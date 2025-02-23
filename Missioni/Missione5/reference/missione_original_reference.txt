@@ -10,6 +10,8 @@ NEMICI:
 -         Guardia delle mura
 o   Utilizza solo armi corpo a corpo, (il tipo di arma non importa)
 o   Ha una possibilita` elevata di schivare gli attacchi magici
+
+aspetta al cancello di ingresso 
  
 -         Prete guardiano
 o   Utilizza solo magie, (magie ti tipo acqua per coerenza con il nome)
@@ -18,7 +20,7 @@ o   Ha una possibilita` elevata di schivare gli attacchi corpo a corpo o fisici
 -         Sacerdote sconsacrato
 o   Utilizza gli effetti della spada contro il player
 o   Usa sia magie che armi corpo a corpo (la spada ovviamente)
- 
+
 Oggetti:
 -         SPADA FANTASMA
  
