@@ -52,19 +52,13 @@ def run_server():
 
 def check_get(path):
     if path.startswith("/m1_"):
-        mis1.check_get(path)
+        mt.check_get(path)
         return 0
-    if path.startswith("/m2_"):
-        mis2.check_get(path)
-        return 1
 
 
 def check_post(path, client_choice):
-    if path.startswith("/m1_"):
-        mis1.check_post(path, client_choice)
-        return 0
     if path.startswith("/m2_"):
-        mis2.check_post(path, client_choice)
+        mt.check_post(path, client_choice)
         return 1
 
 
