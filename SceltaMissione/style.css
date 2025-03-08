@@ -1,0 +1,12 @@
+div {
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #F00;
+    background-color: #F008;
+}
+
+.completato {
+    border-color: #AAA;
+    background-color: #AAA8;
+}
