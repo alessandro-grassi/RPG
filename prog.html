@@ -77,8 +77,7 @@
                 healthBar.style.backgroundColor = "red";
             }
             if (healthValue <= 0) {
-                alert("HAI SCONFITTO IL BOSS");
-                location.reload();
+				window.location.href="vittoria.html";
             }
         }
 
@@ -111,8 +110,7 @@
             
             colorTimeout1 = setTimeout(changeColor, changeColTime); 
             timeout = setTimeout(() => {
-                alert("Hai perso!");
-                location.reload();
+                window.location.href="sconfitta.html";
             }, timeLose);
             
             healthValue -= 100 / 9;
