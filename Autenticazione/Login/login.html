@@ -2,18 +2,39 @@
     <head>
         <title>Accedi!</title>
         <script type="text/javascript" src="login.js"></script>
+        <link href="login.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div>
+        <div id="contenitore">
             <div id="accesso">
                 <p>Inserisci le tue credenziali</p>
-                <input type=”text” id=username”>
-                <input type=”password” id=”password”>
+                <label>Username: </label>
+                <input type="text" id="username">
+                <br><br>
+                <label>Password: </label>
+                <input type="password" id="password">
+                <br><br>
+                <input type="button" value="Accedi" onclick="accedi()">
+                <br><br>
                 <div onclick="change('registrazione')">Non hai un account? Registrati!</div>
-                <input type=”button” value=”Accedi” onclick="accedi()">
             </div>
             <div id="registrazione">
-
+                <p>Siamo costretti a chiederti di compilare il seguente form</p>
+                <br>
+                <label>Inserisci il tuo Username: </label>
+                <input type="text" id="n_username">
+                <br>
+                <p>Nota bene! Sarà il nome con cui tutti<br>gli altri giocatori ti vedranno</p>
+                <br>
+                <label>Inserisci la tua password:</label>
+                <input type="password" id="n_password">
+                <br><br>
+                <label>Inserisci la tua email: </label>
+                <input type="email" id="n_email">
+                <br><br>
+                <label>Inserisci la tua immagine profilo</label>
+                <input type="file" id="n_image" accept="image/*">
+                <br><br>
             </div>
         </div>
     </body>
