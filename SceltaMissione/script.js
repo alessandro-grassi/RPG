@@ -24,8 +24,14 @@ function loadMis(missioni) {
 
         mis.innerHTML = "<h3>" + missione.nome + "</h3><br>" + missione.descrizione;
         btn.click = goToUrl(mis.url);
-        btn.innerHTML = Partecipa;
+        btn.innerHTML = "Partecipa";
 
+        if(missione.completata) {
+            mis.classList.add("completato");
+        }
+
+        mis.appendChild(btn);
+        div.appendChild(mis);
     });
 }
 
