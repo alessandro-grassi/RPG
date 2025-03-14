@@ -1,9 +1,9 @@
 from moduli import queryLib
 
-queryLib.connetti()
+#queryLib.connetti()
 
 def check_get(path):
-    pass
+    return path
 
 def check_post(path,clientchoice):
     pass

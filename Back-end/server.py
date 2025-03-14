@@ -1,8 +1,10 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-import moduli.modulo_missione5 as md
-
+import moduli.modulo_missione5 as m5
+dict = { # dizionario per prendere i suffissi dei moduli
+    "/m5": m5,
+}
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -52,15 +54,17 @@ def run_server():
 
 
 def check_get(path):
-    if path.startswith("/m1_"):
-        md.check_get(path)
-        return 0
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_get(path)
+    return "Modulo non trovato"
 
 
 def check_post(path, client_choice):
-    if path.startswith("/m1_"):
-        md.check_post(path, client_choice)
-        return 0
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_post(path, client_choice)
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":
