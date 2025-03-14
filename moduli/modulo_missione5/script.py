@@ -1,8 +1,11 @@
 from moduli import queryLib
+import os
 
 #queryLib.connetti()
 
 def check_get(path):
+    print(os.listdir("./"))
+    return "ciao"
     if path == "/m5/styletest": # stest get fogli stile
         with open("../Missioni/Missione5/html_pages/style-template.css", "r") as f:
             r = f.read()
@@ -10,7 +13,7 @@ def check_get(path):
             return r
         
     elif path == "/m5/mission-start": # get pagina di start missione
-        with open("../Missioni/Missione5/missione.html") as f:
+        with open(r"..\Missioni\Missione5\missione.html", "r") as f:
             r = f.read()
             f.close()
             return r
