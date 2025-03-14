@@ -8,22 +8,22 @@ def check_get(path):
         with open("Missioni/Missione5/html_pages/style-template.css", "r") as f:
             r = f.read()
             f.close()
-            return r
+            return r.encode("utf-8")
         
     elif path == "/m5/mission-start": # get pagina di start missione
         with open("Missioni/Missione5/missione.html", "r") as f:
             r = f.read()
             f.close()
-            return r
+            return r.encode("utf-8")
     
     elif path == "/m5/mission-start":
         with open("Missioni/Missione5/assets/font.css", "r") as f:
             r = f.read()
             f.close()
-            return r
+            return r.encode("utf-8")
     
     elif path == "/m5/castle-front":
-        with open("Missioni/Missione5/assets/castle-front.jpg", "r") as f:
+        with open("Missioni/Missione5/assets/castle-front.jpg", "rb") as f:
             r = f.read()
             f.close()
             return r
