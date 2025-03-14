@@ -15,6 +15,12 @@ def check_get(path):
             r = f.read()
             f.close()
             return r
+    
+    elif path == "/m5/mission-start":
+        with open("Missioni/Missione5/assets/font.css", "r") as f:
+            r = f.read()
+            f.close()
+            return r
             
             
 def check_post(path,clientchoice):
