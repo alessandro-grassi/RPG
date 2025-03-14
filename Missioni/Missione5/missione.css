@@ -1,4 +1,3 @@
-
 /* missione.css */
 body {
     background-color: #1d2021;
@@ -6,6 +5,26 @@ body {
     color: #ebdbb2;
     text-align: center;
     padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    flex-grow: 1;
+}
+
+.game-image {
+    max-width: 90%;
+    height: auto;
+    border: 3px solid #d79921;
+    box-shadow: 4px 4px 0px #000;
 }
 
 .dialog-box, .prompt-box {
