@@ -4,7 +4,7 @@ from moduli import queryLib
 
 def check_get(path):
     if path == "/m5/styletest": # stest get fogli stile
-        with open("../Missioni/Missione5/html_pages/style-template.css", "r") as f:
+        with open("../Missioni/Missione5/missione.css", "r") as f:
             r = f.read()
             f.close()
             return r
