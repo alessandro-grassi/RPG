@@ -1,4 +1,4 @@
-from moduli import queryLib
+from Back_end import queryLib
 import os
 
 #queryLib.connetti()
