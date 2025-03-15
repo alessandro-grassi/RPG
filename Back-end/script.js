@@ -1,4 +1,4 @@
-function do_get() {
+/*function do_get() {
     fetch("http://localhost:8080/m1_get")
     .then((response) => {
         if(!response.ok) {
@@ -40,4 +40,51 @@ function do_post() {
         console.error(e);
         alert("Errore");
     })
+}*/
+
+let dati = {};
+let turno =1;
+function attacca(){
+    
+}
+function magia(){
+//capire che magia ha utente, i 3 casi
+
+    if (magia==1){
+        fuoco();
+    }
+
+    else if (magia==2){
+        ghiaccio();
+    }
+
+    else if (magia==3){
+        tuono();
+    }
+
+    else{
+        alert("ERROREEE");
+    }
+}
+
+function fuoco(){
+
+}
+
+function ghiaccio(){
+
+}
+
+function tuono(){
+
+}
+
+
+function attaccoMostro(){
+    let danno=0;
+    return danno;
+}
+
+function turni(){
+    //Gestire l'ordine
 }
