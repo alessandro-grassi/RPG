@@ -1,5 +1,14 @@
+from moduli import queryLib as q
+
+q.connetti()
+print(
+    q.execute('SELECT * FROM classi')
+)
+q.disconnetti()
+
 def check_get(path):
     if path.endswith("get_generica"):
+    
         return funz()
         
 

@@ -22,7 +22,7 @@ function do_post() {
         return;
     }
 
-    fetch("http://localhost:8080/m2_post_generica", {
+    fetch("http://localhost:8080/m1_post_generica", {
         method: "POST",
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify({nome})
