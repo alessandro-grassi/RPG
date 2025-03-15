@@ -1,7 +1,29 @@
+/*Light mode attiva del dispositivo*/
+:root {
+    --body-bg: #FFFFFF;
+    --body-color: #000000;
+ }
+ 
+ /* Dark mode attiva del dispositivo*/
+ @media (prefers-color-scheme: dark) {
+    :root {
+        --body-bg: #000000;
+        --body-color: #FFFFFF;
+    }
+ }
 
-div{
+body {
+    position: relative;
+    background: var(--body-bg);
+    color: var(--body-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+}
 
-
+.slider {
+    display:none
 }
 
 #contenitore {
@@ -9,23 +31,30 @@ div{
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    background-color:blue;
+    gap:1.5em;
+    background-color:rgba(0, 0, 255, 0.445);
     position:fixed;
-    top:20%;
-    left:20%;
-    height:20em;
-    width:50em;
-    border-radius: 5%;
+    height:40em;
+    width:70em;
+    border-radius: 3em;
 }
 
 #accesso{
-    visibility: visible;
-    background-color:lightblue;
-    height:max-content;
-    width:max-content;
+    background-color:rgba(173, 216, 230, 0.582);
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 0.9em;
+    padding-top: 1em;
+    height:30em;
+    width:30em;
 }
 
 #registrazione{
-    visibility: hidden;
-
+    background-color:rgba(40, 199, 252, 0.596);
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 0.9em;
+    padding-top: 1em;
+    height:30em;
+    width:30em;
 }
