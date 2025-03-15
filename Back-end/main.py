@@ -56,7 +56,7 @@ def check_get(path):
 
 
 def check_post(path, client_choice):
-    if path.startswith("/m2_"):
+    if path.startswith("/m1_"):
         return missione1.check_post(path, client_choice)
 
 
