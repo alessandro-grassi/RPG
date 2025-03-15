@@ -1,0 +1,86 @@
+{
+    "INIZIO MISSIONE": [
+      "*Mi ricordo...",
+      "*C'era un tempo in cui il nostro regno era assolutamente perfetto.",
+      "*Dove il cibo era abbondante,",
+      " la povertà una mera barzelletta,",
+      " e tutti potevano essere chiamati fratelli e sorelle",
+      "*Ma per qualcuno così egoista come il re,",
+      " un regno come questo non era abbastanza",
+      "*Voleva qualcosa che nessuno potesse realizzare",
+      "*E così... il re sfidò la morte",
+      "*Il regno cadde in rovina",
+      " e la gente divenne solo i fantasmi",
+      " di ciò che erano una volta",
+      "*Per l'alto prezzo del suo regno.",
+      "*Salvaci Eroe, noi povere anime",
+      " vogliamo la nostra pace eterna e",
+      " la vendetta di quel re malvagio"
+    ],
+    "ALL'INGRESSO DEL CANCELLO": [
+      "*Dopo aver superato le insidie sei riuscito",
+      " a raggiungere i cancelli principali del maniero",
+      "*Il regno era in rovina,",
+      " non c'era nemmeno una singola anima",
+      " tranne il popolo perduto del regno",
+      "*All'ingresso si parevano davanti due colossali cancelli",
+      "*Davanti ai cancelli furono lasciate numerose armature e armi arrugginite,",
+      " indossate dai soldati che le sorvegliavano.",
+      "*Dopo pochi passi davanti alle porte pezzi di metallo iniziarono",
+      " a scricchiolare e ad animarsi davanti ai tuoi occhi",
+      "*Un'armatura completa che torreggiava su di te apparve,",
+      " l'ombra di quello che era un soldato",
+      "*Sollevò lentamente la sua arma arrugginita",
+      " roteandola per cercare di colpirti",
+      " ma tu riuscì a fare un passo indietro e a schivarla",
+      "*I loro occhi fiammeggiavano, ",
+      " pronto a sacrificarsi per il suo lavoro senza vita",
+      "*L'Eterno Guardiano era pronto"
+    ],
+    "FIGHT CONTRO IL GUARDIANO DEL CANCELLO": [
+      "- FIGHT CONTRO IL GUARDIANO DEL CANCELLO -"
+    ],
+    "FINE SCONTRO": [
+      "*Dopo che sei riuscito a rimettere quei vecchi pezzi di metallo nel loro cimitero",
+      "*Ponendo fine al lavoro di quella povera anima",
+      "*Hai continuato il tuo cammino attraverso il maniero"
+    ],
+    "ENTRATA LIBRERIA": [
+      "*Sei entrato nel maniero dirigendoti ",
+      " verso una vecchia e polverosa biblioteca",
+      "*All'interno della stanza era umido, disordinato e freddo",
+      "*Vecchi libri sparsi sul pavimento che rallentavano il tuo cammino,",
+      " librearie rotte che bloccavano il tuo cammino",
+      "*E sangue... vecchie macchie di sangue arrugginite ovunque",
+      "*Hai continuato a camminare cercando di ignorare cosa stavi vedendo",
+      " finché non hai guardato per un momento il pavimento",
+      "*Segni e simboli di lingue antiche realizzati con quelle macchie di sangue ovunque,",
+      " probabilmente per un antico culto oscuro",
+      "*Il sangue reagiva alla tua presenza e ai tuoi movimenti",
+      "*Ti sentivi come se qualcuno ti stesse osservando..."
+    ],
+    "pausa drammatica": [
+      "- pausa drammatica -"
+    ],
+    "FIGHT CONTRO IL MAGO OCCULTO": [
+      "- FIGHT CONTRO IL MAGO OCCULTO -"
+    ],
+    "FINE SCONTRO": [
+      "*Le ossa caderono di fronte a te diventando di nuovo cenere",
+      "*Eri esausto ma il tuo lavoro non era ancora finito",
+      "*Il Re ti stava aspettando"
+    ],
+    "FIGHT CONTRO IL RE": [
+      "- FIGHT CONTRO IL RE -",
+      "*Il Re si ergeva davanti a te, avvolto in un'aura oscura",
+      "*I suoi occhi brillavano di un'energia innaturale",
+      "*Con un ghigno malvagio, sollevò la sua spada maledetta",
+      "*Il potere della morte stessa scorreva attraverso la lama",
+      "*Con un ruggito, si lanciò contro di te con forza sovrumana",
+      "*L'ultima battaglia era iniziata"
+    ],
+    "FINE MISSIONE": [
+      "- FINE MISSIONE -"
+    ]
+  }
+  
