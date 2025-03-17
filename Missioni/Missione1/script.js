@@ -1,5 +1,5 @@
 function do_get() {
-    fetch("http://localhost:8080/m1_get_generica")
+    fetch("http://localhost:8080/missione1/get_generica")
     .then((response) => {
         if(!response.ok) {
             throw new Error("Errore connessione"); 
@@ -22,7 +22,7 @@ function do_post() {
         return;
     }
 
-    fetch("http://localhost:8080/m1_post_generica", {
+    fetch("http://localhost:8080/missione1/post_generica", {
         method: "POST",
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify({nome})
