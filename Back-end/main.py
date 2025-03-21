@@ -1,3 +1,4 @@
+#gita a monaco: 7/10
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
