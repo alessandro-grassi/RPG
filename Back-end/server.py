@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-import moduli.modulo_missione5 as m5
+import moduli.modulo_missione5.script as m5
 dict = { # dizionario per prendere i suffissi dei moduli
     "/m5": m5,
 }

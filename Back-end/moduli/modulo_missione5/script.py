@@ -7,19 +7,19 @@ def check_get(path):
         with open("../Missioni/Missione5/missione.css", "r") as f:
             r = f.read()
             f.close()
-            return r
+            return r.encode("utf-8")
         
     elif path == "/m5/mission-start": # get pagina di start missione
         with open("../Missioni/Missione5/missione.html") as f:
             r = f.read()
             f.close()
-            return r
+            return r.encode("utf-8")
         
     elif path == "/m5/castle-front": # get pagina di start missione
         with open("../Missioni/Missione5/missione.html") as f:
             r = f.read()
             f.close()
-            return r 
+            return r.encode("utf-8")
     
             
             
