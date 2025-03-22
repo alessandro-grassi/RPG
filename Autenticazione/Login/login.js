@@ -1,5 +1,4 @@
-
-var slideIndex = 1;
+/*var slideIndex = 1;
 showDivs(slideIndex);
 
 function plusDivs(n) {
@@ -24,4 +23,52 @@ function showDivs(n) {
   }
   x[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " w3-white";
+} */
+
+function registrazione(){
+  const username= document.getElementById('n_username').value;
+  const password= document.getElementById('n_password').value;
+  const email= document.getElementById('n_email').value;
+  const immagine= document.getElementById('n_image').value;
+  
+  if(username=="" || password == "" || email == "" || immagine == ""){
+    alert("Non hai compilato tutti i campi")
+  }else{
+    const message={
+      user : username, 
+      pw : password,
+      mail : email,
+      img: immagine
+    };
+    fetch('http://localhost:8080/login/registrazione', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Errore nella risposta del server.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.error) {
+        alert("Errore di connessione, riprova più tardi!")
+      } else {
+        alert("Registrazione effettuata con successo");
+      }
+    })
+    .catch(error => {
+      console.error("Errore:", error);
+
+    });
+  }
+
 }
+
+function accedi(){
+
+}
+

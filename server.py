@@ -1,7 +1,10 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from Back_end import login
 import json
 from urllib.parse import urlparse
-dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
+dict = { 
+    "/login": login,
+    # dizionario per prendere i suffissi dei moduli da aggiungere
     
 }
 
@@ -13,7 +16,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
-
+        print(path)
         resp = check_get(path)
 
         self.wfile.write(resp)
