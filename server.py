@@ -3,7 +3,7 @@ from Back_end import login
 import json
 from urllib.parse import urlparse
 dict = { 
-    "/login": login,
+    "/login/": login,
     # dizionario per prendere i suffissi dei moduli da aggiungere
     
 }

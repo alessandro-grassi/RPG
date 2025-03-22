@@ -31,7 +31,7 @@ function registrazione(){
   const email= document.getElementById('n_email').value;
   const immagine= document.getElementById('n_image').value;
   
-  if(username=="" || password == "" || email == "" || immagine == ""){
+  if(username=="" || password == "" || email == ""){
     alert("Non hai compilato tutti i campi")
   }else{
     const message={
