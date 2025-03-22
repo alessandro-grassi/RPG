@@ -1,10 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-from Back_end import missione1
+import Back_end.missione1.script as missione1
 dict = { 
     "/missione1": missione1
-    
 }
 
 
