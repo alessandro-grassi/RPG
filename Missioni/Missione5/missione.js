@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchData("get-dialogue",setLines);
 });
 
+let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 
 // funzione usata per fare il fetch dei dati dal server e passarli a una funione data come parametro
 function fetchData(request,callback)
@@ -23,6 +24,12 @@ function fetchData(request,callback)
 // funzione che aggiusta il formato dele linee passate dal database e le inserisce in una variabile
 function setLines(data)
 {
-    let lines = data.flatMap(obj => obj.text);
-    console.log (lines);
+    let lines = data.flatMap(obj => obj.text); // prende ogni linea di testo per gli oggetti estratti e la mappa all'oggetto
+    console.log (lines); // log del risultato per check e debug
+    dialogLines = lines; // assegna le linee di dialogo alla variabile globale
+    document.getElementById("dialog-box").textContent = lines[0];
 }
+
+// funzione che fa avanzare le linee di testo
+function moveLines()
+{}
