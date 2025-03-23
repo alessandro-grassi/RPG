@@ -1,5 +1,6 @@
 from Back_end import queryLib
 import os
+import json
 
 #queryLib.connetti()
 
@@ -47,10 +48,22 @@ def check_get(path):
             return r.encode("utf-8")
             
 def check_post(path,clientchoice):
-    pass
+    if path == "update-index":
+        
 
 if __name__ == "__main__":
     print(
         queryLib.execute('SELECT * FROM classi')
     )
     queryLib.disconnetti()
+    
+
+def update_index(index):
+    json_file = open("Missioni/Missione%/assets/progress.json", "r")  # legge il file json
+    parsed_data = json.loads(json_file.read()) # fa il parse in formato json della stringa
+    json_file.close()
+    parsed_data["current_index"] = index # imposta il nuovo index
+    converted_data = json.dumps(parsed_data, indent=4) # converte i dati in formato json
+    json_file = open("Missioni/Missione%/assets/progress.json", "w") # apre il file in lettura
+    json_file.write(converted_data) # scrive sul file json i dati
+    
