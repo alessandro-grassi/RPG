@@ -22,12 +22,23 @@ def check_get(path):
             f.close()
             return r.encode("utf-8")
     
+    elif path == "/m5/script":
+        with open("Missioni/Missione5/missione.js") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+    
     elif path == "/m5/castle-front":
         with open("Missioni/Missione5/assets/castle-front.jpg", "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
             r = f.read()
             f.close()
             return r
-            
+        
+    elif path == "/m5/get-dialogue":
+        with open("Missioni/Missione5/assets/dialogs.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode per restituire i contenuti del file json come stringa da convertire in json dopo
             
 def check_post(path,clientchoice):
     pass
