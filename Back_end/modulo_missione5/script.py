@@ -40,6 +40,12 @@ def check_get(path):
             f.close()
             return r.encode("utf-8") # encode per restituire i contenuti del file json come stringa da convertire in json dopo
             
+    elif path == "/m5/dialog-index":
+        with open("Missioni/Missione5/assets/progress.json") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+            
 def check_post(path,clientchoice):
     pass
 

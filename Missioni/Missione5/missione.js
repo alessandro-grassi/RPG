@@ -21,6 +21,12 @@ function fetchData(request,callback)
     });
 }
 
+// funzione per impostare le linee di dialogo in base all'index preso dal server
+function updateLines()
+{
+    fetchData("dialog-index",moveLines);
+}
+
 // funzione che aggiusta il formato dele linee passate dal database e le inserisce in una variabile
 function setLines(data)
 {
@@ -30,11 +36,13 @@ function setLines(data)
     document.getElementById("dialog-box").textContent = lines[0];
 }
 
-index = 0; // start a 0 in futuro prende index da file json
-
 // funzione che fa avanzare le linee di testo
-function moveLines()
+function moveLines(index)
 {
-    document.getElementById("dialog-box").textContent = dialogLines[index]; // imposta il testo della dialog box
-    index++; // incrementa index in futuro prendere da json e salvare su json
+    console.log (index);
+
 }
+
+// funzione che manda i dati al server
+function sendToServer()
+{}
