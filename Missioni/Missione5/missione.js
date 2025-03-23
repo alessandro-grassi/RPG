@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchData("dialog-index",moveLines); // aggiorna l'index per le linee correnti e le prossime
 });
 
+document.getElementById("next-button").addEventListener("click",function(){
+    fetchData("dialog-index",moveLines) // fa un fetch dell'index
+});
+
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 
 // funzione usata per fare il fetch dei dati dal server e passarli a una funione data come parametro
@@ -20,12 +24,6 @@ function fetchData(request,callback)
     .catch(err => { // catch dell'errore in modo da stamparlo a console
         console.error('request error',err); // log dell'errore a console
     });
-}
-
-// funzione per impostare le linee di dialogo in base all'index preso dal server e far avanzare le immagini
-function updateLines()
-{
-    fetchData("dialog-index",moveLines); // fa un fetch dell'index
 }
 
 // funzione che fa avanzare le linee di testo e aggiorna l'index lato server
