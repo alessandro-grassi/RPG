@@ -30,6 +30,11 @@ function setLines(data)
     document.getElementById("dialog-box").textContent = lines[0];
 }
 
+index = 0; // start a 0 in futuro prende index da file json
+
 // funzione che fa avanzare le linee di testo
 function moveLines()
-{}
+{
+    document.getElementById("dialog-box").textContent = dialogLines[index]; // imposta il testo della dialog box
+    index++; // incrementa index in futuro prendere da json e salvare su json
+}
