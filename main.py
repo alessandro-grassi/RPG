@@ -2,7 +2,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-from .Back_end import select_mis as sm
+from Back_end import select_mis as sm
 
 mods = {
     "/sm_" : sm
@@ -12,7 +12,7 @@ mods = {
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        self.send_header("Content-type", "application/json")
+        # self.send_header("Content-type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         path = self.path
@@ -25,7 +25,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         self.send_response(200)
-        self.send_header("Content-type", "application/json")
+        # self.send_header("Content-type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         path = self.path
@@ -58,13 +58,13 @@ def run_server():
 def check_get(path):
     for k in mods.keys():
         if path.startswith(k):
-            mods[k].check_get(path)
+            return mods[k].check_get(path)
 
 
 def check_post(path, client_choice):
     for k in mods.keys():
         if path.startswith(k):
-            mods[k].check_post(path,client_choice)
+            return mods[k].check_post(path,client_choice)
 
 
 if __name__ == "__main__":

@@ -22,12 +22,17 @@ function loadMis(missioni) {
         let mis = document.createElement("div");
         let btn = document.createElement("button");
 
-        mis.innerHTML = "<h3>" + missione.nome + "</h3><br>" + missione.descrizione;
-        btn.click = goToUrl(mis.url);
+        mis.innerHTML = "<h3>" + missione.nome + "</h3>" + missione.descrizione + "<br>";
+        btn.onclick = () => {
+            goToUrl(mis.url);
+        }
         btn.innerHTML = "Partecipa";
 
         if(missione.completata) {
             mis.classList.add("completato");
+        }
+        else {
+            mis.classList.add("missione");
         }
 
         mis.appendChild(btn);
