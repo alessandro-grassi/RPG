@@ -2,6 +2,11 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
+from .Back_end import select_mis as sm
+
+mods = {
+    "/sm_" : sm
+}
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -51,15 +56,15 @@ def run_server():
 
 
 def check_get(path):
-    if path.startswith("/m1_"):
-        # mt.check_get(path)
-        return 0
+    for k in mods.keys():
+        if path.startswith(k):
+            mods[k].check_get(path)
 
 
 def check_post(path, client_choice):
-    if path.startswith("/m2_"):
-        # mt.check_post(path, client_choice)
-        return 1
+    for k in mods.keys():
+        if path.startswith(k):
+            mods[k].check_post(path,client_choice)
 
 
 if __name__ == "__main__":
