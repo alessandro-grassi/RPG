@@ -92,10 +92,13 @@ function turni() {
     }
 }
 
-
-let audio = new Audio("audio/Background.mp3");
-
+//Funzione per musica di sottofondo
 function playMusic() {
-    audio.volume = 1.0;
-    audio.play();
+    let audio = new Audio("audio/Background.mp3");
+    audio.volume = 0.2;
+    audio.play().then(() => {
+        console.log("Musica avviata!");
+    }).catch(error => {
+        console.log("Autoplay bloccato! Il browser richiede un'interazione.");
+    });
 }
