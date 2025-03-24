@@ -1,90 +1,101 @@
-/*function do_get() {
-    fetch("http://localhost:8080/m1_get")
-    .then((response) => {
-        if(!response.ok) {
-            throw new Error("Errore connessione"); 
-        }
-        return response.json();
-    })
-    .then((data) => {
-        alert(data);
-    })
-    .catch((e) => {
-        console.error(e);
-        alert("Errore");
-    })
-}
-
-function do_post() {
-    let nome = document.getElementById("nome").value;
-    if(nome == "") {
-        alert("manca il nome");
-        return;
-    }
-
-    fetch("http://localhost:8080/m2_post", {
-        method: "POST",
-        headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify({nome})
-    })
-    .then((response) => {
-        if(!response.ok) {
-            throw new Error("Errore connessione"); 
-        }
-        return response.json();
-    })
-    .then((data) => {
-        alert(data);
-    })
-    .catch((e) => {
-        console.error(e);
-        alert("Errore");
-    })
-}*/
-
+/**
+ * Oggetto che contiene i dati del gioco.
+ * @type {Object}
+ */
 let dati = {};
-let turno =1;
-function attacca(){
-    
+
+/**
+ * Variabile che tiene traccia del turno corrente.
+ * @type {number}
+ */
+let turno = 1;
+
+/**
+ * Funzione chiamata quando il giocatore preme il pulsante "Attacca".
+ * Gestisce l'attacco del giocatore.
+ */
+function attacca() {
+    // Implementazione dell'attacco del giocatore
 }
-function magia(){
-//capire che magia ha utente, i 3 casi
 
-    if (magia==1){
+/**
+ * Funzione chiamata quando il giocatore preme il pulsante "Magia".
+ * Determina quale magia usare in base all'input dell'utente.
+ */
+function magia() {
+    // Capire che magia ha utente, i 3 casi
+    if (magia == 1) {
         fuoco();
-    }
-
-    else if (magia==2){
+    } else if (magia == 2) {
         ghiaccio();
-    }
-
-    else if (magia==3){
+    } else if (magia == 3) {
         tuono();
-    }
-
-    else{
+    } else {
         alert("ERROREEE");
     }
 }
 
-function fuoco(){
-
+/**
+ * Funzione che gestisce l'uso della magia "Fuoco".
+ */
+function fuoco() {
+    // Implementazione della magia "Fuoco"
 }
 
-function ghiaccio(){
-
+/**
+ * Funzione che gestisce l'uso della magia "Ghiaccio".
+ */
+function ghiaccio() {
+    // Implementazione della magia "Ghiaccio"
 }
 
-function tuono(){
-
+/**
+ * Funzione che gestisce l'uso della magia "Tuono".
+ */
+function tuono() {
+    // Implementazione della magia "Tuono"
 }
 
-
-function attaccoMostro(){
-    let danno=0;
+/**
+ * Funzione che gestisce l'attacco del mostro.
+ * @returns {number} Il danno inflitto dal mostro.
+ */
+function attaccoMostro() {
+    let danno = 0;
     return danno;
 }
 
-function turni(){
-    //Gestire l'ordine
+/**
+ * Funzione che gestisce il turno del giocatore.
+ */
+function tuoTurno() {
+    // Implementazione del turno del giocatore
+}
+
+/**
+ * Funzione che gestisce il turno del mostro.
+ */
+function turnoMostro() {
+    // Implementazione del turno del mostro
+}
+
+/**
+ * Funzione che determina di chi è il turno corrente.
+ * Se il turno è pari, è il turno del giocatore.
+ * Se il turno è dispari, è il turno del mostro.
+ */
+function turni() {
+    if (turno & 1 == 0) {
+        tuoTurno();
+    } else {
+        turnoMostro();
+    }
+}
+
+
+let audio = new Audio("audio/Background.mp3");
+
+function playMusic() {
+    audio.volume = 1.0;
+    audio.play();
 }

@@ -1,0 +1,16 @@
+Gioco a oggetti
+Entità Gioco che gestisce elementi di gioco, turno (attributo), Giocatore, Nemico (chiama oggetto di nemico che chiama per esempio)
+Classe astratta Entità con vita, livello, attacco, attacco(), schiva(), nome ecc.
+Classe eroe eredità Entità e aggiunge classe, mana, exp, magia con metodo usaMagia() ecc.
+Classe Mostro eredità Entità e forse basta boh vedremo
+Gestione audio
+Gestione turni con try catch oppure impedire di cliccare bottoni (o entrambi)
+
+
+
+
+TODO FUTURO
+Sessioni di gioco (se esci si salva dove sei rimasto)
+Vari boss (Noce I, NoceII, Noce III, Noce Wittelsbach..)
+Noce Wittelsbach
+
