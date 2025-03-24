@@ -20,7 +20,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_get(path)
 
-        self.wfile.write(json.dumps(resp).encode("utf-8"))
+        self.wfile.write(resp)
         return
 
     def do_POST(self):
@@ -37,7 +37,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_post(path, client_choice)
 
-        self.wfile.write(json.dumps(resp).encode("utf-8"))
+        self.wfile.write(resp)
         return
 
     def do_OPTIONS(self):

@@ -1,3 +1,5 @@
+import json
+
 test_obj = [
     {
         "nome" : "miss1",
@@ -33,7 +35,25 @@ test_obj = [
 
 def check_get(path):
     if path.endswith("missioni"):
-        return {"missioni" : test_obj}
+        return json.dumps({"missioni" : test_obj}).encode("utf-8")
+    if path.endswith("style"):
+        return get_style()
+    if path.endswith("script"):
+        return get_script()
+    
 
 def check_post(path,cc):
     return 0
+
+def get_style():
+    with open("./SceltaMissione/style.css", "rb") as f:
+        msg = f.read()
+        f.close()
+    return msg
+
+
+def get_script():
+    with open("./SceltaMissione/script.js", "rb") as f:
+        msg = f.read()
+        f.close()
+    return msg
