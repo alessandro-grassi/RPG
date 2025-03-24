@@ -31,11 +31,12 @@ function fetchData(request,callback)
     });
 }
 
-// funzione che fa avanzare le linee di testo e aggiorna l'index lato server
+// funzione che fa avanzare le linee di testo in base all'index ricevuto e aggiorna l'index lato server
 function moveLines(index)
 {
     console.log("index:");
     console.log(index);
+    document.getElementById("dialog-box").textContent = dialogLines[index.current_index];
     const data = {"current_index": index.current_index + 1}; // dati con index da inviare
     sendToServer("update-index",data); // invia il nuovo index al server
 }
