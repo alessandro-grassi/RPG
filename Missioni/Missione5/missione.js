@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchData("get-dialogue",setLines); // prende le linee di testo
     fetchData("dialog-index",moveLines); // aggiorna l'index per le linee correnti e le prossime
+    setButton();
 });
 
-document.getElementById("next-button").addEventListener("click",function(){
-    fetchData("dialog-index",moveLines) // fa un fetch dell'index
-});
-
+// funzione usata per impostare l'evento legato al bottone per far avanzare il testo
+function setButton(){
+    document.getElementById("next-button").addEventListener("click",function(){
+        fetchData("dialog-index",moveLines) // fa un fetch dell'index
+    });
+}
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 
 // funzione usata per fare il fetch dei dati dal server e passarli a una funione data come parametro
@@ -19,6 +22,8 @@ function fetchData(request,callback)
         return response.json(); // ritorna la risposta codificata in json
     })
     .then(data => { // prende i dati ottenuti
+        console.log("fetched data: ");
+        console.log(data) // log dati per debug
         callback(data); // chiama la funzione di callback a cui passare i dati ottenuti
     })
     .catch(err => { // catch dell'errore in modo da stamparlo a console
@@ -29,7 +34,9 @@ function fetchData(request,callback)
 // funzione che fa avanzare le linee di testo e aggiorna l'index lato server
 function moveLines(index)
 {
-    const data = {"current_index": index + 1}; // dati con index da inviare
+    console.log("index:");
+    console.log(index);
+    const data = {"current_index": index.current_index + 1}; // dati con index da inviare
     sendToServer("update-index",data); // invia il nuovo index al server
 }
 

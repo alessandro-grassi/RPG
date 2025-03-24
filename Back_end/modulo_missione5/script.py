@@ -48,8 +48,11 @@ def check_get(path):
             return r.encode("utf-8")
             
 def check_post(path,clientchoice):
-    if path == "update-index":
-        
+    if path == "/m5/update-index":
+        print(clientchoice) # print per debug
+        update_index(clientchoice["current_index"])
+        return json.dumps({"status": "success"}).encode()  # Return JSON-encoded bytes
+    return json.dumps({"status": "error"}).encode()  # Ensure a valid JSON response
 
 if __name__ == "__main__":
     print(
@@ -59,11 +62,11 @@ if __name__ == "__main__":
     
 
 def update_index(index):
-    json_file = open("Missioni/Missione%/assets/progress.json", "r")  # legge il file json
+    json_file = open("Missioni/Missione5/assets/progress.json", "r")  # legge il file json
     parsed_data = json.loads(json_file.read()) # fa il parse in formato json della stringa
     json_file.close()
     parsed_data["current_index"] = index # imposta il nuovo index
     converted_data = json.dumps(parsed_data, indent=4) # converte i dati in formato json
-    json_file = open("Missioni/Missione%/assets/progress.json", "w") # apre il file in lettura
+    json_file = open("Missioni/Missione5/assets/progress.json", "w") # apre il file in lettura
     json_file.write(converted_data) # scrive sul file json i dati
     
