@@ -15,3 +15,11 @@ div {
     border-color: #0F0;
     background-color: #0F08;
 }
+
+header{
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: #00F;
+    background-color: #00F8;
+}
