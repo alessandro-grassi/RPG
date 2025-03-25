@@ -95,7 +95,7 @@ function turni() {
 //Funzione per musica di sottofondo
 function playMusic() {
     let audio = new Audio("audio/Background.mp3");
-    audio.volume = 0.2;
+    audio.volume = 0.05;
     audio.play().then(() => {
         console.log("Musica avviata!");
     }).catch(error => {
