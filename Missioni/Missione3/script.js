@@ -1,3 +1,7 @@
+import { Hero } from "./classi/Hero.js";
+import { Enemy } from "./classi/Enemy.js";
+import { Game } from "./classi/Game.js";
+
 /**
  * Oggetto che contiene i dati del gioco.
  * @type {Object}
@@ -92,7 +96,7 @@ function turni() {
     }
 }
 
-//Funzione per musica di sottofondo
+/* Inzio Sezione Gestione Audio */
 function playMusic() {
     let audio = new Audio("audio/Background.mp3");
     audio.volume = 0.05;
@@ -122,3 +126,4 @@ function magicSound(){
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
     });
 }
+/* Fine Sezione Gestione audio*/
