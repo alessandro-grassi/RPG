@@ -102,3 +102,23 @@ function playMusic() {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
     });
 }
+
+function attackSound(){
+    let audio = new Audio("audio/Attacco.mp3");
+    audio.volume = 0.2;
+    audio.play().then(() => {
+        console.log("Suono attacco avviato!");
+    }).catch(error => {
+        console.log("Autoplay bloccato! Il browser richiede un'interazione.");
+    });
+}
+
+function magicSound(){
+    let audio = new Audio("audio/Magia.mp3");
+    audio.volume = 0.2;
+    audio.play().then(() => {
+        console.log("Suono magia avviato!");
+    }).catch(error => {
+        console.log("Autoplay bloccato! Il browser richiede un'interazione.");
+    });
+}
