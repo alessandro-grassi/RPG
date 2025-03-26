@@ -1,8 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
+from Back_end import missione4modulo
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
-    
+    "/missione4/": missione4modulo
 }
 
 
