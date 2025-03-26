@@ -1,25 +1,48 @@
-div {
-    border-style: solid;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: #F00;
-    background-color: #F008;
+div, header {
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px auto;
+    max-width: 600px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+
+header {
+    border-color: #007BFF;
+    background-color: rgba(0, 123, 255, 0.2);
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#missioni {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.missione, .completato {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+
+.missione {
+    border-color: #28A745;
+    background-color: rgba(40, 167, 69, 0.2);
 }
 
 .completato {
-    border-color: #888;
-    background-color: #AAA;
+    border-color: #6C757D;
+    background-color: rgba(108, 117, 125, 0.3);
+    color: #555;
 }
 
-.missione {
-    border-color: #0F0;
-    background-color: #0F08;
-}
-
-header{
-    border-style: solid;
-    border-radius: 5px;
-    border-width: 2px;
-    border-color: #00F;
-    background-color: #00F8;
+.missione:hover, .completato:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
