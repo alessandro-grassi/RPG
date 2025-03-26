@@ -48,12 +48,10 @@ def check_post(path,cc):
 def get_style():
     with open("./SceltaMissione/style.css", "rb") as f:
         msg = f.read()
-        f.close()
     return msg
 
 
 def get_script():
     with open("./SceltaMissione/script.js", "rb") as f:
         msg = f.read()
-        f.close()
     return msg

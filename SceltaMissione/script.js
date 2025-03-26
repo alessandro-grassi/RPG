@@ -44,4 +44,6 @@ function goToUrl(url) {
     window.location.href = url;
 }
 
-get_missioni();
+setTimeout(() => {
+    get_missioni();
+}, 100);
