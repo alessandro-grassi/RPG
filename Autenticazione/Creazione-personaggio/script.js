@@ -2,10 +2,6 @@ document.getElementById('register-form').addEventListener('submit', function(eve
     event.preventDefault();
     const newUser = {
         username: document.getElementById('username').value,
-        nome: document.getElementById('nome').value,
-        cognome: document.getElementById('cognome').value,
-        data_nascita: document.getElementById('data_nascita').value,
-        password: document.getElementById('password').value,
     };
     fetch('http://localhost:8080/users', {
         method: 'POST',
