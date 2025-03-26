@@ -5,30 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combattimento</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="dati">
-        <h1>Turno: n</h1>
-        <p>Tuoi punti vita: m/n</p>
+        <h1>Turno: <span id="turno"></span></h1>
+        <p>Tuoi punti vita: <span id="vitaGiocatore"></span></p>
     </div>
     
     <div id="combattimento">
         <div id="mostro">
             <h2>Mostro da affrontare</h2>
             <img src="media/mostro.png" alt="Foto mostro">
-            <p>Punti vita: m/n</p>
+            <p>Punti vita: <span id="vitaMostro"></span></p>
         </div>
         
         <div id="azioni">
-            <button onclick="attacca()">Attacca</button>
-            <button onclick="magia()">Magia</button>
+            <button onclick="attackSound(); attacca();">Attacca</button>
+            <button onclick="magicSound(); magia();">Magia</button>
         </div>
-        
+
         <div id="esito">
-            <p>Qui verrà messo l'output</p>
+            <p id="output">Qui verrà messo l'output</p>
         </div>
     </div>
-    <script> playMusic();</script>
+
+    <div id="musica">
+        <button onclick="playMusic()">Musica</button>
+    </div>
 </body>
 </html>

@@ -1,3 +1,7 @@
+import { Hero } from "./classi/Hero.js";
+import { Enemy } from "./classi/Enemy.js";
+import { Game } from "./classi/Game.js";
+
 /**
  * Oggetto che contiene i dati del gioco.
  * @type {Object}
@@ -92,10 +96,34 @@ function turni() {
     }
 }
 
-
-let audio = new Audio("audio/Background.mp3");
-
+/* Inzio Sezione Gestione Audio */
 function playMusic() {
-    audio.volume = 1.0;
-    audio.play();
+    let audio = new Audio("audio/Background.mp3");
+    audio.volume = 0.05;
+    audio.play().then(() => {
+        console.log("Musica avviata!");
+    }).catch(error => {
+        console.log("Autoplay bloccato! Il browser richiede un'interazione.");
+    });
 }
+
+function attackSound(){
+    let audio = new Audio("audio/Attacco.mp3");
+    audio.volume = 0.2;
+    audio.play().then(() => {
+        console.log("Suono attacco avviato!");
+    }).catch(error => {
+        console.log("Autoplay bloccato! Il browser richiede un'interazione.");
+    });
+}
+
+function magicSound(){
+    let audio = new Audio("audio/Magia.mp3");
+    audio.volume = 0.2;
+    audio.play().then(() => {
+        console.log("Suono magia avviato!");
+    }).catch(error => {
+        console.log("Autoplay bloccato! Il browser richiede un'interazione.");
+    });
+}
+/* Fine Sezione Gestione audio*/
