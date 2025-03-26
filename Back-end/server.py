@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-import moduli.modulo_missione5 as m5
+import moduli.modulo_missione5.script as m5
 dict = { # dizionario per prendere i suffissi dei moduli
     "/m5": m5,
 }
@@ -17,7 +17,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_get(path)
 
-        self.wfile.write(resp)
+        self.wfile.write(resp.encode("utf-8"))
         return
 
     def do_POST(self):
@@ -34,7 +34,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_post(path, client_choice)
 
-        self.wfile.write(resp)
+        self.wfile.write(resp.encode("utf-8"))
         return
 
     def do_OPTIONS(self):
