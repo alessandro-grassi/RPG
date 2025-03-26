@@ -1,14 +1,15 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-import moduli.modulo_missione5 as md
-
+import Back_end.modulo_missione5 as m5
+dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
+    "/m5": m5,
+}
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        self.send_header("Content-type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         path = self.path
@@ -16,7 +17,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_get(path)
 
-        self.wfile.write(json.dumps(resp).encode("utf-8"))
+        self.wfile.write(resp)
         return
 
     def do_POST(self):
@@ -33,7 +34,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_post(path, client_choice)
 
-        self.wfile.write(json.dumps(resp).encode("utf-8"))
+        self.wfile.write(resp)
         return
 
     def do_OPTIONS(self):
@@ -52,15 +53,17 @@ def run_server():
 
 
 def check_get(path):
-    if path.startswith("/m1_"):
-        md.check_get(path)
-        return 0
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_get(path)
+    return "Modulo non trovato"
 
 
 def check_post(path, client_choice):
-    if path.startswith("/m1_"):
-        md.check_post(path, client_choice)
-        return 0
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_post(path, client_choice)
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":
