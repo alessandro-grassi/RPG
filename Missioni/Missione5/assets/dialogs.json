@@ -18,19 +18,19 @@
         "Dopo aver superato le insidie sei riuscito a raggiungere i cancelli principali del maniero",
         "Il regno era in rovina, non c'era nemmeno una singola anima tranne il popolo perduto del regno",
         "All'ingresso si parevano davanti due colossali cancelli",
-        "Davanti ai cancelli furono lasciate numerose armature e armi arrugginite, indossate dai soldati che le sorvegliavano.",
-        "Dopo pochi passi davanti alle porte pezzi di metallo iniziarono a scricchiolare e ad animarsi davanti ai tuoi occhi",
-        "Un'armatura completa che torreggiava su di te apparve, l'ombra di quello che era un soldato",
-        "Sollevò lentamente la sua arma arrugginita roteandola per cercare di colpirti ma tu riuscì a fare un passo indietro e a schivarla",
-        "I loro occhi fiammeggiavano, pronto a sacrificarsi per il suo lavoro senza vita",
-        "L'Eterno Guardiano era pronto"
+        "Davanti ai cancelli furono lasciati numerosi detriti, quelli che un tempo furono le abitazioni dei popolani.",
+        "Dopo pochi passi davanti alle porte pezzi di roccia iniziarono a scricchiolare e ad ammassarsi davanti ai tuoi occhi",
+        "Un costrutto immenso che torreggiava su di te apparve",
+        "Sollevò lentamente un arto schiantandolo violentemente per terra cercando di colpirti, ma in tempo sei riuscito a schivarlo",
+        "I loro occhi fiammeggiavano di una fiamma viola e il suo cristallo in cima iniziò a caricarsi",
+        "Il Guardiano era pronto"
       ]
     },
     {
       "mission": "AFTER BATTLE WITH GUARDIAN",
       "text": [
-        "Dopo che sei riuscito a rimettere quei vecchi pezzi di metallo nel loro cimitero",
-        "Ponendo fine al lavoro di quella povera anima",
+        "Dopo che sei riuscito a rimettere quei vecchi detriti rovinati al loro posto",
+        "Ponendo fine al lavoro di un non cosi' Eterno guardiano",
         "Hai continuato il tuo cammino attraverso il maniero"
       ]
     },
