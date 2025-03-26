@@ -1,0 +1,23 @@
+.container {
+    width: 500px;
+    height: 250px;
+    margin: 50px;
+    outline: solid 1px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.register-form {
+    width: 90%;
+    height: 90%;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    outline: solid 1px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <form class="register-form">
+            <input class="input" type="text" id="name" placeholder="Inserisci un nome" required oninvalid="this.setCustomValidity('Non hai inserito un nome')" oninput="setCustomValidity('')"><br><br>
+            <input class="input" type="text" id="class" placeholder="Inserisci una classe" required oninvalid="this.setCustomValidity('Non hai inserito una classe')" oninput="setCustomValidity('')"><br><br>
+            <input class="input" type="submit" value="Submit">
+            <input class="input" type="reset" value="Reset">
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+<!--
+<h1>Test get</h1>
+<button type="button" onclick="do_get()">Fai una get</button>
+<br>
+<br>
+<br>
+<h1>Test post</h1>
+<input type="text" placeholder="Nome" id="nome">
+<button type="button" onclick="do_post()">Fai una post</button>
+<script src="script.js"></script>
+-->
