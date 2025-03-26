@@ -19,5 +19,8 @@ def check_get(path):
 
 def check_post(path):
     if path.endswith("registrazione"):
-        parole = "post effettuata"
+        parole = "registrazione effettuata"
+        return parole.encode("utf-8")
+    elif path.endswith("accesso"):
+        parole = "accesso effettuata"
         return parole.encode("utf-8")

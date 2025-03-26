@@ -69,6 +69,40 @@ function registrazione(){
 }
 
 function accedi(){
+  const username= document.getElementById('username').value;
+  const password= document.getElementById('password').value;
+  if(username == "" || password == ""){
+    alert("Non hai compilato tutti i campi")
+  }else{
+    const message={
+      user : username, 
+      pw : password
+    };
+    fetch('http://localhost:8080/login/accesso', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Errore nella risposta del server.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.error) {
+        alert("Errore di connessione, riprova più tardi!")
+      } else {
+        alert("Accesso effettuato con successo");
+      }
+    })
+    .catch(error => {
+      console.error("Errore:", error);
 
+    });
+  }
 }
+
 

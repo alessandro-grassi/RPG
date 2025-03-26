@@ -16,7 +16,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
-        print(path)
         resp = check_get(path)
 
         self.wfile.write(resp)

@@ -19,7 +19,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 .slider {
@@ -31,11 +31,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    gap:1.5em;
+    gap:3em;
     background-color:rgba(0, 0, 255, 0.445);
     position:fixed;
-    height:40em;
-    width:70em;
+    height:60%;
+    width:80%;
     border-radius: 3em;
 }
 
@@ -43,18 +43,18 @@ body {
     background-color:rgba(173, 216, 230, 0.582);
     justify-content: center;
     border-radius: 2em;
-    padding-left: 0.9em;
+    padding-left: 3%;
     padding-top: 1em;
-    height:30em;
-    width:30em;
+    height:90%;
+    width:40%;
 }
 
 #registrazione{
     background-color:rgba(40, 199, 252, 0.596);
     justify-content: center;
     border-radius: 2em;
-    padding-left: 0.9em;
+    padding-left: 3%;
     padding-top: 1em;
-    height:30em;
-    width:30em;
+    height:90%;
+    width:40%;
 }
