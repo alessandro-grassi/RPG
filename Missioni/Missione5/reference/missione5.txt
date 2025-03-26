@@ -3,11 +3,16 @@ STRUTTURA FOLDER MISSIONI:
 /missioneN
 |_ /assets      // cartella per gestire tutte le immagini e asset necessari per il gioco
 |   |_ immagini_necessarie.png
+|
 |_ /html_pages      // tutte le pagine html necessarie per il gioco
 |   |_ page1.html
 |   |_ pageN.html
+|
 |_ /reference       // folder per documentazioni e storia della missione
 |   |_ missioneN.txt
 |   |_ storia.txt
-|_ game.js      // javascript per la logica di gioco
-|_ server.py        // server per gestire le chiamate a file
+|
+|_ missione.js      // javascript per la logica di gioco
+|_ missione.css      // css per la pagina iniziale
+|_ missione.html     // html per pagina iniziale
+

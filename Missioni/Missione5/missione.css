@@ -1,0 +1,75 @@
+body {
+    background-color: #1d2021;
+    font-family: 'Press Start 2P', cursive;
+    color: #ebdbb2;
+    text-align: center;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 60vh; /* Adjusted to take up 60% of the screen height */
+    margin-bottom: 20px; /* Adds spacing for the dialog boxes */
+}
+
+.game-image {
+    width: 60vw; /* Adjusted to take up 60% of the viewport width */
+    height: 60vh; /* Adjusted to take up 60% of the viewport height */
+    object-fit: cover; /* Prevents distortion and ensures it fills the space */
+    border: 3px solid #d79921;
+    box-shadow: 4px 4px 0px #000;
+}
+
+.dialog-box, .prompt-box {
+    background: #32302f;
+    border: 3px solid #d79921;
+    padding: 20px;
+    box-shadow: 2px 2px 0px #000;
+    font-size: 12px;
+    text-align: left;
+    position: relative;
+    width: 60vw; /* Ensures they match the image width */
+    max-width: 60vw;
+}
+
+.dialog-box::before, .prompt-box::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 2px solid #b57614;
+    z-index: -1;
+}
+
+.dialog-text, .prompt-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #ebdbb2;
+}
+
+.dialog-button, .prompt-button {
+    background: #8f3f71;
+    border: 2px solid #b16286;
+    color: #ebdbb2;
+    padding: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+    margin: 5px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.dialog-button:hover, .prompt-button:hover {
+    background: #d3869b;
+}
