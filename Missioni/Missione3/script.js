@@ -1,7 +1,3 @@
-import { Hero } from "./classi/Hero.js";
-import { Enemy } from "./classi/Enemy.js";
-import { Game } from "./classi/Game.js";
-
 /**
  * Oggetto che contiene i dati del gioco.
  * @type {Object}
