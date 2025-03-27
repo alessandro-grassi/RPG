@@ -1,7 +1,13 @@
 class Game {
     constructor(hero) {
         this.hero = hero;
-        this.enemy = new Enemy("Nome", 12, 100, 30, 500);
+        this.enemy = null;
+        this.round = 0;
+        this.roundCompleted = false;
     }
-    turno = 0;
+    nextRound() {
+        if (!roundCompleted) throw Error("Error round is not completed");
+        this.roundCompleted = false;
+        round += 1;
+    }
 }

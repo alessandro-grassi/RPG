@@ -92,6 +92,15 @@ function turni() {
     }
 }
 
+let game = null;
+
+/* Inizio sezione chiamate REST */
+
+document.addEventListener("DOMContentLoaded", async (e) => {
+    game = new Game(new Hero("Hero1", 10, 1000, 10, 500));
+    game.enemy = new Enemy("Enemy1", 2, 30, 4, 40);
+});
+
 /* Inzio Sezione Gestione Audio */
 function playMusic() {
     let audio = new Audio("http://localhost:8080/missione3%/audio/Background.mp3-get_binary_file");
