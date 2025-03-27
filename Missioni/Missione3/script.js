@@ -31,7 +31,7 @@ function magia() {
     } else if (magia == 3) {
         tuono();
     } else {
-        alert("ERROREEE");
+        // alert("ERROREEE");
     }
 }
 
@@ -94,7 +94,7 @@ function turni() {
 
 /* Inzio Sezione Gestione Audio */
 function playMusic() {
-    let audio = new Audio("audio/Background.mp3");
+    let audio = new Audio("http://localhost:8080/missione3%/audio/Background.mp3-get_binary_file");
     audio.volume = 0.05;
     audio.play().then(() => {
         console.log("Musica avviata!");
@@ -104,7 +104,7 @@ function playMusic() {
 }
 
 function attackSound(){
-    let audio = new Audio("audio/Attacco.mp3");
+    let audio = new Audio("http://localhost:8080/missione3%/audio/Attacco.mp3-get_binary_file");
     audio.volume = 0.2;
     audio.play().then(() => {
         console.log("Suono attacco avviato!");
@@ -114,7 +114,7 @@ function attackSound(){
 }
 
 function magicSound(){
-    let audio = new Audio("audio/Magia.mp3");
+    let audio = new Audio("http://localhost:8080/missione3%/audio/Magia.mp3-get_binary_file");
     audio.volume = 0.2;
     audio.play().then(() => {
         console.log("Suono magia avviato!");
