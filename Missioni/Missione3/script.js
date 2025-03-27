@@ -1,3 +1,8 @@
+const atkButton = document.getElementById("atkButton");
+const magicButton = document.getElementById("magicButton");
+
+const output = document.getElementById("output")
+
 /**
  * Oggetto che contiene i dati del gioco.
  * @type {Object}
@@ -14,14 +19,104 @@ let turno = 1;
  * Funzione chiamata quando il giocatore preme il pulsante "Attacca".
  * Gestisce l'attacco del giocatore.
  */
-function attacca() {
-    // Implementazione dell'attacco del giocatore
-}
+atkButton.addEventListener("click", (e) => {
+    if (game.endGame) return;
+    if (game.round % 2 != 0) return output.innerHTML = "Non è il tuo turno";
+
+    const hero = game.hero;
+    const enemy = game.selectedEnemy;
+
+    hero.attack(enemy);
+
+    announceEndGame(game);
+
+    game.completeRound();
+    game.nextRound();
+
+    // Disabilito i pulsanti al giocatore
+
+    atkButton.disabled = true;
+    magicButton.disabled = true;
+
+    const timeout = 1000 + Math.floor(Math.random() * 4000);
+
+    console.log(`Vita eroe: ${game.hero.hp}, vita nemico: ${game.selectedEnemy.hp}`);
+
+    setTimeout(() => {
+        if (game.endGame) return;
+        const enemyAtk = game.enemyAttack();
+        output.innerHTML = `Il nemico ti ha inflitto ${enemyAtk} punti di danno`;
+
+        announceEndGame(game);
+
+        game.completeRound();
+        game.nextRound();
+
+        atkButton.disabled = false;
+        magicButton.disabled = false;
+        console.log(`Vita eroe: ${game.hero.hp}, vita nemico: ${game.selectedEnemy.hp}`);
+    }, timeout);
+});
 
 /**
  * Funzione chiamata quando il giocatore preme il pulsante "Magia".
  * Determina quale magia usare in base all'input dell'utente.
  */
+
+magicButton.addEventListener("click", (e) => {
+    if (game.endGame) return;
+    if (game.round % 2 != 0) return output.innerHTML = "Non è il tuo turno";
+
+    const hero = game.hero;
+    const enemy = game.selectedEnemy;
+
+    hero.useMagic(1, enemy);
+
+    announceEndGame(game);
+
+    game.completeRound();
+    game.nextRound();
+
+    // Disabilito i pulsanti al giocatore
+
+    atkButton.disabled = true;
+    magicButton.disabled = true;
+
+    const timeout = 1000 + Math.floor(Math.random() * 4000);
+
+    console.log(`Vita eroe: ${game.hero.hp}, vita nemico: ${game.selectedEnemy.hp}`);
+
+    setTimeout(() => {
+        if (game.endGame) return;
+        const enemyAtk = game.enemyAttack();
+        output.innerHTML = `Il nemico ti ha inflitto ${enemyAtk} punti di danno`;
+
+        announceEndGame(game);
+
+        game.completeRound();
+        game.nextRound();
+
+        atkButton.disabled = false;
+        magicButton.disabled = false;
+        console.log(`Vita eroe: ${game.hero.hp}, vita nemico: ${game.selectedEnemy.hp}`);
+    }, timeout);
+});
+
+// Annuncia la fine del gioco
+
+function announceEndGame(game) {
+    const winner = game.checkEndGame();
+    if (!winner) return;
+    if (winner.constructor.name === "Hero") {
+        output.innerHTML = 'Hai vinto!!';
+    } else {
+        output.innerHTML = 'Hai perso...';
+    }
+
+    atkButton.disabled = true;
+    magicButton.disabled = true;
+}
+
 function magia() {
     // Capire che magia ha utente, i 3 casi
     if (magia == 1) {
@@ -92,13 +187,12 @@ function turni() {
     }
 }
 
-let game = null;
-
+let game = new Game(new Hero("Hero1", 10, 1000, 20, 500), [new Enemy("Enemy1", 2, 30, 4, 40), new Enemy("Enemy2", 3, 30, 4, 80), new Enemy("Enemy3", 4, 30, 5, 100)]);
+game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
 
 document.addEventListener("DOMContentLoaded", async (e) => {
-    game = new Game(new Hero("Hero1", 10, 1000, 10, 500));
-    game.enemy = new Enemy("Enemy1", 2, 30, 4, 40);
+
 });
 
 /* Inzio Sezione Gestione Audio */
@@ -112,7 +206,7 @@ function playMusic() {
     });
 }
 
-function attackSound(){
+function attackSound() {
     let audio = new Audio("http://localhost:8080/missione3%/audio/Attacco.mp3-get_binary_file");
     audio.volume = 0.2;
     audio.play().then(() => {
@@ -122,7 +216,7 @@ function attackSound(){
     });
 }
 
-function magicSound(){
+function magicSound() {
     let audio = new Audio("http://localhost:8080/missione3%/audio/Magia.mp3-get_binary_file");
     audio.volume = 0.2;
     audio.play().then(() => {

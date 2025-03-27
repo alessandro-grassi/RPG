@@ -73,6 +73,24 @@ button:hover {
     box-shadow: 0 6px 12px rgba(255, 165, 0, 0.7);
 }
 
+button:disabled {
+    background: linear-gradient(45deg, #bd0000, #c57703);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:disabled:hover {
+    transform: scale(1.0);
+}
+
 /* Esito */
 #esito {
     margin-top: 20px;
