@@ -8,6 +8,6 @@ class Game {
     nextRound() {
         if (!roundCompleted) throw Error("Error round is not completed");
         this.roundCompleted = false;
-        round += 1;
+        this.round += 1;
     }
 }
