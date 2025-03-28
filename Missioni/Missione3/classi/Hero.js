@@ -1,11 +1,17 @@
 class Hero extends Entity {
     constructor(name, lvl, exp, atk, hp) {
         super(name, lvl, exp, atk, hp);
+        this.cooldownMagic = 0;  // Tiene traccia del turno dell'ultima magia
+        this.canUseMagic = true; // Indica se l'eroe può usare magie
     }
 
-    //Metodo per usare la magia in base a quale magia ha scelto l'utente. Io l'ho immaginata così ne parliamo domani
-    useMagic(magic, enemy){
-        switch(magic){
+    useMagic(magic, enemy) {
+        if (!this.canUseMagic) {
+            alert("Non puoi usare magie in questo turno!");
+            return;
+        }
+
+        switch (magic) {
             case 1:
                 this.fire(enemy);
                 break;
@@ -18,20 +24,15 @@ class Hero extends Entity {
             default:
                 alert("Errorrrrrr: magic does not exist");
         }
+
+        // Dopo aver usato una magia, avvia il cooldown
+        this.cooldownMagic = game.round;
+        this.canUseMagic = false;
     }
 
-    //Vedere come implemetare
-    fire(enemy){
+    fire(enemy) { /* Implementazione futura */ }
 
-    }
+    ice(enemy) { /* Implementazione futura */ }
     
-    //Vedere come implemetare
-    ice(enemy){
-
-    }
-
-    //Vedere come implemetare
-    thunder(enemy){
-
-    }
+    thunder(enemy) { /* Implementazione futura */ }
 }
