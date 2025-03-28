@@ -35,4 +35,14 @@ class Game {
 
         return victoriousEntity;
     }
+    aggiornaUI() {
+        document.getElementById("vitaGiocatore").textContent = this.hero.hp;
+        document.getElementById("vitaMostro").textContent = this.selectedEnemy.hp;
+        document.getElementById("turno").textContent = this.round;
+    }
+    //Per schivata (max=5) e magie
+    RNG(max) {
+        return Math.floor(Math.random() * max);
+    }
+    
 }

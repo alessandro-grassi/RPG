@@ -18,7 +18,6 @@ class Hero extends Entity {
             default:
                 alert("Errorrrrrr: magic does not exist");
         }
-
     }
 
     //Vedere come implemetare

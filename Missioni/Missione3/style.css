@@ -1,7 +1,7 @@
 /* Stile generale */
 body {
-    font-family: 'Arial', sans-serif;
-    background: url('media/bg.jpg') no-repeat center center fixed;
+    font-family: 'Arial', sans-serif;   
+    background: url("http://localhost:8080/missione3%/media/bg.jpg-get_binary_file") no-repeat center center fixed;
     background-size: cover;
     color: white;
     text-align: center;
