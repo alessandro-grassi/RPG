@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchFromServer("dialog-index").then(index=>{
         document.getElementById("dialog-box").textContent = dialogLines[index.current_index]; // imposta index corrente
         client_index = index.current_index; // salva index su index globale
+        updateImage(); // imposta l'immagine
         console.log(checkImage()); // preso il mapping controlla se alle linee di testo sono associate immagini
     });
     setButton();
@@ -80,6 +81,8 @@ function fetchFromServer(request)
     })
 }
 
+// funzione di fetch
+
 // funzione che controlla se al dialogo corrente è associata un immagine
 function checkImage()
 {
@@ -89,4 +92,12 @@ function checkImage()
             match = mapping.image; // ritorna nome immagine da recuperare
     });
     return match; // fa il return del match
+}
+
+// funzione per aggiornare le immagini in base al dialogo
+function updateImage()
+{
+    const matchFound = checkImage(); // recupera il nome dell'immagine
+    if(matchFound)
+        document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + matchFound); // cambia l'attributo del tag con il percorso per l'immagine necessaria
 }
