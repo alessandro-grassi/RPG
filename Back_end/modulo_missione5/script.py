@@ -70,6 +70,13 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
+        
+    # prende il mapping tra dialoghi e immagini per storyline
+    elif path == PREFIX + "get-mapping":
+        with open("Missioni/Missione5/assets/dialogs_images.json","r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
      
     
     

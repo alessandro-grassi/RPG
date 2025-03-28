@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchData("get-dialogue",setLines); // prende le linee di testo
-    fetchData("dialog-index",moveLines); // aggiorna l'index per le linee correnti e le prossime
+    console.log(fetchData("dialog-index"))// aggiorna l'index per le linee correnti e le prossime
     setButton();
 });
 
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
+let imageMapping; // variabile usata per salvare la mappatura delle immagini
 
 // funzione usata per impostare l'evento legato al bottone per far avanzare il testo
 function setButton(){
@@ -17,18 +18,27 @@ function setButton(){
 function moveLines(index)
 {
     console.log("index:");
-    console.log(index);
+    console.log(dialogLines[index]);
     document.getElementById("dialog-box").textContent = dialogLines[index.current_index];
     const data = {"current_index": index.current_index + 1}; // dati con index da inviare
     sendToServer("update-index",data); // invia il nuovo index al server
+}
+
+
+// funzine che imposta l'index prendendolo dal server
+function setIndex(index)
+{
+    console.log("index impostato:");
+    console.log(index);
+    document.getElementById("dialog-box").textContent = dialogLines[index.current_index];
 }
 
 // funzione che aggiusta il formato dele linee passate dal database e le inserisce in una variabile
 function setLines(data)
 {
     let lines = data.flatMap(obj => obj.text); // prende ogni linea di testo per gli oggetti estratti e la mappa all'oggetto
-    console.log (lines); // log del risultato per check e debug
     dialogLines = lines; // assegna le linee di dialogo alla variabile globale
+    console.log(dialogLines);
 }
 
 // funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
@@ -73,4 +83,32 @@ function fetchData(request,callback)
     .catch(err => { // catch dell'errore in modo da stamparlo a console
         console.error('request error',err); // log dell'errore a console
     });
+}
+
+// funzione che controlla se al dialogo corrente è associata un immagine
+function checkImage(index)
+{
+    imageMapping.forEach(mapping => { // controlla se a ogni dialogo corrisponde un immagine
+        if(mapping.dialog == dialogLines[index]) // se trova un mapping per il dialogo
+            return mapping.image; // ritorna nome immagine da recuperare
+        else 
+            return false // ritorna falso
+    })
+}
+
+// versione asincrona della funzione per fare return dei dati
+async function fetchData(request)
+{
+    try {
+        const response = await fetch(`http://localhost:8080/m5/${request}`); // fa il fetch con await
+        if (!response.ok) { // check della risposta
+            throw new Error(`response fetch error ${response.status}`);
+        }
+        const data = await response.json(); // fa il parse della risposta in formato json usando await per la promise
+        console.log("fetched data: ", data);
+        return data; // fa il return dei dati
+    } catch (err) {
+        console.error("request error", err);
+        throw err;
+    }
 }
