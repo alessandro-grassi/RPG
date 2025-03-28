@@ -6,11 +6,11 @@ document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     // fetch mapping immagini testo
     fetchFromServer("get-mapping").then(data=>{ 
         imageMapping = data; // salva il mapping dell'immagine in un file json
-        console.log(checkImage()); // preso il mapping controlla se alle linee di testo sono associate immagini
     });
     fetchFromServer("dialog-index").then(index=>{
         document.getElementById("dialog-box").textContent = dialogLines[index.current_index]; // imposta index corrente
         client_index = index.current_index; // salva index su index globale
+        console.log(checkImage()); // preso il mapping controlla se alle linee di testo sono associate immagini
     });
     setButton();
 });
@@ -85,7 +85,7 @@ function checkImage()
 {
     let  match =  false; // restituisce null se non vengono trovati match 
     imageMapping.forEach(mapping => { // controlla se a ogni dialogo corrisponde un immagine
-        if(mapping.dialog == dialogLines[client_index]) // se trova un mapping per il dialogo
+        if(mapping.dialog.normalize("NFC").trim() === dialogLines[client_index].normalize("NFC").trim()) // se trova un mapping per il dialogo
             match = mapping.image; // ritorna nome immagine da recuperare
     });
     return match; // fa il return del match
