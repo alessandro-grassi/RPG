@@ -1,0 +1,18 @@
+[
+    {
+        "mossa" : "Risucchio",
+        "danno" : 80
+    },
+    {
+        "mossa" : "Salsa Sanguigna",
+        "danno" : 20
+    },
+    {
+        "mossa" : "Memento Mori",
+        "danno" : 100
+    },
+    {
+        "mossa" : "Frenesia",
+        "danno" : 75
+    }
+]
