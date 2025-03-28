@@ -14,7 +14,8 @@ function sendToServer(request,data)
         return response.json(); 
     })
     .then((result)=>{
-        console.log(result); 
+        console.log(result);
+        return result;
     })
     .catch((err)=>{ 
         console.error('error POST data: ',err);
@@ -22,7 +23,7 @@ function sendToServer(request,data)
     });
 }
 
-function fetchData(request,callback)
+function fetchData(request, callback)
 {
     fetch("http://localhost:8080/m5/" + request)
     .then(response => {
@@ -32,10 +33,22 @@ function fetchData(request,callback)
     })
     .then(data => { 
         console.log("GET body data: ");
-        console.log(data) 
         callback(data);
     })
     .catch(err => { 
         console.error('request error',err);
     });
 }
+
+function setImageEnemy(json){
+    json.forEach(element => {
+    if (element['enemy_name'] == 'Il Re Eterno')
+        path = element['image']; 
+    });
+    document.getElementById('image_king').setAttribute('src', "http://localhost:8080/m5/get-image/"+ path);
+}
+
+document.addEventListener("DOMContentLoaded",()=>{ 
+    fetchData("enemies-images-path", setImageEnemy)
+});
+

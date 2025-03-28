@@ -21,7 +21,13 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-    
+        
+    elif path == PREFIX+"enemies-images-path":
+        with open("Missioni/Missione5/assets/enemies_images.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode 
+        
     elif path == PREFIX+"castle-front":
         with open("Missioni/Missione5/assets/castle-front.jpg", "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
             r = f.read()
@@ -50,6 +56,12 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
+        
+    elif path == PREFIX + "scena-3":
+        with open("Missioni/Missione5/html_pages/scena_3.js") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
     
     # prende le linee di testo da far scorrere per i dialoghi
     elif path == PREFIX + "get-dialogue":
@@ -64,6 +76,15 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
+        
+    #funzione usata per recuperare le immagini in base al nome richiesto
+    elif path.startswith(PREFIX+"get-image/"):
+        image_name = path.split("/")[3]
+        print(image_name)
+        with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
+            r = f.read()
+            f.close()
+            return r
      
     
     
@@ -102,7 +123,7 @@ def check_post(path,clientchoice):
             attack_name = clientchoice['attack_name']
             combactSystem.attack(attacker_name, attacked_name, attack_name)
             return '{"result":"Attack executed successfully"}'.encode("utf-8")
-        
+
         #aggiorna index dialoghi e immagini lore
         elif path == PREFIX + "update-index":
             print(clientchoice) # print per debug
