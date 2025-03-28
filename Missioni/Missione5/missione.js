@@ -1,16 +1,17 @@
 document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
-    fetchFromServer("get-dialog").then(data=>{
+    fetchFromServer("get-dialog").then(data=>{ // fetch dei dialoghi dal server
         let lines = data.flatMap(obj => obj.text); // prende ogni linea di testo per gli oggetti estratti e la mappa all'oggetto
         dialogLines = lines; // assegna le linee di dialogo alla variabile globale});
      });
-    //fetchData("get-dialogue",setLines); // prende le linee di testo
-    fetchData("dialog-index",setIndex);// aggiorna l'index per le linee correnti e le prossime
+    fetchFromServer("dialog-index").then(index=>{
+        document.getElementById("dialog-box").textContent = dialogLines[index.current_index]; // imposta index corrente
+    });
     setButton();
 });
 
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 let imageMapping; // variabile usata per salvare la mappatura delle immagini
-
+let index; // variabile globale per lo store lato client dell'index a cui si trova il dialogo e le immagini
 // funzione usata per impostare l'evento legato al bottone per far avanzare il testo
 function setButton(){
     document.getElementById("next-button").addEventListener("click",function(){
@@ -26,23 +27,6 @@ function moveLines(index)
     document.getElementById("dialog-box").textContent = dialogLines[index.current_index];
     const data = {"current_index": index.current_index + 1}; // dati con index da inviare
     sendToServer("update-index",data); // invia il nuovo index al server
-}
-
-
-// funzine che imposta l'index prendendolo dal server
-function setIndex(index)
-{
-    console.log("index impostato:");
-    console.log(index);
-    document.getElementById("dialog-box").textContent = dialogLines[index.current_index];
-}
-
-// funzione che aggiusta il formato dele linee passate dal database e le inserisce in una variabile
-function setLines(data)
-{
-    let lines = data.flatMap(obj => obj.text); // prende ogni linea di testo per gli oggetti estratti e la mappa all'oggetto
-    dialogLines = lines; // assegna le linee di dialogo alla variabile globale
-    console.log(dialogLines);
 }
 
 // funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
