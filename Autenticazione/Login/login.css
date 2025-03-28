@@ -23,6 +23,12 @@ body {
     font-family: 'Iceland';
 }
 
+#titolo{
+    position:fixed;
+    bottom:85%;
+    font-size: 5rem;
+    color:rgb(0, 255, 242)
+}
 
 
 #contenitore {
