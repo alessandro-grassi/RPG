@@ -35,12 +35,9 @@ def check_get(path):
 def check_post(path, client_choice):
     if path.endswith("registrazione"):
         try:
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length)
-            data = json.loads(post_data.decode('utf-8'))
-            username = data["user"]
-            password = data["pw"]
-            email = data["email"]
+            username = client_choice["user"]
+            password = client_choice["pw"]
+            email = client_choice["email"]
             aggiungi_utente(username, password, email)
             return "Registrazione effettuata con successo!".encode("utf-8")
         except Exception as errore:
