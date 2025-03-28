@@ -40,6 +40,8 @@ def check_get(path):
         return get_style()
     if path.endswith("script"):
         return get_script()
+    if path.endswith("home"):
+        return get_home()
     
 
 def check_post(path,cc):
@@ -53,5 +55,11 @@ def get_style():
 
 def get_script():
     with open("./SceltaMissione/script.js", "rb") as f:
+        msg = f.read()
+    return msg
+
+
+def get_home():
+    with open("./SceltaMissione/index.html", "rb") as f:
         msg = f.read()
     return msg
