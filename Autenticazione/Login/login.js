@@ -43,7 +43,8 @@ function registrazione(){
       if (data.error) {
         alert("Errore di connessione, riprova più tardi!")
       } else {
-        alert("Registrazione effettuata con successo");
+        if (data=="errore") alert("Errore Client")
+          else alert("Registrazione effettuata con successo");
       }
     })
     .catch(error => {
@@ -81,7 +82,8 @@ function accedi(){
       if (data.error) {
         alert("Errore di connessione, riprova più tardi!")
       } else {
-        alert("Accesso effettuato con successo");
+        if (data=="errore") alert("Errore nelle credenziali")
+        else alert("Accesso effettuato con successo");
       }
     })
     .catch(error => {

@@ -10,9 +10,9 @@ def aggiungi_utente(user, pw, em):
 def utente_registrato(user, pw):
     flag = 0
     queryLib.connetti()
-    flag = queryLib.execute("SELECT utenti.username, utenti.hash FROM utenti WHERE utenti.username="+user+" AND utenti.hash="+pw)
+    flag = queryLib.execute(f'''SELECT username, hash FROM "utenti" WHERE username='{user}';''')
     queryLib.disconnetti()
-    return flag
+    return len(flag)==1 and flag[0][1]==pw
 
 
 def check_get(path):
@@ -42,16 +42,16 @@ def check_post(path, client_choice):
             aggiungi_utente(username, password, email)
             return "Registrazione effettuata con successo!".encode("utf-8")
         except Exception as errore:
-            return "Errore di connessione, riprova più tardi".encode("utf-8")
+            return '"errore"'.encode("utf-8")
 
     elif path.endswith("accesso"):
         try:
             username = client_choice["user"]
             password = client_choice["pw"]
-            if(utente_registrato(username, password)!=0):
-                return "<?php header(Location:'personaggio.html')?>".encode("utf-8")
+            if(utente_registrato(username, password)):
+                return '"Successo"'.encode("utf-8")
             else:
-                return "Credenziali errate, riprova".encode("utf-8")
+                return '"errore"'.encode("utf-8")
             
         except Exception as errore:
-            return "Errore di connessione, riprova più tardi".encode("utf-8")
+            return '"errore"'.encode("utf-8")
