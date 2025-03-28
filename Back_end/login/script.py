@@ -1,4 +1,19 @@
 import sys
+from Back_end import queryLib
+
+def aggiungi_utente(user, pw, em):
+    queryLib.connetti()
+    queryLib.execute("INSERT INTO utenti (username, hash, email) VALUES ("+user+","+pw+","+em+")")
+    queryLib.disconnetti()
+
+def utente_registrato(user, pw):
+    flag = 0
+    queryLib.connetti()
+    flag = queryLib.execute("SELECT utenti.username, utenti.hash FROM utenti WHERE utenti.username="+user+" AND utenti.hash="+pw)
+    queryLib.disconnetti()
+    return flag
+
+
 def check_get(path):
     #if path == "/login":  # per aprire la pagina di login principale
     #    f = open("/Autenticazione/Login/login.html", "r")
@@ -17,10 +32,28 @@ def check_get(path):
         f.close()
         return stringa.encode("utf-8")
 
-def check_post(path):
+def check_post(path, client_choice):
     if path.endswith("registrazione"):
-        parole = "registrazione effettuata"
-        return parole.encode("utf-8")
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            username = data["user"]
+            password = data["pw"]
+            email = data["email"]
+            aggiungi_utente(username, password, email)
+            return "Registrazione effettuata con successo!".encode("utf-8")
+        except Exception as errore:
+            return "Errore di connessione, riprova più tardi".encode("utf-8")
+
     elif path.endswith("accesso"):
-        parole = "accesso effettuata"
-        return parole.encode("utf-8")
+        try:
+            username = client_choice["user"]
+            password = client_choice["pw"]
+            if(utente_registrato(username, password)!=0):
+                return "<?php header(Location:'personaggio.html')?>".encode("utf-8")
+            else:
+                return "Credenziali errate, riprova".encode("utf-8")
+            
+        except Exception as errore:
+            return "Errore di connessione, riprova più tardi".encode("utf-8")

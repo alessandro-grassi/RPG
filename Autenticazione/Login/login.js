@@ -37,8 +37,7 @@ function registrazione(){
     const message={
       user : username, 
       pw : password,
-      mail : email,
-      img: immagine
+      mail : email
     };
     fetch('http://localhost:8080/login/registrazione', {
       method: 'POST',
@@ -57,7 +56,7 @@ function registrazione(){
       if (data.error) {
         alert("Errore di connessione, riprova più tardi!")
       } else {
-        alert("Registrazione effettuata con successo");
+        alert(data);
       }
     })
     .catch(error => {
