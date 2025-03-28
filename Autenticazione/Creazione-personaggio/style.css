@@ -1,10 +1,15 @@
+.title {
+    padding: 5px;
+    font-size: 2rem;
+}
+
 .container {
-    width: 80%;
-    padding: 25px;
+    width: 60%;
+    padding: 10px;
     margin: 50px auto;
     background-color: #f0f0f0bb;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,9 +18,9 @@
 
 .register-form {
     width: 100%;
-    max-width: 600px;
+    max-width: 70%;
     text-align: left;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-family: 'Arial', sans-serif;
 }
 
@@ -47,6 +52,7 @@ input.input:focus, select.input:focus {
 
 .classe-immagine {
     max-width: 150px;
+    max-height: 150px;
     margin-left: 20px;
     transition: transform 0.3s ease;
 }
@@ -59,8 +65,8 @@ input[type="submit"], input[type="reset"] {
     background-color: #007BFF;
     color: white;
     border: none;
-    padding: 12px;
-    width: 48%;
+    padding: 10px;
+    width: 40%;
     font-size: 1rem;
     margin: 10px 5px;
     border-radius: 5px;
