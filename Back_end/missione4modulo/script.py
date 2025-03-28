@@ -1,22 +1,47 @@
 import json #simulo il db
 
-#qualche json per simulare il db
-a = '{ "obiettivo": "scopri chi ha rapito Aldo Moro", "ricompensa": "titolo di Kung Fury", "tentativi": 5, "soluzione": "" }'
+#json per simulare il db
+DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro", ' \
+'       "ricompensa": "titolo di Kung Fury", ' \
+'       "tentativi": 3, ' \
+'       "soluzione": "gabibbo",' \
+'       "prove":' \
+'       [' \
+'           { "num": 0, "soluz": "nonna" "ind": "è rosso" },' \
+'           { "num": 1, "soluz": "porto" "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
+'           { "num": 2, "soluz": "trave" "ind": "usa spesso il termine BELANDI" },' \
+'       ] }'
 
+dbDict = json.loads(DB)
+
+
+#gestione get e post
 def check_get(path):
     if path.endswith("dettagli"):
         return getDettagli()
 
-def check_post(path, client_choice):
-    if path.endswith("post_generica"):
-        return funz222(client_choice)
+def check_post(path, tentativo, risposta=''):
+    if path.endswith("indovina"):
+        return indovina(tentativo, risposta)
+    elif path.endswith("prove"):
+        return getProve(tentativo)
 
+
+
+#funzioni
 def getDettagli():
-    
+    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativi"],dbDict["soluzione"]
+
+def getProve(tentativo):
+    tentDict = dbDict["prove"][tentativo]
+    return tentDict["soluz"], tentDict["ind"]
 
 
-def funz222(client_choice):
-    nome = client_choice.get("nome", "")
-    cognome = client_choice.get("cognome", "")
-
-    print("ciao" + ' ' + nome + cognome)
+def indovina(tentativo, risposta):
+    if tentativo <= dbDict["tentativi"]:
+        if risposta == dbDict["soluzione"]:
+            print("complimenti! hai indovinato")
+        else:
+            print("mi dispiace ma non è la risposta corretta")
+    else:
+        print("tentativi esauriti")

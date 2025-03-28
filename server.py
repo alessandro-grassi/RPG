@@ -3,7 +3,8 @@ import json
 from urllib.parse import urlparse
 from Back_end import missione4modulo
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
-    "/missione4/": missione4modulo
+    "/missione4/dettagli": missione4modulo,
+    "/missione4/prove": missione4modulo
 }
 
 
