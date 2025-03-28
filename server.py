@@ -4,7 +4,7 @@ import json
 from urllib.parse import urlparse
 dict = { 
     "/login": login,
-    # dizionario per prendere i suffissi dei moduli da aggiungere
+    # dizionario per prendere i prefissi dei moduli da aggiungere
     
 }
 
