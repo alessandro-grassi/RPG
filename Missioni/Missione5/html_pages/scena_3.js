@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded",()=>{ 
     fetchData("enemies-images-path", setImageEnemy)
     fetchData("enemies-list", setLifePoints)
+    setName();
     setDialogue();
     setLifePointsPG();
     setButtonAttack();
@@ -76,9 +77,14 @@ function setLifePoints(json){
     })
 }
 
+function setName(){
+    document.getElementById('name-text').innerHTML = NAME;
+}
+
 function setDialogue(){
     document.getElementById('text').innerHTML = "Il Re sta aspettando...";
 }
+
 function setButtonAttack(){
     document.getElementById('attack_button').addEventListener("click", function(){
         vita_corrente -= danno_fisico_pg;

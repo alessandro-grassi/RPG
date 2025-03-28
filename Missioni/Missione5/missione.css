@@ -79,9 +79,7 @@ progress {
   }
 
 .life-text, .prompt-text {
-    font-size: 30px;
-    padding-left: 20px;
-    padding-right: 20px;
+    font-size: 18px;
     padding-top: 15px;
     padding-bottom: 15px;
     color: #ebdbb2;
