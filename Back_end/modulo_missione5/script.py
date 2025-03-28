@@ -22,12 +22,6 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
     
-    elif path == PREFIX+"mission-start":
-        with open("Missioni/Missione5/assets/font.css", "r") as f: # usare r per richieste sui file
-            r = f.read()
-            f.close()
-            return r.encode("utf-8")
-    
     elif path == PREFIX+"castle-front":
         with open("Missioni/Missione5/assets/castle-front.jpg", "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
             r = f.read()

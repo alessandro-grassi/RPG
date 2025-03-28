@@ -1,0 +1,14 @@
+[
+    {
+        "enemy_name": "Guardiano di Rocciascura",
+        "image": "Immortal_guardian.png"
+    },
+    {
+        "enemy_name": "Adepto immortale cremesi",
+        "image": "Skeleton_blood_mage.png"
+    },
+    {
+        "enemy_name": "Il Re Eterno",
+        "image": "Phantom_king.png"
+    }
+]
