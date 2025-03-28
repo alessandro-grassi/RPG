@@ -24,6 +24,7 @@ atkButton.addEventListener("click", (e) => {
         output.innerHTML = `${enemy.name} ha schivato l'attacco`;
         console.log("Attacco schivato");
     }
+    setTimeout(() => {}, 1000);
     game.completeRound();
     game.aggiornaUI();
     game.nextRound();
@@ -54,12 +55,16 @@ atkButton.addEventListener("click", (e) => {
         output.innerHTML = `${hero.name}, hai schivato l'attacco!`;
         console.log("Attacco schivato");
     }
+    setTimeout(() => {}, 1000);
         game.completeRound();
         game.aggiornaUI();
         game.nextRound();
 
         atkButton.disabled = false;
-        magicButton.disabled = false;
+        if(game.hero.canUseMagic)
+            magicButton.disabled = false
+        else   
+            magicButton.disabled = true;
         console.log(`Vita eroe: ${game.hero.hp}, vita nemico: ${game.selectedEnemy.hp}`);
     }, timeout);
 
@@ -84,7 +89,7 @@ magicButton.addEventListener("click", (e) => {
         const hero = game.hero;
         const enemy = game.selectedEnemy;
     
-        hero.useMagic(1, enemy);
+        hero.useMagic(hero.magia, enemy);
     
         announceEndGame(game);
     }

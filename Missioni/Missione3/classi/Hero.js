@@ -1,6 +1,7 @@
 class Hero extends Entity {
     constructor(name, lvl, exp, atk, hp) {
         super(name, lvl, exp, atk, hp);
+        this.magia=1; // Magia dell'eroe (1: fuoco, 2: ghiaccio, 3: fulmine)
         this.cooldownMagic = 0;  // Tiene traccia del turno dell'ultima magia
         this.canUseMagic = true; // Indica se l'eroe può usare magie
     }
@@ -30,9 +31,13 @@ class Hero extends Entity {
         this.canUseMagic = false;
     }
 
-    fire(enemy) { /* Implementazione futura */ }
+    fire(enemy){
+    if (enemy.status !== "none") return; // Se il nemico ha uno stato non si può sovrascriver
+    enemy.status = "burned";
+    enemy.statusTurns = 1;
+    }
 
     ice(enemy) { /* Implementazione futura */ }
-    
+
     thunder(enemy) { /* Implementazione futura */ }
 }

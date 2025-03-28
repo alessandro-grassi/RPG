@@ -17,13 +17,17 @@ class Game {
     nextRound() {
         if (!this.completedRound) throw Error("Error round is not completed");
         this.completedRound = false;
-
         this.round += 1;
         // Controlla se l'eroe può usare magie
-        if (this.round >= this.hero.cooldownMagic + 5) {
+        if (this.round >= this.hero.cooldownMagic + 7) {
             this.hero.canUseMagic = true;
+            if(this.round === this.hero.cooldownMagic + 7)
+                setTimeout(() => {
+                    output.innerHTML = `Puoi usare magie!`;
+                }, 1000);
         }
         this.removeStatusEffects();
+        this.applyStatusEffects();
         return this.round;
     }
 
@@ -57,6 +61,10 @@ class Game {
         document.getElementById("vitaGiocatore").textContent = this.hero.hp;
         document.getElementById("vitaMostro").textContent = this.selectedEnemy.hp;
         document.getElementById("turno").textContent = this.round;
+        if(this.hero.canUseMagic)
+            magicButton.disabled = false
+        else   
+            magicButton.disabled = true;
     }
 
     //Metodo che genera un numero da 0 a max-1
@@ -69,7 +77,7 @@ class Game {
         if (this.selectedEnemy.status === "frozen" && this.RNG(3) === 0) {
             this.removeStatus();
         }
-        if (this.selectedEnemy.status === "burned" && this.RNG(3) === 0) {
+        if (this.selectedEnemy.status === "burned" && this.RNG(10 - this.selectedEnemy.statusTurns) === 0) {
             this.removeStatus();
         }
         if (this.selectedEnemy.status === "paralyzed" && this.RNG(5) === 0) {
@@ -79,7 +87,23 @@ class Game {
 
     //Metodo che rimuove lo stato attuale del nemico
     removeStatus(){
+        setTimeout(() => {
+            output.innerHTML = `Il nemico e' guarito da ${this.selectedEnemy.status}`;
+        }, 1000);
+        console.log(`Il nemico e' guarito da ${this.selectedEnemy.status}`);
         this.selectedEnemy.status = "none";
         this.selectedEnemy.statusTurns = 0;
+    }
+
+    //Metodo che applica gli effetti di stato al nemico
+    applyStatusEffects() {
+        if (this.selectedEnemy.status === "burned") {
+            let burnDamage = Math.floor((this.hero.atk / 3));
+            this.selectedEnemy.hp -= burnDamage;
+            console.log(`Il nemico subisce ${burnDamage} danni da bruciatura!`);
+            setTimeout(() => {
+                output.innerHTML = `Il nemico subisce ${burnDamage} danni da bruciatura!`;
+            }, 1000);
+        }   
     }
 }
