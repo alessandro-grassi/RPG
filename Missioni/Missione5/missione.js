@@ -34,7 +34,7 @@ function movelines(step)
     document.getElementById("dialog-box").textContent = dialogLines[client_index]; // imposta i dialoghi all' index corrente
     const data = {"current_index": client_index}; // crea oggetto da inviare al server
     //sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
-    console.log(checkImage()); // log immagini corrispondenti
+    updateImage();
 }
 
 // funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
