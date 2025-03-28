@@ -23,10 +23,7 @@ def check_get(path:str):
             return r.encode("utf-8")
     
     elif path == PREFIX+"castle-front":
-        with open("Missioni/Missione5/assets/castle-front.jpg", "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
-            r = f.read()
-            f.close()
-            return r
+        ö
         
     elif path == PREFIX+"api-test":
         with open("Missioni/Missione5/api-test.html", "r") as f: # usare r per richieste sui file
@@ -72,11 +69,17 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
      
+    #funzione usata per recuperare le immagini in base al nome richiesto
+    elif path.startswith(PREFIX+"get-image/"):
+        image_name = path.split("/")[3]
+        print(image_name)
+        with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
+            r = f.read()
+            f.close()
+            return r
     
     
     
-            
-            
 def check_post(path,clientchoice):
     try:
         if path == PREFIX_API+"set-life":
