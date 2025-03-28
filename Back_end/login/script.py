@@ -3,7 +3,8 @@ from Back_end import queryLib
 
 def aggiungi_utente(user, pw, em):
     queryLib.connetti()
-    queryLib.execute("INSERT INTO utenti (username, hash, email) VALUES ("+user+","+pw+","+em+")")
+    a= queryLib.execute(f'''INSERT INTO "utenti" (username, hash, email) VALUES ('{user}','{pw}','{em}')''')
+    b=a
     queryLib.disconnetti()
 
 def utente_registrato(user, pw):
@@ -15,11 +16,11 @@ def utente_registrato(user, pw):
 
 
 def check_get(path):
-    #if path == "/login":  # per aprire la pagina di login principale
-    #    f = open("/Autenticazione/Login/login.html", "r")
-    #    stringa = f.read()
-    #    f.close()
-    #    return stringa.encode("utf-8")
+    if path == "/login":  # per aprire la pagina di login principale
+        f = open(sys.path[0]+"/Autenticazione/Login/login.html", "r")
+        stringa = f.read()
+        f.close()
+        return stringa.encode("utf-8")
     if path.endswith("stile"):
         f = open(sys.path[0] +"/Autenticazione/Login/login.css", "r")
         stringa = f.read()
@@ -37,7 +38,7 @@ def check_post(path, client_choice):
         try:
             username = client_choice["user"]
             password = client_choice["pw"]
-            email = client_choice["email"]
+            email = client_choice["mail"]
             aggiungi_utente(username, password, email)
             return "Registrazione effettuata con successo!".encode("utf-8")
         except Exception as errore:

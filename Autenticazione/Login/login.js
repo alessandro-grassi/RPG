@@ -16,7 +16,7 @@ function registrazione(){
   const username= document.getElementById('n_username').value;
   const password= document.getElementById('n_password').value;
   const email= document.getElementById('n_email').value;
-  const immagine= document.getElementById('n_image').value;
+ 
   
   if(username=="" || password == "" || email == ""){
     alert("Non hai compilato tutti i campi")

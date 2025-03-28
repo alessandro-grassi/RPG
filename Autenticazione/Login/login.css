@@ -30,6 +30,14 @@ body {
     color:rgb(0, 255, 242)
 }
 
+.hoverdiv{
+    
+}
+.hoverdiv:hover{
+    color: #FFFFFF;
+    cursor:pointer;
+}
+
 
 #contenitore {
     display: flex;
