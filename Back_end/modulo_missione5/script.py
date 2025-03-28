@@ -22,17 +22,17 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
+    elif path == PREFIX+"mission-scene-3":
+        with open("Missioni/Missione5/html_pages/scena_3.html", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+        
     elif path == PREFIX+"enemies-images-path":
         with open("Missioni/Missione5/assets/enemies_images.json", "r") as f:
             r = f.read()
             f.close()
             return r.encode("utf-8") # encode 
-        
-    elif path == PREFIX+"castle-front":
-        with open("Missioni/Missione5/assets/castle-front.jpg", "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
-            r = f.read()
-            f.close()
-            return r
         
     elif path == PREFIX+"api-test":
         with open("Missioni/Missione5/api-test.html", "r") as f: # usare r per richieste sui file
@@ -50,6 +50,12 @@ def check_get(path:str):
         mana = str(combactSystem.get_mana(name))
         return ('{"result":"'+mana+'"}').encode("utf-8")
     
+    elif path == PREFIX+"enemies-list":
+        with open("Missioni/Missione5/assets/Enemies.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode
+
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
@@ -57,7 +63,7 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
-    elif path == PREFIX + "scena-3":
+    elif path == PREFIX + "script-scena-3":
         with open("Missioni/Missione5/html_pages/scena_3.js") as f:
             r = f.read()
             f.close()
@@ -85,12 +91,9 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r
-     
-    
-    
-    
-            
-            
+
+
+
 def check_post(path,clientchoice):
     try:
         if path == PREFIX_API+"set-life":

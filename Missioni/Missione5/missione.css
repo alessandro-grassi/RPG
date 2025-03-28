@@ -32,7 +32,6 @@ body {
 .overlay-image{
     position: absolute;
     align-items: center;
-    justify-content: center;
 }
 
 .dialog-box, .prompt-box {
@@ -62,6 +61,14 @@ body {
     font-size: 14px;
     line-height: 1.5;
     color: #ebdbb2;
+}
+
+.life-text, .prompt-text {
+    font-size: 30px;
+    line-height: 1.5;
+    color: #ebdbb2;
+    background: #32302f;
+    border: 3px solid #d79921;
 }
 
 .dialog-button, .prompt-button {

@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded",()=>{ 
+    fetchData("enemies-images-path", setImageEnemy)
+    fetchData("enemies-list", setLifePoints)
+});
+
+
+
 function sendToServer(request,data)
 {
     fetch("http://localhost:8080/m5/" + request,{
@@ -40,15 +47,23 @@ function fetchData(request, callback)
     });
 }
 
+//GLOBAL
+    const NAME = "Il Re Eterno";
+    let vita_corrente = 0;
+
 function setImageEnemy(json){
     json.forEach(element => {
-    if (element['enemy_name'] == 'Il Re Eterno')
+    if (element['enemy_name'] == NAME)
         path = element['image']; 
     });
     document.getElementById('image_king').setAttribute('src', "http://localhost:8080/m5/get-image/"+ path);
 }
 
-document.addEventListener("DOMContentLoaded",()=>{ 
-    fetchData("enemies-images-path", setImageEnemy)
-});
-
+function setLifePoints(json){
+    json.forEach(enemy =>{
+        if(enemy['name'] == NAME)
+            document.getElementById('vita').innerHTML = "PV:"+ enemy['stats'].vita;
+            vita_corrente = enemy['stats'].vita;
+    })
+    console.log(vita_corrente);
+}
