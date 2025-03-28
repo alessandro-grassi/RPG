@@ -4,7 +4,7 @@ import json
 #non funziona
 import Back_end.modulo_missione5.combactSystem as combactSystem
 
-#queryLib.connetti()
+queryLib.connetti()
 
 PREFIX = "/m5/" 
 PREFIX_API = PREFIX+"api/"
@@ -45,6 +45,11 @@ def check_get(path:str):
         life = str (combactSystem.get_life(name))
         return ('{"result":"'+life+'"}').encode("utf-8")
     
+    elif path.startswith( PREFIX_API+"get-stats/"):
+        stats = combactSystem.get_stats()
+        resp = json.dumps({"result": stats}).encode("utf-8")  # Converto in stringa JSON e poi in bytes
+        return resp
+    
     elif path.startswith(PREFIX_API+"get-mana/"):
         name = path.split("/")[4]
         mana = str(combactSystem.get_mana(name))
@@ -71,11 +76,6 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
      
-    
-    
-    
-            
-            
 def check_post(path,clientchoice):
     try:
         if path == PREFIX_API+"set-life":
@@ -95,6 +95,11 @@ def check_post(path,clientchoice):
             value = clientchoice['value']
             combactSystem.do_damage(name, int(value))
             return '{"result":"Damage done successfully"}'.encode("utf-8")
+        
+        elif path == PREFIX_API+"do-damage-boss":
+            mossa = combactSystem.do_damage_boss()
+            resp = json.dumps({"result": "Il boss ha usato la mossa "+mossa["mossa"]+ " causando "+ str(mossa["danno"])+" danni"}).encode("utf-8")  # Converto in stringa JSON e poi in bytes
+            return resp
         
         elif path == PREFIX_API+"use-mana":
             name = clientchoice['name']

@@ -1,7 +1,33 @@
 import random 
 
 
+moves = [
+    {
+        "mossa" : "pugno",
+        "danno" : 100
+    },
+    {
+        "mossa" : "ammasso",
+        "danno" : 120
+    },
+    {
+        "mossa" : "carica",
+        "danno" : 150
+    },
+    {
+        "mossa" : "folgorazione",
+        "danno" : 50
+    }
+]
 
+stats = {
+    "Vita" : 700,
+    "Vigore" : 7,
+    "Forza" : 10,
+    "Destrezza" : 0,
+    "Intelligenza" : 1,
+    "Fede" : 3
+}
 
 lifes = {
     "player" : 10,
@@ -63,6 +89,20 @@ def do_damage(name, value):
         set_life(name, current_life - value)
     else:
         print("Entità: ",name," inesistente")
+
+def do_damage_boss():
+    num = rand(1, 100)
+    if num <= 60:
+        return {"mossa": moves[0]["mossa"], "danno": moves[0]["danno"]}
+    elif num > 60 and num <= 80:
+        return {"mossa": moves[1]["mossa"], "danno": moves[1]["danno"]}
+    elif num > 80 and num <= 95:
+        return {"mossa": moves[2]["mossa"], "danno": moves[2]["danno"]}
+    else:
+        return {"mossa": moves[3]["mossa"], "danno": moves[3]["danno"]}
+    
+def get_stats():
+    return stats
 
 def use_mana(name, value):
     current_mana = get_mana(name)
