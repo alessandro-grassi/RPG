@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 let imageMapping; // variabile usata per salvare la mappatura delle immagini
 let client_index; // variabile globale per lo store lato client dell'index a cui si trova il dialogo e le immagini
+let lastImage = "Castle-front.jpg"; // globale per salvare l'ultima immagine richiesta al server
 
 // funzione usata per impostare l'evento legato al bottone per far avanzare o tornare indietro il testo
 function setButton(){
@@ -84,8 +85,6 @@ function fetchFromServer(request)
     })
 }
 
-// funzione di fetch
-
 // funzione che controlla se al dialogo corrente è associata un immagine
 function checkImage()
 {
@@ -102,5 +101,11 @@ function updateImage()
 {
     const matchFound = checkImage(); // recupera il nome dell'immagine
     if(matchFound)
+    {
         document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + matchFound); // cambia l'attributo del tag con il percorso per l'immagine necessaria
+        lastImage = matchFound;
+    }
+    else
+        document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + lastImage); // cambia l'attributo del tag con il percorso per l'immagine necessaria
 }
+
