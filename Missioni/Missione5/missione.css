@@ -46,6 +46,17 @@ body {
     max-width: 60vw;
 }
 
+.combat-box, .prompt-box {
+    display: flex;
+    align-items: left;
+    padding: 20px;
+    font-size: 12px;
+    text-align: left;
+    position: relative;
+    width: 60vw; /* Ensures they match the image width */
+    max-width: 60vw;
+}
+
 .dialog-box::before, .prompt-box::before {
     content: "";
     position: absolute;

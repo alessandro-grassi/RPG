@@ -10,7 +10,7 @@
     <body>
         <div class="image-container">
             <img src="http://localhost:8080/m5/get-image/Throne_room.jpg" alt="RPG Scene" class="game_image">
-            <div class="overlay-image">
+            <div class="overlay-image" id="overlay">
                 <div class="life-text" id="Center-text-box">
                     <p id="vita-text"></p>
                     <progress id="vita"></progress>
@@ -19,10 +19,14 @@
             </div>
         </div>
         
-        <div class="dialog-box">
-            <p class="dialog-text" id="dialog_box"></p>
-            <button class="dialog-button" id="next_button">Next</button>
-            <button class="dialog-button" id="attack_button">Attack</button>
+        <div class="combat-box">
+            <div class="dialog-box">
+                <p class="dialog-text" id="vita-text-pg"></p>
+                <button class="dialog-button" id="attack_button">Attack</button>
+            </div>
+            <div class="dialog-box">
+                <p class="dialog-text" id="text"></p>
+            </div>
         </div>
     </body>
 </html>

@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded",()=>{ 
     fetchData("enemies-images-path", setImageEnemy)
     fetchData("enemies-list", setLifePoints)
+    setDialogue();
+    setLifePointsPG();
     setButtonAttack();
 });
 
@@ -51,6 +53,7 @@ function fetchData(request, callback)
 //GLOBAL
     const NAME = "Il Re Eterno";
     let vita_corrente = 0;
+    let vita_corrente_pg = 500;
     let attacco_pg = 10;
     let danno_fisico_pg = attacco_pg * 10;
 
@@ -73,6 +76,9 @@ function setLifePoints(json){
     })
 }
 
+function setDialogue(){
+    document.getElementById('text').innerHTML = "Il Re sta aspettando...";
+}
 function setButtonAttack(){
     document.getElementById('attack_button').addEventListener("click", function(){
         vita_corrente -= danno_fisico_pg;
@@ -80,12 +86,18 @@ function setButtonAttack(){
             document.getElementById('image_king').remove();
             document.getElementById('vita').remove();
             document.getElementById('vita-text').remove();
-            document.getElementById('Center-text-box').append(document.createElement('p').innerHTML = "YOU WIN");
+            document.getElementById('overlay').remove();
+            document.getElementById('text').innerHTML = "HAI VINTO!!";
             this.removeEventListener();
         }
         else{
             document.getElementById('vita').value = vita_corrente;
             document.getElementById('vita-text').innerHTML = "PV:"+ vita_corrente;
+            document.getElementById('text').innerHTML = "'Hai inflitto "+danno_fisico_pg+" danni fisici!'";
         }
     })
+}
+
+function setLifePointsPG(){
+    document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }
