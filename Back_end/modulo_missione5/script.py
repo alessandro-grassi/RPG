@@ -71,13 +71,11 @@ def check_get(path:str):
      
     #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):
-        image_name = path.split("/")[3]
-        print(image_name)
+        image_name = path.split("/")[3] # fa uno split e prende la 4a cella
         with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
             r = f.read()
             f.close()
-            return r
-    
+            return r # restituisce immagine in formato binario
     
     
 def check_post(path,clientchoice):

@@ -30,10 +30,13 @@ function setButton(){
 // funzione che permette di modificare l'index dei dialoghi
 function movelines(step)
 {
-    client_index += step; // incrementa index di quanto indicato dallo step
+    if(client_index + step < dialogLines.length)
+    {
+        client_index += step; // incrementa index di quanto indicato dallo step
+        const data = {"current_index": client_index}; // crea oggetto da inviare al server
+        sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
+    }
     document.getElementById("dialog-box").textContent = dialogLines[client_index]; // imposta i dialoghi all' index corrente
-    const data = {"current_index": client_index}; // crea oggetto da inviare al server
-    //sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
     updateImage();
 }
 
