@@ -1,19 +1,79 @@
 .container {
     width: 80%;
     padding: 25px;
-    margin: 50px;
+    margin: 50px auto;
     background-color: #f0f0f0bb;
-    border-radius: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
-  
+
 .register-form {
-    width: 90%;
-    height: 90%;
-    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+    font-size: 1.2rem;
+    font-family: 'Arial', sans-serif;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input.input, select.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+input.input:focus, select.input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.flex-row {
+    display: flex;
     align-items: center;
-    text-align: center;
-    font-size: x-large;
+}
+
+.classe-immagine {
+    max-width: 150px;
+    margin-left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.classe-immagine:hover {
+    transform: scale(1.1); /* Effetto hover per l'immagine */
+}
+
+input[type="submit"], input[type="reset"] {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 48%;
+    font-size: 1rem;
+    margin: 10px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover {
+    background-color: #0056b3;
+}
+
+input[type="reset"] {
+    background-color: #f44336;
+}
+
+input[type="reset"]:hover {
+    background-color: #e53935;
 }
