@@ -1,0 +1,22 @@
+[
+    {
+        "mossa" : "pugno",
+        "danno" : 100,
+        "prob" : 60
+    },
+    {
+        "mossa" : "ammasso",
+        "danno" : 120,
+        "prob" : 20
+    },
+    {
+        "mossa" : "carica",
+        "danno" : 150,
+        "prob" : 15
+    },
+    {
+        "mossa" : "folgorazione",
+        "danno" : 50,
+        "prob" : 5
+    }
+]
