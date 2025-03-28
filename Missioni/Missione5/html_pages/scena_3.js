@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded",()=>{ 
     fetchData("enemies-images-path", setImageEnemy)
     fetchData("enemies-list", setLifePoints)
+    setButtonAttack();
 });
 
 
@@ -50,6 +51,8 @@ function fetchData(request, callback)
 //GLOBAL
     const NAME = "Il Re Eterno";
     let vita_corrente = 0;
+    let attacco_pg = 10;
+    let danno_fisico_pg = attacco_pg * 10;
 
 function setImageEnemy(json){
     json.forEach(element => {
@@ -61,9 +64,28 @@ function setImageEnemy(json){
 
 function setLifePoints(json){
     json.forEach(enemy =>{
-        if(enemy['name'] == NAME)
-            document.getElementById('vita').innerHTML = "PV:"+ enemy['stats'].vita;
+        if(enemy['name'] == NAME){
             vita_corrente = enemy['stats'].vita;
+            document.getElementById('vita').value = vita_corrente;
+            document.getElementById('vita').max = vita_corrente;
+            document.getElementById('vita-text').innerHTML = "PV:"+vita_corrente;
+        }
     })
-    console.log(vita_corrente);
+}
+
+function setButtonAttack(){
+    document.getElementById('attack_button').addEventListener("click", function(){
+        vita_corrente -= danno_fisico_pg;
+        if(vita_corrente <= 0){
+            document.getElementById('image_king').remove();
+            document.getElementById('vita').remove();
+            document.getElementById('vita-text').remove();
+            document.getElementById('Center-text-box').append(document.createElement('p').innerHTML = "YOU WIN");
+            this.removeEventListener();
+        }
+        else{
+            document.getElementById('vita').value = vita_corrente;
+            document.getElementById('vita-text').innerHTML = "PV:"+ vita_corrente;
+        }
+    })
 }

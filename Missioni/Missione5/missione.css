@@ -63,9 +63,16 @@ body {
     color: #ebdbb2;
 }
 
+progress {
+    accent-color: red;
+  }
+
 .life-text, .prompt-text {
     font-size: 30px;
-    line-height: 1.5;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     color: #ebdbb2;
     background: #32302f;
     border: 3px solid #d79921;
