@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
-    fetchData("get-dialogue",setLines); // prende le linee di testo
-    console.log(fetchData("dialog-index"))// aggiorna l'index per le linee correnti e le prossime
+    fetchFromServer("get-dialog").then(data=>{
+        let lines = data.flatMap(obj => obj.text); // prende ogni linea di testo per gli oggetti estratti e la mappa all'oggetto
+        dialogLines = lines; // assegna le linee di dialogo alla variabile globale});
+     });
+    //fetchData("get-dialogue",setLines); // prende le linee di testo
+    fetchData("dialog-index",setIndex);// aggiorna l'index per le linee correnti e le prossime
     setButton();
 });
 
@@ -96,19 +100,22 @@ function checkImage(index)
     })
 }
 
-// versione asincrona della funzione per fare return dei dati
-async function fetchData(request)
+
+// funzione di fetch a server a scopo generico
+function fetchFromServer(request)
 {
-    try {
-        const response = await fetch(`http://localhost:8080/m5/${request}`); // fa il fetch con await
-        if (!response.ok) { // check della risposta
-            throw new Error(`response fetch error ${response.status}`);
-        }
-        const data = await response.json(); // fa il parse della risposta in formato json usando await per la promise
-        console.log("fetched data: ", data);
-        return data; // fa il return dei dati
-    } catch (err) {
-        console.error("request error", err);
+    return fetch("http://localhost:8080/m5/" + request)
+    .then((response) => { // check risposta 
+        if(!response.ok)
+            throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
+        return response.json(); // ritorna la risposta codificata in json
+    })
+    .then((data) => {
+        console.log("fetched data:",data);
+        return data; // return data
+    })
+    .catch((err) => {
+        console.error('request erro: ',err); //log errore a console
         throw err;
-    }
+    })
 }

@@ -58,7 +58,7 @@ def check_get(path:str):
             return r.encode("utf-8")
     
     # prende le linee di testo da far scorrere per i dialoghi
-    elif path == PREFIX + "get-dialogue":
+    elif path == PREFIX + "get-dialog":
         with open("Missioni/Missione5/assets/dialogs.json", "r") as f:
             r = f.read()
             f.close()
