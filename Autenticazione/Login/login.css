@@ -19,12 +19,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    font-family: 'Iceland';
 }
 
-.slider {
-    display:none
-}
+
 
 #contenitore {
     display: flex;
@@ -57,4 +56,5 @@ body {
     padding-top: 1em;
     height:90%;
     width:40%;
+    visibility: hidden;
 }
