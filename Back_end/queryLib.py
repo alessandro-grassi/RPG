@@ -38,7 +38,11 @@ def execute(SQL:str)->list[tuple]:
         raise ValueError("il modulo queryLib non è stato inizializzato. chiama queryLib.connetti().")
     try:
         cursor.execute(SQL)
-        return cursor.fetchall()
+        connection.commit()
+        try:
+            return cursor.fetchall()
+        except:
+            return None
     except Exception as e:
         raise ValueError(f"La Query è fallita. Motivo: \n\t{e}")
 
