@@ -11,7 +11,7 @@
         <h1 class="title">Creazione personaggio</h1>
         <form class="register-form" id="form">
             <div class="form-group">
-                <label for="name">Nome:</label>
+                <label for="name">Nome:</label>alessandro-grassi/RPG/Autenticazione/Login
                 <input class="input" type="text" id="name" placeholder="Inserisci un nome" required oninvalid="this.setCustomValidity('Non hai inserito un nome')" oninput="setCustomValidity('')">
             </div><br><br>
             
@@ -26,7 +26,7 @@
                 <img id="class-image" src="https://cdn.pixabay.com/photo/2016/09/28/02/14/user-1699635_1280.png" alt="Immagine classe" class="classe-immagine">
             </div><br><br>
 
-            <!-- Lista della sofferenza -->
+            <!-- Lista della sofferenza 
             <label id ="abilita" for="checkbox">Abilità:</label><br><br>
             <div>
                 <label><input type="checkbox" class="checkbox" value="opzione1"> Palla di fuoco</label><br>
@@ -37,6 +37,20 @@
             <br>
             <input class="input" type="submit" value="Submit">
             <input class="input" type="reset" value="Reset">
+             -->
+
+            <select id="ab1" onload="listaAbilità()">
+                <option value="default">Seleziona classe</option>
+            </select>
+                
+            <select id="ab2" onload="listaAbilità()">
+                <option value="default">Seleziona classe</option>
+            </select>
+
+            <select id="ab3" onload="listaAbilità()">
+                <option value="default">Seleziona classe</option>
+            </select>
+
         </form>
     </div>
 </body>

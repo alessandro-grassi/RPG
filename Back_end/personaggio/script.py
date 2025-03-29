@@ -18,13 +18,25 @@ def check_get(path):
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
+    
     elif path.endswith("backend"):
         f = open(sys.path[0] +"/Autenticazione/Login/login.js", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
+    
+    elif path.endswith("magoblu"):
+        f = open(sys.path[0] +"/Autenticazione/Creazione-personaggio/magoblu.jpg", "rb")
+        stringa = f.read()
+        f.close()
+        return stringa
 
+    elif path.endswith("magorosso"):
+        f = open(sys.path[0] +"/Autenticazione/Creazione-personaggio/magorosso.jpg", "rb")
+        stringa = f.read()
+        f.close()
+        return stringa
     
 
 
-def check_post(path, client_choice):
+def check_post(path, client_choice):...
