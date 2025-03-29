@@ -4,7 +4,7 @@ import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
 
-mods = {
+dict = {
     "/sm_" : sm
 }
 
@@ -56,15 +56,15 @@ def run_server():
 
 
 def check_get(path):
-    for k in mods.keys():
+    for k in dict.keys():
         if path.startswith(k):
-            return mods[k].check_get(path)
+            return dict[k].check_get(path)
 
 
 def check_post(path, client_choice):
-    for k in mods.keys():
+    for k in dict.keys():
         if path.startswith(k):
-            return mods[k].check_post(path,client_choice)
+            return dict[k].check_post(path,client_choice)
 
 
 if __name__ == "__main__":
