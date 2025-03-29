@@ -12,7 +12,6 @@ mods = {
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        # self.send_header("Content-type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         path = self.path
@@ -25,7 +24,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         self.send_response(200)
-        # self.send_header("Content-type", "application/json")
+        self.send_header("Content-type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         path = self.path
@@ -56,15 +55,17 @@ def run_server():
 
 
 def check_get(path):
-    for k in mods.keys():
-        if path.startswith(k):
-            return mods[k].check_get(path)
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_get(path)
+    return "Modulo non trovato"
 
 
 def check_post(path, client_choice):
-    for k in mods.keys():
-        if path.startswith(k):
-            return mods[k].check_post(path,client_choice)
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_post(path, client_choice)
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":
