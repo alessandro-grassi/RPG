@@ -1,8 +1,19 @@
+function crea_personaggio(){
+    const name = document.getElementById("name");
+    const classe = document.getElementById("classe");
+    const ab1 = documentgetElementById("ab1");
+    const ab2 = documentgetElementById("ab2");
+    const ab3 = documentgetElementById("ab3");
+}
+
+
+
+
 function cambiaImmagine() {
     var selezione = document.getElementById("choice").value;
     var class_image = document.getElementById("class-image");
-    var image_1 = "https://imgs.search.brave.com/eSRV0IQbqKs4sxfOJFQXt5Hik-bre6joGUeCTVevnRA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMud2lraWEubm9j/b29raWUubmV0L2Zp/bmFsZmFudGFzeS9p/bWFnZXMvMC8wNS9G/RkVfTWFnb19ibHUu/cG5nL3JldmlzaW9u/L2xhdGVzdC9zY2Fs/ZS10by13aWR0aC1k/b3duLzIyNT9jYj0y/MDE0MTIyMTE0NDEz/NiZwYXRoLXByZWZp/eD1pdA.jpeg"
-    var image_2 = "https://imgs.search.brave.com/fwN_Z1DiB1K1QTH_NYIegRtMl1sfkezPuJuu03m9Pv0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMud2lraWEubm9j/b29raWUubmV0L2Zp/bmFsZmFudGFzeS9p/bWFnZXMvNC80Ni9G/RkVfTWFnb19yb3Nz/by5wbmcvcmV2aXNp/b24vbGF0ZXN0L3Nj/YWxlLXRvLXdpZHRo/LWRvd24vMjUwP2Ni/PTIwMTQxMDIxMjIx/OTA2JnBhdGgtcHJl/Zml4PWl0.jpeg"
+    var image_1 = "http://localhost:8080/personaggio/magoblu"
+    var image_2 = "http://localhost:8080/personaggio/magorosso"
     var default_image = "https://cdn.pixabay.com/photo/2016/09/28/02/14/user-1699635_1280.png"
 
     if (selezione == "opzione1") {
