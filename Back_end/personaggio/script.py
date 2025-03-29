@@ -13,6 +13,12 @@ def aggiungi_personaggio(nome, classe, abilita):
 
 
 def check_get(path):
+    if path == "/personaggio":  # per aprire la pagina di login principale
+        f = open(sys.path[0]+"/Autenticazione/Creazione-personaggio/index.html", "r")
+        stringa = f.read()
+        f.close()
+        return stringa.encode("utf-8")
+    
     if path.endswith("stile"):
         f = open(sys.path[0] +"/AutenticazioneCreazione-personaggio/style.css", "r")
         stringa = f.read()
