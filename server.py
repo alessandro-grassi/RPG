@@ -1,11 +1,15 @@
 #gita a monaco: 7/10
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from Back_end import login
 import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
 
-mods = {
-    "/sm_" : sm
+dict = {
+    "/sm_" : sm,
+    "/login": login,
+    # dizionario per prendere i prefissi dei moduli da aggiungere
+    
 }
 
 
@@ -16,7 +20,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
-
         resp = check_get(path)
 
         self.wfile.write(resp)
