@@ -94,13 +94,4 @@ function accedi(){
 }
 
 
-function crea_personaggio(){
-  const name = document.getElementById("name");
-  const classe = document.getElementById("classe");
-  const abilita = documentgetElementById("abilita");
-
-
-}
-
-
 

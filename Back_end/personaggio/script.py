@@ -14,24 +14,24 @@ def aggiungi_personaggio(nome, classe, abilita):
 
 def check_get(path):
     if path.endswith("stile"):
-        f = open(sys.path[0] +"/Autenticazione/Login/login.css", "r")
+        f = open(sys.path[0] +"/AutenticazioneCreazione-personaggio/style.css", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
     elif path.endswith("backend"):
-        f = open(sys.path[0] +"/Autenticazione/Login/login.js", "r")
+        f = open(sys.path[0] +"/Autenticazione/Creazione-personaggio/script.js", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    elif path.endswith("magoblu"):
+    elif path.endswith("magoblu"):                  
         f = open(sys.path[0] +"/Autenticazione/Creazione-personaggio/magoblu.jpg", "rb")
         stringa = f.read()
         f.close()
         return stringa
 
-    elif path.endswith("magorosso"):
+    elif path.endswith("magorosso"):    
         f = open(sys.path[0] +"/Autenticazione/Creazione-personaggio/magorosso.jpg", "rb")
         stringa = f.read()
         f.close()
@@ -39,4 +39,5 @@ def check_get(path):
     
 
 
-def check_post(path, client_choice):...
+def check_post(path, client_choice):
+    ...
