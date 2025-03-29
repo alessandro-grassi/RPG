@@ -15,9 +15,9 @@
     </body>
     <script>
         function creaTabellaStats(json_value) {
-            path_img = "D:/OneDrive/Desktop/RPG/Missioni/Missione5/assets/Immortal_guardian.png"
+            path_img = "Immortal_guardian.png"
             table = "";
-            table += "<tr><td><img src="+path_img+"></td></tr>"; 
+            table += "<tr><td><img src=http://localhost:8080/m5/get-image/"+path_img+"></td></tr>"; 
             table += "<tr><td> Vita: "+json_value.Vita+"</td></tr>";
             table += "<tr><td> Vigore: "+json_value.Vigore+"</td></tr>";
             table += "<tr><td> Forza: "+json_value.Forza+"</td></tr>";
@@ -65,5 +65,47 @@
                     });
             });
         
+            function sendToServer(request,data)
+            {
+                fetch("http://localhost:8080/m5/" + request,{
+                    method:"POST", // metodo richiesta
+                    headers:{'Content-Type':'application/json'},
+                    body: JSON.stringify(data) // dati da inviare in formato json
+                })
+                .then((response)=>{ // prende la risposta del server
+                    if(!response.ok) // in caso di errore manda stato risposta a console
+                    {
+                        alert('operazione fallita, riprovare o ricaricare la pagina'); // in caso di fallimento post
+                        throw new Error(`error posting content to server: ${response.status}`); 
+                    }
+                    return response.json(); // restituisce la risposta data dal server
+                })
+                .then((result)=>{
+                    console.log(result); // log risposta per debug
+                })
+                .catch((err)=>{ // catch errori
+                    console.error('error sending data: ',err); // fa un log a console dell'errore
+                    alert('operazione fallita, riprovare o ricaricare la pagina.\n\ncodice di errore: '+ err); // manda un alert con il codice di errore
+                });
+            }
+
+            // funzione usata per fare il fetch dei dati dal server e passarli a una funzione data come parametro
+            function fetchData(request,callback)
+            {
+                fetch("http://localhost:8080/m5/" + request) // fetch url con richiesta
+                .then(response => {
+                    if(!response.ok) // check stato risposta
+                        throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
+                    return response.json(); // ritorna la risposta codificata in json
+                })
+                .then(data => { // prende i dati ottenuti
+                    console.log("fetched data: ");
+                    console.log(data) // log dati per debug
+                    callback(data); // chiama la funzione di callback a cui passare i dati ottenuti
+                })
+                .catch(err => { // catch dell'errore in modo da stamparlo a console
+                    console.error('request error',err); // log dell'errore a console
+                });
+            }
     </script>
 </html>
