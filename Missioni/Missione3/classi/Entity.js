@@ -15,11 +15,18 @@ class Entity {
     //Metodo per attaccare un'altra entità. Ritorna il danno inflitto. Ereditata perchè utile a entrambi
     attack(target) {
         if (target.hp > 0) {
-            let damage = this.atk;
+            let damage = Math.floor(Math.random() * this.atk) + 10;
             target.hp -= damage;
             return damage;
         }
         return 0;
     }
 
+    //Metodo utilizzabile sia dal mostro che dall'eroe, per schivare
+    avoid(){
+        let avoid = game.RNG(5);
+        if (avoid == 0)
+            return true;
+        return false;
+    }
 }

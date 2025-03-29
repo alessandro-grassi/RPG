@@ -16,12 +16,14 @@
 <body>
     <div id="dati">
         <h1>Turno: <span id="turno"></span></h1>
+        <h2><span id="nomeGiocatore"></span></h2>
         <p>Tuoi punti vita: <span id="vitaGiocatore"></span></p>
     </div>
     
     <div id="combattimento">
         <div id="mostro">
             <h2>Mostro da affrontare</h2>
+            <h3><span id="nomeMostro"></span></h3>
             <img src="http://localhost:8080/missione3%/media/mostro.png-get_binary_file" alt="Foto mostro">
             <p>Punti vita: <span id="vitaMostro"></span></p>
         </div>
@@ -37,7 +39,7 @@
     </div>
 
     <div id="musica">
-        <button onclick="playMusic()">Musica</button>
+        <button id="musicButton" onclick="playMusic()">Musica</button>
     </div>
     <script src="http://localhost:8080/missione3%/classi/Entity.js-get_text_file"></script>
     <script src="http://localhost:8080/missione3%/classi/Hero.js-get_text_file"></script>
