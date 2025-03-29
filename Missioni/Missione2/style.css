@@ -1,0 +1,6 @@
+.mappa { display: grid; grid-template-columns: repeat(10, 40px); gap: 1px; }
+.cella { width: 40px; height: 40px; border: 1px solid #000; text-align: center; line-height: 40px; }
+.cespuglio { background: green; color: white; }
+.porta { background: yellow; }
+.partenza { background: blue; color: white; }
+.giocatore { background: red; color: white; }

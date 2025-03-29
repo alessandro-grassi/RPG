@@ -21,6 +21,13 @@ def check_get(path):
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
+    
+    if path == "/missione2":
+        f = open(sys.path[0] + "/Missioni/Missione2/index.html", "r")
+        stringa = f.read()
+        f.close()
+        return stringa.encode("utf-8")
+    
     if path.endswith("stile"):
         f = open(sys.path[0] +"/Autenticazione/Login/login.css", "r")
         stringa = f.read()
