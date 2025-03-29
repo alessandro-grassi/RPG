@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     setDialogue();
     setLifePointsPG();
     setButtonAttack();
+    setButtonNext();
 });
 
 
@@ -57,6 +58,9 @@ function fetchData(request, callback)
     let vita_corrente_pg = 500;
     let attacco_pg = 10;
     let danno_fisico_pg = attacco_pg * 10;
+    let forza = 10;
+    let danno_fisico = forza * 10;
+    let rand = 0;
 
 function setImageEnemy(json){
     json.forEach(element => {
@@ -101,9 +105,50 @@ function setButtonAttack(){
             document.getElementById('vita-text').innerHTML = "PV:"+ vita_corrente;
             document.getElementById('text').innerHTML = "'Hai inflitto "+danno_fisico_pg+" danni fisici!'";
         }
+        document.getElementById('next_button').style = "visibility: visible;"; 
+        this.style = "visibility: hidden";
     })
 }
 
+function setButtonNext(){
+    document.getElementById('next_button').addEventListener("click", function(){
+        fetchData("random-chance", getRand)
+        fetchData("enemies-list", enemyAttack)
+        document.getElementById('attack_button').style = "visibility: visible;"; 
+        this.style = "visibility: hidden";
+    })
+}
+function getRand(json){
+    rand = parseInt(json['result']);
+    console.log(rand);
+}
+function enemyAttack(json){
+    json.forEach(enemy =>{
+        if(enemy['name'] == NAME){
+            tempChance = 0;
+            enemy['moves'].forEach(moves =>{
+                console.log(moves);
+                console.log(moves['chance']);
+                tempChance += moves['chance'];
+                console.log(tempChance);
+                if(tempChance >= rand){
+                    document.getElementById('text').innerHTML = moves['description'];
+                    if(moves['move_type'] == 'attack'){
+                        if(moves['damage_type'] == 'fisico'){
+                            vita_corrente_pg -= danno_fisico + (vita_corrente_pg * (moves['damage_fis_perc']/100));
+                            document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
+                        }
+                    }
+                    else{
+                        vita_corrente_pg -= danno_fisico;
+                        document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
+                    }
+                    return;
+                }
+            })
+        }
+    })
+}
 function setLifePointsPG(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }

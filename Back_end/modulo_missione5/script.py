@@ -22,7 +22,7 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
-    elif path == PREFIX+"mission-scene-3":
+    elif path == PREFIX+"mission-scena-3":
         with open("Missioni/Missione5/html_pages/scena_3.html", "r") as f:
             r = f.read()
             f.close()
@@ -55,6 +55,10 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8") # encode
+
+    elif path == PREFIX+"random-chance":
+        rand = combactSystem.rand(1, 100)
+        return ('{"result":"'+str(rand)+'"}').encode("utf-8")
 
     # prende javascript missione
     elif path == PREFIX + "script":
