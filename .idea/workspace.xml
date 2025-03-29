@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8734fd6c-1611-4fdf-a634-e07a162cf008" name="Changes" comment="" />
+    <list default="true" id="8734fd6c-1611-4fdf-a634-e07a162cf008" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Back_end/modulo_missione5/Immortal_guardian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Back_end/modulo_missione5/Immortal_guardian.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,9 +18,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2ti1WyhIHag7GaSgRnvL3rBneQI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,8 +30,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/Greco",
-    "last_opened_file_path": "C:/Users/LU.GRECO/Documents/RPG",
+    "git-widget-placeholder": "feature/Piano/missione5-grassi",
+    "last_opened_file_path": "C:/Users/AL.GRASSI/Documents/RepGitRpg/RPG",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
