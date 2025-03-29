@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <title>mission-start</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="http://localhost:8080/m5/styletest">
+        <script src="http://localhost:8080/m5/script-scena-2"></script>
+    </head>
+    <body>
+        <div class="image-container">
+            <img src="http://localhost:8080/m5/get-image/Library.png" alt="RPG Scene" class="game_image">
+            <div class="overlay-image" id="overlay">
+                <div class="life-text" id="Center-text-box">
+                    <p id="name-text" style="font-size: 25px;"></p>
+                    <p id="vita-text"></p>
+                    <progress id="vita"></progress>
+                </div>
+                <img id="image_mage">
+            </div>
+        </div>
+        
+        <div class="combat-box">
+            <div class="dialog-box">
+                <p class="dialog-text" id="vita-text-pg"></p>
+                <button class="dialog-button" id="attack_button">Attack</button>
+            </div>
+            <div class="dialog-box">
+                <p class="dialog-text" id="text"></p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -21,6 +21,12 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
+        
+    elif path == PREFIX+"mission-scene-2":
+        with open("Missioni/Missione5/html_pages/scena_2.html", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
     
     elif path == PREFIX+"mission-start":
         with open("Missioni/Missione5/assets/font.css", "r") as f: # usare r per richieste sui file
@@ -75,7 +81,15 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-     
+        
+     #funzione usata per recuperare le immagini in base al nome richiesto
+    elif path.startswith(PREFIX+"get-image/"):
+        image_name = path.split("/")[3] # fa uno split e prende la 4a cella
+        with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
+            r = f.read()
+            f.close()
+            return r # restituisce immagine in formato binario
+        
 def check_post(path,clientchoice):
     try:
         if path == PREFIX_API+"set-life":
