@@ -57,6 +57,13 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
+    if path=="/favicon.ico":
+        f = open("Config/logo magi.ico","rb")
+        r = f.read()
+        f.close()
+        return r
+    elif path=="/":
+        return check_get("/login")
     return "Modulo non trovato".encode("utf-8")
 
 
