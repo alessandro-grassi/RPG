@@ -1,6 +1,8 @@
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
 const output = document.getElementById("output")
+var genericAudio = new Audio("http://localhost:8080/missione3%/audio/Background.mp3-get_binary_file");
+    
 
 /**
  * Funzione chiamata quando il giocatore preme il pulsante "Attacca".
@@ -167,15 +169,15 @@ document.addEventListener("DOMContentLoaded", async (e) => {
 
 /* Inzio Sezione Gestione Audio */
 function playMusic() {
-    let audio = new Audio("http://localhost:8080/missione3%/audio/Background.mp3-get_binary_file");
-    audio.volume = 0.05;
-    audio.play().then(() => {
+    if (genericAudio.volume == 0.05) {genericAudio.volume=0;console.log("Musica stop!"); return;}
+    genericAudio.volume = 0.05;
+    genericAudio.play().then(() => {
         console.log("Musica avviata!");
     }).catch(error => {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
         
     });
-    musicButton.disabled = true;
+    //musicButton.disabled = true;
 }
 
 function attackSound() {
