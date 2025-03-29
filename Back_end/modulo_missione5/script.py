@@ -22,7 +22,7 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
-    elif path == PREFIX+"mission-scene-3":
+    elif path == PREFIX+"mission-scena-3":
         with open("Missioni/Missione5/html_pages/scena_3.html", "r") as f:
             r = f.read()
             f.close()
@@ -70,7 +70,7 @@ def check_get(path:str):
             return r.encode("utf-8")
     
     # prende le linee di testo da far scorrere per i dialoghi
-    elif path == PREFIX + "get-dialogue":
+    elif path == PREFIX + "get-dialog":
         with open("Missioni/Missione5/assets/dialogs.json", "r") as f:
             r = f.read()
             f.close()
@@ -92,8 +92,13 @@ def check_get(path:str):
             f.close()
             return r
 
-
-
+    # prende il mapping tra dialoghi e immagini per storyline
+    elif path == PREFIX + "get-mapping":
+        with open("Missioni/Missione5/assets/dialogs_images.json","r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+     
 def check_post(path,clientchoice):
     try:
         if path == PREFIX_API+"set-life":
