@@ -36,8 +36,6 @@ test_obj = [
 """
 
 def check_get(path):
-    if path.endswith("missioni"):
-        return get_missioni()
     if path.endswith("style"):
         return get_style()
     if path.endswith("script"):
@@ -46,7 +44,9 @@ def check_get(path):
         return get_home()
     
 def check_post(path,cc):
-    return 0
+    uid = cc.uid
+    if path.endswith("missioni"):
+        return get_missioni(uid)
 
 def get_style():
     with open("./SceltaMissione/style.css", "rb") as f:
@@ -63,12 +63,12 @@ def get_home():
         msg = f.read()
     return msg
 
-def get_missioni():
+def get_missioni(uid):
     obj = []
     ql.connetti()
 
-    create_tables()
-    # data = retrieve()
+    # create_tables()
+    data = retrieve(uid)
     # obj = parse(data)
 
     ql.disconnetti
@@ -87,12 +87,20 @@ def create_tables():
                id_personaggio INTEGER NOT NULL,
                id_missione INTEGER NOT NULL,
                p_comp INT DEFAULT 0,
-               PRIMARY KEY(ID_progresspo),
-               FOREIGN KEY(id_personaggio) REFERENCES "personaggi".id,
-               FOREIGN KEY(id_missione) REFERNCES "missioni".ID_missione);''')
+               PRIMARY KEY(ID_progresso),
+               FOREIGN KEY(id_personaggio) REFERENCES personaggi(id),
+               FOREIGN KEY(id_missione) REFERENCES missioni(ID_missione));''')
 
-def retrieve():
-    return 0
+def retrieve(uid):
+    data = ql.execute(f'''SELECT *
+                      FROM
+                        missioni,
+                        progressi
+                      WHERE
+                        missioni(ID_missione) = progressi(id_missione) AND
+                        progressi(id_personaggio) = {uid};''')
+
+    return data
 
 def parse(data):
     return 0
