@@ -1,5 +1,11 @@
 function get_missioni() {
-    fetch("http://localhost:8080/sm_missioni")
+    let uid = document.getElementById("uid").value;
+    fetch("http://localhost:8080/sm_missioni", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(uid)
+    }
+    )
     .then((respsonse) => {
         if(!respsonse.ok) {
             throw new Error("Errore di connessione")
