@@ -1,9 +1,11 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login
+from Back_end import personaggio
 import json
 from urllib.parse import urlparse
 dict = { 
     "/login": login,
+    "/personaggio" : personaggio,
     # dizionario per prendere i prefissi dei moduli da aggiungere
     
 }
