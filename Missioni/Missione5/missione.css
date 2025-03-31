@@ -25,6 +25,7 @@ body {
     width: 60vw; /* Adjusted to take up 60% of the viewport width */
     height: 60vh; /* Adjusted to take up 60% of the viewport height */
     object-fit: cover; /* Prevents distortion and ensures it fills the space */
+    align-items: center;
     border: 3px solid #d79921;
     box-shadow: 4px 4px 0px #000;
 }

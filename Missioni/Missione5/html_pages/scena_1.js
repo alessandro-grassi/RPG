@@ -61,7 +61,8 @@ function fetchData(request, callback)
 function setImageEnemy(json){
     json.forEach(element => {
     if (element['enemy_name'] == NAME)
-        path = element['image']; 
+        path = element['image'];
+        console.log(path);
     });
     document.getElementById('image_guardian').setAttribute('src', "http://localhost:8080/m5/get-image/"+ path);
 }

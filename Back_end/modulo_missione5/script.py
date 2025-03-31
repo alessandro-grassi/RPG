@@ -22,11 +22,11 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
-    elif path == PREFIX+"mission-scena-1": # get pagina di start missione
-        with open("Back_end/modulo_missione5/Immortal_guardian.html", "r") as f:
+    elif path == PREFIX+"enemies-images-path":
+        with open("Missioni/Missione5/assets/enemies_images.json", "r") as f:
             r = f.read()
             f.close()
-            return r.encode("utf-8")
+            return r.encode("utf-8") # encode 
     
     elif path == PREFIX+"mission-start":
         with open("Missioni/Missione5/assets/font.css", "r") as f: # usare r per richieste sui file
@@ -34,7 +34,7 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
-    elif path == PREFIX+"mission-scene-1":
+    elif path == PREFIX+"mission-scena-1":
         with open("Missioni/Missione5/html_pages/scena_1.html", "r") as f:
             r = f.read()
             f.close()
@@ -67,6 +67,12 @@ def check_get(path:str):
         mana = str(combactSystem.get_mana(name))
         return ('{"result":"'+mana+'"}').encode("utf-8")
     
+    elif path == PREFIX+"enemies-list":
+        with open("Missioni/Missione5/assets/Enemies.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode
+        
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
@@ -95,11 +101,11 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r # restituisce immagine in formato binario
-    elif path=="/m5/script-scena-1":
+    elif path== PREFIX + "script-scena-1":
         f = open("Missioni/Missione5/html_pages/scena_1.js")
         r = f.read()
         f.close()
-        return r.encode("utf-8")
+        return r.encode("utf-8") 
     else:
         return "Percorso non valido!".encode("utf-8")
         
