@@ -95,6 +95,13 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r # restituisce immagine in formato binario
+    elif path=="/m5/script-scena-1":
+        f = open("Missioni/Missione5/html_pages/scena_1.js")
+        r = f.read()
+        f.close()
+        return r.encode("utf-8")
+    else:
+        return "Percorso non valido!".encode("utf-8")
         
 def check_post(path,clientchoice):
     try:
