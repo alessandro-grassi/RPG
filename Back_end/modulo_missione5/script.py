@@ -102,10 +102,10 @@ def check_get(path:str):
             f.close()
             return r # restituisce immagine in formato binario
     elif path== PREFIX + "script-scena-1":
-        f = open("Missioni/Missione5/html_pages/scena_1.js")
+        f = open("Missioni/Missione5/html_pages/scena_1.js", "rb")
         r = f.read()
         f.close()
-        return r.encode("utf-8") 
+        return r
     else:
         return "Percorso non valido!".encode("utf-8")
         
