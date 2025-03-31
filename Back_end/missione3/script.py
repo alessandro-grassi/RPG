@@ -1,3 +1,5 @@
+import re
+
 # import moduli.queryLib as queryLib
 #queryLib.connetti()
 def read_binary_file(path):
@@ -13,11 +15,13 @@ def read_text_file(path):
 
 def check_get(path):
     if path.endswith("get_text"): # Invio di file al client
-        file_path = path.split("/")[2].split("-")[0]
-        return read_text_file("./Missioni/Missione3/" + file_path)
+        char_position = re.search("/", path[1:len(path)]).regs[0][1]
+        file_path = path[char_position:len(path)].split("-")[0]
+        return read_text_file("./Missioni/Missione3" + file_path)
     elif path.endswith("get_binary"): # Invio di file al client
-        file_path = path.split("/")[2].split("-")[0]
-        return read_binary_file("./Missioni/Missione3/" + file_path)
+        char_position = re.search("/", path[1:len(path)]).regs[0][1]
+        file_path = path[char_position:len(path)].split("-")[0]
+        return read_binary_file("./Missioni/Missione3" + file_path)
 
 def check_post(path, client_choice):
     if path.endswith("post"):
