@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
-<<<<<<< HEAD
     <option name="sdkName" value="Python 3.10 (RPG)" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_20" />
-=======
-    <option name="sdkName" value="Python 3.13 (login)" />
-  </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (login)" project-jdk-type="Python SDK" />
->>>>>>> 91aa888e57728bab973bd99bac27cfb21a66c144
 </project>

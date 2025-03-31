@@ -1,14 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from Back_end import login, jslib
 import json
 from urllib.parse import urlparse
-
 import Back_end.modulo_missione5 as m5
 dict = { # dizionario per prendere i suffissi dei moduli
     "/m5": m5,
-    "/login": login,
-    "/jslib": jslib
-    # dizionario per prendere i prefissi dei moduli da aggiungere
 }
 
 
@@ -19,6 +14,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
+
         resp = check_get(path)
 
         self.wfile.write(resp)
@@ -60,21 +56,14 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
-    if path=="/favicon.ico":
-        f = open("Config/logo magi.ico","rb")
-        r = f.read()
-        f.close()
-        return r
-    elif path=="/":
-        return check_get("/login")
-    return "Modulo non trovato".encode("utf-8")
+    return "Modulo non trovato"
 
 
 def check_post(path, client_choice):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_post(path, client_choice)
-    return "Modulo non trovato".encode("utf-8")
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":
