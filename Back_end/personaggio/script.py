@@ -20,7 +20,7 @@ def check_get(path):
         return stringa.encode("utf-8")
     
     if path.endswith("stile"):
-        f = open(sys.path[0] +"/AutenticazioneCreazione-personaggio/style.css", "r")
+        f = open(sys.path[0] +"/Autenticazione/Creazione-personaggio/style.css", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
