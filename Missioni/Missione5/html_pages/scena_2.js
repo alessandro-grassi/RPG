@@ -52,7 +52,7 @@ function fetchData(request, callback)
 }
 
 //GLOBAL
-    const NAME = "Adepto immortale cremesi";
+    const NAME = "Adepto immortale cremisi";
     let vita_corrente = 0;
     let vita_corrente_pg = 500;
     let attacco_pg = 10;
@@ -82,7 +82,7 @@ function setName(){
 }
 
 function setDialogue(){
-    document.getElementById('text').innerHTML = "Adepto immortale cremesi sta aspettando...";
+    document.getElementById('text').innerHTML = "Adepto immortale cremisi sta aspettando...";
 }
 
 function setButtonAttack(){
