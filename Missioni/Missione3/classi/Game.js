@@ -60,7 +60,7 @@ class Game {
     aggiornaUI() {
         if(this.hero.hp < 0) 
             document.getElementById("vitaGiocatore").textContent = 0;
-        else    
+        else
             document.getElementById("vitaGiocatore").textContent = this.hero.hp;
 
         if(this.selectedEnemy.hp < 0)
@@ -114,6 +114,12 @@ class Game {
             setTimeout(() => {
                 output.innerHTML = `Il nemico subisce ${burnDamage} danni da bruciatura!`;
             }, 1000);
-        }   
+            }   
+        if (this.selectedEnemy.status === "frozen") {
+            console.log(`Il nemico è congelato e non può attaccare!`);
+            setTimeout(() => {
+                output.innerHTML = `Il nemico è congelato e non può attaccare!`;
+            }, 1000);
+        }
     }
 }

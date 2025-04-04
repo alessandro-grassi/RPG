@@ -159,6 +159,7 @@ function announceEndGame(game) {
     atkButton.disabled = true;
     magicButton.disabled = true;
     game.endGame = true;
+
     output.style.pointerEvents = "none";
     output.style.userSelect = "none";
 }
@@ -209,28 +210,5 @@ function magicSound() {
     });
 }
 
-// Funzione per silenziare o riattivare tutti i suoni
-function toggleMute() {
-    const allAudios = document.querySelectorAll("audio"); // Seleziona tutti gli elementi audio
-    let isMuted = allAudios.length > 0 && allAudios[0].muted; // Controlla se il primo audio è già muto
-
-    allAudios.forEach(audio => {
-        audio.muted = !isMuted; // Inverto lo stato di mute per tutti
-    });
-
-    // Aggiorna il testo del bottone
-    const muteButton = document.getElementById("muteSound");
-    if (muteButton) {
-        muteButton.textContent = isMuted ? "Audio ON" : "Audio OFF";
-    }
-}
-
-// Associa la funzione al bottone
-document.addEventListener("DOMContentLoaded", () => {
-    const muteButton = document.getElementById("muteSound");
-    if (muteButton) {
-        muteButton.addEventListener("click", toggleMute);
-    }
-});
 
 /* Fine Sezione Gestione audio*/
