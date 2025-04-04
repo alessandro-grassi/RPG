@@ -55,6 +55,9 @@
                 //assegno paragrafi a div
                 divDettagli.appendChild(par1);
                 divDettagli.appendChild(par2);
+
+                //assegno div a documento
+                document.appendChild(divDettagli);
             }
             
             //creo div dettagli
@@ -68,7 +71,62 @@
             titolo.innerText = "Indizi";
 
             //assegno titolo a div
-            divDettagli.appendChild(titolo);
+            divIndizi.appendChild(titolo);
+
+            //assegno div a documento
+            document.appendChild(divIndizi);
+
+            if(temp)
+            {
+                //creo pulsanti
+                var indovinaBtn = document.createElement("button");
+                var giocaBtn = document.createElement("button");
+
+                //assegno id
+                indovinaBtn.id = "indovinaBtn";
+                giocaBtn.id = "giocaBtn";
+
+                //assegno attributi
+                indovinaBtn.setAttribute("onclick", "caricaPagina(false)");
+                giocaBtn.setAttribute("onclick", "caricaGioco()");
+
+                //assegno scritta
+                indovinaBtn.innerText = "Indovina";
+                giocaBtn.innerText = "Gioca";
+
+                //assegno pulsanti a documento
+                document.appendChild(indovinaBtn);
+                document.appendChild(giocaBtn);
+            }
+            else
+            {
+                //creo input
+                var rispostaTxt = document.createElement("input");
+                rispostaTxt.type = "text";
+                rispostaTxt.id = "risposta";
+                rispostaTxt.placeholder = "Inserire la propria risposta";
+                rispostaTxt.required = "true";
+
+                //creo pulsanti
+                var indietroBtn = document.createElement("button");
+                var indovinaBtn = document.createElement("button");
+
+                //assegno id
+                indietroBtn.id = "indietroBtn";
+                indovinaBtn.id = "indovinaBtn";
+
+                //assegno attributi
+                indietroBtn.setAttribute("onclick", "caricaPagina()");
+                indovinaBtn.setAttribute("onclick", "controllaRisposta()");
+
+                //assegno scritta
+                indietroBtn.innerText = "Indietro";
+                indovinaBtn.innerText = "Indovina";
+
+                //assegno pulsanti a documento
+                document.appendChild(indietroBtn);
+                document.appendChild(indovinaBtn);
+            }
 
         }
 
