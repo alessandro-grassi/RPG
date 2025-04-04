@@ -26,5 +26,19 @@
         <button onclick="location.href='indovina_soluzione.html'">Indovina Soluzione</button>
         <button onclick="location.href='wordle.html'">Gioca</button>
     </div>
+
+    <!--parte di script per gli indizi-->
+    <script>
+        //windowonload degli indizi
+        function caricaIndizi() {
+            fetch('http://localhost:8080/api/indizi', { method: 'GET' })  //nome api di esempio
+                .then(response => response.json())
+                .then(data => {
+                    //quindi qua bisogna fare la get della lista degli indizi da mettere dentro
+                    //<p> id="lista-indizi"></p>
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+    </script>
 </body>
 </html>
