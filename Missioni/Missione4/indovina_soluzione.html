@@ -26,5 +26,38 @@
             <button onclick="location.href='prima_pagina.html'">Indietro</button>
         </div>
     </div>
+
+    <!--chiamate rest-->
+    <script>
+        //windowonload degli indizi
+        function caricaIndizi() {
+            fetch('http://localhost:8080/api/indizi', { method: 'GET' })  //nome api di esempio
+                .then(response => response.json())
+                .then(data => {
+                    //quindi qua bisogna fare la get della lista degli indizi da mettere dentro
+                    //<p> id="lista-indizi"></p>
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        //quando indovini la soluzione
+        document.getElementById('indovina').addEventListener('click', function () {
+            const soluzione = document.getElementById('parola-finale').value;
+
+            fetch('http://localhost:8080/api/verifica-soluzione', { //nome api di esempio
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ soluzione: soluzione })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    //se data è giusto, alert di ricompensa e aggiunta ricompensa nel database
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        });
+
+        //carica gli indizi all'avvio della pagina
+        window.onload = caricaIndizi;
+    </script>
 </body>
 </html>
