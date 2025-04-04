@@ -1,0 +1,75 @@
+/* Stile generale */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+#header h1 {
+    margin: 0;
+}
+
+#tentativi-rimasti {
+    font-size: 16px;
+}
+
+#obbiettivo, #indizi, #azioni, #wordle-container, #soluzione {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#azioni button, #pulsanti button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#azioni button:hover, #pulsanti button:hover {
+    background-color: #555;
+}
+
+#griglia-wordle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.riga {
+    display: flex;
+    gap: 5px;
+}
+
+.lettera {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#indizi ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#indizi li {
+    margin: 5px 0;
+}
