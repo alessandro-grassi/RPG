@@ -1,7 +1,7 @@
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
 const output = document.getElementById("output")
-var genericAudio = new Audio("http://localhost:8080/missione3%/audio/Background.mp3-get_binary_file");
+var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
     
 
 /**
