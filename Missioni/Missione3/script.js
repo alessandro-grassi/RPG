@@ -2,6 +2,8 @@ const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
 const output = document.getElementById("output")
 var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
+var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
+var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
     
 const magieDescriptions = {
     1: "Palla di Fuoco ",
@@ -179,7 +181,13 @@ document.addEventListener("DOMContentLoaded", async (e) => {
 
 /* Inzio Sezione Gestione Audio */
 function playMusic() {
-    if (genericAudio.volume == 0.05) {genericAudio.volume=0;console.log("Musica stop!"); return;}
+    if (genericAudio.volume == 0.05) {
+        genericAudio.volume = 0;
+        genericAudio.pause;
+        console.log("Musica stop!");
+        return;
+    }
+    genericAudio.play;
     genericAudio.volume = 0.05;
     genericAudio.play().then(() => {
         console.log("Musica avviata!");
@@ -191,9 +199,8 @@ function playMusic() {
 }
 
 function attackSound() {
-    let audio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
-    audio.volume = 0.2;
-    audio.play().then(() => {
+    attackAudio.volume = 0.2;
+    attackAudio.play().then(() => {
         console.log("Suono attacco avviato!");
     }).catch(error => {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
@@ -201,14 +208,31 @@ function attackSound() {
 }
 
 function magicSound() {
-    let audio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
-    audio.volume = 0.2;
-    audio.play().then(() => {
+    magicAudio.volume = 0.2;
+    magicAudio.play().then(() => {
         console.log("Suono magia avviato!");
     }).catch(error => {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
     });
 }
 
+let audioMuted = false; // variabile globale!
 
+function GestisciAudio() {
+    if (!audioMuted) {
+        genericAudio.volume = 0;
+        attackAudio.volume = 0;
+        magicAudio.volume = 0;
+        audioMuted = true;
+        document.getElementById("muteSound").src = "http://localhost:8080/missione3/media/unmute.png-get_binary"
+        console.log("Audio disattivato!");
+    } else {
+        genericAudio.volume = 0.05;
+        attackAudio.volume = 0.2;
+        magicAudio.volume = 0.2;
+        audioMuted = false;
+        document.getElementById("muteSound").src = "http://localhost:8080/missione3/media/mute.png-get_binary"
+        console.log("Audio attivato!");
+    }
+}
 /* Fine Sezione Gestione audio*/
