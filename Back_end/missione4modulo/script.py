@@ -30,7 +30,7 @@ def check_post(path, tentativo, risposta=''):
 
 #funzioni
 def getDettagli():
-    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativi"],dbDict["soluzione"]
+    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativi"]
 
 def getProve(tentativo):
     tentDict = dbDict["prove"][tentativo]

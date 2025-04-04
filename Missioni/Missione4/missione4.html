@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Missione 4</title>
 </head>
-<body>
+<body onload="CaricaPagina()">
 
     <!--Titolo-->
     <h1>Missione 4</h1>
@@ -55,29 +55,21 @@
                 //assegno paragrafi a div
                 divDettagli.appendChild(par1);
                 divDettagli.appendChild(par2);
-
-                //aggiungo funzione per ricavare dettagli missione
-                divDettagli.setAttribute("onload", "getDettagliMissione()");
             }
             
             //creo div dettagli
-            var divDettagli = document.createElement("div");
+            var divIndizi = document.createElement("div");
 
             //assegno id
-            divDettagli.id = "divDettagli";
+            divIndizi.id = "divIndizi";
 
-            //creo paragrafi
-            var par1 = document.createElement("p");
-            par1.id = "obiettivo";
-            var par2 = document.createElement("p");
-            par2.id = "ricompensa";
+            //creo titolo
+            var titolo = document.createElement("h3");
+            titolo.innerText = "Indizi";
 
-            //assegno paragrafi a div
-            divDettagli.appendChild(par1);
-            divDettagli.appendChild(par2);
+            //assegno titolo a div
+            divDettagli.appendChild(titolo);
 
-            //aggiungo funzione per ricavare dettagli missione
-            divDettagli.setAttribute("onload", "getDettagliMissione()");
         }
 
 
