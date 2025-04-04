@@ -1,54 +1,92 @@
+/* Importazione del font Outfit */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 /* Stile generale */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Outfit', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f8f4e3; /* Sfondo color panna leggero */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra orizzontalmente */
 }
 
 #header {
+    width: 80%;
+    max-width: 600px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
+    padding: 20px 0;
+    margin-top: 20px; /* Parte dall'inizio della finestra */
 }
 
 #header h1 {
+    font-weight: 600;
     margin: 0;
-}
-
-#tentativi-rimasti {
-    font-size: 16px;
+    text-align: center;
+    flex-grow: 1;
 }
 
 #obbiettivo, #indizi, #azioni, #wordle-container, #soluzione {
-    margin: 20px;
+    background-color: #ece0c8; /* Colore leggermente più intenso per i contenitori */
     padding: 20px;
-    background-color: white;
-    border-radius: 8px;
+    border-radius: 20px; /* Border radius aumentato a 20px */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    margin: 20px 0; /* Rimuove margine superiore e inferiore eccessivo */
+    text-align: left; /* Allineamento del testo a sinistra */
+}
+
+#obbiettivo h2, #indizi h2, #soluzione h2, #wordle-container h2 {
+    font-weight: 600;
+    text-align: left; /* Titoli allineati a sinistra */
+    margin-top: 0; /* Rimuove spazio in alto */
 }
 
 #azioni button, #pulsanti button {
-    margin: 5px;
+    margin: 10px;
     padding: 10px 20px;
-    background-color: #333;
+    background-color: #b58339; /* Colore più intenso per i pulsanti */
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 30px; /* Border radius aumentato a 30px */
     cursor: pointer;
+    font-weight: 500;
+    font-family: 'Outfit', sans-serif; /* Applica il font Outfit ai pulsanti */
 }
 
 #azioni button:hover, #pulsanti button:hover {
-    background-color: #555;
+    background-color: #a06f2e;
+}
+
+/* Pulsante "Indovina" centrato nella pagina Wordle */
+#wordle-container button#indovina {
+    display: block;
+    margin: 20px auto; /* Centra il pulsante */
+}
+
+/* Text field nella pagina "Indovina Soluzione" */
+#parola-finale {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif; /* Applica il font Outfit */
+    border: 1px solid #ccc;
+    border-radius: 10px; /* Border radius aumentato a 20px */
+    margin-bottom: 20px;
 }
 
 #griglia-wordle {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .riga {
@@ -61,8 +99,10 @@ body {
     height: 40px;
     text-align: center;
     font-size: 20px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif; /* Applica il font Outfit */
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 10px; /* Border radius aumentato a 20px */
 }
 
 #indizi ul {

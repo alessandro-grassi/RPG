@@ -9,13 +9,13 @@
 <body>
     <div id="header">
         <h1 id="titolo-missione">missione 4</h1>
-        <p id="tentativi-rimasti">Tentativi rimasti: <span id="numero-tentativi">5</span></p>
     </div>
 
     <div id="wordle-container">
         <h2>trova la parola</h2>
+        <p id="tentativi-rimasti">Tentativi rimasti: <span id="numero-tentativi">5</span></p>
         <div id="griglia-wordle">
-            <!--questa è la prima riga-->
+            <!--prima riga come esempio-->
             <div class="riga">
                 <input type="text" maxlength="1" class="lettera">
                 <input type="text" maxlength="1" class="lettera">
@@ -23,10 +23,11 @@
                 <input type="text" maxlength="1" class="lettera">
                 <input type="text" maxlength="1" class="lettera">
             </div>
-            <!--le altre da creare dinamicamente-->
+            <!--altre righe da fare dinamicamente-->
         </div>
-        <button id="indovina">Indovina</button>
-        <button onclick="location.href='prima_pagina.html'">Indietro</button>
+        <div id="pulsanti">
+            <button id="indovina">Indovina</button>
+        </div>
     </div>
 </body>
 </html>
