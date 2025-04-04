@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missione 4</title>
+</head>
+<body>
+
+    <!--Titolo-->
+    <h1>Missione 4</h1>
+
+    <!--Tentativi-->
+    <h3>Tentativi: </h3>
+
+    <!--Div Dettagli-->
+    <div id="divDettagli">
+        <p>Obiettivo: </p>
+        <p>Ricompensa: </p>
+    </div>
+
+    <!--Div Indizi-->
+    <div id="divIndizi">
+        <h3>Indizi:</h3>
+        <ol id="listaIndizi">
+            
+        </ol>
+    </div>
+
+    <!--Pulsante Indovina-->
+    <button id="indovinaBtn">Indovina</button>
+
+    <!--Pulsante Gioca-->
+    <button id="GiocaBtn">Gioca</button>
+
+
+    <script>
+
+        function CaricaPagina(temp = true)
+        {
+            if(temp)
+            {
+                //creo div dettagli
+                var divDettagli = document.createElement("div");
+
+                //assegno id
+                divDettagli.id = "divDettagli";
+
+                //creo paragrafi
+                var par1 = document.createElement("p");
+                par1.id = "obiettivo";
+                var par2 = document.createElement("p");
+                par2.id = "ricompensa";
+
+                //assegno paragrafi a div
+                divDettagli.appendChild(par1);
+                divDettagli.appendChild(par2);
+
+                //aggiungo funzione per ricavare dettagli missione
+                divDettagli.setAttribute("onload", "getDettagliMissione()");
+            }
+            
+            //creo div dettagli
+            var divDettagli = document.createElement("div");
+
+            //assegno id
+            divDettagli.id = "divDettagli";
+
+            //creo paragrafi
+            var par1 = document.createElement("p");
+            par1.id = "obiettivo";
+            var par2 = document.createElement("p");
+            par2.id = "ricompensa";
+
+            //assegno paragrafi a div
+            divDettagli.appendChild(par1);
+            divDettagli.appendChild(par2);
+
+            //aggiungo funzione per ricavare dettagli missione
+            divDettagli.setAttribute("onload", "getDettagliMissione()");
+        }
+
+
+    </script>
+
+
+</body>
+</html>
