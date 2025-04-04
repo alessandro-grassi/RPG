@@ -22,6 +22,12 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
+    elif path == PREFIX+"enemies-images-path":
+        with open("Missioni/Missione5/assets/enemies_images.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode 
+        
     elif path == PREFIX+"mission-scene-2":
         with open("Missioni/Missione5/html_pages/scena_2.html", "r") as f:
             r = f.read()
@@ -61,6 +67,12 @@ def check_get(path:str):
         mana = str(combactSystem.get_mana(name))
         return ('{"result":"'+mana+'"}').encode("utf-8")
     
+    elif path == PREFIX+"enemies-list":
+        with open("Missioni/Missione5/assets/Enemies.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode
+        
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:

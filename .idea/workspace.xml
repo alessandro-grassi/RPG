@@ -8,9 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/RPG.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/RPG.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back_end/modulo_missione5/Skeleton_blood_mage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Back_end/modulo_missione5/Skeleton_blood_mage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Back_end/modulo_missione5/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/Back_end/modulo_missione5/script.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Missioni/Missione5/missione.css" beforeDir="false" afterPath="$PROJECT_DIR$/Missioni/Missione5/missione.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Missioni/Missione5/html_pages/scena_2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Missioni/Missione5/html_pages/scena_2.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +35,7 @@
     "Python.server.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "feature/Piano/missione5-Di__Tano",
     "last_opened_file_path": "C:/Users/TO.DITANO/Desktop/RPG/RPG",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
@@ -119,7 +119,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+        <option value="bundled-python-sdk-4f4e415b4190-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26053.29" />
       </set>
     </attachedChunks>
   </component>
