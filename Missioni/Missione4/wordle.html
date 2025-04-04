@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titolo-missione">Missione Wordle</h1>
+        <p id="tentativi-rimasti">Tentativi rimasti: <span id="numero-tentativi">5</span></p>
+    </div>
+
+    <div id="wordle-container">
+        <h2>Gioca al Wordle</h2>
+        <div id="griglia-wordle">
+            <!-- Esempio di riga -->
+            <div class="riga">
+                <input type="text" maxlength="1" class="lettera">
+                <input type="text" maxlength="1" class="lettera">
+                <input type="text" maxlength="1" class="lettera">
+                <input type="text" maxlength="1" class="lettera">
+                <input type="text" maxlength="1" class="lettera">
+            </div>
+            <!-- Altre righe possono essere aggiunte dinamicamente -->
+        </div>
+        <button id="indovina">Indovina</button>
+    </div>
+</body>
+</html>
