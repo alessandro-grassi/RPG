@@ -47,10 +47,10 @@ def check_get(path:str):
     
     # prende le linee di testo da far scorrere per i dialoghi
     elif path == PREFIX + "get-dialog":
-        with open("Missioni/Missione5/assets/dialogs.json", "r") as f:
+        with open("Missioni/Missione5/assets/dialogs.json", "rb") as f:
             r = f.read()
             f.close()
-            return r.encode("utf-8") # encode per restituire i contenuti del file json come stringa da convertire in json dopo
+            return r # encode per restituire i contenuti del file json come stringa da convertire in json dopo
     
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":

@@ -4,6 +4,14 @@
       "image":"Castle_front.jpg"
    },
    {
+      "dialog":"Salvaci Eroe, noi povere anime vogliamo la nostra pace eterna e la vendetta di quel re malvagio",
+      "image":"hero_image.png"
+   },
+   {
+      "dialog":"Il regno cadde in rovina e la gente divenne solo i fantasmi di ciò che erano una volta",
+      "image":"destroyed_reign.jpg"
+   },
+   {
       "dialog":"Dopo aver superato le insidie sei riuscito a raggiungere i cancelli principali del maniero",
       "image":"Castle_gates.jpeg"
    },
