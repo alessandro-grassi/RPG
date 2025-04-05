@@ -81,11 +81,11 @@ def check_get(path:str):
             return r.encode("utf-8")
     
     # prende le linee di testo da far scorrere per i dialoghi
-    elif path == PREFIX + "get-dialogue":
-        with open("Missioni/Missione5/assets/dialogs.json", "r") as f:
+    elif path == PREFIX + "get-dialog":
+        with open("Missioni/Missione5/assets/dialogs.json", "rb") as f:
             r = f.read()
             f.close()
-            return r.encode("utf-8") # encode per restituire i contenuti del file json come stringa da convertire in json dopo
+            return r # encode per restituire i contenuti del file json come stringa da convertire in json dopo
     
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":
@@ -93,6 +93,23 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
+        
+    # prende il mapping tra dialoghi e immagini per storyline
+    elif path == PREFIX + "get-mapping":
+        with open("Missioni/Missione5/assets/dialogs_images.json","r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+     
+    #funzione usata per recuperare le immagini in base al nome richiesto
+    elif path.startswith(PREFIX+"get-image/"):
+        image_name = path.split("/")[3] # fa uno split e prende la 4a cella
+        with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
+            r = f.read()
+            f.close()
+            return r # restituisce immagine in formato binario
+    
+    
         
      #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):

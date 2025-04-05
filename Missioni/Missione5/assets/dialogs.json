@@ -1,6 +1,5 @@
 [
     {
-      "mission": "Mi ricordo...",
       "text": [
         "C'era un tempo in cui il nostro regno era assolutamente perfetto.",
         "Dove il cibo era abbondante, la povertà una mera barzelletta, e tutti potevano essere chiamati fratelli e sorelle",
@@ -13,7 +12,6 @@
       ]
     },
     {
-      "mission": "AT THE ENTRANCE OF THE GATE",
       "text": [
         "Dopo aver superato le insidie sei riuscito a raggiungere i cancelli principali del castello",
         "Il regno era in rovina, non c'era nemmeno una singola anima tranne il popolo perduto del regno",
@@ -27,7 +25,6 @@
       ]
     },
     {
-      "mission": "AFTER BATTLE WITH GUARDIAN",
       "text": [
         "Riuscendo nell'impresa impossibile l'ammasso di roccia cadde inanime",
         "Ponendo fine al lavoro del povero guardiano",
@@ -35,7 +32,6 @@
       ]
     },
     {
-      "mission": "ENTRANCE TO LIBRARY",
       "text": [
         "Entrando nel castello si presentò all'ingresso una vecchia e polverosa biblioteca",
         "All'interno della stanza era umido, disordinato e freddo",
@@ -48,7 +44,6 @@
       ]
     },
     {
-      "mission": "DARK SPELL",
       "text": [
         "Parole profonde e distanti si udivano da un angolo buio come la pece",
         "\"Pape Satàn, pape Satàn aleppe\" (Alè Satan, Alè Satan risorgi)",
@@ -61,7 +56,6 @@
       ]
     },
     {
-      "mission": "AFTER BATTLE WITH DARK WIZARD",
       "text": [
         "Le ossa caderono di fronte a te diventando di nuovo cenere",
         "Eri esausto ma il tuo lavoro non era ancora finito",
@@ -69,7 +63,6 @@
       ]
     },
     {
-      "mission": "THRONE ROOM ENTRANCE",
       "text": [
         "Quando si aprono le porte della sala del trono, si vide una sala reale vuota.",
         "Era vuoto ma si poteva sentire nei tuoi pensieri le urla dei poveri che imploravano per la loro vita ai piedi del re",
@@ -84,7 +77,6 @@
       ]
     },
     {
-      "mission": "FINAL BATTLE AGAINST PHANTOM KING",
       "text": [
         "Il vecchio re cominciò a cadere cercando di afferrare la sua spada",
         "Gridò \"Sono immortale!!\"",
@@ -98,15 +90,13 @@
       ]
     },
     {
-      "mission": "CHOICE",
       "text": [
         "PURIFICA LA SPADA E RIPORTA LA PACE ALLE ANIME DEL REGNO",
         "MANTIENI LA SPADA IN QUELLE CONDIZIONI PER LE TUE PROSSIME AVVENTURE"
       ]
-    },
-    {
-      "mission": "FINE MISSIONE",
-      "text": []
     }
   ]
-  
+
+
+
+
