@@ -1,13 +1,10 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-from Back_end import missione1
-dict = {
+import Back_end.missione1.script as missione1
+dict = { 
     "/missione1": missione1
-   
 }
-
-
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -18,9 +15,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         path = self.path
         path = urlparse(path).path
 
-
         resp = check_get(path)
-
 
         self.wfile.write(resp)
         return
@@ -41,7 +36,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
         resp = check_post(path, client_choice)
-
 
         self.wfile.write(resp)
         return
@@ -73,15 +67,11 @@ def check_get(path):
     return "Modulo non trovato"
 
 
-
-
 def check_post(path, client_choice):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_post(path, client_choice)
     return "Modulo non trovato"
-
-
 
 
 if __name__ == "__main__":
