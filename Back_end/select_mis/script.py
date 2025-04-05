@@ -100,7 +100,17 @@ def retrieve(uid):
                         missioni(ID_missione) = progressi(id_missione) AND
                         progressi(id_personaggio) = {uid};''')
 
-    return data
+    parsed_data = parse(data)
+    return parsed_data
 
 def parse(data):
-    return 0
+    parsed_data = []
+    for row in data:
+        mission = {
+            "nome": row["nome"],
+            "descrizione": row["descrizione"],
+            "url": row["url"],
+            "completata": row["p_comp"] == 100  
+        }
+        parsed_data.append(mission)
+    return parsed_data
