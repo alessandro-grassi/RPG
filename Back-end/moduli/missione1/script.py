@@ -1,5 +1,5 @@
 import json
-
+#GIUSTO
 def check_get(path):
     if path.endswith("get_generica"):
         return 'ciao'.encode("utf-8")
@@ -21,9 +21,5 @@ def check_get(path):
 
 
 
-def check_post(path, client_choice):
-    if path.endswith("post_generica"):
-        return process_mission(client_choice)
-    else:
-        return "Percorso non valido".encode("utf-8")
+
 

@@ -32,6 +32,7 @@ function startMission() {
 
     alert(`Tempo: ${timeLeft}s, Click richiesti: ${clicksRequired}`);
     startGame(); // Avvia il gioco
+    }
     let timeLeft = 60; // Tempo iniziale
     let clicks = 0; // Click effettuati
     let clicksRequired = 10; // Click richiesti
@@ -39,7 +40,7 @@ function startMission() {
 
     const grass = document.getElementById('grass');
     const resultDisplay = document.getElementById('result');
-}
+
 
 // Funzione per spostare la ciocca d'erba casualmente
 function moveGrass() {
@@ -64,7 +65,7 @@ function startTimer() {
             clearInterval(timerInterval);
             endGame();
         }
-    }, 1000);
+    }, 3000);
 }
 
 // Conteggio click
