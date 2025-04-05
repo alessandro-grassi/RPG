@@ -52,7 +52,7 @@ function fetchData(request, callback)
 }
 
 //GLOBAL
-    const NAME = "Adepto immortale cremisi";
+    const NAME = "Adepto immortale Cremisi";
     let vita_corrente = 0;
     let vita_corrente_pg = 500;
     let attacco_pg = 10;
