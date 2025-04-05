@@ -1,25 +1,29 @@
-from moduli import queryLib as q
-
-q.connetti()
-print(
-    q.execute('SELECT * FROM classi')
-)
-q.disconnetti()
+import json
 
 def check_get(path):
     if path.endswith("get_generica"):
-    
-        return funz()
-        
+        return 'ciao'.encode("utf-8")
+    elif path.endswith("/index"):
+        try:
+            with open("./Missioni/Missione1/index.html", "r") as file:
+                content = file.read()
+            return content.encode("utf-8")
+        except FileNotFoundError:
+            return "File non trovato".encode("utf-8")
+    elif path.endswith("/script.js"):
+        try:
+            with open("./Missioni/Missione1/script.js", "r") as file:
+                content = file.read()
+            return content.encode("utf-8")
+        except FileNotFoundError:
+            return "File non trovato".encode("utf-8")
 
-def funz():
-    return "ciao"
 
 
-def check_post(path,client_choice):
+
+def check_post(path, client_choice):
     if path.endswith("post_generica"):
-        return f2(client_choice)
+        return process_mission(client_choice)
+    else:
+        return "Percorso non valido".encode("utf-8")
 
-def f2(client_choice):
-    nome = client_choice.get("nome")
-    return nome
