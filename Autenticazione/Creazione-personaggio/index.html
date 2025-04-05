@@ -3,55 +3,66 @@
 <head>
     <link rel="stylesheet" href="http://localhost:8080/personaggio/stile">
     <script src="http://localhost:8080/personaggio/backend"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
     <div class="container">
-        <h1 class="title">Creazione personaggio nuovo</h1>
-        <form class="register-form" id="form">
-            <div class="form-group">
-                <label for="name">Nome:</label>
-                <input class="input" type="text" id="name" placeholder="Inserisci un nome" required oninvalid="this.setCustomValidity('Non hai inserito un nome')" oninput="setCustomValidity('')">
-            </div><br><br>
-            
-            <!-- Lista a discesa con opzioni e immagine a destra -->
-            <div class="form-group flex-row">
-                <label id="classe" for="choice">Classe:</label>
-                <select id="choice" class="input" onchange="cambiaImmagine()">
-                    <option value="default">Seleziona classe</option>
-                    <option value="opzione1">Mago Blu</option>
-                    <option value="opzione2">Mago Rosso</option>
-                </select>
-                <img id="class-image" src="https://cdn.pixabay.com/photo/2016/09/28/02/14/user-1699635_1280.png" alt="Immagine classe" class="classe-immagine">
-            </div><br><br>
-
-            <!-- Lista della sofferenza 
-            <label id ="abilita" for="checkbox">Abilità:</label><br><br>
-            <div>
-                <label><input type="checkbox" class="checkbox" value="opzione1"> Palla di fuoco</label><br>
-                <label><input type="checkbox" class="checkbox" value="opzione2"> Sberle a raffica</label><br>
-                <label><input type="checkbox" class="checkbox" value="opzione3"> Pensione</label><br>
-                <label><input type="checkbox" class="checkbox" value="opzione4"> Reddito</label><br>
-            </div>
-            <br>
-            <input class="input" type="submit" value="Submit">
-            <input class="input" type="reset" value="Reset">
-             -->
-
-            <select id="ab1" onload="listaAbilità()">
-                <option value="default">Seleziona classe</option>
-            </select>
+        <div id="titolo">Decidi il tuo destino</div>
+        <div id="scegli" onload="cerca_personaggi()">
+            <div class = "hoverdiv" onclick="changeVisibility()">Crea un nuovo personaggio!</div>
+        </div>
+        <div id="crea">
+            <h1 class="title">Crea il tuo personaggio!</h1>
+            <form class="register-form" id="form">
+                <div class="form-group">
+                    <label for="name">Nome:</label>
+                    <input class="input" type="text" id="name" placeholder="Inserisci un nome" required oninvalid="this.setCustomValidity('Non hai inserito un nome')" oninput="setCustomValidity('')">
+                </div><br><br>
                 
-            <select id="ab2" onload="listaAbilità()">
-                <option value="default">Seleziona classe</option>
-            </select>
+                <!-- Lista a discesa con opzioni e immagine a destra -->
+                <div class="form-group flex-row">
+                    <label id="classe" for="choice">Classe:</label>
+                    <select id="choice" class="input" onchange="cambiaImmagine()">
+                        <option value="default">Seleziona classe</option>
+                        <option value="opzione1">Mago Blu</option>
+                        <option value="opzione2">Mago Rosso</option>
+                    </select>
+                    <img id="class-image" src="https://cdn.pixabay.com/photo/2016/09/28/02/14/user-1699635_1280.png" alt="Immagine classe" class="classe-immagine">
+                </div><br><br>
+    
+                <!-- Lista della sofferenza 
+                <label id ="abilita" for="checkbox">Abilità:</label><br><br>
+                <div>
+                    <label><input type="checkbox" class="checkbox" value="opzione1"> Palla di fuoco</label><br>
+                    <label><input type="checkbox" class="checkbox" value="opzione2"> Sberle a raffica</label><br>
+                    <label><input type="checkbox" class="checkbox" value="opzione3"> Pensione</label><br>
+                    <label><input type="checkbox" class="checkbox" value="opzione4"> Reddito</label><br>
+                </div>
+                 -->
+    
+                <select id="ab1" onload="listaAbilità()">
+                    <option value="default">Seleziona classe</option>
+                </select>
+                    
+                <select id="ab2" onload="listaAbilità()">
+                    <option value="default">Seleziona classe</option>
+                </select>
+    
+                <select id="ab3" onload="listaAbilità()">
+                    <option value="default">Seleziona classe</option>
+                </select>
+                
+                <br>
+                <input class="input" type="submit" value="Submit">
+                <input class="input" type="reset" value="Reset">
+                <div class = "hoverdiv" onclick="changeVisibility()">Seleziona il personaggio</div>
+            </form>
 
-            <select id="ab3" onload="listaAbilità()">
-                <option value="default">Seleziona classe</option>
-            </select>
-
-        </form>
+        </div>
+        
     </div>
 </body>
 </html>

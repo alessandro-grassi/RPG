@@ -1,3 +1,17 @@
+var k=0;
+
+function changeVisibility(){
+  if(k == 0){
+    document.getElementById("scegli").style.visibility = 'visible';
+    document.getElementById("crea").style.visibility = "hidden";
+    k=1;
+  }else if(k == 1){
+    document.getElementById("scegli").style.visibility = 'hidden';
+    document.getElementById("crea").style.visibility = "visible";
+    k=0;
+  }
+}
+
 function crea_personaggio(){
     const name = document.getElementById("name");
     const classe = document.getElementById("classe");
@@ -5,9 +19,6 @@ function crea_personaggio(){
     const ab2 = documentgetElementById("ab2");
     const ab3 = documentgetElementById("ab3");
 }
-
-
-
 
 function cambiaImmagine() {
     var selezione = document.getElementById("choice").value;
@@ -23,4 +34,9 @@ function cambiaImmagine() {
     } else {
         class_image.src = default_image;  // Non mostrare nulla altrimenti
     }
+}
+
+function cerca_personaggi(){
+    //richiesta get
+
 }

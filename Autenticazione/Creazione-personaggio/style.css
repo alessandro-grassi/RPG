@@ -1,19 +1,73 @@
-.title {
-    padding: 5px;
-    font-size: 2rem;
-}
+/*Light mode attiva del dispositivo*/
+:root {
+    --body-bg: #FFFFFF;
+    --body-color: #000000;
+ }
+ 
+ /* Dark mode attiva del dispositivo*/
+ @media (prefers-color-scheme: dark) {
+    :root {
+        --body-bg: #000000;
+        --body-color: #FFFFFF;
+    }
+ }
 
-.container {
-    width: 60%;
-    padding: 10px;
-    margin: 50px auto;
-    background-color: #f0f0f0bb;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+body {
+    position: relative;
+    background: var(--body-bg);
+    color: var(--body-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    font-size: 1.2rem;
+    font-family: 'Iceland';
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    position:fixed;
+    top:7em;
+    gap:3em;
+    width: 65%;
+    height:80%;
+    border-radius: 3em;
+    background-color: #f0f0f0bb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#titolo{
+    position:fixed;
+    bottom:85%;
+    font-size: 5rem;
+    color:rgb(0, 255, 242)
+}
+
+#crea{
+    visibility: hidden;
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 3%;
+    padding-top: 1em;
+    height:90%;
+    width:40%;
+}
+
+#scegli{
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 3%;
+    padding-top: 1em;
+    height:90%;
+    width:40%;
+}
+
+
+.title {
+    padding: 5px;
+    font-size: 2rem;
 }
 
 .register-form {
