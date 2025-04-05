@@ -21,9 +21,6 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-    
-    elif path == PREFIX+"castle-front":
-        ö
         
     elif path == PREFIX+"api-test":
         with open("Missioni/Missione5/api-test.html", "r") as f: # usare r per richieste sui file
