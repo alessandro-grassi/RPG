@@ -1,4 +1,3 @@
-import sys
 from Back_end import queryLib
 
 def aggiungi_utente(user, pw, em):
@@ -17,18 +16,18 @@ def utente_registrato(user, pw):
 
 def check_get(path):
     if path == "/login":  # per aprire la pagina di login principale
-        f = open(sys.path[0]+"/Autenticazione/Login/login.html", "r")
+        f = open("Autenticazione/Login/login.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     if path.endswith("stile"):
-        f = open(sys.path[0] +"/Autenticazione/Login/login.css", "r")
+        f = open("Autenticazione/Login/login.css", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
     elif path.endswith("backend"):
-        f = open(sys.path[0] +"/Autenticazione/Login/login.js", "r")
+        f = open("Autenticazione/Login/login.js", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
