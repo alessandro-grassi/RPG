@@ -1,6 +1,7 @@
 import json
 import Back_end.queryLib as ql
-""""
+import base64
+"""
 test_obj = [
     {
         "nome" : "miss1",
@@ -44,8 +45,8 @@ def check_get(path):
         return get_home()
     
 def check_post(path,cc):
-    uid = cc.uid
     if path.endswith("missioni"):
+        uid = cc.get("uid","")
         return get_missioni(uid)
 
 def get_style():
@@ -69,7 +70,7 @@ def get_missioni(uid):
 
     # create_tables()
     data = retrieve(uid)
-    # obj = parse(data)
+    obj = parse(data)
 
     ql.disconnetti
     return json.dumps({"missioni" : obj}).encode("utf-8")
@@ -97,20 +98,24 @@ def retrieve(uid):
                         missioni,
                         progressi
                       WHERE
-                        missioni(ID_missione) = progressi(id_missione) AND
-                        progressi(id_personaggio) = {uid};''')
+                        missioni.ID_missione = progressi.id_missione AND
+                        progressi.id_personaggio = {uid};''')
 
-    parsed_data = parse(data)
-    return parsed_data
+    return data
 
 def parse(data):
     parsed_data = []
     for row in data:
         mission = {
-            "nome": row["nome"],
-            "descrizione": row["descrizione"],
-            "url": row["url"],
-            "completata": row["p_comp"] == 100  
+            "nome": row[1],
+            "descrizione": row[2],
+            "url": row[3],
+            "completata": row[8] == 100,
+            "img": parse_img(row[4])
         }
         parsed_data.append(mission)
     return parsed_data
+
+def parse_img(img):
+    encoded_img = base64.b64encode(bytes(img)).decode("utf-8")
+    return f"data:image/png;base64,{encoded_img}"

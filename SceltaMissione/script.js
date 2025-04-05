@@ -3,7 +3,7 @@ function get_missioni() {
     fetch("http://localhost:8080/sm_missioni", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(uid)
+        body: JSON.stringify({uid})
     }
     )
     .then((respsonse) => {
@@ -27,12 +27,16 @@ function loadMis(missioni) {
     missioni.forEach((missione) => {
         let mis = document.createElement("div");
         let btn = document.createElement("button");
+        let img = document.createElement("img");
 
         mis.innerHTML = "<h3>" + missione.nome + "</h3>" + missione.descrizione + "<br>";
         btn.onclick = () => {
             goToUrl(mis.url);
         }
         btn.innerHTML = "Partecipa";
+        encoded_img = missione.img.split(",")[1];
+        console.log(atob(encoded_img));
+        img.src = atob(encoded_img);
 
         if(missione.completata) {
             mis.classList.add("completato");
@@ -40,7 +44,7 @@ function loadMis(missioni) {
         else {
             mis.classList.add("missione");
         }
-
+        mis.appendChild(img);
         mis.appendChild(btn);
         div.appendChild(mis);
     });
