@@ -4,6 +4,7 @@ const output = document.getElementById("output")
 var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
 var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
 var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
+var audioMuted = false; // variabile globale!
     
 const magieDescriptions = {
     1: "Palla di Fuoco ",
@@ -199,6 +200,7 @@ function playMusic() {
 }
 
 function attackSound() {
+    if(audioMuted) return;
     attackAudio.volume = 0.2;
     attackAudio.play().then(() => {
         console.log("Suono attacco avviato!");
@@ -208,6 +210,7 @@ function attackSound() {
 }
 
 function magicSound() {
+    if(audioMuted) return;
     magicAudio.volume = 0.2;
     magicAudio.play().then(() => {
         console.log("Suono magia avviato!");
@@ -215,8 +218,6 @@ function magicSound() {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
     });
 }
-
-let audioMuted = false; // variabile globale!
 
 function GestisciAudio() {
     if (!audioMuted) {
