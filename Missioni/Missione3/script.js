@@ -1,6 +1,8 @@
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
 const output = document.getElementById("output")
+const endGameScreen = document.getElementById("messaggioFineGioco");
+const playAgainButton = document.getElementById("giocaAncora");
 var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
 var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
 var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
@@ -152,11 +154,16 @@ magicButton.addEventListener("click", (e) => {
 function announceEndGame(game) {
     const winner = game.checkEndGame();
     if (!winner) return;
+    const endGameText = endGameScreen.getElementsByTagName("h2")[0];
     if (winner.constructor.name === "Hero") {
-        output.innerHTML = 'Hai vinto!!';
+        endGameText.innerHTML = 'Hai vinto!!';
     } else {
-        output.innerHTML = 'Hai perso...';
+        endGameText.innerHTML = 'Hai perso...';
     }
+
+    // Visualizzo la schermata di fine gioco
+
+    endGameScreen.style.display = "flex";
 
     atkButton.disabled = true;
     magicButton.disabled = true;
@@ -165,6 +172,23 @@ function announceEndGame(game) {
     output.style.pointerEvents = "none";
     output.style.userSelect = "none";
 }
+
+// Evento gioca di nuovo
+playAgainButton.addEventListener("click", () => {
+    endGameScreen.style.display = "none";
+
+    // Resetto il gioco per poter iniziare con una nuova partita
+    game.reset();
+    // Aggiorno l'interfaccia
+    // Abilito i pulsanti
+    atkButton.disabled = false
+    magicButton.disabled = false
+    // Cancello il messaggio nel div output
+    output.innerHTML = "";
+
+    game.aggiornaUI();
+});
+
 
 const heroesInfos = [
     {
