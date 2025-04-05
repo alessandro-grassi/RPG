@@ -82,7 +82,7 @@ function setName(){
 }
 
 function setDialogue(){
-    document.getElementById('text').innerHTML = "Adepto immortale cremisi sta aspettando...";
+    document.getElementById('text').innerHTML = "Adepto immortale cremisi ti osserva...";
 }
 
 function setButtonAttack(){
