@@ -135,7 +135,8 @@ function enemyAttack(json){
                     document.getElementById('text').innerHTML = moves['description'];
                     if(moves['move_type'] == 'attack'){
                         if(moves['damage_type'] == 'fisico'){
-                            vita_corrente_pg -= danno_fisico + (vita_corrente_pg * (moves['damage_fis_perc']/100));
+                            danno_enemy = danno_fisico + Math.floor((vita_corrente_pg * (moves['damage_fis_perc']/100)));
+                            vita_corrente_pg -= danno_enemy;
                             document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
                         }
                     }
@@ -143,11 +144,21 @@ function enemyAttack(json){
                         vita_corrente_pg -= danno_fisico;
                         document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
                     }
-                    return;
+                    if(vita_corrente_pg < 0){
+                        vita_corrente_pg = 0;
+                        gameover();
+                    }
+                    tempChance -= 100
                 }
             })
         }
     })
+}
+function gameover(){
+    document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
+    document.getElementById('text').innerHTML = "GAME OVER";
+    document.getElementById('attack_button').remove();
+    document.getElementById('next_button').remove();
 }
 function setLifePointsPG(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
