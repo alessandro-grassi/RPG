@@ -1,4 +1,4 @@
-import queryLib
+from Back_end import queryLib
 
 queryLib.connetti()
 print(
