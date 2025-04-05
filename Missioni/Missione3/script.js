@@ -4,7 +4,7 @@ const output = document.getElementById("output")
 var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
 var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
 var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
-    
+
 const magieDescriptions = {
     1: "Palla di Fuoco ",
     2: "Esplosione Ghiacciata ",
@@ -32,7 +32,7 @@ atkButton.addEventListener("click", (e) => {
         output.innerHTML = `${enemy.name} ha schivato l'attacco`;
         console.log("Attacco schivato");
     }
-    
+
     game.completeRound();
     game.aggiornaUI();
     game.nextRound();
@@ -42,7 +42,7 @@ atkButton.addEventListener("click", (e) => {
     atkButton.disabled = true;
     magicButton.disabled = true;
 
-    if ((!hero.isAlive()) || (!enemy.isAlive())) 
+    if ((!hero.isAlive()) || (!enemy.isAlive()))
         return;
     //Inizio sezione attacco del nemico
     // Dopo 2 secondi cambia il testo in "Il boss sta pensando..."
@@ -74,7 +74,7 @@ atkButton.addEventListener("click", (e) => {
             atkButton.disabled = false;
             magicButton.disabled = !game.hero.canUseMagic;
         }, timeout);
-        
+
     }, 2000);
 });
 
@@ -114,7 +114,7 @@ magicButton.addEventListener("click", (e) => {
     atkButton.disabled = true;
     magicButton.disabled = true;
 
-    if ((!hero.isAlive()) || (!enemy.isAlive())) 
+    if ((!hero.isAlive()) || (!enemy.isAlive()))
         return;
     // Dopo 2 secondi cambia il testo in "Il boss sta pensando..."
     setTimeout(() => {
@@ -166,9 +166,28 @@ function announceEndGame(game) {
     output.style.userSelect = "none";
 }
 
+const heroesInfos = [
+    {
+        name: "Super Tibet",
+        lvl: 80,
+        exp: 7900,
+        atk: 29,
+        hp: 240,
+    },
+    {
+        name: "Test",
+        lvl: 100,
+        exp: 10000,
+        atk: 45,
+        hp: 2000,
+    }
+];
 
+const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.length)];
 
-let game = new Game(new Hero("Super Tibet", 80, 7900, 29, 240)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
+console.log(selectedHeroInfo);
+
+let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
 
@@ -176,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async (e) => {
     document.getElementById("nomeGiocatore").textContent = game.hero.name;
     document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
     game.aggiornaUI();
-    
+
 });
 
 /* Inzio Sezione Gestione Audio */
@@ -193,7 +212,7 @@ function playMusic() {
         console.log("Musica avviata!");
     }).catch(error => {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
-        
+
     });
     //musicButton.disabled = true;
 }
