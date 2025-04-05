@@ -24,7 +24,7 @@ class Entity {
 
     //Metodo utilizzabile sia dal mostro che dall'eroe, per schivare
     avoid(){
-        let avoid = game.RNG(5);
+        let avoid = game.RNG(8);
         if (avoid == 0)
             return true;
         return false;

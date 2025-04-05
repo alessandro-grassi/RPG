@@ -58,8 +58,16 @@ class Game {
 
     //Metodo che aggiorna l'interfaccia utente con le informazioni attuali del gioco
     aggiornaUI() {
-        document.getElementById("vitaGiocatore").textContent = this.hero.hp;
+        if(this.hero.hp < 0) 
+            document.getElementById("vitaGiocatore").textContent = 0;
+        else
+            document.getElementById("vitaGiocatore").textContent = this.hero.hp;
+
+        if(this.selectedEnemy.hp < 0)
+            document.getElementById("vitaMostro").textContent = 0;
+        else
         document.getElementById("vitaMostro").textContent = this.selectedEnemy.hp;
+
         document.getElementById("turno").textContent = this.round;
         if(this.hero.canUseMagic)
             magicButton.disabled = false
@@ -77,7 +85,7 @@ class Game {
         if (this.selectedEnemy.status === "frozen" && this.RNG(3) === 0) {
             this.removeStatus();
         }
-        if (this.selectedEnemy.status === "burned" && this.RNG(10 - this.selectedEnemy.statusTurns) === 0) {
+        if (this.selectedEnemy.status === "burned" && !this.RNG(5)){
             this.removeStatus();
         }
         if (this.selectedEnemy.status === "paralyzed" && this.RNG(5) === 0) {
@@ -88,7 +96,7 @@ class Game {
     //Metodo che rimuove lo stato attuale del nemico
     removeStatus(){
         setTimeout(() => {
-            output.innerHTML = `Il nemico e' guarito da ${this.selectedEnemy.status}`;
+            output.innerHTML = `Il nemico e' guarito dallo status`;
         }, 1000);
         console.log(`Il nemico e' guarito da ${this.selectedEnemy.status}`);
         this.selectedEnemy.status = "none";
@@ -97,13 +105,21 @@ class Game {
 
     //Metodo che applica gli effetti di stato al nemico
     applyStatusEffects() {
+        if ((!this.hero.isAlive()) || (!this.selectedEnemy.isAlive())) 
+            return;
         if (this.selectedEnemy.status === "burned") {
-            let burnDamage = Math.floor((this.hero.atk / 3));
+            let burnDamage = Math.floor((this.hero.atk / 3) + this.RNG(10));
             this.selectedEnemy.hp -= burnDamage;
             console.log(`Il nemico subisce ${burnDamage} danni da bruciatura!`);
             setTimeout(() => {
                 output.innerHTML = `Il nemico subisce ${burnDamage} danni da bruciatura!`;
             }, 1000);
-        }   
+            }   
+        if (this.selectedEnemy.status === "frozen") {
+            console.log(`Il nemico è congelato e non può attaccare!`);
+            setTimeout(() => {
+                output.innerHTML = `Il nemico è congelato e non può attaccare!`;
+            }, 1000);
+        }
     }
 }
