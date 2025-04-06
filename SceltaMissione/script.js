@@ -27,16 +27,14 @@ function loadMis(missioni) {
     missioni.forEach((missione) => {
         let mis = document.createElement("div");
         let btn = document.createElement("button");
-        let img = document.createElement("img");
+        //let img = document.createElement("img");
 
         mis.innerHTML = "<h3>" + missione.nome + "</h3>" + missione.descrizione + "<br>";
         btn.onclick = () => {
             goToUrl(mis.url);
         }
         btn.innerHTML = "Partecipa";
-        encoded_img = missione.img.split(",")[1];
-        console.log(atob(encoded_img));
-        img.src = atob(encoded_img);
+        //img.src = missione.img;
 
         if(missione.completata) {
             mis.classList.add("completato");
@@ -44,7 +42,11 @@ function loadMis(missioni) {
         else {
             mis.classList.add("missione");
         }
-        mis.appendChild(img);
+        //mis.appendChild(img);
+        //mis.innerHTML += "<br>"
+        mis.style.backgroundImage = `url('${missione.img}')`;
+        mis.style.backgroundSize = "contain";
+        mis.style.backgroundRepeat = "no-repeat";  
         mis.appendChild(btn);
         div.appendChild(mis);
     });

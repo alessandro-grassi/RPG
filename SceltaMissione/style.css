@@ -3,16 +3,9 @@ div, header {
     border-radius: 8px;
     padding: 10px;
     margin: 10px auto;
-    max-width: 600px;
+    width: 40.75%;
     text-align: center;
     font-family: Arial, sans-serif;
-}
-
-img {
-    width: 20%;
-    border: 2px solid;
-    border-radius: 8px;
-    border-color: crimson ;
 }
 
 header {
@@ -29,23 +22,29 @@ header {
 }
 
 .missione, .completato {
+    border: 5px solid;
     padding: 15px;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    color: #FFF;
+    text-shadow: 1px 1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        -1px -1px 0 #000;
+    opacity: 0.75;
 }
 
 
 .missione {
-    border-color: #28A745;
+    border-color: #28A745FF;
     background-color: rgba(40, 167, 69, 0.2);
 }
 
 .completato {
-    border-color: #6C757D;
+    border-color: #6C757DFF;
     background-color: rgba(108, 117, 125, 0.3);
-    color: #555;
 }
 
 .missione:hover, .completato:hover {
