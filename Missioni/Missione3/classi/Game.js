@@ -61,8 +61,8 @@ class Game {
         this.endGame = false;
     }
 
-    //Metodo che controlla se il gioco è finito
-    checkEndGame() {
+    // Metodo che restituisce il vincitore
+    checkWinner() {
         let victoriousEntity = null;
         if (!this.hero.isAlive()) {
             victoriousEntity = this.selectedEnemy;
@@ -70,9 +70,12 @@ class Game {
             victoriousEntity = this.hero;
         }
 
-        if (victoriousEntity) this.endGame = true;
-
         return victoriousEntity;
+    }
+
+    //Metodo che controlla se il gioco è finito
+    checkEndGame() {
+        
     }
 
     //Metodo che aggiorna l'interfaccia utente con le informazioni attuali del gioco

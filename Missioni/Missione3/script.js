@@ -29,7 +29,7 @@ atkButton.addEventListener("click", (e) => {
         attackSound();
         const heroAtk = hero.attack(enemy);
         output.innerHTML = `Hai inflitto ${heroAtk} punti di danno a ${enemy.name}`;
-        announceEndGame(game);
+        announceVictory(game);
     } else {
         output.innerHTML = `${enemy.name} ha schivato l'attacco`;
         console.log("Attacco schivato");
@@ -61,7 +61,7 @@ atkButton.addEventListener("click", (e) => {
                 const enemyAtk = game.enemyAttack();
                 output.innerHTML = `${enemy.name} ti ha inflitto ${enemyAtk} punti di danno`;
 
-                announceEndGame(game);
+                announceVictory(game);
             } else {
                 output.innerHTML = `${hero.name}, hai schivato l'attacco!`;
                 console.log("Attacco schivato");
@@ -102,7 +102,7 @@ magicButton.addEventListener("click", (e) => {
         const magiaUsata = magieDescriptions[hero.magia] || "Magia Sconosciuta";
         output.innerHTML = `Hai usato <b>${magiaUsata}</b> su ${enemy.name}!`;
 
-        announceEndGame(game);
+        announceVictory(game);
     } else {
         output.innerHTML = `${enemy.name} ha schivato la magia`;
         console.log("Attacco schivato");
@@ -132,7 +132,7 @@ magicButton.addEventListener("click", (e) => {
                 const enemyAtk = game.enemyAttack();
                 output.innerHTML = `${enemy.name} ti ha inflitto ${enemyAtk} punti di danno`;
 
-                announceEndGame(game);
+                announceVictory(game);
             } else {
                 output.innerHTML = `${hero.name}, hai schivato l'attacco!`;
                 console.log("Attacco schivato");
@@ -150,9 +150,9 @@ magicButton.addEventListener("click", (e) => {
 });
 /*Fine sezione attacco del nemico*/
 
-// Annuncia la fine del gioco
-function announceEndGame(game) {
-    const winner = game.checkEndGame();
+// Annuncia la fine di una parte del gioco
+function announceVictory(game) {
+    const winner = game.checkWinner();
     if (!winner) return;
     const endGameText = endGameScreen.getElementsByTagName("h2")[0];
     if (winner.constructor.name === "Hero") {
