@@ -16,7 +16,8 @@ class Entity {
     attack(target) {
         if (target.hp > 0) {
             let damage = Math.floor(Math.random() * this.atk) + 10;
-            target.hp -= damage;
+            // Evito che la vita del target scenda sotto allo 0
+            target.hp - damage < 0 ? target.hp = 0 : target.hp -= damage;
             return damage;
         }
         return 0;

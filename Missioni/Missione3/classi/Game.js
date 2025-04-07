@@ -77,21 +77,21 @@ class Game {
 
     //Metodo che aggiorna l'interfaccia utente con le informazioni attuali del gioco
     aggiornaUI() {
-        if(this.hero.hp < 0) 
-            document.getElementById("vitaGiocatore").textContent = 0;
-        else
-            document.getElementById("vitaGiocatore").textContent = this.hero.hp;
+        document.getElementById("nomeGiocatore").textContent = this.hero.name;
+        document.getElementById("vitaGiocatore").textContent = this.hero.hp;
 
-        if(this.selectedEnemy.hp < 0)
-            document.getElementById("vitaMostro").textContent = 0;
-        else
+        document.getElementById("nomeMostro").textContent = this.selectedEnemy.name;
         document.getElementById("vitaMostro").textContent = this.selectedEnemy.hp;
 
         document.getElementById("turno").textContent = this.round;
+
+        magicButton.disabled = !this.hero.canUseMagic;
+        /*
         if(this.hero.canUseMagic)
             magicButton.disabled = false
         else   
             magicButton.disabled = true;
+        */
     }
 
     //Metodo che genera un numero da 0 a max-1

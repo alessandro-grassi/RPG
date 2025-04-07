@@ -219,7 +219,6 @@ document.addEventListener("DOMContentLoaded", async (e) => {
     document.getElementById("nomeGiocatore").textContent = game.hero.name;
     document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
     game.aggiornaUI();
-
 });
 
 /* Inzio Sezione Gestione Audio */
