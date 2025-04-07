@@ -1,4 +1,3 @@
-import sys
 from Back_end import queryLib
 
 #la parte post e coneessione al DB la tengo buona ma non so se conviene farla qui o su modulo
@@ -22,28 +21,28 @@ def utente_registrato(user, pw):
 def check_get(path):
     #apre pagina principale
     if path == "/missione4":  
-        f = open(sys.path[0]+"/Missioni/Missione4/primapagina.html", "r")
+        f = open("Missioni/Missione4/primapagina.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
     #apre il css
     elif path.endswith("stile"):
-        f = open(sys.path[0] +"/Missioni/Missione4/stile.css", "r")
+        f = open("Missioni/Missione4/stile.css", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
     #apre la pagina per indovinare
     elif path.endswith("indovina"):
-        f = open(sys.path[0] +"/Missioni/Missione4/indovina_soluzione.html", "r")
+        f = open("Missioni/Missione4/indovina_soluzione.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
     #apre la pagina per giocare
     elif path.endswith("gioca"):
-        f = open(sys.path[0] +"/Missioni/Missione4/wordle.html", "r")
+        f = open("Missioni/Missione4/wordle.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
