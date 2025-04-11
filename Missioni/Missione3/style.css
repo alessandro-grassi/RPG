@@ -84,6 +84,8 @@ button:disabled {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s, box-shadow 0.2s;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 button:disabled:hover {
@@ -118,8 +120,8 @@ button:disabled:hover {
     background: transparent;
     border: none;
     cursor: pointer;
-    width: 6.5%;
-    height: 11.3%;
+    width: 70px;
+    height: 70px;
     padding: 0;
     display: flex;
     justify-content: center;

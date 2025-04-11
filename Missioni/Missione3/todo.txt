@@ -14,5 +14,4 @@ Gestione magia
 TODO FUTURO
 Creare funzione con attacco del mostro per rendere il tutto più scalabile (occhiali veloci)
 Sessioni di gioco (se esci si salva dove sei rimasto)
-Vari boss (Noce I, NoceII, Noce III, Noce Wittelsbach..)
 Selezione personaggio

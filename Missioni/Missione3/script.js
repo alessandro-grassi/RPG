@@ -6,10 +6,11 @@ const playAgainButton = document.getElementById("giocaAncora");
 var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
 var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
 var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
-
+var audioMuted = false; // variabile globale!
+    
 const magieDescriptions = {
     1: "Palla di Fuoco ",
-    2: "Esplosione Ghiacciata ",
+    2: "Aromaterapia",
     3: "Fulmine Devastante "
 };
 
@@ -51,8 +52,8 @@ atkButton.addEventListener("click", (e) => {
     setTimeout(() => {
         output.innerHTML = `${enemy.name} sta pensando...`;
 
-        // Dopo 3 secondi + ritardo casuale il nemico attacca
-        const timeout = 3000 + Math.floor(Math.random() * 1000);
+        // Dopo 2 secondi + ritardo casuale il nemico attacca
+        const timeout = 2000 + Math.floor(Math.random() * 1000);
         setTimeout(() => {
             if (game.endGame) return;
 
@@ -122,8 +123,8 @@ magicButton.addEventListener("click", (e) => {
     setTimeout(() => {
         output.innerHTML = `${enemy.name} sta pensando...`;
 
-        // Dopo 3 secondi + ritardo casuale il nemico attacca
-        const timeout = 3000 + Math.floor(Math.random() * 1000);
+        // Dopo 2 secondi + ritardo casuale il nemico attacca
+        const timeout = 2000 + Math.floor(Math.random() * 1000);
         setTimeout(() => {
             if (game.endGame) return;
 
@@ -199,10 +200,10 @@ const heroesInfos = [
         hp: 240,
     },
     {
-        name: "Test",
+        name: "Mario il Grande",
         lvl: 100,
         exp: 10000,
-        atk: 45,
+        atk: 50,
         hp: 2000,
     }
 ];
@@ -242,6 +243,7 @@ function playMusic() {
 }
 
 function attackSound() {
+    if(audioMuted) return;
     attackAudio.volume = 0.2;
     attackAudio.play().then(() => {
         console.log("Suono attacco avviato!");
@@ -251,6 +253,7 @@ function attackSound() {
 }
 
 function magicSound() {
+    if(audioMuted) return;
     magicAudio.volume = 0.2;
     magicAudio.play().then(() => {
         console.log("Suono magia avviato!");
@@ -258,8 +261,6 @@ function magicSound() {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
     });
 }
-
-let audioMuted = false; // variabile globale!
 
 function GestisciAudio() {
     if (!audioMuted) {
