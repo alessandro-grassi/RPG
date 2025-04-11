@@ -10,7 +10,7 @@ var audioMuted = false; // variabile globale!
     
 const magieDescriptions = {
     1: "Palla di Fuoco ",
-    2: "Cura floreale ",
+    2: "Aromaterapia",
     3: "Fulmine Devastante "
 };
 

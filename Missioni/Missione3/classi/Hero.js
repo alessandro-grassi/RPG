@@ -4,6 +4,7 @@ class Hero extends Entity {
         this.magia=2; // Magia dell'eroe (1: fuoco, 2: fulmine, 3: cura)
         this.cooldownMagic = 0;  // Tiene traccia del turno dell'ultima magia
         this.canUseMagic = true; // Indica se l'eroe può usare magie
+        this.maxHp = hp; // Salute massima dell'eroe
     }
 
     useMagic(magic, enemy) {
@@ -17,7 +18,7 @@ class Hero extends Entity {
                 this.fire(enemy);
                 break;
             case 2:
-                this.thunder(enemy);
+                this.heal(enemy);
                 break;
             case 3:
                 this.heal
@@ -40,10 +41,15 @@ class Hero extends Entity {
 
     heal() {
         if (this.hp >= this.maxHp){
-            console.log (`${this.name} non può curarsi, è già al massimo della salute!`);
+            console.log (`${this.name} non può curarsi, e' gia' al massimo della salute!`);
             return;
         } // Se l'eroe è già al massimo della salute non può curarsi
-        console.log(`${hero.name} si è curato!`);
+        this.hp += this.maxHp*2/10 // Cura il 20% della vita
+
+        if(this.hp > this.maxHp) // Se la vita supera il massimo, la riporta al massimo
+            this.hp = this.maxHp;
+        console.log(`${this.name} si è curato!`);
+        output.innerHTML = `${this.name} si è curato!`;
         }
 
     thunder(enemy) { /* Implementazione futura */ }
