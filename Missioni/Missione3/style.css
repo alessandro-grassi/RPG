@@ -120,8 +120,8 @@ button:disabled:hover {
     background: transparent;
     border: none;
     cursor: pointer;
-    width: 6.5%;
-    height: 11.3%;
+    width: 70px;
+    height: 70px;
     padding: 0;
     display: flex;
     justify-content: center;
