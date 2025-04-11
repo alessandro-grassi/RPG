@@ -39,8 +39,11 @@ class Hero extends Entity {
     }
 
     heal() {
-        if (this.hp >= this.maxHp) return; // Se l'eroe è già al massimo della salute non può curarsi
-            console.log(`${hero.name} si è curato!`);
+        if (this.hp >= this.maxHp){
+            console.log (`${this.name} non può curarsi, è già al massimo della salute!`);
+            return;
+        } // Se l'eroe è già al massimo della salute non può curarsi
+        console.log(`${hero.name} si è curato!`);
         }
 
     thunder(enemy) { /* Implementazione futura */ }

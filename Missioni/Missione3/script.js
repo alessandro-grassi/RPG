@@ -52,8 +52,8 @@ atkButton.addEventListener("click", (e) => {
     setTimeout(() => {
         output.innerHTML = `${enemy.name} sta pensando...`;
 
-        // Dopo 3 secondi + ritardo casuale il nemico attacca
-        const timeout = 3000 + Math.floor(Math.random() * 1000);
+        // Dopo 2 secondi + ritardo casuale il nemico attacca
+        const timeout = 2000 + Math.floor(Math.random() * 1000);
         setTimeout(() => {
             if (game.endGame) return;
 
@@ -123,8 +123,8 @@ magicButton.addEventListener("click", (e) => {
     setTimeout(() => {
         output.innerHTML = `${enemy.name} sta pensando...`;
 
-        // Dopo 3 secondi + ritardo casuale il nemico attacca
-        const timeout = 3000 + Math.floor(Math.random() * 1000);
+        // Dopo 2 secondi + ritardo casuale il nemico attacca
+        const timeout = 2000 + Math.floor(Math.random() * 1000);
         setTimeout(() => {
             if (game.endGame) return;
 
