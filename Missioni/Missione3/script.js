@@ -1,6 +1,8 @@
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
 const output = document.getElementById("output")
+const endGameScreen = document.getElementById("messaggioFineGioco");
+const playAgainButton = document.getElementById("giocaAncora");
 var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
 var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
 var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
@@ -33,7 +35,7 @@ atkButton.addEventListener("click", (e) => {
         output.innerHTML = `${enemy.name} ha schivato l'attacco`;
         console.log("Attacco schivato");
     }
-    
+
     game.completeRound();
     game.aggiornaUI();
     game.nextRound();
@@ -43,7 +45,7 @@ atkButton.addEventListener("click", (e) => {
     atkButton.disabled = true;
     magicButton.disabled = true;
 
-    if ((!hero.isAlive()) || (!enemy.isAlive())) 
+    if ((!hero.isAlive()) || (!enemy.isAlive()))
         return;
     //Inizio sezione attacco del nemico
     // Dopo 2 secondi cambia il testo in "Il boss sta pensando..."
@@ -75,7 +77,7 @@ atkButton.addEventListener("click", (e) => {
             atkButton.disabled = false;
             magicButton.disabled = !game.hero.canUseMagic;
         }, timeout);
-        
+
     }, 2000);
 });
 
@@ -115,7 +117,7 @@ magicButton.addEventListener("click", (e) => {
     atkButton.disabled = true;
     magicButton.disabled = true;
 
-    if ((!hero.isAlive()) || (!enemy.isAlive())) 
+    if ((!hero.isAlive()) || (!enemy.isAlive()))
         return;
     // Dopo 2 secondi cambia il testo in "Il boss sta pensando..."
     setTimeout(() => {
@@ -153,11 +155,16 @@ magicButton.addEventListener("click", (e) => {
 function announceEndGame(game) {
     const winner = game.checkEndGame();
     if (!winner) return;
+    const endGameText = endGameScreen.getElementsByTagName("h2")[0];
     if (winner.constructor.name === "Hero") {
-        output.innerHTML = 'Hai vinto!!';
+        endGameText.innerHTML = 'Hai vinto!!';
     } else {
-        output.innerHTML = 'Hai perso...';
+        endGameText.innerHTML = 'Hai perso...';
     }
+
+    // Visualizzo la schermata di fine gioco
+
+    endGameScreen.style.display = "flex";
 
     atkButton.disabled = true;
     magicButton.disabled = true;
@@ -167,9 +174,45 @@ function announceEndGame(game) {
     output.style.userSelect = "none";
 }
 
+// Evento gioca di nuovo
+playAgainButton.addEventListener("click", () => {
+    endGameScreen.style.display = "none";
+
+    // Resetto il gioco per poter iniziare con una nuova partita
+    game.reset();
+    // Aggiorno l'interfaccia
+    // Abilito i pulsanti
+    atkButton.disabled = false
+    magicButton.disabled = false
+    // Cancello il messaggio nel div output
+    output.innerHTML = "";
+
+    game.aggiornaUI();
+});
 
 
-let game = new Game(new Hero("Super Tibet", 80, 7900, 29, 240)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
+const heroesInfos = [
+    {
+        name: "Super Tibet",
+        lvl: 80,
+        exp: 7900,
+        atk: 29,
+        hp: 240,
+    },
+    {
+        name: "Test",
+        lvl: 100,
+        exp: 10000,
+        atk: 45,
+        hp: 2000,
+    }
+];
+
+const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.length)];
+
+console.log(selectedHeroInfo);
+
+let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
 
@@ -177,7 +220,7 @@ document.addEventListener("DOMContentLoaded", async (e) => {
     document.getElementById("nomeGiocatore").textContent = game.hero.name;
     document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
     game.aggiornaUI();
-    
+
 });
 
 /* Inzio Sezione Gestione Audio */
@@ -194,7 +237,7 @@ function playMusic() {
         console.log("Musica avviata!");
     }).catch(error => {
         console.log("Autoplay bloccato! Il browser richiede un'interazione.");
-        
+
     });
     //musicButton.disabled = true;
 }

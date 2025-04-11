@@ -1,6 +1,7 @@
 class Game {
-    constructor(hero, enemies) {
-        this.hero = hero;
+    constructor(heroInfo, enemies) {
+        this.heroInfo = heroInfo;
+        this.hero = new Hero(heroInfo.name, heroInfo.lvl, heroInfo.exp, heroInfo.atk, heroInfo.hp);
         this.enemies = enemies;
         this.selectedEnemy = null;
         this.round = 0;
@@ -40,6 +41,24 @@ class Game {
     enemyAttack() {
         if (this.round % 2 == 0) return;
         return this.selectedEnemy.attack(this.hero);
+    }
+
+    //Metodo che rimuove il nemico dall'array di nemici
+    removeEnemy() {
+        this.enemies.splice(this.enemies.indexOf(this.selectedEnemy), 1);
+    }
+
+    reset() {
+        // Creo lo stesso eroe con le statistiche di partenza
+        this.hero = null;
+        this.hero = new Hero(this.heroInfo.name, this.heroInfo.lvl, this.heroInfo.exp, this.heroInfo.atk, this.heroInfo.hp);
+
+        this.removeEnemy();
+        this.selectedEnemy = this.selectEnemy();
+
+        this.round = 0;
+        this.completedRound = false;
+        this.endGame = false;
     }
 
     //Metodo che controlla se il gioco è finito
