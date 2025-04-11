@@ -29,7 +29,7 @@ function loadMis(missioni) {
         let btn = document.createElement("button");
         //let img = document.createElement("img");
 
-        mis.innerHTML = "<h3>" + missione.nome + "</h3>" + missione.descrizione + "<br>";
+        mis.innerHTML = `<h3>${missione.nome}</h3>${missione.descrizione}<br>`;
         btn.onclick = () => {
             goToUrl(mis.url);
         }
