@@ -10,7 +10,7 @@ var audioMuted = false; // variabile globale!
     
 const magieDescriptions = {
     1: "Palla di Fuoco ",
-    2: "Esplosione Ghiacciata ",
+    2: "Cura floreale ",
     3: "Fulmine Devastante "
 };
 
@@ -200,10 +200,10 @@ const heroesInfos = [
         hp: 240,
     },
     {
-        name: "Test",
+        name: "Mario il Grande",
         lvl: 100,
         exp: 10000,
-        atk: 45,
+        atk: 50,
         hp: 2000,
     }
 ];

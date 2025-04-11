@@ -1,7 +1,7 @@
 class Hero extends Entity {
     constructor(name, lvl, exp, atk, hp) {
         super(name, lvl, exp, atk, hp);
-        this.magia=2; // Magia dell'eroe (1: fuoco, 2: ghiaccio, 3: fulmine)
+        this.magia=2; // Magia dell'eroe (1: fuoco, 2: fulmine, 3: cura)
         this.cooldownMagic = 0;  // Tiene traccia del turno dell'ultima magia
         this.canUseMagic = true; // Indica se l'eroe può usare magie
     }
@@ -17,10 +17,10 @@ class Hero extends Entity {
                 this.fire(enemy);
                 break;
             case 2:
-                this.ice
+                this.thunder(enemy);
                 break;
             case 3:
-                this.thunder(enemy);
+                this.heal
                 break;
             default:
                 alert("Errorrrrrr: magic does not exist");
@@ -38,11 +38,10 @@ class Hero extends Entity {
     console.log(`${enemy.name} è stato bruciato!`);
     }
 
-    ice(enemy) {
-        if (enemy.status !== "none") return;
-            enemy.status = "frozen";
-            enemy.statusTurns = 1;
-            console.log(`${enemy.name} è stato congelato!`);
+    heal() {
+        if (this.hp >= this.maxHp) return; // Se l'eroe è già al massimo della salute non può curarsi
+            console.log(`${hero.name} si è curato!`);
         }
+
     thunder(enemy) { /* Implementazione futura */ }
 }
