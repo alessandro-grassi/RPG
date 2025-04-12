@@ -71,6 +71,7 @@ def get_missioni(uid):
     # create_tables()
     data = retrieve(uid)
     obj = parse(data)
+    # obj = sort(obj)
 
     ql.disconnetti
     return json.dumps({"missioni" : obj}).encode("utf-8")
@@ -99,7 +100,9 @@ def retrieve(uid):
                         progressi
                       WHERE
                         missioni.ID_missione = progressi.id_missione AND
-                        progressi.id_personaggio = {uid};''')
+                        progressi.id_personaggio = {uid}
+                      ORDER BY
+                        progressi.ID_progresso;''')
 
     return data
 
@@ -119,3 +122,6 @@ def parse(data):
 def parse_img(img):
     encoded_img = base64.b64encode(bytes(img)).decode("utf-8")
     return f"data:image/png;base64,{encoded_img}"
+
+def sort(list):
+    print()
