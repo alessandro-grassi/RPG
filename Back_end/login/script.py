@@ -17,10 +17,10 @@ def utente_registrato(user, pw):
 
 def check_get(path):
     if path == "/login":  # per aprire la pagina di login principale
-        f = open(sys.path[0]+"/Autenticazione/Login/login.html", "r")
+        f = open(sys.path[0]+"/Autenticazione/Login/login.html", "rb")
         stringa = f.read()
         f.close()
-        return stringa.encode("utf-8")
+        return stringa
     elif path.endswith("stile"):
         f = open(sys.path[0] +"/Autenticazione/Login/login.css", "r")
         stringa = f.read()

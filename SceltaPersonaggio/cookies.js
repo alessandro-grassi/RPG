@@ -15,3 +15,7 @@ function getCookie(name) {
     }
     return null; // Cookie non trovato
 }
+
+function setCookie(name,value){
+    document.cookie = ''+name+'='+value+"";
+}
