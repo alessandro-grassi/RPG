@@ -77,6 +77,7 @@ class Game {
 
     //Metodo che aggiorna l'interfaccia utente con le informazioni attuali del gioco
     aggiornaUI() {
+        document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
         if(this.hero.hp < 0) 
             document.getElementById("vitaGiocatore").textContent = 0;
         else
@@ -101,9 +102,6 @@ class Game {
     
     //Metodo che controlla la rimozione degli effetti di stato
     removeStatusEffects() {
-        if (this.selectedEnemy.status === "frozen" && this.RNG(3) === 0) {
-            this.removeStatus();
-        }
         if (this.selectedEnemy.status === "burned" && !this.RNG(5)){
             this.removeStatus();
         }
@@ -134,11 +132,5 @@ class Game {
                 output.innerHTML = `Il nemico subisce ${burnDamage} danni da bruciatura!`;
             }, 1000);
             }   
-        if (this.selectedEnemy.status === "frozen") {
-            console.log(`Il nemico è congelato e non può attaccare!`);
-            setTimeout(() => {
-                output.innerHTML = `Il nemico è congelato e non può attaccare!`;
-            }, 1000);
-        }
     }
 }
