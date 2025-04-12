@@ -16,7 +16,7 @@ def ottieni_classi():
     listaClassi = queryLib.execute(f'''SELECT classi.id FROM "classi" ''')
     queryLib.disconnetti()
     stringa = json.dumps(listaClassi)
-    return stringa
+    return stringa.encode("utf-8")
 
 
 
@@ -41,7 +41,7 @@ def check_get(path):
     
     elif path.endswith("listaClassi"):
         f = ottieni_classi()
-        return f.encode("utf-8")
+        return f
 
     elif path.endswith("listaPersonaggi"):
         print()
