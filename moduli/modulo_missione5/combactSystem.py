@@ -44,7 +44,7 @@ def set_life(name, value):
         print("Entità: ",name," inesistente")
 
 def get_life(name):
-    print(queryLib.execute("select * from personaggi"))
+    print(queryLib.execute("select * from abilita"))
     return lifes.get(name)
 
 def set_mana(name,value):
