@@ -1,6 +1,5 @@
 import random 
-
-
+from moduli import queryLib
 
 
 lifes = {
@@ -45,6 +44,7 @@ def set_life(name, value):
         print("Entità: ",name," inesistente")
 
 def get_life(name):
+    print(queryLib.execute("select * from personaggi"))
     return lifes.get(name)
 
 def set_mana(name,value):
@@ -76,3 +76,4 @@ if __name__ == "__main__":
     print(random.random())
     print(rand(0,3))
     print(set_mana("playe",3))
+
