@@ -17,6 +17,16 @@ def check_get(path):
             return content.encode("utf-8")
         except FileNotFoundError:
             return "File non trovato".encode("utf-8")
+    elif path.endswith("grass.png"):
+        f= open("Missioni/Missione1/grass.png","rb")
+        r= f.read()
+        f.close()
+        return r
+    elif path.endswith("grassRed.png"):
+        f= open("Missioni/Missione1/grassRed.png","rb")
+        r= f.read()
+        f.close()
+        return r
 
 
 

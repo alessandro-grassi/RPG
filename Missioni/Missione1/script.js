@@ -65,12 +65,13 @@ function startTimer() {
             clearInterval(timerInterval);
             endGame();
         }
-    }, 3000);
+    }, 1000);
 }
 
 // Conteggio click
 grass.addEventListener('click', () => {
     clicks++;
+    moveGrass();
     if (clicks >= clicksRequired) {
         endGame();
     }
