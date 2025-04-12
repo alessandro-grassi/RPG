@@ -1,7 +1,6 @@
 class Hero extends Entity {
-    constructor(name, lvl, exp, atk, hp) {
+    constructor(name, lvl, exp, atk, hp, magic) {
         super(name, lvl, exp, atk, hp);
-        this.magia=2; // Magia dell'eroe (1: fuoco, 2: fulmine, 3: cura)
         this.cooldownMagic = 0;  // Tiene traccia del turno dell'ultima magia
         this.canUseMagic = true; // Indica se l'eroe può usare magie
         this.maxHp = hp; // Salute massima dell'eroe

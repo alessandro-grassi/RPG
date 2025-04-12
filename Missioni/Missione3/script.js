@@ -198,6 +198,7 @@ const heroesInfos = [
         exp: 7900,
         atk: 29,
         hp: 240,
+        magic: 1,
     },
     {
         name: "Mario il Grande",
@@ -205,6 +206,7 @@ const heroesInfos = [
         exp: 10000,
         atk: 50,
         hp: 2000,
+        magic: 2,
     }
 ];
 
@@ -212,7 +214,7 @@ const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.leng
 
 console.log(selectedHeroInfo);
 
-let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
+let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp, selectedHeroInfo.magic)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
 
