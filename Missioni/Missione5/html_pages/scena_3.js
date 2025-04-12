@@ -137,12 +137,12 @@ function enemyAttack(json){
                         if(moves['damage_type'] == 'fisico'){
                             danno_enemy = danno_fisico + Math.floor((vita_corrente_pg * (moves['damage_fis_perc']/100)));
                             vita_corrente_pg -= danno_enemy;
-                            document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
+                            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
                         }
                     }
                     else{
                         vita_corrente_pg -= danno_fisico;
-                        document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
+                        document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
                     }
                     if(vita_corrente_pg < 0){
                         vita_corrente_pg = 0;
@@ -155,10 +155,17 @@ function enemyAttack(json){
     })
 }
 function gameover(){
-    document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
+    document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
     document.getElementById('text').innerHTML = "GAME OVER";
     document.getElementById('attack_button').remove();
     document.getElementById('next_button').remove();
+    retry = document.createElement('button');
+    retry.textContent = "Retry";
+    retry.className = "dialog-button";
+    retry.addEventListener("click", function(){
+        location.reload();
+    });
+    document.getElementById('dialog-box').appendChild(retry);
 }
 function setLifePointsPG(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
