@@ -1,3 +1,5 @@
+#TODO: INTEGRARE QUESTO IN UN SOLO MODULO IN MISSIONE4 (LA COPIA DEL LOGIN)
+
 import json #simulo il db
 
 #json per simulare il db
@@ -48,7 +50,7 @@ def getDettagliGenerali():
 
 def getDettagliGioco(num):
     tentDict = dbDict["prove"][num - 1]
-    return tentDict["ind"]
+    return tentDict["num"], tentDict["ind"]
 
 
 def indovina(tentativo, risposta):
@@ -59,3 +61,5 @@ def indovina(tentativo, risposta):
             print("mi dispiace ma non è la risposta corretta")
     else:
         print("tentativi esauriti")
+
+
