@@ -59,6 +59,7 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
+        
     # prende il mapping tra dialoghi e immagini per storyline
     elif path == PREFIX + "get-mapping":
         with open("Missioni/Missione5/assets/dialogs_images.json","r") as f:
@@ -112,8 +113,17 @@ def check_post(path,clientchoice):
         elif path == PREFIX + "update-index":
             print(clientchoice) # print per debug
             update_index(clientchoice["current_index"])
-            return json.dumps({"status": "success"}).encode()  # Return JSON-encoded bytes
-        return json.dumps({"status": "error"}).encode()  # Ensure a valid JSON response
+            return json.dumps({"status": "success"}).encode() 
+        
+        #aggiorna l'ultima immagine vista nel file json
+        elif path == PREFIX + "update-last_image":
+            update_index(clientchoice["last_image"])
+            return json.dumps({"status": "success"}).encode() 
+        
+        return json.dumps({"status": "error"}).encode()
+    
+    
+
 
         
     except KeyError as e:

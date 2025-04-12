@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchFromServer("dialog-index").then(index=>{
         document.getElementById("dialog-box").textContent = formatDialog(dialogLines[index.current_index]); // imposta index corrente
         client_index = index.current_index; // salva index su index globale
-        //updateImage(); // imposta l'immagine
-        console.log(checkImage()); // preso il mapping controlla se alle linee di testo sono associate immagini
+
+        
     });
     setButton();
 });
@@ -31,8 +31,9 @@ function formatDialog(dialogLines)
 {
     let finalDialog = "" // crea una variabile in cui fare lo store delle linee
     dialogLines.forEach(line =>{ // itera ogni linea della cella di dialogo
-        finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
-        updateImage(line); // fa un update delle immagini
+        if(line.image == null)
+            finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
+        updateImage(line.image); // fa un update delle immagini
     })
     return finalDialog; // restituisce dialogo finale
 }
@@ -94,27 +95,16 @@ function fetchFromServer(request)
     })
 }
 
-// funzione che controlla se al dialogo corrente è associata un immagine
-function checkImage(current_line)
-{
-    let  match =  false; // restituisce null se non vengono trovati match 
-    imageMapping.forEach(mapping => { // controlla se a ogni dialogo corrisponde un immagine
-        if(mapping.dialog.normalize("NFC").trim() === current_line.normalize("NFC").trim()) // se trova un mapping per il dialogo
-            match = mapping.image; // ritorna nome immagine da recuperare
-    });
-    return match; // fa il return del match
-}
-
 // funzione per aggiornare le immagini in base al dialogo
-function updateImage(current_line)
+function updateImage(current_image)
 {
-    const matchFound = checkImage(current_line); // recupera il nome dell'immagine
-    if(matchFound)
+    if(current_image != null)
     {
-        document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + matchFound); // cambia l'attributo del tag con il percorso per l'immagine necessaria
-        lastImage = matchFound;
+        document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + current_image); // cambia l'attributo del tag con il percorso per l'immagine necessaria
+        sendToServer("update-last_image", current_image);
     }
     else
-        document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + lastImage); // cambia l'attributo del tag con il percorso per l'immagine necessaria
+        fetchFromServer("dialog-index").then((image)=>{ // in caso non ci siano immagini da impostare prende l'ultima salvata
+            document.getElementById("background-image").setAttribute("src","http://localhost:8080/m5/get-image/" + image.last_image); // carica ultima immagine salvata su progress.json
+        });
 }
-
