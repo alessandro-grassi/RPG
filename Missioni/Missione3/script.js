@@ -97,10 +97,10 @@ magicButton.addEventListener("click", (e) => {
 
     if (!enemy.avoid()) {
         magicSound();
-        hero.useMagic(hero.magia, enemy);
+        hero.useMagic(enemy);
 
         // Prendo la descrizione della magia dal dizionario
-        const magiaUsata = magieDescriptions[hero.magia] || "Magia Sconosciuta";
+        const magiaUsata = magieDescriptions[hero.magic] || "Magia Sconosciuta";
         output.innerHTML = `Hai usato <b>${magiaUsata}</b> su ${enemy.name}!`;
 
         announceEndGame(game);

@@ -1,7 +1,7 @@
 class Game {
-    constructor(heroInfo, enemies) {
-        this.heroInfo = heroInfo;
-        this.hero = new Hero(heroInfo.name, heroInfo.lvl, heroInfo.exp, heroInfo.atk, heroInfo.hp);
+    constructor(hero, enemies) {
+        //this.heroInfo = heroInfo;
+        this.hero = hero;
         this.enemies = enemies;
         this.selectedEnemy = null;
         this.round = 0;
