@@ -39,6 +39,7 @@ def check_get(path):
     
     elif path.endswith("listaClassi"):
         f = ottieni_classi()
+        print(f)
         return f.encode("utf-8")
 
     elif path.endswith("listaPersonaggi"):
