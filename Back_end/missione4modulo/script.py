@@ -3,13 +3,15 @@ import json #simulo il db
 #json per simulare il db
 DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro", ' \
 '       "ricompensa": "titolo di Kung Fury", ' \
-'       "tentativi": 3, ' \
+'       "tentativiIndovina": 3, ' \
+'       "tentativiGioco": 5, ' \
 '       "soluzione": "gabibbo",' \
+'       "maxIndizi": 2,' \
 '       "prove":' \
 '       [' \
-'           { "num": 0, "soluz": "nonna" "ind": "è rosso" },' \
-'           { "num": 1, "soluz": "porto" "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           { "num": 2, "soluz": "trave" "ind": "usa spesso il termine BELANDI" },' \
+'           { "num": 1, "soluz": "nonna" "ind": "è rosso" },' \
+'           { "num": 2, "soluz": "porto" "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
+'           { "num": 3, "soluz": "trave" "ind": "usa spesso il termine BELANDI" },' \
 '       ] }'
 
 dbDict = json.loads(DB)
