@@ -1,5 +1,5 @@
 import random 
-from moduli import queryLib
+from Back_end import queryLib
 
 
 lifes = {
