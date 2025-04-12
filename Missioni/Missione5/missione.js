@@ -1,21 +1,19 @@
 document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchFromServer("get-dialog").then(data=>{ // fetch dei dialoghi dal server
-        let lines = data.flatMap(obj => obj.text); // prende ogni linea di testo per gli oggetti estratti e la mappa all'oggetto
-        dialogLines = lines; // assegna le linee di dialogo alla variabile globale});
+        dialogLines = data;// assegna le linee di dialogo alla variabile globale});
      });
     // fetch mapping immagini testo
     fetchFromServer("get-mapping").then(data=>{ 
         imageMapping = data; // salva il mapping dell'immagine in un file json
     });
     fetchFromServer("dialog-index").then(index=>{
-        document.getElementById("dialog-box").textContent = dialogLines[index.current_index]; // imposta index corrente
+        document.getElementById("dialog-box").textContent = formatDialog(dialogLines[index.current_index]); // imposta index corrente
         client_index = index.current_index; // salva index su index globale
-        updateImage(); // imposta l'immagine
+        //updateImage(); // imposta l'immagine
         console.log(checkImage()); // preso il mapping controlla se alle linee di testo sono associate immagini
     });
     setButton();
 });
-
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 let imageMapping; // variabile usata per salvare la mappatura delle immagini
 let client_index; // variabile globale per lo store lato client dell'index a cui si trova il dialogo e le immagini
@@ -28,6 +26,17 @@ function setButton(){
     });
 }
 
+//funzione che formatta il blocco di dialogo 
+function formatDialog(dialogLines)
+{
+    let finalDialog = ""
+    dialogLines.forEach(line =>{
+        finalDialog += line + "\n";
+        updateImage(line);
+    })
+    return finalDialog;
+}
+
 // funzione che permette di modificare l'index dei dialoghi
 function movelines(step)
 {
@@ -37,7 +46,7 @@ function movelines(step)
         const data = {"current_index": client_index}; // crea oggetto da inviare al server
         sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
     }
-    document.getElementById("dialog-box").textContent = dialogLines[client_index]; // imposta i dialoghi all' index corrente
+    document.getElementById("dialog-box").textContent = formatDialog(dialogLines[client_index]); // imposta i dialoghi all' index corrente
     updateImage();
 }
 
@@ -86,20 +95,20 @@ function fetchFromServer(request)
 }
 
 // funzione che controlla se al dialogo corrente è associata un immagine
-function checkImage()
+function checkImage(current_line)
 {
     let  match =  false; // restituisce null se non vengono trovati match 
     imageMapping.forEach(mapping => { // controlla se a ogni dialogo corrisponde un immagine
-        if(mapping.dialog.normalize("NFC").trim() === dialogLines[client_index].normalize("NFC").trim()) // se trova un mapping per il dialogo
+        if(mapping.dialog.normalize("NFC").trim() === current_line.normalize("NFC").trim()) // se trova un mapping per il dialogo
             match = mapping.image; // ritorna nome immagine da recuperare
     });
     return match; // fa il return del match
 }
 
 // funzione per aggiornare le immagini in base al dialogo
-function updateImage()
+function updateImage(current_line)
 {
-    const matchFound = checkImage(); // recupera il nome dell'immagine
+    const matchFound = checkImage(current_line); // recupera il nome dell'immagine
     if(matchFound)
     {
         document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + matchFound); // cambia l'attributo del tag con il percorso per l'immagine necessaria
