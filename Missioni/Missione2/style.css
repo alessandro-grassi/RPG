@@ -1,6 +1,101 @@
-.mappa { display: grid; grid-template-columns: repeat(10, 40px); gap: 1px; }
-.cella { width: 40px; height: 40px; border: 1px solid #000; text-align: center; line-height: 40px; }
-.cespuglio { background: green; color: white; }
-.porta { background: yellow; }
-.partenza { background: blue; color: white; }
-.giocatore { background: red; color: white; }
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h1 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+  }
+  
+  .mappa {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    gap: 2px;
+    margin: 20px auto;
+    max-width: 420px;
+    background: white;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .cella {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #81c784;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: default;
+    user-select: none;
+  }
+  
+  /* Elementi speciali */
+  .giocatore {
+    background: #e53935;
+    color: white;
+    border-radius: 3px;
+  }
+  
+  .partenza {
+    background: #1e88e5;
+    color: white;
+  }
+  
+  .porta {
+    background: #ffd600;
+  }
+  
+  .porta-chiusa {
+    background: #757575;
+    color: #e0e0e0;
+  }
+  
+  .cespuglio {
+    background: #4caf50;
+    color: rgba(255,255,255,0.3);
+  }
+  
+  /* Area visibile */
+  .cespuglio.visibile {
+    background: #66bb6a;
+    color: white;
+  }
+  
+  .trappola::after {
+    content: "X";
+    color: #d32f2f;
+    margin-left: 2px;
+  }
+  
+  .percorso::after {
+    content: "O";
+    color: #a5d6a7;
+    margin-left: 2px;
+  }
+  
+  /* Pulsante reset */
+  #reset {
+    padding: 8px 20px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  #reset:hover {
+    background: #388e3c;
+  }
+  
+  .hidden {
+    display: none;
+  }
