@@ -49,7 +49,7 @@ def check_get(path):
     
     #torna alla home
     elif path.endswith("sm_home"):
-        f = open("Missioni/Missione4/indovina_soluzione.html", "r")
+        f = open("SceltaMissione/index.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")

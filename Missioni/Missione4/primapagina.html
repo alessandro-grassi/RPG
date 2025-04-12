@@ -18,9 +18,12 @@
         <p id="ricompensaP"></p>
     </div>
 
-    <div id="indizi">
+    <div id="indiziDiv">
         <h2>Indizi</h2>
-        <p id="lista-indizi">Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</p>
+        <p id="messaggioIndizi">Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</p>
+        <ol id="ListaIndizi">
+
+        </ol>
     </div>
 
     <div id="pulsanti">
@@ -59,15 +62,16 @@
                     var tentativiH = document.getElementById("tentativiH");
                     tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentativiIndovina) - int(tentativiIndovinaFatti));
 
-
-                    /* Popola la lista degli indizi nella pagina HTML
-                    const listaIndizi = document.getElementById('lista-indizi');
+                    //indizi
+                    var mesIndizi = document.getElementById("messaggioIndizi");
+                    mesIndizi.hidden = True;
+                    var listaIndizi = document.getElementById("listaIndizi");
                     indiziOttenuti.forEach(indizio => {
-                        // Crea un elemento per ogni indizio
-                        const indizioElement = document.createElement('p');
-                        indizioElement.textContent = `Indizio ${indizio.num}: ${indizio.ind}`;
-                        listaIndizi.appendChild(indizioElement);*/
-
+                        var indizioElement = document.createElement("li");
+                        indizioElement.innerText = indizio;
+                        listaIndizi.appendChild(indizioElement);
+                    });
+                    
 
                 })
                 .catch(error => console.error("Si è verificato un errore:", error));

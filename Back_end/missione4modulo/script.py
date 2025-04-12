@@ -16,8 +16,9 @@ DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
 '       "maxIndizi": 2,' \
 '       "indiziOttenuti":' \
 '       [' \
-'           { "num": 0, "ind": "è una prova" },' \
-'       ] }' \
+'           "prova1",' \
+'           "prova1"' \
+'       ]' \
 
 '       "prove":' \
 '       [' \
@@ -50,7 +51,7 @@ def getDettagliGenerali():
 
 def getDettagliGioco(num):
     tentDict = dbDict["prove"][num - 1]
-    return tentDict["num"], tentDict["ind"]
+    return tentDict["ind"]
 
 
 def indovina(tentativo, risposta):
