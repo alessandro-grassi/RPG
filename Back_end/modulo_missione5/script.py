@@ -139,7 +139,7 @@ def update_progress(data,target):
     json_file = open("Missioni/Missione5/assets/progress.json", "r")  # legge il file json
     parsed_data = json.loads(json_file.read()) # fa il parse in formato json della stringa
     json_file.close()
-    parsed_data[target] = data # imposta il nuovo index
+    parsed_data[target] = data # imposta il campo con i dati 
     converted_data = json.dumps(parsed_data, indent=4) # converte i dati in formato json
     json_file = open("Missioni/Missione5/assets/progress.json", "w") # apre il file in lettura
     json_file.write(converted_data) # scrive sul file json i dati
