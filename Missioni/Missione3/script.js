@@ -212,7 +212,7 @@ const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.leng
 
 console.log(selectedHeroInfo);
 
-let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
+let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro.png-get_binary")]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
 
