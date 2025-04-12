@@ -57,14 +57,14 @@
                 "move_type": "Attack",
                 "chance": 60,
                 "damage_type": "magico",
-                "description": "L'adepto cremisi risucchia il sangue attraverso la magia"
+                "description": "L'adepto cremesi risucchia il sangue attraverso la magia"
             },
             {
                 "move_name": "Salsa Sanguigna",
                 "move_type": "Unique",
                 "chance": 20,
                 "recupero_vita": 75,
-                "description": "L'adepto cremisi si cura usando il sangue risucchiato"
+                "description": "L'adepto cremesi si cura usando il sangue risucchiato"
             },
             {
                 "move_name": "Memento Mori",
@@ -72,13 +72,13 @@
                 "chance": 15,
                 "vulnerabile_mag": true,
                 "durata": 2,
-                "description": "L'adepto cremisi ti maledice rimembrando della tua fragile mortalità"
+                "description": "L'adepto cremesi ti maledice rimembrando della tua fragile mortalità"
             },
             {
                 "move_name": "Frenesia",
                 "move_type": "Unique",
                 "chance": 5,
-                "description": "L'adepto cremisi usa un antico incantesimo rendendoti pazzo e infliggendoti un attacco a te stesso"
+                "description": "L'adepto cremesi usa un antico incantesimo rendendoti pazzo e infliggendoti un attacco a te stesso"
             }
         ]
     },

@@ -72,7 +72,9 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8") # encode
-        
+    elif path == PREFIX+"random-chance":
+        rand = combactSystem.rand(1, 100)
+        return ('{"result":"'+str(rand)+'"}').encode("utf-8")  
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
