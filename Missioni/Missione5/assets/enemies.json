@@ -37,7 +37,7 @@
             {
                 "move_name": "Folgorazione",
                 "move_type": "Unique",
-                "chance": 5,
+                "chance": 4,
                 "description": "Il guardiano sfodera una scarica di energia purpurea che ti paralizza"
             }
         ]

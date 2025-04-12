@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8734fd6c-1611-4fdf-a634-e07a162cf008" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Back_end/modulo_missione5/Immortal_guardian.html" beforeDir="false" afterPath="$PROJECT_DIR$/Back_end/modulo_missione5/Immortal_guardian.html" afterDir="false" />
-    </list>
+    <list default="true" id="8734fd6c-1611-4fdf-a634-e07a162cf008" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,15 +24,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/Piano/missione5-grassi",
-    "last_opened_file_path": "C:/Users/AL.GRASSI/Documents/RepGitRpg/RPG",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/Piano/missione5-grassi&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/AL.GRASSI/Documents/RepGitRpg/RPG&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="RPG" />

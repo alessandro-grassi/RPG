@@ -73,6 +73,10 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8") # encode
         
+    elif path == PREFIX+"random-chance":
+        rand = combactSystem.rand(1, 100)
+        return ('{"result":"'+str(rand)+'"}').encode("utf-8")
+        
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
@@ -145,11 +149,6 @@ def check_post(path,clientchoice):
             value = clientchoice['value']
             combactSystem.do_damage(name, int(value))
             return '{"result":"Damage done successfully"}'.encode("utf-8")
-        
-        elif path == PREFIX_API+"do-damage-boss":
-            mossa = combactSystem.do_damage_boss()
-            resp = json.dumps({"result": "Il boss ha usato la mossa "+mossa["mossa"]+ " causando "+ str(mossa["danno"])+" danni"}).encode("utf-8")  # Converto in stringa JSON e poi in bytes
-            return resp
         
         elif path == PREFIX_API+"use-mana":
             name = clientchoice['name']

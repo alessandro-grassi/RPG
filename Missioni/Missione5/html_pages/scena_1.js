@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     setDialogue();
     setLifePointsPG();
     setButtonAttack();
+    setButtonNext();
 });
 
 
@@ -57,6 +58,9 @@ function fetchData(request, callback)
     let vita_corrente_pg = 500;
     let attacco_pg = 10;
     let danno_fisico_pg = attacco_pg * 10;
+    let forza = 10;
+    let danno_fisico = forza * 10;
+    let rand = 0;
 
 function setImageEnemy(json){
     json.forEach(element => {
@@ -102,7 +106,67 @@ function setButtonAttack(){
             document.getElementById('vita-text').innerHTML = "PV:"+ vita_corrente;
             document.getElementById('text').innerHTML = "'Hai inflitto "+danno_fisico_pg+" danni!'";
         }
+        document.getElementById('next_button').style = "visibility: visible;"; 
+        this.style = "visibility: hidden";
     })
+}
+
+function setButtonNext(){
+    document.getElementById('next_button').addEventListener("click", function(){
+        fetchData("random-chance", getRand)
+        fetchData("enemies-list", enemyAttack)
+        document.getElementById('attack_button').style = "visibility: visible;"; 
+        this.style = "visibility: hidden";
+    })
+}
+
+function getRand(json){
+    rand = parseInt(json['result']);
+    console.log(rand);
+}
+
+function enemyAttack(json){
+    json.forEach(enemy =>{
+        if(enemy['name'] == NAME){
+            tempChance = 0;
+            enemy['moves'].forEach(moves =>{
+                tempChance += moves['chance'];
+                if(tempChance >= rand){
+                    document.getElementById('text').innerHTML = moves['description'];
+                    if(moves['move_type'] == 'attack'){
+                        if(moves['damage_type'] == 'fisico'){
+                            danno_enemy = danno_fisico + Math.floor((vita_corrente_pg * (moves['damage_fis_perc']/100)));
+                            vita_corrente_pg -= danno_enemy;
+                            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+                        }
+                    }
+                    else{
+                        vita_corrente_pg -= danno_fisico;
+                        document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+                    }
+                    if(vita_corrente_pg <= 0){
+                        vita_corrente_pg = 0;
+                        gameover();
+                    }
+                    tempChance -= 100
+                }
+            })
+        }
+    })
+}
+
+function gameover(){
+    document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
+    document.getElementById('text').innerHTML = "GAME OVER";
+    document.getElementById('attack_button').remove();
+    document.getElementById('next_button').remove();
+    retry = document.createElement('button');
+    retry.textContent = "Retry";
+    retry.className = "dialog-button";
+    retry.addEventListener("click", function(){
+        location.reload();
+    });
+    document.getElementById('dialog-box').appendChild(retry);
 }
 
 function setLifePointsPG(){
