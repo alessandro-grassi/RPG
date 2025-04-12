@@ -45,7 +45,7 @@ function loadMis(missioni) {
         //mis.appendChild(img);
         //mis.innerHTML += "<br>"
         mis.style.backgroundImage = `url('${missione.img}')`;
-        mis.style.backgroundSize = "contain";
+        mis.style.backgroundSize = "100% 100%";
         mis.style.backgroundRepeat = "no-repeat";  
         mis.appendChild(btn);
         div.appendChild(mis);
@@ -59,3 +59,10 @@ function goToUrl(url) {
 setTimeout(() => {
     get_missioni();
 }, 100);
+
+function setup()
+{
+
+}
+
+setup();
