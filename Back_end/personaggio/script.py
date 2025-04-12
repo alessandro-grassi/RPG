@@ -1,5 +1,6 @@
 import sys
 from Back_end import queryLib
+import json
 
 def aggiungi_personaggio(nome, classe, abilita):
     queryLib.connetti()
@@ -14,9 +15,8 @@ def ottieni_classi():
     queryLib.connetti()
     listaClassi = queryLib.execute(f'''SELECT classi.id FROM "classi" ''')
     queryLib.disconnetti()
-    arrayClassi = [item for item in listaClassi]
-    print(arrayClassi)
-    return arrayClassi
+    stringa = json.dumps(listaClassi)
+    return stringa
 
 
 
@@ -41,7 +41,6 @@ def check_get(path):
     
     elif path.endswith("listaClassi"):
         f = ottieni_classi()
-        print(f)
         return f.encode("utf-8")
 
     elif path.endswith("listaPersonaggi"):
