@@ -19,7 +19,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         path = self.path
         path = urlparse(path).path
         resp = check_get(path)
-
+        print(resp)
         self.wfile.write(resp)
         return
 
