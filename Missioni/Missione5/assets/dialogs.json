@@ -2,7 +2,7 @@
   [
       "C'era un tempo in cui il nostro regno era assolutamente perfetto.",
       "Dove il cibo era abbondante, la povertà una mera barzelletta, e tutti potevano essere chiamati fratelli e sorelle",
-      {"image":"Castle_front.jpg"}
+      {"image":"perfect_reign.jpg"}
   ],
   [
       "Ma per qualcuno così egoista come il re, un regno come questo non era abbastanza",
@@ -22,14 +22,16 @@
   ],
   [
       "Superati gli ostacoli e le insidie del regno, i cancelli principali del castello parvero davanti",
-      {"image":"Castle_gates.jpeg"}
+      {"image":"Castle_front.jpg"}
   ],
   [
-      "Il regno era in rovina, non c'era nemmeno una singola anima tranne le ombre vaganti dei popolani"
+      "Il regno era in rovina, non c'era nemmeno una singola anima tranne le ombre vaganti dei popolani",
+      {"image":"ruined_reign.jpg"}
   ],
   [
       "All'ingresso del castello si mostrava davanti un colossale cancello,",
-      "nelle vicinanze numerosi detriti poggiavano sul suolo, quelli che un tempo furono le abitazioni del popolo."
+      "nelle vicinanze numerosi detriti poggiavano sul suolo, quelli che un tempo furono le abitazioni del popolo.",
+      {"image":"Castle_gates.jpeg"}
   ],
   [
       "Dopo pochi passi davanti alle porte pezzi di roccia iniziarono a scricchiolare e ad ammassarsi,",
@@ -54,7 +56,8 @@
   ],
   [
       "All'interno della stanza era umido, disordinato e freddo.",
-      "Vecchi libri sparsi sul pavimento rallentavano il passo, e le librerie marce e decadenti bloccavano il passaggio"
+      "Vecchi libri sparsi sul pavimento rallentavano il passo, e le librerie marce e decadenti bloccavano il passaggio",
+      {"image":"second_lib.jpg"}
   ],
   [
       "E sangue... vecchie macchie di sangue sopraffavano il tuo olfatto."
@@ -88,12 +91,13 @@
       "Eri esausto ma la tua missione non era ancora finita."
   ],
   [
-      "Il Re sta aspettando il tuo arrivo."
+      "Il Re sta aspettando il tuo arrivo.",
+      {"image":"Throne_room_door.jpg"}
   ],
   [
       "Quando si aprirono le porte della sala del trono, parve una sala regale buia e cupa.",
       "Era vuoto e silenzioso ma si poteva sentire nei tuoi pensieri le urla di quei poveri che imploravano per la loro vita ai piedi del Re.",
-      {"image":"Throne_room_door.jpg"}
+      {"image":"Throne_room.jpg"}
   ],
   [
       "Si potevano sentire le piccole risate dei nobili nel vedere i poveri supplicare,",

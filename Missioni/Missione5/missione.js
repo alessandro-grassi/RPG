@@ -2,22 +2,16 @@ document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
     fetchFromServer("get-dialog").then(data=>{ // fetch dei dialoghi dal server
         dialogLines = data;// assegna le linee di dialogo alla variabile globale});
      });
-    // fetch mapping immagini testo
-    fetchFromServer("get-mapping").then(data=>{ 
-        imageMapping = data; // salva il mapping dell'immagine in un file json
-    });
     fetchFromServer("dialog-index").then(index=>{
         document.getElementById("dialog-box").textContent = formatDialog(dialogLines[index.current_index]); // imposta index corrente
         client_index = index.current_index; // salva index su index globale
-
-        
     });
     setButton();
 });
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 let imageMapping; // variabile usata per salvare la mappatura delle immagini
 let client_index; // variabile globale per lo store lato client dell'index a cui si trova il dialogo e le immagini
-let lastImage = "Castle-front.jpg"; // globale per salvare l'ultima immagine richiesta al server
+
 
 // funzione usata per impostare l'evento legato al bottone per far avanzare o tornare indietro il testo
 function setButton(){
