@@ -12,7 +12,7 @@ def aggiungi_personaggio(nome, classe, abilita):
 
 def ottieni_classi():
     queryLib.connetti()
-    listaClassi = queryLib.execute(f'''SELECT classi.id FROM classi ''')
+    listaClassi = queryLib.execute(f'''SELECT classi.id FROM "classi" ''')
     queryLib.disconnetti()
     return listaClassi
 
