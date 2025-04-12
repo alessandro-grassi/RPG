@@ -56,7 +56,6 @@ function listaClassi(){
         let option = document.createElement("option");
         option.textContent=classe;
         option.value="opzione"+i;
-        option.addEventListener("click",mostraAbilita())
         select.appendChild(option);
         i++;
         });
