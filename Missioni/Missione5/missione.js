@@ -29,12 +29,12 @@ function setButton(){
 //funzione che formatta il blocco di dialogo 
 function formatDialog(dialogLines)
 {
-    let finalDialog = ""
-    dialogLines.forEach(line =>{
-        finalDialog += line + "\n";
-        updateImage(line);
+    let finalDialog = "" // crea una variabile in cui fare lo store delle linee
+    dialogLines.forEach(line =>{ // itera ogni linea della cella di dialogo
+        finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
+        updateImage(line); // fa un update delle immagini
     })
-    return finalDialog;
+    return finalDialog; // restituisce dialogo finale
 }
 
 // funzione che permette di modificare l'index dei dialoghi
