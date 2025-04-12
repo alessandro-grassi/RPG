@@ -14,7 +14,8 @@ def ottieni_classi():
     queryLib.connetti()
     listaClassi = queryLib.execute(f'''SELECT classi.id FROM "classi" ''')
     queryLib.disconnetti()
-    return listaClassi
+    arrayClassi= list(listaClassi)
+    return arrayClassi
 
 
 
