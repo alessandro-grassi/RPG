@@ -1,0 +1,74 @@
+/*Light mode attiva del dispositivo*/
+:root {
+    --body-bg: #FFFFFF;
+    --body-color: #000000;
+ }
+ 
+ /* Dark mode attiva del dispositivo*/
+ @media (prefers-color-scheme: dark) {
+    :root {
+        --body-bg: #000000;
+        --body-color: #FFFFFF;
+    }
+ }
+
+body {
+    position: relative;
+    background: var(--body-bg);
+    color: var(--body-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: 'Iceland';
+}
+
+#titolo{
+    position:fixed;
+    bottom:85%;
+    font-size: 5rem;
+    color:rgb(0, 255, 242)
+}
+
+.hoverdiv{
+    
+}
+.hoverdiv:hover{
+    color: #FFFFFF;
+    cursor:pointer;
+}
+
+
+#contenitore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap:3em;
+    background-color:rgba(0, 0, 255, 0.445);
+    position:fixed;
+    height:60%;
+    width:80%;
+    border-radius: 3em;
+}
+
+#accesso{
+    background-color:rgba(173, 216, 230, 0.582);
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 3%;
+    padding-top: 1em;
+    height:90%;
+    width:40%;
+}
+
+#registrazione{
+    background-color:rgba(40, 199, 252, 0.596);
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 3%;
+    padding-top: 1em;
+    height:90%;
+    width:40%;
+    visibility: hidden;
+}

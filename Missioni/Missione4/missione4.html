@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missione 4</title>
+</head>
+<body onload="CaricaPagina()">
+
+    <!--Titolo-->
+    <div id="titolo">
+        <h1>Missione 4</h1>
+    </div>
+
+    <!--Tentativi-->
+    <h3>Tentativi: </h3>
+
+    <!--Div Dettagli-->
+    <div id="divDettagli">
+        <p>Obiettivo: </p>
+        <p>Ricompensa: </p>
+    </div>
+
+    <!--Div Indizi-->
+    <div id="divIndizi">
+        <h3>Indizi:</h3>
+        <ol id="listaIndizi">
+            
+        </ol>
+    </div>
+
+    <!--Pulsante Indovina-->
+    <button id="indovinaBtn">Indovina</button>
+
+    <!--Pulsante Gioca-->
+    <button id="GiocaBtn">Gioca</button>
+
+
+    <script>
+
+        function CaricaPagina(temp = true)
+        {
+            if(temp)
+            {
+                //creo div dettagli
+                var divDettagli = document.createElement("div");
+
+                //assegno id
+                divDettagli.id = "divDettagli";
+
+                //creo paragrafi
+                var par1 = document.createElement("p");
+                par1.id = "obiettivo";
+                var par2 = document.createElement("p");
+                par2.id = "ricompensa";
+
+                //assegno paragrafi a div
+                divDettagli.appendChild(par1);
+                divDettagli.appendChild(par2);
+
+                //assegno div a documento
+                document.appendChild(divDettagli);
+            }
+            
+            //creo div dettagli
+            var divIndizi = document.createElement("div");
+
+            //assegno id
+            divIndizi.id = "divIndizi";
+
+            //creo titolo
+            var titolo = document.createElement("h3");
+            titolo.innerText = "Indizi";
+
+            //assegno titolo a div
+            divIndizi.appendChild(titolo);
+
+            //assegno div a documento
+            document.appendChild(divIndizi);
+
+            if(temp)
+            {
+                //creo pulsanti
+                var indovinaBtn = document.createElement("button");
+                var giocaBtn = document.createElement("button");
+
+                //assegno id
+                indovinaBtn.id = "indovinaBtn";
+                giocaBtn.id = "giocaBtn";
+
+                //assegno attributi
+                indovinaBtn.setAttribute("onclick", "caricaPagina(false)");
+                giocaBtn.setAttribute("onclick", "caricaGioco()");
+
+                //assegno scritta
+                indovinaBtn.innerText = "Indovina";
+                giocaBtn.innerText = "Gioca";
+
+                //assegno pulsanti a documento
+                document.appendChild(indovinaBtn);
+                document.appendChild(giocaBtn);
+            }
+            else
+            {
+                //creo input
+                var rispostaTxt = document.createElement("input");
+                rispostaTxt.type = "text";
+                rispostaTxt.id = "risposta";
+                rispostaTxt.placeholder = "Inserire la propria risposta";
+                rispostaTxt.required = "true";
+
+                //creo pulsanti
+                var indietroBtn = document.createElement("button");
+                var indovinaBtn = document.createElement("button");
+
+                //assegno id
+                indietroBtn.id = "indietroBtn";
+                indovinaBtn.id = "indovinaBtn";
+
+                //assegno attributi
+                indietroBtn.setAttribute("onclick", "caricaPagina()");
+                indovinaBtn.setAttribute("onclick", "controllaRisposta()");
+
+                //assegno scritta
+                indietroBtn.innerText = "Indietro";
+                indovinaBtn.innerText = "Indovina";
+
+                //assegno pulsanti a documento
+                document.appendChild(indietroBtn);
+                document.appendChild(indovinaBtn);
+            }
+
+            //richiamo la funzione che fa la GET dei dettagli
+            getDettagli()
+
+        }
+
+        function getDettagli()
+        {
+            
+        }
+
+        function caricaGioco()
+        {
+
+        }
+
+        function controllaRisposta()
+        {
+
+        }
+
+
+    </script>
+
+
+</body>
+</html>
