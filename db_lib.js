@@ -28,5 +28,3 @@ function completion() {
     })
 
 }
-
-completion()
