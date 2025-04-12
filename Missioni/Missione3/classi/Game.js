@@ -79,6 +79,7 @@ class Game {
     aggiornaUI() {
         /* Mostro */
         document.getElementById("immagineMostro").src = this.selectedEnemy.imageUrl;
+        console.log("AGGIORNA UI",this.selectedEnemy.imageUrl);
         document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
         document.getElementById("vitaMostro").textContent = this.selectedEnemy.hp;
         /* Mostro */

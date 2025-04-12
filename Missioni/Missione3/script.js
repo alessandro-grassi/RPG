@@ -14,6 +14,9 @@ const magieDescriptions = {
     3: "Fulmine Devastante "
 };
 
+document.addEventListener("DOMContentLoaded", (e) => {
+    game.aggiornaUI();
+})
 /**
  * Funzione chiamata quando il giocatore preme il pulsante "Attacca".
  * Gestisce l'attacco del giocatore.
@@ -214,7 +217,7 @@ const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.leng
 
 console.log(selectedHeroInfo);
 
-let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp, selectedHeroInfo.magic), [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
+let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp, selectedHeroInfo.magic), [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
 
