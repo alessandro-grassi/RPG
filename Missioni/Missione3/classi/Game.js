@@ -77,6 +77,7 @@ class Game {
 
     //Metodo che aggiorna l'interfaccia utente con le informazioni attuali del gioco
     aggiornaUI() {
+        document.getElementById("immagineMostro").src = this.selectedEnemy.imageUrl;
         document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
         if(this.hero.hp < 0) 
             document.getElementById("vitaGiocatore").textContent = 0;
