@@ -1,8 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
+from Back_end import complete_mission as cm
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
-    
+    "/cm" : cm
 }
 
 
