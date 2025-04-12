@@ -14,6 +14,9 @@ const magieDescriptions = {
     3: "Fulmine Devastante "
 };
 
+document.addEventListener("DOMContentLoaded", (e) => {
+    game.aggiornaUI();
+})
 /**
  * Funzione chiamata quando il giocatore preme il pulsante "Attacca".
  * Gestisce l'attacco del giocatore.
@@ -97,10 +100,10 @@ magicButton.addEventListener("click", (e) => {
 
     if (!enemy.avoid()) {
         magicSound();
-        hero.useMagic(hero.magia, enemy);
+        hero.useMagic(enemy);
 
         // Prendo la descrizione della magia dal dizionario
-        const magiaUsata = magieDescriptions[hero.magia] || "Magia Sconosciuta";
+        const magiaUsata = magieDescriptions[hero.magic] || "Magia Sconosciuta";
         output.innerHTML = `Hai usato <b>${magiaUsata}</b> su ${enemy.name}!`;
 
         announceEndGame(game);
@@ -198,6 +201,7 @@ const heroesInfos = [
         exp: 7900,
         atk: 29,
         hp: 240,
+        magic: 1,
     },
     {
         name: "Mario il Grande",
@@ -205,6 +209,7 @@ const heroesInfos = [
         exp: 10000,
         atk: 50,
         hp: 2000,
+        magic: 2,
     }
 ];
 
@@ -212,16 +217,9 @@ const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.leng
 
 console.log(selectedHeroInfo);
 
-let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro.png-get_binary")]);
+let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp, selectedHeroInfo.magic), [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
-
-document.addEventListener("DOMContentLoaded", async (e) => {
-    document.getElementById("nomeGiocatore").textContent = game.hero.name;
-    document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
-    game.aggiornaUI();
-
-});
 
 /* Inzio Sezione Gestione Audio */
 function playMusic() {
