@@ -11,10 +11,10 @@
         <h1 id="titolo-missione">missione 4</h1>
     </div>
 
-    <div id="obbiettivo">
+    <div id="obiettivoDiv">
         <h2>Obbiettivo</h2>
-        <p>Risolvi i Wordle per ottenere indizi e scoprire la parola finale!</p>
-        <p>Ricompensa: Una sorpresa speciale!</p>
+        <p id="obiettivoP"></p>
+        <p id="ricompensaP"></p>
     </div>
 
     <div id="indizi">
@@ -30,18 +30,45 @@
     <!--parte di script per gli indizi-->
     <script>
         //windowonload degli indizi
-        function caricaIndizi() {
-            fetch('http://localhost:8080/api/indizi', { method: 'GET' })  //nome api di esempio
+        function getDettagliGenerali() 
+        {
+            fetch('http://localhost:8080/missione4/dettagliGenerali', 
+            { method: 'GET' })  
                 .then(response => response.json())
                 .then(data => {
-                    //quindi qua bisogna fare la get della lista degli indizi da mettere dentro
-                    //<p> id="lista-indizi"></p>
+                    //estraggo i dettagli dal JSON restituito
+                    var obiettivo = data[0];
+                    var ricompensa = data[1];
+                    var tentativiIndovina = data[2];
+                    var tentativiIndovinaFatti = data[3];
+                    var indiziOttenuti = data[4]; //lista degli indizi
+                    var maxIndizi = data[5];
+
+                    //inserisco i dati ottenuti al loro posto**************
+
+                    //obiettivo
+                    var obiettivoP = document.getElementById("obiettivoP");
+                    obiettivoP.innerText = obiettivo;
+
+                    //ricompensa
+                    var ricompensaP = document.getElementById("ricompensaP");
+                    ricompensaP.innerText = ricompensa;
+
+                    /* Popola la lista degli indizi nella pagina HTML
+                    const listaIndizi = document.getElementById('lista-indizi');
+                    indiziOttenuti.forEach(indizio => {
+                        // Crea un elemento per ogni indizio
+                        const indizioElement = document.createElement('p');
+                        indizioElement.textContent = `Indizio ${indizio.num}: ${indizio.ind}`;
+                        listaIndizi.appendChild(indizioElement);*/
+
+
                 })
                 .catch(error => console.error("Si è verificato un errore:", error));
         }
 
         //carica gli indizi all'avvio della pagina
-        window.onload = caricaIndizi;
+        window.onload = getDettagliGenerali();
     </script>
 </body>
 </html>
