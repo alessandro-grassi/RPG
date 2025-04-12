@@ -16,7 +16,7 @@ def ottieni_classi():
     listaClassi = queryLib.execute(f'''SELECT classi.id FROM "classi" ''')
     queryLib.disconnetti()
     stringa = json.dumps(listaClassi)
-    return stringa
+    return stringa.encode("utf-8")
 
 
 
