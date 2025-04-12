@@ -10,6 +10,12 @@ def aggiungi_personaggio(nome, classe, abilita):
     b = a
     queryLib.disconnetti()
 
+def ottieni_classi():
+    queryLib.connetti()
+    listaClassi = queryLib.execute(f'''SELECT classi.id FROM classi ''')
+    queryLib.disconnetti()
+    return listaClassi
+
 
 
 def check_get(path):
@@ -31,6 +37,16 @@ def check_get(path):
         f.close()
         return stringa.encode("utf-8")
     
+    elif path.endswith("listaClassi"):
+        f = ottieni_classi()
+        return f.encode("utf-8")
+
+    elif path.endswith("listaPersonaggi"):
+        print()
+
+    elif path.endswith("listaAbilita"):
+        print()
+
     elif path.endswith("magoblu"):                  
         f = open("Autenticazione/Creazione-personaggio/magoblu.jpg", "rb")
         stringa = f.read()

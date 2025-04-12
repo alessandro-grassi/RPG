@@ -36,7 +36,52 @@ function cambiaImmagine() {
     }
 }
 
-function cerca_personaggi(){
-    //richiesta get
+
+function listaClassi(){
+  fetch('http://localhost:8080/personaggio/listaClassi')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json(); // Decodifica la risposta JSON
+    })
+    .then(data => {
+      // Mostra il messaggio nella pagina
+      let classi = data.message;
+      let select = document.getElementById("choice");
+      let i=1;
+
+      classi.forEach((classe)=> {
+        let option = document.createElement("option");
+        option.textContent=classe;
+        option.value="opzione"+i;
+        select.appendChild(option);
+        i++;
+        });
+    })
+    .catch(error => {
+      console.error("Errore durante la chiamata REST:", error);
+      alert("Errore di connesione, riprova più tardi!");
+    });
 
 }
+
+/*function cerca_personaggi(){
+  fetch('http://localhost:8080/personaggio/listaPersonaggi')
+	  .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json(); // Decodifica la risposta JSON
+    })
+}
+
+function listaAbilità(){
+  fetch('http://localhost:8080/personaggio/listaAbilita')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json(); // Decodifica la risposta JSON
+    })
+}*/
