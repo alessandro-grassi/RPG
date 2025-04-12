@@ -46,13 +46,15 @@ def check_get(path):
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
-    '''
-    #apre il backend
-    elif path.endswith("backend"):
-        f = open(sys.path[0] +"/Back_end/Missione4/backend.py", "r")
+    
+    #torna alla home
+    elif path.endswith("sm_home"):
+        f = open("Missioni/Missione4/indovina_soluzione.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
+    
+    '''
     elif path.endswith("trycookie"):
         f = open(sys.path[0] +"/SceltaPersonaggio/scelta.html", "r")
         stringa = f.read()

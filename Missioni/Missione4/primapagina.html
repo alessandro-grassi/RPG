@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benvenuto!</title>
-    <link rel="stylesheet" href="stile.css">
+    <link rel="stylesheet" href="http://localhost:8080/missione4/stile">
 </head>
 <body>
     <div id="header">
@@ -24,8 +24,8 @@
     </div>
 
     <div id="pulsanti">
-        <button onclick="location.href='indovina_soluzione.html'">Indovina Soluzione</button>
-        <button onclick="location.href='wordle.html'">Gioca</button>
+        <button onclick="ReindirizzamentoPaginaIndovina()">Indovina Soluzione</button>
+        <button onclick="ReindirizzamentoPaginaGioco()">Gioca</button>
     </div>
 
     <!--parte di script per gli indizi-->
@@ -71,6 +71,20 @@
 
                 })
                 .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+
+        function ReindirizzamentoPaginaGioco()
+        {
+            fetch('http://localhost:8080/missione4/gioca', 
+            { method: 'GET' })  
+        }
+
+
+        function ReindirizzamentoPaginaIndovina()
+        {
+            fetch('http://localhost:8080/missione4/indovina', 
+            { method: 'GET' })  
         }
 
 
