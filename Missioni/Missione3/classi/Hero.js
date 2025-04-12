@@ -1,6 +1,6 @@
 class Hero extends Entity {
     constructor(name, lvl, exp, atk, hp, magic) {
-        super(name, lvl, exp, atk, hp);
+        super(name, lvl, exp, atk, hp, magic);
         this.cooldownMagic = 0;  // Tiene traccia del turno dell'ultima magia
         this.canUseMagic = true; // Indica se l'eroe può usare magie
         this.maxHp = hp; // Salute massima dell'eroe
@@ -17,13 +17,13 @@ class Hero extends Entity {
                 this.fire(enemy);
                 break;
             case 2:
-                this.heal(enemy);
+                this.heal();
                 break;
             case 3:
-                this.heal
+                this.thunder(enemy);
                 break;
             default:
-                alert("Errorrrrrr: magic does not exist");
+                alert("Error: magic does not exist");
         }
 
         // Dopo aver usato una magia, avvia il cooldown

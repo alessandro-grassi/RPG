@@ -214,16 +214,9 @@ const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.leng
 
 console.log(selectedHeroInfo);
 
-let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp, selectedHeroInfo.magic)/*, new Hero("Antonio lo Gnomo", 80, 7900, 50, 80)]*/, [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
+let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp, selectedHeroInfo.magic), [new Enemy("Noce I", 85, 8400, 30, 255), new Enemy("Noce II", 90, 30, 60, 150), new Enemy("Noce Wittelsbach", 80, 30, 20, 400)]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
-
-document.addEventListener("DOMContentLoaded", async (e) => {
-    document.getElementById("nomeGiocatore").textContent = game.hero.name;
-    document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
-    game.aggiornaUI();
-
-});
 
 /* Inzio Sezione Gestione Audio */
 function playMusic() {
