@@ -7,7 +7,7 @@ var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.m
 var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
 var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
 var audioMuted = false; // variabile globale!
-    
+
 const magieDescriptions = {
     1: "Palla di Fuoco ",
     2: "Aromaterapia",
@@ -16,11 +16,76 @@ const magieDescriptions = {
 
 document.addEventListener("DOMContentLoaded", (e) => {
     game.aggiornaUI();
-})
+});
+
+function useActionButton(button, action) {
+    button.addEventListener("click", (e) => {
+        console.log("CLICK")
+        if (game.endGame) return;
+        if (game.round % 2 != 0) return output.innerHTML = "Non è il tuo turno";
+
+        // Sezione di attacco del giocatore
+        const hero = game.hero;
+        const enemy = game.selectedEnemy;
+
+        if (!enemy.avoid()) {
+            action(hero, enemy);
+        } else {
+            output.innerHTML = `${enemy.name} ha schivato l'attacco`;
+            console.log("Attacco schivato");
+        }
+
+        game.completeRound();
+        game.aggiornaUI();
+        game.nextRound();
+
+        //Fine sezione attacco del giocatore
+        // Disabilita i pulsanti mentre il nemico pensa
+        atkButton.disabled = true;
+        magicButton.disabled = true;
+
+        if ((!hero.isAlive()) || (!enemy.isAlive()))
+            return;
+        //Inizio sezione attacco del nemico
+        // Dopo 2 secondi cambia il testo in "Il boss sta pensando..."
+        setTimeout(() => {
+            output.innerHTML = `${enemy.name} sta pensando...`;
+
+            // Dopo 2 secondi + ritardo casuale il nemico attacca
+            const timeout = 2000 + Math.floor(Math.random() * 1000);
+            setTimeout(() => {
+                if (game.endGame) return;
+
+                if (!hero.avoid()) {
+                    attackSound();
+                    const enemyAtk = game.enemyAttack();
+                    output.innerHTML = `${enemy.name} ti ha inflitto ${enemyAtk} punti di danno`;
+
+                    announceEndGame(game);
+                } else {
+                    output.innerHTML = `${hero.name}, hai schivato l'attacco!`;
+                    console.log("Attacco schivato");
+                }
+
+                game.completeRound();
+                game.aggiornaUI();
+                game.nextRound();
+
+                //Fine sezione attacco del nemico
+                // Riattiva i pulsanti
+                atkButton.disabled = false;
+                magicButton.disabled = !game.hero.canUseMagic;
+            }, timeout);
+
+        }, 2000);
+    });
+}
+
 /**
  * Funzione chiamata quando il giocatore preme il pulsante "Attacca".
  * Gestisce l'attacco del giocatore.
  */
+/*
 atkButton.addEventListener("click", (e) => {
     if (game.endGame) return;
     if (game.round % 2 != 0) return output.innerHTML = "Non è il tuo turno";
@@ -83,6 +148,14 @@ atkButton.addEventListener("click", (e) => {
 
     }, 2000);
 });
+*/
+
+useActionButton(atkButton, function (hero, enemy) {
+    attackSound();
+    const heroAtk = hero.attack(enemy);
+    output.innerHTML = `Hai inflitto ${heroAtk} punti di danno a ${enemy.name}`;
+    announceEndGame(game);
+});
 
 /*Fine sezione attacco del nemico*/
 
@@ -90,7 +163,7 @@ atkButton.addEventListener("click", (e) => {
  * Funzione chiamata quando il giocatore preme il pulsante "Magia".
  * Determina quale magia usare in base all'input dell'utente.
  */
-
+/*
 magicButton.addEventListener("click", (e) => {
     if (game.endGame) return;
     if (game.round % 2 != 0) return output.innerHTML = "Non è il tuo turno";
@@ -151,6 +224,18 @@ magicButton.addEventListener("click", (e) => {
             else magicButton.disabled = true;
         }, timeout);
     }, 2000);
+});
+*/
+
+useActionButton(magicButton, function (hero, enemy) {
+    magicSound();
+    hero.useMagic(enemy);
+
+    // Prendo la descrizione della magia dal dizionario
+    const magiaUsata = magieDescriptions[hero.magic] || "Magia Sconosciuta";
+    output.innerHTML = `Hai usato <b>${magiaUsata}</b> su ${enemy.name}!`;
+
+    announceEndGame(game);
 });
 /*Fine sezione attacco del nemico*/
 
@@ -217,7 +302,7 @@ const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.leng
 
 console.log(selectedHeroInfo);
 
-let game = new Game(new Hero(selectedHeroInfo.name, selectedHeroInfo.lvl, selectedHeroInfo.exp, selectedHeroInfo.atk, selectedHeroInfo.hp, selectedHeroInfo.magic), [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
+let game = new Game(selectedHeroInfo, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
 game.selectedEnemy = game.selectEnemy();
 /* Inizio sezione chiamate REST */
 
@@ -241,7 +326,7 @@ function playMusic() {
 }
 
 function attackSound() {
-    if(audioMuted) return;
+    if (audioMuted) return;
     attackAudio.volume = 0.2;
     attackAudio.play().then(() => {
         console.log("Suono attacco avviato!");
@@ -251,7 +336,7 @@ function attackSound() {
 }
 
 function magicSound() {
-    if(audioMuted) return;
+    if (audioMuted) return;
     magicAudio.volume = 0.2;
     magicAudio.play().then(() => {
         console.log("Suono magia avviato!");

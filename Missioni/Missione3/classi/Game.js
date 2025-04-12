@@ -1,7 +1,7 @@
 class Game {
-    constructor(hero, enemies) {
-        //this.heroInfo = heroInfo;
-        this.hero = hero;
+    constructor(heroInfo, enemies) {
+        this.heroInfo = heroInfo;
+        this.hero = new Hero(this.heroInfo.name, this.heroInfo.lvl, this.heroInfo.exp, this.heroInfo.atk, this.heroInfo.hp, this.heroInfo.magic);
         this.enemies = enemies;
         this.selectedEnemy = null;
         this.round = 0;
@@ -51,7 +51,7 @@ class Game {
     reset() {
         // Creo lo stesso eroe con le statistiche di partenza
         this.hero = null;
-        this.hero = new Hero(this.heroInfo.name, this.heroInfo.lvl, this.heroInfo.exp, this.heroInfo.atk, this.heroInfo.hp);
+        this.hero = new Hero(this.heroInfo.name, this.heroInfo.lvl, this.heroInfo.exp, this.heroInfo.atk, this.heroInfo.hp, this.heroInfo.magic);
 
         this.removeEnemy();
         this.selectedEnemy = this.selectEnemy();
@@ -62,7 +62,7 @@ class Game {
     }
 
     //Metodo che controlla se il gioco è finito
-    checkEndGame() {
+    checkVictory() {
         let victoriousEntity = null;
         if (!this.hero.isAlive()) {
             victoriousEntity = this.selectedEnemy;
@@ -70,16 +70,18 @@ class Game {
             victoriousEntity = this.hero;
         }
 
-        if (victoriousEntity) this.endGame = true;
-
         return victoriousEntity;
+    }
+
+    checkEndGame() {
+        if (this.enemies.length === 0) return true;
+        return false;
     }
 
     //Metodo che aggiorna l'interfaccia utente con le informazioni attuali del gioco
     aggiornaUI() {
         /* Mostro */
         document.getElementById("immagineMostro").src = this.selectedEnemy.imageUrl;
-        console.log("AGGIORNA UI",this.selectedEnemy.imageUrl);
         document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
         document.getElementById("vitaMostro").textContent = this.selectedEnemy.hp;
         /* Mostro */
