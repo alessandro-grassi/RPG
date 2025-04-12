@@ -50,14 +50,12 @@ function listaClassi(){
       // Mostra il messaggio nella pagina
       let classi = data;
       let select = document.getElementById("choice");
-      let i=1;
 
       classi.forEach((classe)=> {
         let option = document.createElement("option");
         option.textContent=classe;
-        option.value="opzione"+i;
+        option.value=classe;
         select.appendChild(option);
-        i++;
         });
     })
     .catch(error => {
