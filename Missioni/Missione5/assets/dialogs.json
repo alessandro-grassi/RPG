@@ -13,13 +13,16 @@
   ],
   [
       "Il regno cadde in rovina e il popolo divenne l'ombra di ciò che erano una volta.",
-      "L'immortalità per l'alto prezzo di un intero regno."
+      "L'immortalità per l'alto prezzo di un intero regno.",
+      {"image":"destroyed_reign.jpg"}
   ],
   [
-      "Salvaci Eroe, noi povere anime rivogliamo la nostra pace e vendetta da quel tiranno."
+      "Salvaci Eroe, noi povere anime rivogliamo la nostra pace e vendetta da quel tiranno.",
+      {"image":"hero_image.png"}
   ],
   [
-      "Superati gli ostacoli e le insidie del regno, i cancelli principali del castello parvero davanti"
+      "Superati gli ostacoli e le insidie del regno, i cancelli principali del castello parvero davanti",
+      {"image":"Castle_gates.jpeg"}
   ],
   [
       "Il regno era in rovina, non c'era nemmeno una singola anima tranne le ombre vaganti dei popolani"
@@ -46,7 +49,8 @@
       "questo era solo l'inizio."
   ],
   [
-      "Entrando nel castello si presentò all'ingresso una vecchia e polverosa biblioteca."
+      "Entrando nel castello si presentò all'ingresso una vecchia e polverosa biblioteca.",
+      {"image":"Library.png"}
   ],
   [
       "All'interno della stanza era umido, disordinato e freddo.",
@@ -88,7 +92,8 @@
   ],
   [
       "Quando si aprirono le porte della sala del trono, parve una sala regale buia e cupa.",
-      "Era vuoto e silenzioso ma si poteva sentire nei tuoi pensieri le urla di quei poveri che imploravano per la loro vita ai piedi del Re."
+      "Era vuoto e silenzioso ma si poteva sentire nei tuoi pensieri le urla di quei poveri che imploravano per la loro vita ai piedi del Re.",
+      {"image":"Throne_room_door.jpg"}
   ],
   [
       "Si potevano sentire le piccole risate dei nobili nel vedere i poveri supplicare,",

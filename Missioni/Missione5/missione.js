@@ -101,7 +101,8 @@ function updateImage(current_image)
     if(current_image != null)
     {
         document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + current_image); // cambia l'attributo del tag con il percorso per l'immagine necessaria
-        sendToServer("update-last_image", current_image);
+        const data = {"last_image": current_image}; // crea oggetto da inviare al server
+        sendToServer("update-last_image", data);
     }
     else
         fetchFromServer("dialog-index").then((image)=>{ // in caso non ci siano immagini da impostare prende l'ultima salvata

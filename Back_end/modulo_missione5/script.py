@@ -112,12 +112,12 @@ def check_post(path,clientchoice):
         #aggiorna index dialoghi e immagini lore
         elif path == PREFIX + "update-index":
             print(clientchoice) # print per debug
-            update_index(clientchoice["current_index"])
+            update_progress(clientchoice["current_index"],"current_index")
             return json.dumps({"status": "success"}).encode() 
         
         #aggiorna l'ultima immagine vista nel file json
         elif path == PREFIX + "update-last_image":
-            update_index(clientchoice["last_image"])
+            update_progress(clientchoice["last_image"],"last_image")
             return json.dumps({"status": "success"}).encode() 
         
         return json.dumps({"status": "error"}).encode()
@@ -134,16 +134,18 @@ def check_post(path,clientchoice):
         return f'{{"error":"An error occurred: {str(e)}"}}'.encode("utf-8")
     
 
-# funzione usata per aggiornare l'index del dialogo a cui si è arrivati nella storia
-def update_index(index):
+# funzione usata per aggiornare l'index del dialogo e ultima immagine a cui si è arrivati nella storia
+def update_progress(data,target):
     json_file = open("Missioni/Missione5/assets/progress.json", "r")  # legge il file json
     parsed_data = json.loads(json_file.read()) # fa il parse in formato json della stringa
     json_file.close()
-    parsed_data["current_index"] = index # imposta il nuovo index
+    parsed_data[target] = data # imposta il nuovo index
     converted_data = json.dumps(parsed_data, indent=4) # converte i dati in formato json
     json_file = open("Missioni/Missione5/assets/progress.json", "w") # apre il file in lettura
     json_file.write(converted_data) # scrive sul file json i dati
     json_file.close() # chiude il file
+    
+
 
 if __name__ == "__main__":
     print(
