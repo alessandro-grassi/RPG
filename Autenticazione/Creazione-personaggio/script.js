@@ -47,7 +47,7 @@ function listaClassi(){
     })
     .then(data => {
       // Mostra il messaggio nella pagina
-      let classi = data.message;
+      let classi = data;
       let select = document.getElementById("choice");
       let i=1;
 
