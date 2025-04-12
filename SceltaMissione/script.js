@@ -62,7 +62,8 @@ setTimeout(() => {
 
 function setup()
 {
-
+    let personaggio = get_personaggio();
+    document.getElementById('uid').value = personaggio;
 }
 
 setup();
