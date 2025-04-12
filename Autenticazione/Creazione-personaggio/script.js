@@ -1,4 +1,5 @@
 var k=0;
+var j=0;
 
 function changeVisibility(){
   if(k == 0){
@@ -74,14 +75,48 @@ function listaClassi(){
       }
       return response.json(); // Decodifica la risposta JSON
     })
+}*/
+
+function mostraAbilita(){
+  document.getElementById("ab1").style.visibility = 'visible';
+  document.getElementById("ab2").style.visibility = 'visible';
+  document.getElementById("ab3").style.visibility = 'visible';
+  j=1;
+
 }
 
 function listaAbilità(){
-  fetch('http://localhost:8080/personaggio/listaAbilita')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json(); // Decodifica la risposta JSON
-    })
-}*/
+if(j!=0){
+  let classe = document.getElementById("choice").value;
+  const message={
+    class : classe
+  };
+  fetch('http://localhost:8080/personaggio/listaAbilita', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Errore nella risposta del server.');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.error) {
+      alert("Errore di connessione, riprova più tardi!")
+    } else {
+      if (data=="errore") alert("Errore Client")
+        else alert("Registrazione effettuata con successo");
+    }
+  })
+  .catch(error => {
+    console.error("Errore:", error);
+
+  });
+}
+j=0;
+  
+}
