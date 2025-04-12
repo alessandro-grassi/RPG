@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 function useActionButton(button, action) {
     button.addEventListener("click", (e) => {
-        console.log("CLICK")
         if (game.endGame) return;
         if (game.round % 2 != 0) return output.innerHTML = "Non è il tuo turno";
 
