@@ -87,7 +87,7 @@ const VerificaMatch = () => {
                 primaCarta.classList.remove('rotazione');
                 secondaCarta.classList.remove('rotazione');
                 resetCarte();
-            }, 1000);
+            }, 300);
         }
     }
 };
@@ -111,6 +111,7 @@ const checkVittoria = () => {
     if (match === carte.length) {
         clearInterval(interval);
         alert('Missione superata');
+        window.location.href="../progetto calo/prog.html";// dovrebbe essere il collegamento con il boss finale però bisognerà vedere 
     }
 };
 
