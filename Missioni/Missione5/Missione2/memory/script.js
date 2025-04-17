@@ -104,6 +104,9 @@ const CreaTimer = () => {
     interval = setInterval(() => {
         timer++;
         tempo.textContent = timer;
+        if(timer==45){
+            alert('tempo scaduto, hai perso! RIPROVA :)');
+        }
     }, 1000);
 };
 
