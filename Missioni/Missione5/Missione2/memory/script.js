@@ -106,6 +106,7 @@ const CreaTimer = () => {
         tempo.textContent = timer;
         if(timer==45){
             alert('tempo scaduto, hai perso! RIPROVA :)');
+            window.location.reload();
         }
     }, 1000);
 };
