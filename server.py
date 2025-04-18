@@ -3,14 +3,10 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib
 import json
 from urllib.parse import urlparse
-<<<<<<< HEAD
-from Back_end import missione4modulo
-dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
-    "/missione4/dettagli": missione4modulo,
-    "/missione4/prove": missione4modulo
-=======
-dict = { 
+from Back_end import missione4
+dict = {  # dizionario per prendere i prefissi dei moduli da aggiungere
     "/login": login,
+<<<<<<< HEAD
     "/jslib": jslib
     # dizionario per prendere i prefissi dei moduli da aggiungere
     
@@ -24,6 +20,10 @@ dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/cm" : cm,
     "/jslib": jslib
 >>>>>>> f431a12d926145662bfdbd695256d16a70dcb4a4
+=======
+    "/jslib": jslib,
+    "/missione4": missione4
+>>>>>>> 6f6dbb1d0f0942a56d2cb8ddb093a80c942f3941
 }
 
 

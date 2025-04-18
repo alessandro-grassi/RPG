@@ -1,15 +1,30 @@
+#TODO: INTEGRARE QUESTO IN UN SOLO MODULO IN MISSIONE4 (LA COPIA DEL LOGIN)
+
 import json #simulo il db
 
 #json per simulare il db
-DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro", ' \
+DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
 '       "ricompensa": "titolo di Kung Fury", ' \
-'       "tentativi": 3, ' \
+
+'       "tentativiIndovina": 3, ' \
+'       "tentativiIndovinaFatti": 0, ' \
+'       "tentativiGioco": 5, ' \
+'       "tentativiGiocoFatti": 0, ' \
+
 '       "soluzione": "gabibbo",' \
+
+'       "maxIndizi": 2,' \
+'       "indiziOttenuti":' \
+'       [' \
+'           "prova1",' \
+'           "prova1"' \
+'       ]' \
+
 '       "prove":' \
 '       [' \
-'           { "num": 0, "soluz": "nonna" "ind": "è rosso" },' \
-'           { "num": 1, "soluz": "porto" "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           { "num": 2, "soluz": "trave" "ind": "usa spesso il termine BELANDI" },' \
+'           { "num": 1, "soluz": "nonna", "ind": "è rosso" },' \
+'           { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
+'           { "num": 3, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
 '       ] }'
 
 dbDict = json.loads(DB)
@@ -17,24 +32,26 @@ dbDict = json.loads(DB)
 
 #gestione get e post
 def check_get(path):
-    if path.endswith("dettagli"):
-        return getDettagli()
+    if path.endswith("dettagliGenerali"):
+        return getDettagliGenerali()
 
 def check_post(path, tentativo, risposta=''):
     if path.endswith("indovina"):
         return indovina(tentativo, risposta)
-    elif path.endswith("prove"):
-        return getProve(tentativo)
+    #elif path.endswith("dettagliGioco"):
+    elif path.contains("dettagliGioco/"):
+        num = path.rsplit('/', 1)[-1]
+        return getDettagliGioco(num)
 
 
 
 #funzioni
-def getDettagli():
-    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativi"]
+def getDettagliGenerali():
+    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativiIndovina"],dbDict["tentativiIndovinaFatti"],dbDict["indiziOttenuti"],dbDict["maxIndizi"]
 
-def getProve(tentativo):
-    tentDict = dbDict["prove"][tentativo]
-    return tentDict["soluz"], tentDict["ind"]
+def getDettagliGioco(num):
+    tentDict = dbDict["prove"][num - 1]
+    return tentDict["ind"]
 
 
 def indovina(tentativo, risposta):
@@ -45,3 +62,5 @@ def indovina(tentativo, risposta):
             print("mi dispiace ma non è la risposta corretta")
     else:
         print("tentativi esauriti")
+
+
