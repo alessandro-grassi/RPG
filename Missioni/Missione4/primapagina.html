@@ -63,15 +63,23 @@
                     tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentativiIndovina) - int(tentativiIndovinaFatti));
 
                     //indizi
-                    var mesIndizi = document.getElementById("messaggioIndizi");
-                    mesIndizi.hidden = True;
-                    var listaIndizi = document.getElementById("listaIndizi");
-                    indiziOttenuti.forEach(indizio => {
-                        var indizioElement = document.createElement("li");
-                        indizioElement.innerText = indizio;
-                        listaIndizi.appendChild(indizioElement);
-                    });
+                    if(len(indiziOttenuti) >= maxIndizi)
+                    {
+                        //reindirizzamento a pagina indovina
+                        ReindirizzamentoPaginaIndovina();
+                    }
+                    if(len(indiziOttenuti) > 0)
+                    {
+                        var mesIndizi = document.getElementById("messaggioIndizi");
+                        mesIndizi.hidden = True;
                     
+                        var listaIndizi = document.getElementById("listaIndizi");
+                        indiziOttenuti.forEach(indizio => {
+                            var indizioElement = document.createElement("li");
+                            indizioElement.innerText = indizio;
+                            listaIndizi.appendChild(indizioElement);
+                        });
+                    }
 
                 })
                 .catch(error => console.error("Si è verificato un errore:", error));
@@ -82,6 +90,9 @@
         {
             fetch('http://localhost:8080/missione4/gioca', 
             { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
         }
 
 
@@ -89,8 +100,10 @@
         {
             fetch('http://localhost:8080/missione4/indovina', 
             { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
         }
-
 
         //carica gli indizi all'avvio della pagina
         window.onload = getDettagliGenerali();
