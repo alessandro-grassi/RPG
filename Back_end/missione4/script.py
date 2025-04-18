@@ -54,6 +54,10 @@ def check_get(path):
         f.close()
         return stringa.encode("utf-8")
     
+    #getDetteagliGenerali
+    elif path.endswith("dettagliGenerali"):
+        return getDettagliGenerali()
+    
     '''
     elif path.endswith("trycookie"):
         f = open(sys.path[0] +"/SceltaPersonaggio/scelta.html", "r")
@@ -85,4 +89,70 @@ def check_post(path, client_choice):
                 return '"errore"'.encode("utf-8")
         except Exception as errore:
             return '"errore"'.encode("utf-8")
+        
+    elif path.endswith("indovina"):
+        tentativo = client_choice["tentativo"]
+        risposta = client_choice["risposta"]
+        return indovina(tentativo, risposta)
+    
+    #elif path.endswith("dettagliGioco"):
+    elif path.contains("dettagliGioco/"):
+        num = path.rsplit('/', 1)[-1]
+        return getDettagliGioco(num)
+    
     return '"Path not found"'.encode("utf-8")
+
+    
+
+
+
+
+
+#PARTE PER SIMULARE DB
+import json #simulo il db
+
+#json per simulare il db
+DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
+'       "ricompensa": "titolo di Kung Fury", ' \
+
+'       "tentativiIndovina": 3, ' \
+'       "tentativiIndovinaFatti": 0, ' \
+'       "tentativiGioco": 5, ' \
+'       "tentativiGiocoFatti": 0, ' \
+
+'       "soluzione": "gabibbo",' \
+
+'       "maxIndizi": 2,' \
+'       "indiziOttenuti":' \
+'       [' \
+'           "prova1",' \
+'           "prova1"' \
+'       ]' \
+
+'       "prove":' \
+'       [' \
+'           { "num": 1, "soluz": "nonna", "ind": "è rosso" },' \
+'           { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
+'           { "num": 3, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
+'       ] }'
+
+dbDict = json.loads(DB)
+
+#funzioni per simulare db
+def getDettagliGenerali():
+    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativiIndovina"],dbDict["tentativiIndovinaFatti"],dbDict["indiziOttenuti"],dbDict["maxIndizi"]
+
+def getDettagliGioco(num):
+    tentDict = dbDict["prove"][num - 1]
+    return tentDict["ind"]
+
+
+def indovina(tentativo, risposta):
+    if tentativo <= dbDict["tentativi"]:
+        if risposta == dbDict["soluzione"]:
+            print("complimenti! hai indovinato")
+        else:
+            print("mi dispiace ma non è la risposta corretta")
+    else:
+        print("tentativi esauriti")
+
