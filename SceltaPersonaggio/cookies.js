@@ -14,4 +14,11 @@ function getCookie(name) {
         }
     }
     return null; // Cookie non trovato
+<<<<<<< HEAD
+=======
+}
+
+function setCookie(name,value){
+    document.cookie = ''+name+'='+value+"";
+>>>>>>> f431a12d926145662bfdbd695256d16a70dcb4a4
 }
