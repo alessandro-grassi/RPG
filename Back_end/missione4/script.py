@@ -58,6 +58,10 @@ def check_get(path):
     elif path.endswith("dettagliGenerali"):
         return getDettagliGenerali()
     
+    #elif path.endswith("dettagliGioco"):
+    elif path.contains("dettagliGioco/"):
+        return getDettagliGioco()
+    
     '''
     elif path.endswith("trycookie"):
         f = open(sys.path[0] +"/SceltaPersonaggio/scelta.html", "r")
@@ -66,6 +70,8 @@ def check_get(path):
         return stringa.encode("utf-8")'''
     #se non trova il path
     return '"Path not found"'.encode("utf-8")
+
+
 
 
 def check_post(path, client_choice):
@@ -91,14 +97,23 @@ def check_post(path, client_choice):
             return '"errore"'.encode("utf-8")
         
     elif path.endswith("indovina"):
-        tentativo = client_choice["tentativo"]
-        risposta = client_choice["risposta"]
-        return indovina(tentativo, risposta)
+        try:
+            tentativo = client_choice["tentativo"]
+            risposta = client_choice["risposta"]
+            return indovina(tentativo, risposta)
+        except Exception as errore:
+                return '"errore"'.encode("utf-8")
     
-    #elif path.endswith("dettagliGioco"):
-    elif path.contains("dettagliGioco/"):
-        num = path.rsplit('/', 1)[-1]
-        return getDettagliGioco(num)
+    elif path.contains("controlla/"):
+        try:
+            num = path.rsplit('/', 1)[-1]
+            tentativo = client_choice["tentativo"]
+            risposta = client_choice["risposta"]
+            return indovina(tentativo, risposta)
+        except Exception as errore:
+                return '"errore"'.encode("utf-8")
+    
+    
     
     return '"Path not found"'.encode("utf-8")
 
@@ -122,7 +137,7 @@ DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
 
 '       "soluzione": "gabibbo",' \
 
-'       "maxIndizi": 2,' \
+'       "maxIndizi": 3,' \
 '       "indiziOttenuti":' \
 '       [' \
 '           "prova1",' \
@@ -131,9 +146,9 @@ DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
 
 '       "prove":' \
 '       [' \
-'           { "num": 1, "soluz": "nonna", "ind": "è rosso" },' \
+'           { "num": 3, "soluz": "nonna", "ind": "è rosso" },' \
 '           { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           { "num": 3, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
+'           { "num": 1, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
 '       ] }'
 
 dbDict = json.loads(DB)
@@ -142,9 +157,16 @@ dbDict = json.loads(DB)
 def getDettagliGenerali():
     return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativiIndovina"],dbDict["tentativiIndovinaFatti"],dbDict["indiziOttenuti"],dbDict["maxIndizi"]
 
-def getDettagliGioco(num):
+def getDettagliGioco():
+    return dbDict["tentativiGioco"],dbDict["tentativiGiocoFatti"]
+
+def getVincita(num):
     tentDict = dbDict["prove"][num - 1]
     return tentDict["ind"]
+
+def getSoluzione(num):
+    tentDict = dbDict["prove"][num - 1]
+    return tentDict["soluz"]
 
 
 def indovina(tentativo, risposta):

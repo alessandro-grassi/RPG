@@ -31,9 +31,9 @@
         <button onclick="ReindirizzamentoPaginaGioco()">Gioca</button>
     </div>
 
-    <!--parte di script per gli indizi-->
+
     <script>
-        //windowonload degli indizi
+        //onload degli indizi
         function getDettagliGenerali() 
         {
             fetch('http://localhost:8080/missione4/dettagliGenerali', 
@@ -48,8 +48,6 @@
                     var indiziOttenuti = data[4]; //lista degli indizi
                     var maxIndizi = data[5];
 
-                    //inserisco i dati ottenuti al loro posto**************
-
                     //obiettivo
                     var obiettivoP = document.getElementById("obiettivoP");
                     obiettivoP.innerText = obiettivo;
@@ -63,12 +61,12 @@
                     tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentativiIndovina) - int(tentativiIndovinaFatti));
 
                     //indizi
-                    if(len(indiziOttenuti) >= maxIndizi)
+                    if(indiziOttenuti.length >= maxIndizi)
                     {
                         //reindirizzamento a pagina indovina
                         ReindirizzamentoPaginaIndovina();
                     }
-                    if(len(indiziOttenuti) > 0)
+                    else if(indiziOttenuti.length > 0)
                     {
                         var mesIndizi = document.getElementById("messaggioIndizi");
                         mesIndizi.hidden = True;
@@ -79,6 +77,14 @@
                             indizioElement.innerText = indizio;
                             listaIndizi.appendChild(indizioElement);
                         });
+
+                    }
+                    
+                    if((indiziOttenuti.length >= 0)&&(indiziOttenuti.length < maxIndizi))
+                    {
+                        //ricavo la prova da giocare e la inserisco nel localStorage per facilitare la GET successivamente
+                        numeroProva = maxIndizi - indiziOttenuti.length;
+                        localStorage.setItem("numeroProva", numeroProva);
                     }
 
                 })

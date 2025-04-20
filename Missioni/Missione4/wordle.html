@@ -8,12 +8,11 @@
 </head>
 <body>
     <div id="header">
-        <h1 id="titolo-missione">missione 4</h1>
+        <h1 id="titolo-missione">trova la parola</h1>
     </div>
 
     <div id="wordle-container">
-        <h2>trova la parola</h2>
-        <p id="tentativi-rimasti">Tentativi rimasti: <span id="numero-tentativi">5</span></p>
+        <h2 id="tentativiH">Tentativi per indovinare: </h2>
         <div id="griglia-wordle">
             <!--prima riga come esempio-->
             <div class="riga">
@@ -26,11 +25,58 @@
             <!--altre righe da fare dinamicamente-->
         </div>
         <div id="pulsanti">
-            <button id="indovina">Indovina</button>
+            <button id="indovina" onclick="controllaSoluzioni()">Indovina</button>
         </div>
     </div>
 
-    <!--chiamate rest-->
+
+    <script>
+        //onload dei dettagli di gioco
+        function getDettagliGioco()
+        {
+            numeroProva = localStorage.getItem("numeroProva");
+            fetch('http://localhost:8080/missione4/dettagliGioco/' + numeroProva, 
+            { method: 'GET' })  
+                .then(response => response.json())
+                .then(data => {
+                    //estraggo i dettagli dal JSON restituito
+                    var tentGiocoMax = data[0];
+                    var tentGiocoFatti = data[1];
+
+                    //tentativi per indovinare
+                    var tentativiH = document.getElementById("tentativiH");
+                    tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentGiocoMax) - int(tentGiocoFatti));
+                
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        function controllaSoluzioni()
+        {
+            numeroProva = localStorage.getItem("numeroProva");
+
+
+            
+            fetch('http://localhost:8080/missione4/gioca', 
+            {method: 'POST', body: JSON.stringify({numProva: numeroProva})})
+            .then(response => response.json())
+            .then(data => {
+                //estraggo i dettagli dal JSON restituito
+                var tentGiocoMax = data[0];
+                var tentGiocoFatti = data[1];
+
+                //tentativi per indovinare
+                var tentativiH = document.getElementById("tentativiH");
+                tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentGiocoMax) - int(tentGiocoFatti));
+            
+            })
+            .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+
+    </script>
+
+    <!--chiamate rest
     <script>
         //onload dei tentativi rimasti
         function caricaTentativiRimasti() {
@@ -68,5 +114,6 @@
         // Carica i tentativi rimasti all'avvio della pagina
         window.onload = caricaTentativiRimasti;
     </script>
+-->
 </body>
 </html>
