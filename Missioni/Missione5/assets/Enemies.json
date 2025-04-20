@@ -57,14 +57,14 @@
                 "move_type": "Attack",
                 "chance": 60,
                 "damage_type": "magico",
-                "description": "L'adepto cremisi risucchia il sangue attraverso la magia"
+                "description": "L'adepto cremesi risucchia il sangue attraverso la magia"
             },
             {
                 "move_name": "Salsa Sanguigna",
                 "move_type": "Unique",
                 "chance": 20,
                 "recupero_vita": 75,
-                "description": "L'adepto cremisi si cura usando il sangue risucchiato"
+                "description": "L'adepto cremesi si cura usando il sangue risucchiato"
             },
             {
                 "move_name": "Memento Mori",
@@ -72,13 +72,13 @@
                 "chance": 15,
                 "vulnerabile_mag": true,
                 "durata": 2,
-                "description": "L'adepto cremisi ti maledice rimembrando della tua fragile mortalità"
+                "description": "L'adepto cremesi ti maledice rimembrando della tua fragile mortalità"
             },
             {
                 "move_name": "Frenesia",
                 "move_type": "Unique",
                 "chance": 5,
-                "description": "L'adepto cremisi usa un antico incantesimo rendendoti pazzo e infliggendoti un attacco a te stesso"
+                "description": "L'adepto cremesi usa un antico incantesimo rendendoti pazzo e infliggendoti un attacco a te stesso"
             }
         ]
     },
@@ -95,7 +95,6 @@
             {
                 "move_name": "Spada delle Mille Anime",
                 "move_type": "Unique",
-                "chance": 0,
                 "bonus_schivata": 25,
                 "damage_type": "both"
             },
@@ -107,7 +106,7 @@
                 "damage_fis_perc": 5,
                 "vulnerabile_mag": true,
                 "durata": 1,
-                "description": "Il Re fende la sua spada attraversando il corpo raggiungendo la tua anima"
+                "description": "Il Re fende la sua spada e ti colpisce la tua anima attraverso il tuo corpo"
             },
             {
                 "move_name":"Aura immortale",
@@ -117,7 +116,7 @@
                 "damage_type": "magico",
                 "vulnerabile_fis": true,
                 "durata": 2,
-                "description": "Il Re evoca un aura spiritica da migliaia di anime"
+                "description": "Il Re evoca un aura intorno a sè con migliaia di spiriti che vagano incessatamente intorno"
             },
             {
                 "move_name":"Corona Indistruttibile",
