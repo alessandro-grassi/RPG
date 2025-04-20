@@ -29,11 +29,27 @@ body {
     box-shadow: 4px 4px 0px #000;
 }
 
+.overlay-image{
+    position: absolute;
+    align-items: center;
+}
+
 .dialog-box, .prompt-box {
     background: #32302f;
     border: 3px solid #d79921;
     padding: 20px;
     box-shadow: 2px 2px 0px #000;
+    font-size: 12px;
+    text-align: left;
+    position: relative;
+    width: 60vw; /* Ensures they match the image width */
+    max-width: 60vw;
+}
+
+.combat-box, .prompt-box {
+    display: flex;
+    align-items: left;
+    padding: 20px;
     font-size: 12px;
     text-align: left;
     position: relative;
@@ -56,6 +72,19 @@ body {
     font-size: 14px;
     line-height: 1.5;
     color: #ebdbb2;
+}
+
+progress {
+    accent-color: red;
+  }
+
+.life-text, .prompt-text {
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #ebdbb2;
+    background: #32302f;
+    border: 3px solid #d79921;
 }
 
 .dialog-button, .prompt-button {
