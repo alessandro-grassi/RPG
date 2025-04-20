@@ -22,19 +22,24 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
-    elif path == PREFIX+"mission-scena-3":
-        with open("Missioni/Missione5/html_pages/scena_3.html", "r") as f:
-            r = f.read()
-            f.close()
-            return r.encode("utf-8")
-        
     elif path == PREFIX+"enemies-images-path":
         with open("Missioni/Missione5/assets/enemies_images.json", "r") as f:
             r = f.read()
             f.close()
             return r.encode("utf-8") # encode 
+    
+    elif path == PREFIX+"mission-start":
+        with open("Missioni/Missione5/assets/font.css", "r") as f: # usare r per richieste sui file
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
         
-        
+    elif path == PREFIX+"mission-scena-1":
+        with open("Missioni/Missione5/html_pages/scena_1.html", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+
     elif path == PREFIX+"api-test":
         with open("Missioni/Missione5/api-test.html", "r") as f: # usare r per richieste sui file
             r = f.read()
@@ -56,11 +61,11 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8") # encode
-
+        
     elif path == PREFIX+"random-chance":
         rand = combactSystem.rand(1, 100)
         return ('{"result":"'+str(rand)+'"}').encode("utf-8")
-
+        
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
@@ -88,15 +93,33 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
+    # prende il mapping tra dialoghi e immagini per storyline
+    elif path == PREFIX + "get-mapping":
+        with open("Missioni/Missione5/assets/dialogs_images.json","r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+     
     #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):
-        image_name = path.split("/")[3]
-        print(image_name)
+        image_name = path.split("/")[3] # fa uno split e prende la 4a cella
         with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
             r = f.read()
             f.close()
-            return r   
-
+            return r # restituisce immagine in formato binario
+    
+    
+        
+     #funzione usata per recuperare le immagini in base al nome richiesto
+            return r # restituisce immagine in formato binario
+    elif path== PREFIX + "script-scena-1":
+        f = open("Missioni/Missione5/html_pages/scena_1.js", "rb")
+        r = f.read()
+        f.close()
+        return r
+    else:
+        return "Percorso non valido!".encode("utf-8")
+        
 def check_post(path,clientchoice):
     try:
         if path == PREFIX_API+"set-life":
