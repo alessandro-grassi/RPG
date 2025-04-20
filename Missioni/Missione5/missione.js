@@ -20,14 +20,19 @@ function setButton(){
     });
 }
 
-//funzione che formatta il blocco di dialogo 
+//funzione che formatta il blocco di dialogo e controlla se ci sono immagini
 function formatDialog(dialogLines)
 {
     let finalDialog = "" // crea una variabile in cui fare lo store delle linee
     dialogLines.forEach(line =>{ // itera ogni linea della cella di dialogo
-        if(line.image == null)
-            finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
-        updateImage(line.image); // fa un update delle immagini
+        if(line.fight != null) // controlla se ci sono reindirizzamenti a pagine di combattimento
+            window.location.replace("http://localhost:8080/m5/" + line.fight); // redirect in modo che non si possa fare back alla pagina precedente
+        else
+        {
+            if(line.image == null) // nel caso non ci siano immagini da cambiare
+                finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
+            updateImage(line.image); // fa un update delle immagini
+        }
     })
     return finalDialog; // restituisce dialogo finale
 }
