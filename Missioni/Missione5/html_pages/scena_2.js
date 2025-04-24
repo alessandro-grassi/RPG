@@ -92,6 +92,14 @@ function setDialogue(){
 function setButtonAttack(){
     document.getElementById('attack_button').addEventListener("click", function(){
         vita_corrente -= danno_fisico_pg;
+
+        let enemyImage = document.getElementById('image_mage');
+        enemyImage.classList.add('hit-effect');
+
+        setTimeout(() => {
+            enemyImage.classList.remove('hit-effect');
+        }, 300);
+
         if(vita_corrente <= 0){
             document.getElementById('image_mage').remove();
             document.getElementById('vita').remove();
@@ -137,6 +145,9 @@ function enemyAttack(json){
                         if(moves['damage_type'] == 'fisico'){
                             danno_enemy = danno_fisico;
                             vita_corrente_pg -= danno_enemy;
+
+                            flashScreen();
+                            
                             document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
                         }
                     }
@@ -164,4 +175,12 @@ function gameover(){
 
 function setLifePointsPG(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
+}
+
+function flashScreen() {
+    const flash = document.getElementById('screen-flash');
+    flash.classList.add('active');
+    setTimeout(() => {
+        flash.classList.remove('active');
+    }, 200);
 }
