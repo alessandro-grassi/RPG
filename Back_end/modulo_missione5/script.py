@@ -109,6 +109,13 @@ def check_get(path:str):
             return r # restituisce immagine in formato binario
      #funzione usata per recuperare le immagini in base al nome richiesto
             return r # restituisce immagine in formato binario
+    elif path.startswith(PREFIX+"get-audio/"):
+        audio_name = path.split("/")[3] # fa uno split e prende la 4a cella
+        with open("Missioni/Missione5/assets/"+audio_name, "rb") as f: # utilizzare rb(read byte) per richieste sugli audio
+            r = f.read()
+            f.close()
+            return r    
+        
     elif path== PREFIX + "script-scena-1":
         f = open("Missioni/Missione5/html_pages/scena_1.js", "rb")
         r = f.read()
