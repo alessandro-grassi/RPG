@@ -122,8 +122,12 @@ function setButtonAttack(){
         if(vita_corrente <= 0){
             document.getElementById('image_guardian').remove();
             document.getElementById('vita').remove();
+            document.getElementById('ulti').remove();
             document.getElementById('vita-text').remove();
             document.getElementById('overlay').remove();
+            document.getElementById('attack_button').remove();
+            document.getElementById('heal_button').remove();
+            document.getElementById('ulti_button').remove();
             document.getElementById('text').innerHTML = "HAI VINTO!!";
             this.removeEventListener();
         }
@@ -137,6 +141,7 @@ function setButtonAttack(){
         document.getElementById('ulti_button').style = "visibility: hidden;";
         document.getElementById('next_button').style = "visibility: visible;"; 
         document.getElementById('heal_button').style = "visibility: hidden;";
+        document.getElementById('ulti').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
         void boss.offsetWidth; // Trigger reflow to restart animation
@@ -170,6 +175,7 @@ function setButtonHeal(){
         document.getElementById('ulti_button').style = "visibility: hidden;";
         document.getElementById('next_button').style = "visibility: visible;"; 
         document.getElementById('attack_button').style = "visibility: hidden;";
+        document.getElementById('ulti').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
     })
@@ -199,20 +205,26 @@ function setButtonUlti(){
         if(vita_corrente <= 0){
             document.getElementById('image_guardian').remove();
             document.getElementById('vita').remove();
+            document.getElementById('ulti').remove();
             document.getElementById('vita-text').remove();
             document.getElementById('overlay').remove();
+            document.getElementById('attack_button').remove();
+            document.getElementById('heal_button').remove();
+            document.getElementById('ulti_button').remove();
             document.getElementById('text').innerHTML = "HAI VINTO!!";
             this.removeEventListener();
         }
         else{
             document.getElementById('vita').value = vita_corrente;
+            document.getElementById('ulti').value = carica_ulti;
             document.getElementById('vita-text').innerHTML = "PV:"+ vita_corrente;
             document.getElementById('text').innerHTML = "'Hai inflitto "+danno_fisico_pg*2+" danni!'";
         }
 
-        document.getElementById('ulti_button').style = "visibility: hidden;";
+        document.getElementById('attack_button').style = "visibility: hidden;";
         document.getElementById('next_button').style = "visibility: visible;"; 
         document.getElementById('heal_button').style = "visibility: hidden;";
+        document.getElementById('ulti').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
         void boss.offsetWidth; // Trigger reflow to restart animation
@@ -225,8 +237,13 @@ function setButtonNext(){
         fetchData("enemies-list", enemyAttack)
         document.getElementById('attack_button').style = "visibility: visible;";
         document.getElementById('heal_button').style = "visibility: visible;";
+        document.getElementById('ulti_button').style = "visibility: visible;";
+        document.getElementById('ulti').style = "visibility: visible;";
         if(carica_ulti >=3){
-            document.getElementById('ulti_button').style = "visibility: visible;";
+            document.getElementById('ulti_button').disabled = false;
+        }
+        else{
+            document.getElementById('ulti_button').disabled = true;
         }
         this.style = "visibility: hidden";
     })
@@ -293,8 +310,9 @@ function gameover(){
     document.getElementById('text').innerHTML = "GAME OVER";
     document.getElementById('attack_button').remove();
     document.getElementById('heal_button').remove();
-    document.getElementById('next_button').remove();
     document.getElementById('ulti_button').remove();
+    document.getElementById('next_button').remove();
+    document.getElementById('ulti').remove();
     retry = document.createElement('button');
     retry.textContent = "Retry";
     retry.className = "dialog-button";
