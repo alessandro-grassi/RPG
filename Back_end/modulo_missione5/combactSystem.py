@@ -44,7 +44,20 @@ def set_life(name, value):
         print("Entità: ",name," inesistente")
 
 def get_life(name):
-    print(queryLib.execute("select * from abilita"))
+    print(queryLib.execute("""
+CREATE SEQUENCE m5_current_boss_id_seq;
+
+CREATE TABLE m5_current_boss (
+    current_boss_id INTEGER PRIMARY KEY DEFAULT NEXTVAL('m5_current_boss_id_seq'),
+    utente VARCHAR(255) UNIQUE REFERENCES utenti(username),
+    boss_name VARCHAR(255),
+    healt INTEGER,
+    bonus_attack INTEGER,
+    bonus_attack_duration INTEGER,
+    bonus_defense INTEGER,
+    bonus_defense_duration INTEGER
+);
+"""))
     return lifes.get(name)
 
 def set_mana(name,value):
