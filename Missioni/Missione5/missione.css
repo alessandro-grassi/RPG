@@ -100,6 +100,23 @@ progress {
     font-family: 'Press Start 2P', cursive;
 }
 
+.ulti_button {
+    background: gold;
+    border: 2px solid goldenrod;
+    color: black;
+    padding: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+    margin: 5px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.ulti_button:hover {
+    background: rgb(185, 158, 2);
+}
+
+
 .dialog-button:hover, .prompt-button:hover {
     background: #d3869b;
 }
