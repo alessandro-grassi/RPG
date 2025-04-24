@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     setDialogue();
     setLifePointsPG();
     setButtonAttack();
+    setButtonHeal();
     setButtonNext();
 });
 
@@ -107,6 +108,7 @@ function setButtonAttack(){
             document.getElementById('text').innerHTML = "'Hai inflitto "+danno_fisico_pg+" danni!'";
         }
         document.getElementById('next_button').style = "visibility: visible;"; 
+        document.getElementById('heal_button').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
         //effetti visivi
@@ -128,11 +130,44 @@ function setButtonAttack(){
     })
 }
 
+function setButtonHeal(){
+    document.getElementById('heal_button').addEventListener("click", function(){
+
+        if(vita_corrente <= 0){
+            this.removeEventListener();
+        }
+
+        vita_corrente_pg += 150;
+
+        if(vita_corrente_pg > 500){
+            vita_corrente_pg = 500;
+            document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+            document.getElementById('text').innerHTML = "'Non puoi curarti oltre i 500 PV!'";
+        }
+        else{
+            document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+            document.getElementById('text').innerHTML = "'Ti sei curato di 150 PV!'";
+        }
+
+        document.getElementById('next_button').style = "visibility: visible;"; 
+        document.getElementById('attack_button').style = "visibility: hidden;";
+        this.style = "visibility: hidden";
+
+        //effetti visivi
+        const heal_sound = document.getElementById('heal_sound');
+
+        heal_sound.currentTime = 0;
+        heal_sound.play();
+
+    })
+}
+
 function setButtonNext(){
     document.getElementById('next_button').addEventListener("click", function(){
         fetchData("random-chance", getRand)
         fetchData("enemies-list", enemyAttack)
-        document.getElementById('attack_button').style = "visibility: visible;"; 
+        document.getElementById('attack_button').style = "visibility: visible;";
+        document.getElementById('heal_button').style = "visibility: visible;";
         this.style = "visibility: hidden";
     })
 }
@@ -197,6 +232,7 @@ function gameover(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
     document.getElementById('text').innerHTML = "GAME OVER";
     document.getElementById('attack_button').remove();
+    document.getElementById('heal_button').remove();
     document.getElementById('next_button').remove();
     retry = document.createElement('button');
     retry.textContent = "Retry";
