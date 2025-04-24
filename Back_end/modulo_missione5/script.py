@@ -22,6 +22,31 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8")
         
+    elif path == PREFIX+"enemies-images-path":
+        with open("Missioni/Missione5/assets/enemies_images.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode 
+    
+    elif path == PREFIX+"mission-start":
+        with open("Missioni/Missione5/assets/font.css", "r") as f: # usare r per richieste sui file
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+        
+    # getter pagine missioni, da cambiare in una funzione generalizzata
+    elif path == PREFIX+"mission-scena-1":
+        with open("Missioni/Missione5/html_pages/scena_1.html", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+    
+    elif path == PREFIX+"mission-scena-3":
+        with open("Missioni/Missione5/html_pages/scena_3.html", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+
     elif path == PREFIX+"api-test":
         with open("Missioni/Missione5/api-test.html", "r") as f: # usare r per richieste sui file
             r = f.read()
@@ -38,9 +63,25 @@ def check_get(path:str):
         mana = str(combactSystem.get_mana(name))
         return ('{"result":"'+mana+'"}').encode("utf-8")
     
+    elif path == PREFIX+"enemies-list":
+        with open("Missioni/Missione5/assets/Enemies.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode
+        
+    elif path == PREFIX+"random-chance":
+        rand = combactSystem.rand(1, 100)
+        return ('{"result":"'+str(rand)+'"}').encode("utf-8")
+        
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+        
+    elif path == PREFIX + "script-scena-3":
+        with open("Missioni/Missione5/html_pages/scena_3.js") as f:
             r = f.read()
             f.close()
             return r.encode("utf-8")
@@ -58,14 +99,6 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-        
-        
-    # prende il mapping tra dialoghi e immagini per storyline
-    elif path == PREFIX + "get-mapping":
-        with open("Missioni/Missione5/assets/dialogs_images.json","r") as f:
-            r = f.read()
-            f.close()
-            return r.encode("utf-8")
      
     #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):
@@ -74,8 +107,16 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r # restituisce immagine in formato binario
-    
-    
+     #funzione usata per recuperare le immagini in base al nome richiesto
+            return r # restituisce immagine in formato binario
+    elif path== PREFIX + "script-scena-1":
+        f = open("Missioni/Missione5/html_pages/scena_1.js", "rb")
+        r = f.read()
+        f.close()
+        return r
+    else:
+        return "Percorso non valido!".encode("utf-8")
+        
 def check_post(path,clientchoice):
     try:
         if path == PREFIX_API+"set-life":
@@ -108,7 +149,7 @@ def check_post(path,clientchoice):
             attack_name = clientchoice['attack_name']
             combactSystem.attack(attacker_name, attacked_name, attack_name)
             return '{"result":"Attack executed successfully"}'.encode("utf-8")
-        
+
         #aggiorna index dialoghi e immagini lore
         elif path == PREFIX + "update-index":
             print(clientchoice) # print per debug

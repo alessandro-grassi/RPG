@@ -1,0 +1,140 @@
+[
+    {  
+        "name":"Guardiano di Rocciascura",
+        "stats":{
+            "vita": 700,
+            "danno_fis_base": 100,
+            "schivata": 0,
+            "danno_mag_base": 10,
+            "critico": 30
+        },
+        "moves":[
+            {
+                "move_name": "Pugno",
+                "move_type": "Attack",
+                "chance": 60,
+                "damage_type": "fisico",
+                "description": "Il guardiano colpisce con i suoi pugni e infligge 100 danni!"
+            },
+            {
+                "move_name": "Ammasso",
+                "move_type": "buff",
+                "chance": 20,
+                "bonus_defense": 40,
+                "damage_type": "fisico",
+                "durata": 2, 
+                "description": "Il guardiano si ricopre di strati di roccia e riduce i danni subiti"
+            },
+            {
+                "move_name": "Carica",
+                "move_type": "buff",
+                "chance": 15,
+                "bonus_attack": 50,
+                "damage_type": "fisico",
+                "durata": 2,
+                "description": "Il guardiano si carica di energia purpurea e aumenta il suo attacco"
+            },
+            {
+                "move_name": "Folgorazione",
+                "move_type": "Unique",
+                "chance": 5,
+                "description": "Il guardiano sfodera una scarica di energia purpurea che ti paralizza"
+            }
+        ]
+    },
+    {
+        "name":"Adepto immortale Cremisi",
+        "stats":{
+            "vita":500,
+            "danno_fis_base": 0,
+            "schivata": 15,
+            "danno_mag_base":80,
+            "critico": 60
+        },
+        "moves":[
+            {
+                "move_name": "Risucchio",
+                "move_type": "Attack",
+                "chance": 60,
+                "damage_type": "magico",
+                "description": "L'adepto cremesi risucchia il sangue attraverso la magia"
+            },
+            {
+                "move_name": "Salsa Sanguigna",
+                "move_type": "Unique",
+                "chance": 20,
+                "recupero_vita": 75,
+                "description": "L'adepto cremesi si cura usando il sangue risucchiato"
+            },
+            {
+                "move_name": "Memento Mori",
+                "move_type": "debuff",
+                "chance": 15,
+                "vulnerabile_mag": true,
+                "durata": 2,
+                "description": "L'adepto cremesi ti maledice rimembrando della tua fragile mortalità"
+            },
+            {
+                "move_name": "Frenesia",
+                "move_type": "Unique",
+                "chance": 5,
+                "description": "L'adepto cremesi usa un antico incantesimo rendendoti pazzo e infliggendoti un attacco a te stesso"
+            }
+        ]
+    },
+    {
+        "name":"Il Re Eterno",
+        "stats":{
+            "vita": 1000,
+            "danno_fis_base": 50,
+            "schivata": 30,
+            "danno_mag_base": 50,
+            "critico": 40
+        },
+        "moves":[
+            {
+                "move_name": "Spada delle Mille Anime",
+                "move_type": "Unique",
+                "bonus_schivata": 25,
+                "damage_type": "both"
+            },
+            {
+                "move_name":"Fendente spirituale",
+                "move_type": "attack",
+                "chance": 60,
+                "damage_type": "fisico",
+                "damage_fis_perc": 5,
+                "vulnerabile_mag": true,
+                "durata": 1,
+                "description": "Il Re fende la sua spada e ti colpisce la tua anima attraverso il tuo corpo"
+            },
+            {
+                "move_name":"Aura immortale",
+                "move_type": "buff",
+                "chance": 20,
+                "damage_mag_perc": 1,
+                "damage_type": "magico",
+                "vulnerabile_fis": true,
+                "durata": 2,
+                "description": "Il Re evoca un aura intorno a sè con migliaia di spiriti che vagano incessatamente intorno"
+            },
+            {
+                "move_name":"Corona Indistruttibile",
+                "move_type": "buff",
+                "chance": 19,
+                "bonus_attack": 50,
+                "bonus_defense": 50,
+                "damage_type": "both",
+                "durata": 3,
+                "description": "Il Re si infervora e la sua corona brilla alla sua furia aumentando attacco e difesa"
+            },
+            {
+                "move_name":"Dominio",
+                "move_type": "Unique",
+                "chance": 1,
+                "durata": 5,
+                "description": "Il Re inizia a cambiare la trama dello spazio-tempo portandoti nel suo Dominio Spirituale"
+            }
+        ]
+    }
+]

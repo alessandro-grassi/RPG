@@ -15,10 +15,13 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
-
+    
         resp = check_get(path)
-
-        self.wfile.write(resp)
+        try:
+            self.wfile.write(resp)
+        except:
+            print(f"Errore durante la richiesta get a '{path}'")
+            self.wfile.write(b"");
         return
 
     def do_POST(self):
@@ -39,6 +42,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         return
 
     def do_OPTIONS(self):
+        
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
@@ -57,14 +61,14 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
-    return "Modulo non trovato"
+    return "Modulo non trovato".encode("utf-8")
 
 
 def check_post(path, client_choice):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_post(path, client_choice)
-    return "Modulo non trovato"
+    return "Modulo non trovato".encode("utf-8")
 
 
 if __name__ == "__main__":
