@@ -30,8 +30,25 @@ def enemy_attack(userName):
 
     enemyName = enemy_get_boss_name(userName)
     #get enemy possible attacks
+
+    #choose random attack
+
+    #do damage to player
+
+    #decrement attack and defense duration
+    enemy_decrement_attack_duration(userName, enemyName)
+    enemy_decrement_defense_duration(userName, enemyName)
+
+    #add duration to attack and defense
+
+
     print("enemyName: ", enemyName)
     print("enemy healt: ", enemy_get_healt(userName,enemyName))
+    print(queryLib.execute(f"""
+        SELECT *
+        FROM m5_current_boss
+        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
+    """))
 
 def enemy_get_boss_name(userName):
     enemyName = queryLib.execute(f"""
