@@ -21,7 +21,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(resp)
         except:
             print(f"Errore durante la richiesta get a '{path}'")
-            self.wfile.write(b"");
+            self.wfile.write(b"")
         return
 
     def do_POST(self):
