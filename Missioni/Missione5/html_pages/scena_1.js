@@ -110,21 +110,21 @@ function setButtonAttack(){
         this.style = "visibility: hidden";
 
         //effetti visivi
-
-        const attack_button = document.getElementById('attack_button');
         const boss = document.getElementById('image_guardian');
         const hit_sound = document.getElementById('hit_sound');
 
-        boss.classList.add('shake');
+        boss.classList.add('shake_boss');
         boss.classList.add('hit');
     
         hit_sound.currentTime = 0;
         hit_sound.play();
     
         setTimeout(() => {
-            boss.classList.remove('shake');
+            boss.classList.remove('shake_boss');
             boss.classList.remove('hit');
         }, 200);
+
+        void boss.offsetWidth; // Trigger reflow to restart animation
     })
 }
 
@@ -165,7 +165,28 @@ function enemyAttack(json){
                         vita_corrente_pg = 0;
                         gameover();
                     }
-                    tempChance -= 100
+                    tempChance -= 100;
+
+                    document.getElementById('boss_sound').setAttribute('src', "http://localhost:8080/m5/get-audio/"+ moves['audio']);
+
+                    const combat_box = document.getElementById('combat-box');
+                    const boss_sound = document.getElementById('boss_sound');
+
+                    combat_box.classList.add('shake_player');
+                    combat_box.classList.add('hit');
+                    combat_box.classList.add('flash');
+                    
+                    boss_sound.load();
+                    boss_sound.currentTime = 0;
+                    boss_sound.play().catch(err => console.error("Errore riproduzione audio:", err));
+                
+                    setTimeout(() => {
+                        combat_box.classList.remove('shake_player');
+                        combat_box.classList.remove('hit');
+                        combat_box.classList.remove('flash');
+                    }, 4000);
+
+                    void combat_box.offsetWidth; // Trigger reflow to restart animation
                 }
             })
         }
