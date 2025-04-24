@@ -172,3 +172,20 @@ function gameover(){
 function setLifePointsPG(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }
+
+const attack_button = document.getElementById('attack_button');
+const boss = document.getElementById('image_guardian');
+const hit_sound = document.getElementById('hit_sound');
+
+attack_button.addEventListener("click", () =>{
+    boss.classList.add('shake');
+    boss.classList.add('hit');
+
+    hit_sound.currentTime = 0;
+    hit_sound.play();
+
+    setTimeout(() => {
+        boss.classList.remove('shake');
+        boss.classList.remove('hit');
+    }, 200);
+});
