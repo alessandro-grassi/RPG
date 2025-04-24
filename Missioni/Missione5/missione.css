@@ -103,3 +103,27 @@ progress {
 .dialog-button:hover, .prompt-button:hover {
     background: #d3869b;
 }
+
+#boss {
+    font-size: 50px;
+    margin-bottom: 30px;
+    transition: transform 0.1s;
+    padding: 20px;
+    display: inline-block;
+}
+
+.hit {
+    transform:scale(1.1);
+}
+
+.shake {
+    animation: shake 0.2s;
+}
+
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-3px, 0); }
+    50% { transform: translate(3px, 0); }
+    75% { transform: translate(-3px, 0); }
+    100% { transform: translate(0); }
+}
