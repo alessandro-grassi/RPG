@@ -4,7 +4,7 @@ import json
 #non funziona
 import Back_end.modulo_missione5.combactSystem as combactSystem
 
-queryLib.connetti()
+#queryLib.connetti()
 
 PREFIX = "/m5/" 
 PREFIX_API = PREFIX+"api/"
