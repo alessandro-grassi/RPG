@@ -10,6 +10,7 @@ def getHeaders(tabella:str)->list[str]:
     :param tabella: Tabella di cui si vogliono le header
     :return: lista di header
     """
+
     if cursor==None:
         raise ValueError("il modulo queryLib non è stato inizializzato. chiama queryLib.connetti().")
     try:
@@ -52,21 +53,21 @@ def connetti()->None:
     global cursor
     global connection
     print("Connessione al DB...")
-    try:
-        connection = psycopg2.connect(
-            user=user,
-            password=r"Magistri.cumacini25",
-            host=host,
-            port=port,
-            dbname=dbname
-        )
-        print("Connection successful!")
+#    try:
+    connection = psycopg2.connect(
+        user=user,
+        password=r"Magistri.cumacini25",
+        host=host,
+        port=port,
+        dbname=dbname
+    )
+    print("Connection successful!")
 
-        # Create a cursor to execute SQL queries
-        cursor = connection.cursor()
+    # Create a cursor to execute SQL queries
+    cursor = connection.cursor()
 
-    except Exception as e:
-        raise ConnectionError(f"La connessione a Supabase è fallita. Motivo: \n\t{e}")
+#    except Exception as e:
+#        raise ConnectionError(f"La connessione a Supabase è fallita. Motivo: \n\t{e}")
 
 
 user = "postgres.wzpwffetdfjgngwcpyuq"
