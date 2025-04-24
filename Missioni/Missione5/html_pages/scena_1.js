@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     setButtonHeal();
     setButtonUlti();
     setButtonNext();
+    setUltiCharge();
 });
 
 
@@ -85,6 +86,11 @@ function setLifePoints(json){
     })
 }
 
+function setUltiCharge(){
+    document.getElementById('ulti').value = carica_ulti;
+    document.getElementById('ulti').max = 3;
+}
+
 function setName(){
     document.getElementById('name-text').innerHTML = NAME;
 }
@@ -123,6 +129,7 @@ function setButtonAttack(){
         }
         else{
             document.getElementById('vita').value = vita_corrente;
+            document.getElementById('ulti').value = carica_ulti;
             document.getElementById('vita-text').innerHTML = "PV:"+ vita_corrente;
             document.getElementById('text').innerHTML = "'Hai inflitto "+danno_fisico_pg+" danni!'";
         }
@@ -174,7 +181,6 @@ function setButtonUlti(){
         //effetti visivi
         const boss = document.getElementById('image_guardian');
         const ulti_sound = document.getElementById('ulti_sound');
-        const ulti_button = document.getElementById('ulti_button');
 
         boss.classList.add('shake_boss');
         boss.classList.add('hit');

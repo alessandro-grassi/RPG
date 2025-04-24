@@ -75,9 +75,14 @@ body {
     color: #ebdbb2;
 }
 
-progress {
+.life {
     accent-color: red;
   }
+
+.charge {
+    accent-color: gold;
+  }
+
 
 .life-text, .prompt-text {
     font-size: 18px;
