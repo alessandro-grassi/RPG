@@ -159,6 +159,7 @@ function enemyAttack(json){
                     tempChance -= 100
                 }
             })
+            setLifePointsPG();
             flashScreen();
         }
     })
@@ -172,7 +173,12 @@ function gameover(){
 }
 
 function setLifePointsPG(){
-    document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
+    const pgText = document.getElementById('vita-text-pg');
+    const pgBar = document.getElementById('vita-pg');
+
+    pgText.innerHTML = "PV: " + vita_corrente_pg;
+    pgBar.value = vita_corrente_pg;
+    pgBar.max = 500; // Vita massima del PG
 }
 
 function flashScreen() {

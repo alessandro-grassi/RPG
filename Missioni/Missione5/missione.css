@@ -77,6 +77,12 @@ body {
 progress {
     accent-color: red;
   }
+  
+
+#vita-pg {
+    accent-color: green;
+  }
+
 
 .life-text, .prompt-text {
     font-size: 18px;
@@ -136,4 +142,16 @@ progress {
 
 #screen-flash.active {
     opacity: 1;
+}
+
+.player-life-text {
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #ebdbb2;
+    border: 3px solid #d79921;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
 }
