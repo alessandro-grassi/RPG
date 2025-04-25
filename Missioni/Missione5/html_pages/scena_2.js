@@ -145,9 +145,6 @@ function enemyAttack(json){
                         if(moves['damage_type'] == 'fisico'){
                             danno_enemy = danno_fisico;
                             vita_corrente_pg -= danno_enemy;
-
-                            flashScreen();
-                            
                             document.getElementById('vita-text-pg').innerHTML = vita_corrente_pg;
                         }
                     }
@@ -162,6 +159,7 @@ function enemyAttack(json){
                     tempChance -= 100
                 }
             })
+            flashScreen();
         }
     })
 }
