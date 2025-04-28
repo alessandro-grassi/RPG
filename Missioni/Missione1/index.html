@@ -104,6 +104,11 @@
         }
 
         #grass:hover {
+
+            position: absolute;
+            width: 50px;
+            height: 50px;
+
             background-image: url('http://localhost:8080/missione1/grassRed.png'); /* Percorso relativo */
             background-size: cover;
             cursor: pointer;
@@ -141,6 +146,9 @@
             background-color: #218838;
         }
 
+
+        /* Timer e Click Counter */
+        #timer, #click-counter {
         /* Timer */
         #timer {
             position: absolute;
@@ -149,6 +157,10 @@
             font-size: 18px;
             font-weight: bold;
             color: #333;
+        }
+
+        #click-counter {
+            top: 40px; /* Sotto il timer */
         }
     </style>
 </head>
@@ -166,7 +178,7 @@
             <option value="clerico">Clerico</option>
             <option value="mago">Mago</option>
         </select>
-
+        <label>Seleziona le tue abilita:</label>
         <label>Seleziona le tue abilità:</label>
         <input type="checkbox" name="abilita" value="forza"> Forza<br>
         <input type="checkbox" name="abilita" value="raccoglimento risorse"> Raccoglimento Risorse<br>
@@ -177,6 +189,7 @@
     <!-- Area di gioco -->
     <div id="game-container">
         <div id="timer">Tempo rimasto: 60s</div>
+        <p id="click-counter">Click effettuati: 0</p> 
         <div id="grass"></div>
         <p id="result"></p>
         <button id="restart-button" onclick="restartGame()">Rigioca</button>
