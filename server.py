@@ -1,13 +1,15 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
-import moduli.missione1 as missione1
+import Back_end.missione1.script as missione1
+dict = { 
+    "/missione1": missione1
+}
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        self.send_header("Content-type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         path = self.path
@@ -15,8 +17,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_get(path)
 
-        self.wfile.write(json.dumps(resp).encode("utf-8"))
+        self.wfile.write(resp)
         return
+
 
     def do_POST(self):
         self.send_response(200)
@@ -26,14 +29,17 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         path = self.path
         path = urlparse(path).path
 
+
         content_length = int(self.headers.get('Content-Length', 0))
         post_data = self.rfile.read(content_length) if content_length > 0 else b""
         client_choice = json.loads(post_data)
 
+
         resp = check_post(path, client_choice)
 
-        self.wfile.write(json.dumps(resp).encode("utf-8"))
+        self.wfile.write(resp)
         return
+
 
     def do_OPTIONS(self):
         self.send_response(200)
@@ -43,6 +49,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 
+
+
 def run_server():
     server_address = ('localhost', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
@@ -50,14 +58,20 @@ def run_server():
     httpd.serve_forever()
 
 
+
+
 def check_get(path):
-    if path.startswith("/m1_"):
-        return missione1.check_get(path)
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_get(path)
+    return "Modulo non trovato"
 
 
 def check_post(path, client_choice):
-    if path.startswith("/m1_"):
-        return missione1.check_post(path, client_choice)
+    for suffisso, modulo in dict.items():
+        if path.startswith(suffisso):
+            return modulo.check_post(path, client_choice)
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":
