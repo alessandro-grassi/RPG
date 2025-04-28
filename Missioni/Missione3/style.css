@@ -92,6 +92,14 @@ button:disabled:hover {
     transform: scale(1.0);
 }
 
+button.button-green {
+    background: linear-gradient(45deg, #84bd00, #a2c503);
+}
+
+button.button-green:hover {
+    box-shadow: 0 6px 12px rgba(0, 255, 76, 0.589);
+}
+
 /* Esito */
 #esito {
     margin-top: 20px;
