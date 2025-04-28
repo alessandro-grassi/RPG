@@ -1,6 +1,6 @@
 import random 
 from Back_end import queryLib
-
+import json
 
 lifes = {
     "player" : 10,
@@ -24,15 +24,16 @@ manas = {
 #      bonus_defense_duration = 5
 #  WHERE utente = 'nome utente';
 
+# !! da aggiungere vulnerabilita fisica e magica sul database
 
 def enemy_attack(userName):
     #get enemy name
-
+    #enemy_set_boss_name(userName, "Guardiano di Rocciascura")
     enemyName = enemy_get_boss_name(userName)
     #get enemy possible attacks
-
+    enemyData = enemy_get_data(enemyName)
     #choose random attack
-
+    moveCount = len(enemyData["moves"])
     #do damage to player
 
     #decrement attack and defense duration
@@ -49,6 +50,22 @@ def enemy_attack(userName):
         FROM m5_current_boss
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """))
+    print("enemyData: ", enemyData) 
+    print("enemyData moves count: ", moveCount)
+
+def enemy_get_data(enemyName):
+    #read json file with enemy data
+    # read the json file
+    with open("Back_end/modulo_missione5/enemies.json", "r") as f:    
+        data = json.load(f)
+    # get the list of data
+    # return the list
+    for enemy in data:
+        if enemy["name"] == enemyName:
+            return enemy
+    # if enemy not found return None
+    print("enemy not found")
+    return None
 
 def enemy_get_boss_name(userName):
     enemyName = queryLib.execute(f"""
