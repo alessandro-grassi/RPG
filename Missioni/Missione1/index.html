@@ -5,20 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raccolta Erbe</title>
     <style>
+        /* Contenitore per lo sfondo sfocato */
+        .background-blur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://img.freepik.com/premium-photo/2d-medieval-village-background-environment-battle-arena-mobile-game-generative-ai_742252-13642.jpg?w=1380');
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px); /* Sfocatura dello sfondo */
+            z-index: -1; /* Assicura che lo sfondo sia dietro tutto */
+        }
+
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
             font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #FAF1E6;
             color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow: hidden; /* Impedisce lo scroll indesiderato */
         }
-
 
         /* Barra di selezione al centro */
         .selection-bar {
@@ -28,19 +41,17 @@
             justify-content: center;
             margin-top: 20px;
             padding: 20px;
-            background-color: #FDFAF6;
+            background-color: #E0F7FA; /* Nuovo colore di sfondo */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             width: 100%;
             max-width: 600px;
         }
 
-
         .selection-bar label {
             font-size: 16px;
             margin-bottom: 8px;
         }
-
 
         .selection-bar select, .selection-bar input {
             margin: 5px 0;
@@ -49,7 +60,6 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-
 
         .selection-bar button {
             margin-top: 10px;
@@ -63,15 +73,12 @@
             transition: background-color 0.3s ease;
         }
 
-
         .selection-bar button:hover {
             background-color: #626F47;
         }
 
-
-        /* conteiner per l'area di gioco */
-        #game-container
-        {
+        /* Contenitore per l'area di gioco */
+        #game-container {
             margin-top: 20px;
             position: relative;
             width: 80%;
@@ -84,9 +91,8 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: none; /* nasconde l'area di gioco all'inizio */
+            display: none; /* Nasconde l'area di gioco all'inizio */
         }
-
 
         #grass {
             position: absolute;
@@ -97,15 +103,11 @@
             cursor: pointer;
         }
 
-        #grass:hover{
-            position: absolute;
-            width: 50px;
-            height: 50px;
+        #grass:hover {
             background-image: url('http://localhost:8080/missione1/grassRed.png'); /* Percorso relativo */
             background-size: cover;
-            cursor:pointer;
+            cursor: pointer;
         }
-
 
         /* Stile per il risultato */
         #result {
@@ -118,7 +120,6 @@
             color: #007bff;
             display: none;
         }
-
 
         /* Pulsante Rigioca */
         #restart-button {
@@ -136,11 +137,9 @@
             display: none; /* Nascondi il pulsante all'inizio */
         }
 
-
         #restart-button:hover {
             background-color: #218838;
         }
-
 
         /* Timer */
         #timer {
@@ -154,6 +153,11 @@
     </style>
 </head>
 <body>
+    <!-- Contenitore per lo sfondo sfocato -->
+    <div class="background-blur"></div>
+
+    <div class="container">
+    </div>
     <div class="selection-bar">
         <label for="classe">Seleziona la tua classe:</label>
         <select id="classe">
@@ -163,15 +167,12 @@
             <option value="mago">Mago</option>
         </select>
 
-
         <label>Seleziona le tue abilità:</label>
         <input type="checkbox" name="abilita" value="forza"> Forza<br>
         <input type="checkbox" name="abilita" value="raccoglimento risorse"> Raccoglimento Risorse<br>
 
-
         <button onclick="startMission()">Inizia Missione</button>
     </div>
-
 
     <!-- Area di gioco -->
     <div id="game-container">
@@ -180,7 +181,6 @@
         <p id="result"></p>
         <button id="restart-button" onclick="restartGame()">Rigioca</button>
     </div>
-
 
     <script src="script.js"></script>
 </body>
