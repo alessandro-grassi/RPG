@@ -131,6 +131,9 @@ function setButtonAttack(){
             document.getElementById('heal_button').remove();
             document.getElementById('ulti_button').remove();
             document.getElementById('text').innerHTML = "HAI VINTO!!";
+
+            document.getElementById('next_button').style = "visibility: visible;"; 
+
             this.removeEventListener();
         }
         else{
@@ -216,6 +219,9 @@ function setButtonUlti(){
             document.getElementById('heal_button').remove();
             document.getElementById('ulti_button').remove();
             document.getElementById('text').innerHTML = "HAI VINTO!!";
+
+            document.getElementById('next_button').style = "visibility: visible;"; 
+
             this.removeEventListener();
         }
         else{
@@ -237,19 +243,24 @@ function setButtonUlti(){
 
 function setButtonNext(){
     document.getElementById('next_button').addEventListener("click", function(){
-        fetchData("random-chance", getRand)
-        fetchData("enemies-list", enemyAttack)
-        document.getElementById('attack_button').style = "visibility: visible;";
-        document.getElementById('heal_button').style = "visibility: visible;";
-        document.getElementById('ulti_button').style = "visibility: visible;";
-        document.getElementById('ulti').style = "visibility: visible;";
-        if(carica_ulti >=3){
-            document.getElementById('ulti_button').disabled = false;
+        if(vita_corrente > 0) {
+            fetchData("random-chance", getRand)
+            fetchData("enemies-list", enemyAttack)
+            document.getElementById('attack_button').style = "visibility: visible;";
+            document.getElementById('heal_button').style = "visibility: visible;";
+            document.getElementById('ulti_button').style = "visibility: visible;";
+            document.getElementById('ulti').style = "visibility: visible;";
+            if(carica_ulti >=3){
+                document.getElementById('ulti_button').disabled = false;
+            }
+            else{
+                document.getElementById('ulti_button').disabled = true;
+            }
+            this.style = "visibility: hidden";
         }
-        else{
-            document.getElementById('ulti_button').disabled = true;
+        else {
+            console.log("redirect alla pagina principale");
         }
-        this.style = "visibility: hidden";
     })
 }
 
