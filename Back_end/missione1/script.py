@@ -27,7 +27,11 @@ def check_get(path):
         r= f.read()
         f.close()
         return r
-
+    elif path.endswith("grass.png"):
+        f= open("Missioni/Missione1/sfondoSelect.jpg","rb")
+        r= f.read()
+        f.close()
+        return r
 
 
 
