@@ -2,6 +2,11 @@ const timerDisplay = document.getElementById('timer');
 const gameContainer = document.getElementById('game-container');
 const restartButton = document.getElementById('restart-button');
 
+// Aggiungi una variabile per tenere traccia del conteggio dei click
+let clicks = 0;
+
+// Aggiungi un riferimento all'elemento del conteggio dei click
+const clickCounter = document.getElementById('click-counter');
 
 // Avvia il gioco
 function startGame() {
@@ -11,13 +16,11 @@ function startGame() {
     startTimer(); // Avvia il timer
 }
 
-
 // Inizia la missione
 function startMission() {
     const playerClass = document.getElementById('classe').value;
     const abilities = Array.from(document.querySelectorAll('input[name="abilita"]:checked'))
                           .map(checkbox => checkbox.value);
-
 
     // Simulazione dei dati ricevuti dal server
     const data = {
@@ -25,22 +28,19 @@ function startMission() {
         click_richiesti: playerClass === 'guerriero' ? 13 : playerClass === 'mago' ? 8 : 10
     };
 
-
     timeLeft = data.tempo || 60;
     clicksRequired = data.click_richiesti || 10;
 
-
     alert(`Tempo: ${timeLeft}s, Click richiesti: ${clicksRequired}`);
     startGame(); // Avvia il gioco
-    }
-    let timeLeft = 60; // Tempo iniziale
-    let clicks = 0; // Click effettuati
-    let clicksRequired = 10; // Click richiesti
-    let timerInterval = null;
+}
 
-    const grass = document.getElementById('grass');
-    const resultDisplay = document.getElementById('result');
+let timeLeft = 60; // Tempo iniziale
+let clicksRequired = 10; // Click richiesti
+let timerInterval = null;
 
+const grass = document.getElementById('grass');
+const resultDisplay = document.getElementById('result');
 
 // Funzione per spostare la ciocca d'erba casualmente
 function moveGrass() {
@@ -70,8 +70,11 @@ function startTimer() {
 
 // Conteggio click
 grass.addEventListener('click', () => {
-    clicks++;
-    moveGrass();
+    clicks++; // Incrementa il numero di click
+    clickCounter.textContent = `Click effettuati: ${clicks}`; // Aggiorna il testo dell'elemento
+    moveGrass(); // Sposta l'erba
+
+    // Controlla se il giocatore ha raggiunto il numero di click richiesti
     if (clicks >= clicksRequired) {
         endGame();
     }
@@ -90,7 +93,7 @@ function endGame() {
 function restartGame() {
     // Resetta variabili
     timeLeft = 60;
-    clicks = 0;
+    clicks = 0; // Resetta il conteggio dei click
     clicksRequired = 10;
 
     // Resetta UI
@@ -98,6 +101,7 @@ function restartGame() {
     restartButton.style.display = 'none';
     grass.style.display = 'block';
     timerDisplay.textContent = `Tempo rimasto: ${timeLeft}s`;
+    clickCounter.textContent = `Click effettuati: ${clicks}`; // Resetta il conteggio dei click nell'UI
 
     // Riavvia il gioco
     startGame();
