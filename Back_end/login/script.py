@@ -21,7 +21,7 @@ def check_get(path):
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
-    if path.endswith("stile"):
+    elif path.endswith("stile"):
         f = open(sys.path[0] +"/Autenticazione/Login/login.css", "r")
         stringa = f.read()
         f.close()
@@ -32,6 +32,12 @@ def check_get(path):
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
+    elif path.endswith("trycookie"):
+        f = open(sys.path[0] +"/SceltaPersonaggio/scelta.html", "r")
+        stringa = f.read()
+        f.close()
+        return stringa.encode("utf-8")
+    return '"Path not found"'.encode("utf-8")
 
 def check_post(path, client_choice):
     if path.endswith("registrazione"):
@@ -52,6 +58,6 @@ def check_post(path, client_choice):
                 return '"Successo"'.encode("utf-8")
             else:
                 return '"errore"'.encode("utf-8")
-            
         except Exception as errore:
             return '"errore"'.encode("utf-8")
+    return '"Path not found"'.encode("utf-8")
