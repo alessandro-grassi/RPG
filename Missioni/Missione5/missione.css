@@ -79,6 +79,10 @@ body {
     accent-color: red;
   }
 
+.life_pg {
+    accent-color: rgb(13, 231, 13);
+}
+
 .charge {
     accent-color: gold;
   }

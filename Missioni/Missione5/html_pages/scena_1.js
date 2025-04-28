@@ -82,6 +82,8 @@ function setLifePoints(json){
             document.getElementById('vita').value = vita_corrente;
             document.getElementById('vita').max = vita_corrente;
             document.getElementById('vita-text').innerHTML = "PV:"+vita_corrente;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
+            document.getElementById('vita_pg').max = vita_corrente_pg;
         }
     })
 }
@@ -165,10 +167,12 @@ function setButtonHeal(){
         if(vita_corrente_pg > 500){
             vita_corrente_pg = 500;
             document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
             document.getElementById('text').innerHTML = "'Non puoi curarti oltre i 500 PV!'";
         }
         else{
             document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
             document.getElementById('text').innerHTML = "'Ti sei curato di 150 PV!'";
         }
 
@@ -272,6 +276,7 @@ function enemyAttack(json){
                     else{
                         vita_corrente_pg -= danno_fisico;
                         document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+                        document.getElementById('vita_pg').value = vita_corrente_pg;
                     }
                     if(vita_corrente_pg <= 0){
                         vita_corrente_pg = 0;
