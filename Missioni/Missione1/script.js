@@ -32,12 +32,31 @@ function startMission() {
     clicksRequired = data.click_richiesti || 10;
 
     alert(`Tempo: ${timeLeft}s, Click richiesti: ${clicksRequired}`);
+
+
+    // Nascondi la barra di selezione
+    document.querySelector('.selection-bar').style.display = 'none';
+
+
     startGame(); // Avvia il gioco
 }
+
 
 let timeLeft = 60; // Tempo iniziale
 let clicksRequired = 10; // Click richiesti
 let timerInterval = null;
+
+
+
+let timeLeft = 60; // Tempo iniziale
+let clicks = 0; // Click effettuati
+let clicksRequired = 10; // Click richiesti
+let timerInterval = null;
+
+
+const grass = document.getElementById('grass');
+const resultDisplay = document.getElementById('result');
+
 
 const grass = document.getElementById('grass');
 const resultDisplay = document.getElementById('result');
@@ -48,12 +67,15 @@ function moveGrass() {
     const maxWidth = container.offsetWidth - grass.offsetWidth;
     const maxHeight = container.offsetHeight - grass.offsetHeight;
 
+
     const randomX = Math.floor(Math.random() * maxWidth);
     const randomY = Math.floor(Math.random() * maxHeight);
+
 
     grass.style.left = `${randomX}px`;
     grass.style.top = `${randomY}px`;
 }
+
 
 // Timer
 function startTimer() {
@@ -61,12 +83,14 @@ function startTimer() {
         timeLeft--;
         timerDisplay.textContent = `Tempo rimasto: ${timeLeft}s`;
 
+
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             endGame();
         }
     }, 1000);
 }
+
 
 // Conteggio click
 grass.addEventListener('click', () => {
@@ -80,6 +104,7 @@ grass.addEventListener('click', () => {
     }
 });
 
+
 // Fine partita
 function endGame() {
     clearInterval(timerInterval);
@@ -89,6 +114,7 @@ function endGame() {
     restartButton.style.display = 'block'; // Mostra il pulsante "Rigioca"
 }
 
+
 // Rigioca
 function restartGame() {
     // Resetta variabili
@@ -96,12 +122,14 @@ function restartGame() {
     clicks = 0; // Resetta il conteggio dei click
     clicksRequired = 10;
 
+
     // Resetta UI
     resultDisplay.style.display = 'none';
     restartButton.style.display = 'none';
     grass.style.display = 'block';
     timerDisplay.textContent = `Tempo rimasto: ${timeLeft}s`;
     clickCounter.textContent = `Click effettuati: ${clicks}`; // Resetta il conteggio dei click nell'UI
+
 
     // Riavvia il gioco
     startGame();
