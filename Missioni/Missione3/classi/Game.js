@@ -62,7 +62,7 @@ class Game {
     }
 
     //Metodo che controlla se il gioco è finito
-    checkWinner() {
+    getWinner() {
         let victoriousEntity = null;
         if (!this.hero.isAlive()) {
             victoriousEntity = this.selectedEnemy;
