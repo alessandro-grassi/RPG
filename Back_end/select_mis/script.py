@@ -65,16 +65,43 @@ def get_home():
     return msg
 
 def get_missioni(uid):
-    obj = []
     ql.connetti()
+    
+    allMissions = ql.execute("SELECT ID_missione FROM missioni")
+    if not allMissions:
+        ql.disconnetti()
+        return json.dumps({"missioni": []}).encode("utf-8") 
+    
 
-    # create_tables()
+    user_progress = ql.execute(
+        "SELECT id_missione FROM progressi WHERE id_personaggio = %s",
+        (uid,)
+    )
+    
+    id_missioni_esistenti = set(row[0] for row in user_progress)
+
+    missioniNuove = [
+        mission_id for (mission_id,) in allMissions
+        if mission_id not in id_missioni_esistenti
+    ]
+    
+    if missioniNuove:
+        try:
+            for mission_id in missioniNuove:
+                ql.execute(
+                    "INSERT INTO progressi (id_personaggio, id_missione, p_comp) VALUES (%s, %s, 0)",
+                    (uid, mission_id)
+                )
+            ql.conn.commit()
+        except Exception as e:
+            ql.conn.rollback()
+            print(f"Errore durante l'inserimento dei progressi: {e}")
+    
     data = retrieve(uid)
     obj = parse(data)
-    # obj = sort(obj)
-
-    ql.disconnetti
-    return json.dumps({"missioni" : obj}).encode("utf-8")
+    ql.disconnetti()
+    
+    return json.dumps({"missioni": obj}).encode("utf-8")
 
 def create_tables():
     ql.execute('''CREATE TABLE IF NOT EXISTS missioni(
