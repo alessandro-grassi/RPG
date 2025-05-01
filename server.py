@@ -8,7 +8,8 @@ from Back_end import missione3
 
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/cm" : cm,
-    "/jslib": jslib
+    "/jslib": jslib,
+    "missione3": missione3
 }
 
 
