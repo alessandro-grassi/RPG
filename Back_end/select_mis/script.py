@@ -74,8 +74,7 @@ def get_missioni(uid):
     
 
     user_progress = ql.execute(
-        "SELECT id_missione FROM progressi WHERE id_personaggio = %s",
-        (uid,)
+        f'''SELECT id_missione FROM progressi WHERE id_personaggio = {uid};''',
     )
     
     id_missioni_esistenti = set(row[0] for row in user_progress)
@@ -84,17 +83,14 @@ def get_missioni(uid):
         mission_id for (mission_id,) in allMissions
         if mission_id not in id_missioni_esistenti
     ]
-    
+
     if missioniNuove:
         try:
             for mission_id in missioniNuove:
                 ql.execute(
-                    "INSERT INTO progressi (id_personaggio, id_missione, p_comp) VALUES (%s, %s, 0)",
-                    (uid, mission_id)
+                    f'''INSERT INTO progressi (id_personaggio, id_missione, p_comp) VALUES ({uid}, {mission_id}, 0);'''
                 )
-            ql.conn.commit()
         except Exception as e:
-            ql.conn.rollback()
             print(f"Errore durante l'inserimento dei progressi: {e}")
     
     data = retrieve(uid)
