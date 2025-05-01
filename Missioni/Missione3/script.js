@@ -182,11 +182,11 @@ game.selectedEnemy = game.selectEnemy();
 function playMusic() {
     if (genericAudio.volume == 0.05) {
         genericAudio.volume = 0;
-        genericAudio.pause;
+        genericAudio.pause();
         console.log("Musica stop!");
         return;
     }
-    genericAudio.play;
+    genericAudio.play();
     genericAudio.volume = 0.05;
     genericAudio.play().then(() => {
         console.log("Musica avviata!");
@@ -223,14 +223,16 @@ function GestisciAudio() {
         attackAudio.volume = 0;
         magicAudio.volume = 0;
         audioMuted = true;
-        document.getElementById("muteSound").src = "http://localhost:8080/missione3/media/unmute.png-get_binary"
+        document.getElementById("muteSound").querySelector("img").src = "http://localhost:8080/missione3/media/unmute.png-get_binary";
+
         console.log("Audio disattivato!");
     } else {
         genericAudio.volume = 0.05;
         attackAudio.volume = 0.2;
         magicAudio.volume = 0.2;
         audioMuted = false;
-        document.getElementById("muteSound").src = "http://localhost:8080/missione3/media/mute.png-get_binary"
+        document.getElementById("muteSound").querySelector("img").src = "http://localhost:8080/missione3/media/mute.png-get_binary";
+
         console.log("Audio attivato!");
     }
 }
