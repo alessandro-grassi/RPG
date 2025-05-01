@@ -179,6 +179,36 @@ def enemy_decrement_defense_duration(userName, enemyName):
     else:
         enemy_set_defense_duration(userName, enemyName, 0)
 
+def player_get_healt(userName):
+    player_healt = queryLib.execute(f"""
+        SELECT player_healt
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(player_healt) > 0:
+        return player_healt[0][0]
+    else:
+        return 0
+
+def player_set_healt(userName, healt):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET player_healt = {healt}
+        WHERE utente = '{userName}';
+    """)
+
+def player_damage(userName, damage):
+    currentHealt = player_get_healt(userName)
+    if currentHealt > 0:
+        newHealt = currentHealt - damage
+        if newHealt < 0:
+            newHealt = 0
+        player_set_healt(userName, newHealt)
+    else:
+        player_set_healt(userName, 0)
+
+
+
 def mele(attackedName, attackerName):
     do_damage(attackedName,rand(3,7))
     
