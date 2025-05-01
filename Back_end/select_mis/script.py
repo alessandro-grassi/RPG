@@ -64,7 +64,7 @@ def get_home():
         msg = f.read()
     return msg
 
-def get_missioni(uid):
+def get_missioni(uid):   #Aggiungere personaggio con id 2 nelle tabelle per testare la funzione
     ql.connetti()
     
     allMissions = ql.execute("SELECT ID_missione FROM missioni")
