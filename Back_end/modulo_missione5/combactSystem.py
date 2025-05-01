@@ -27,6 +27,9 @@ manas = {
 # !! da aggiungere vulnerabilita fisica e magica sul database
 
 def enemy_attack(userName):
+    player_set_healt(userName, 600)
+    queue_defense_duration = None
+    queue_attack_duration = None
     #get enemy name
     #enemy_set_boss_name(userName, "Guardiano di Rocciascura")
     enemyName = enemy_get_boss_name(userName)
@@ -34,14 +37,69 @@ def enemy_attack(userName):
     enemyData = enemy_get_data(enemyName)
     #choose random attack
     moveCount = len(enemyData["moves"])
-    #do damage to player
+    moveIndex = rand(0, moveCount - 1)
+    move = enemyData["moves"][moveIndex]
+    missed = False
+
+
+    if move.get("chance") != None:
+        chance = move["chance"]
+        if rand(0, 100) > chance:
+            print("miss")
+            missed = True
+
+    #execute move
+    if not missed:
+
+
+
+        if move.get("damage_type") != None:
+
+            damage_type = move["damage_type"]
+            if damage_type == "fisico":
+                damage = enemyData["stats"]["danno_fis_base"]
+                if enemy_get_attack_bonus_duration(userName, enemyName) > 0:
+                    damage += enemy_get_attack_bonus(userName, enemyName)
+            if damage_type == "magico":
+                damage = enemyData["stats"]["danno_mag_base"]
+                if enemy_get_attack_bonus_duration(userName, enemyName) > 0:
+                    damage += enemy_get_attack_bonus(userName, enemyName)
+            if damage_type == "both":
+                damage = enemyData["stats"]["danno_fis_base"] + enemyData["danno_mag_base"]
+                if enemy_get_attack_bonus_duration(userName, enemyName) > 0:
+                    damage += enemy_get_attack_bonus(userName, enemyName)
+            player_damage(userName, damage)
+            print("damage: ", damage)
+            print("damage type: ", damage_type)
+
+        if move.get("bonus_defense") != None:
+            bonus_defense = move["bonus_defense"]
+            enemy_set_defense_bonus(userName, enemyName, bonus_defense)
+            queue_defense_duration = move["durata"]
+            print("bonus defense: ", bonus_defense)
+            print("bonus defense duration: ", move["durata"])
+        if move.get("bonus_attack") != None:
+            bonus_attack = move["bonus_attack"]
+            enemy_set_attack_bonus(userName, enemyName, bonus_attack)
+            queue_attack_duration = move["durata"]
+            print("bonus attack: ", bonus_attack)
+            print("bonus attack duration: ", move["durata"])
+    
+        
+        
+
+    print("move: ", move)
 
     #decrement attack and defense duration
-    enemy_decrement_attack_duration(userName, enemyName)
-    enemy_decrement_defense_duration(userName, enemyName)
+    enemy_decrement_attack_bonus_duration(userName, enemyName)
+    enemy_decrement_defense_bonus_duration(userName, enemyName)
 
     #add duration to attack and defense
-
+    if queue_attack_duration != None:
+        enemy_set_attack_bonus_duration(userName,enemyName,queue_attack_duration)
+    
+    if queue_defense_duration != None:
+        enemy_set_defense_bonus_duration(userName,enemyName,queue_defense_duration)
 
     print("enemyName: ", enemyName)
     print("enemy healt: ", enemy_get_healt(userName,enemyName))
@@ -110,7 +168,7 @@ def enemy_set_healt(userName, enemyName, healt):
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
-def enemy_get_attack(userName, enemyName):
+def enemy_get_attack_bonus(userName, enemyName):
     attack = queryLib.execute(f"""
         SELECT boss_bonus_attack
         FROM m5_play_data
@@ -121,14 +179,14 @@ def enemy_get_attack(userName, enemyName):
     else:
         return 0
 
-def enemy_set_attack(userName, enemyName, value):
+def enemy_set_attack_bonus(userName, enemyName, value):
     queryLib.execute_no_return(f"""
         UPDATE m5_play_data
         SET boss_bonus_attack = {value}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
-def enemy_get_defense(userName, enemyName):
+def enemy_get_defense_bonus(userName, enemyName):
     defense = queryLib.execute(f"""
         SELECT boss_bonus_defense
         FROM m5_play_data
@@ -139,28 +197,28 @@ def enemy_get_defense(userName, enemyName):
     else:
         return 0
 
-def enemy_set_defense(userName, enemyName, value):
+def enemy_set_defense_bonus(userName, enemyName, value):
     queryLib.execute_no_return(f"""
         UPDATE m5_play_data
         SET boss_bonus_defense = {value}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
-def enemy_set_attack_duration(userName, enemyName, attack_duration):
+def enemy_set_attack_bonus_duration(userName, enemyName, attack_duration):
     queryLib.execute_no_return(f"""
         UPDATE m5_play_data
         SET boss_bonus_attack_duration = {attack_duration}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
-def enemy_set_defense_duration(userName, enemyName, defense_duration):
+def enemy_set_defense_bonus_duration(userName, enemyName, defense_duration):
     queryLib.execute_no_return(f"""
         UPDATE m5_play_data
         SET boss_bonus_defense_duration = {defense_duration}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
-def enemy_get_attack_duration(userName, enemyName):
+def enemy_get_attack_bonus_duration(userName, enemyName):
     attack_duration = queryLib.execute(f"""
         SELECT boss_bonus_attack_duration
         FROM m5_play_data
@@ -171,7 +229,7 @@ def enemy_get_attack_duration(userName, enemyName):
     else:
         return 0
 
-def enemy_get_defense_duration(userName, enemyName):
+def enemy_get_defense_bonus_duration(userName, enemyName):
     defense_duration = queryLib.execute(f"""
         SELECT boss_bonus_defense_duration
         FROM m5_play_data
@@ -182,19 +240,19 @@ def enemy_get_defense_duration(userName, enemyName):
     else:
         return 0
 
-def enemy_decrement_attack_duration(userName, enemyName):
-    attack_duration = enemy_get_attack_duration(userName, enemyName)
+def enemy_decrement_attack_bonus_duration(userName, enemyName):
+    attack_duration = enemy_get_attack_bonus_duration(userName, enemyName)
     if attack_duration > 0:
-        enemy_set_attack_duration(userName, enemyName, attack_duration - 1)
+        enemy_set_attack_bonus_duration(userName, enemyName, attack_duration - 1)
     else:
-        enemy_set_attack_duration(userName, enemyName, 0)
+        enemy_set_attack_bonus_duration(userName, enemyName, 0)
  
-def enemy_decrement_defense_duration(userName, enemyName):
-    defense_duration = enemy_get_defense_duration(userName, enemyName)
+def enemy_decrement_defense_bonus_duration(userName, enemyName):
+    defense_duration = enemy_get_defense_bonus_duration(userName, enemyName)
     if defense_duration > 0:
-        enemy_set_defense_duration(userName, enemyName, defense_duration - 1)
+        enemy_set_defense_bonus_duration(userName, enemyName, defense_duration - 1)
     else:
-        enemy_set_defense_duration(userName, enemyName, 0)
+        enemy_set_defense_bonus_duration(userName, enemyName, 0)
 
 def player_get_healt(userName):
     player_healt = queryLib.execute(f"""
