@@ -2,10 +2,10 @@ const timerDisplay = document.getElementById('timer');
 const gameContainer = document.getElementById('game-container');
 const restartButton = document.getElementById('restart-button');
 
-// Aggiungi una variabile per tenere traccia del conteggio dei click
+
 let clicks = 0;
 
-// Aggiungi un riferimento all'elemento del conteggio dei click
+
 const clickCounter = document.getElementById('click-counter');
 
 // Avvia il gioco
@@ -45,18 +45,6 @@ function startMission() {
 let timeLeft = 60; // Tempo iniziale
 let clicksRequired = 10; // Click richiesti
 let timerInterval = null;
-
-
-
-let timeLeft = 60; // Tempo iniziale
-let clicks = 0; // Click effettuati
-let clicksRequired = 10; // Click richiesti
-let timerInterval = null;
-
-
-const grass = document.getElementById('grass');
-const resultDisplay = document.getElementById('result');
-
 
 const grass = document.getElementById('grass');
 const resultDisplay = document.getElementById('result');
