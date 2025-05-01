@@ -16,7 +16,7 @@
             background-size: cover;
             background-position: center;
             filter: blur(8px); /* Sfocatura dello sfondo */
-            z-index: -1; /* Assicura che lo sfondo sia dietro tutto */
+            z-index: -1; 
         }
 
         body, html {
@@ -30,7 +30,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden; /* Impedisce lo scroll indesiderato */
+            overflow: hidden; 
         }
 
         /* Barra di selezione al centro */
@@ -104,11 +104,6 @@
         }
 
         #grass:hover {
-
-            position: absolute;
-            width: 50px;
-            height: 50px;
-
             background-image: url('http://localhost:8080/missione1/grassRed.png'); /* Percorso relativo */
             background-size: cover;
             cursor: pointer;
@@ -146,9 +141,6 @@
             background-color: #218838;
         }
 
-
-        /* Timer e Click Counter */
-        #timer, #click-counter {
         /* Timer */
         #timer {
             position: absolute;
@@ -159,8 +151,14 @@
             color: #333;
         }
 
+        /* Click Counter */
         #click-counter {
+            position: absolute;
             top: 40px; /* Sotto il timer */
+            left: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
         }
     </style>
 </head>
@@ -179,7 +177,6 @@
             <option value="mago">Mago</option>
         </select>
         <label>Seleziona le tue abilita:</label>
-        <label>Seleziona le tue abilità:</label>
         <input type="checkbox" name="abilita" value="forza"> Forza<br>
         <input type="checkbox" name="abilita" value="raccoglimento risorse"> Raccoglimento Risorse<br>
 

@@ -33,9 +33,6 @@ def check_get(path):
         f.close()
         return r
 
-
-
-
 def check_post(path, client_choice):
     if path.endswith("post_generica"):
         return process_mission(client_choice)
