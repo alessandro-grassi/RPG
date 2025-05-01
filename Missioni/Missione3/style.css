@@ -100,6 +100,14 @@ button.button-green:hover {
     box-shadow: 0 6px 12px rgba(0, 255, 76, 0.589);
 }
 
+button#continueButton {
+    display: none;
+}
+
+button#retryButton {
+    display: none;
+}
+
 /* Esito */
 #esito {
     margin-top: 20px;

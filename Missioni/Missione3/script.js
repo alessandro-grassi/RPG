@@ -1,5 +1,9 @@
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
+
+const continueButton = document.getElementById("continueButton");
+const retryButton = document.getElementById("retryButton");
+
 const output = document.getElementById("output")
 const endGameScreen = document.getElementById("messaggioFineGioco");
 const playAgainButton = document.getElementById("giocaAncora");
@@ -18,15 +22,22 @@ document.addEventListener("DOMContentLoaded", (e) => {
     game.aggiornaUI();
 });
 
-document.getElementById("againButton").addEventListener("click", () => {
+continueButton.addEventListener("click", (e) => {
     const winner = game.getWinner();
-    if (!winner) return;
-    if (winner.constructor.name === "Hero") {
-        game.reset();
-        game.aggiornaUI();
-        atkButton.disabled = false;
-        magicButton.disabled = false;
-    }
+    if (winner?.constructor.name !== "Hero") return;
+    game.reset();
+    game.aggiornaUI();
+    atkButton.disabled = false;
+    magicButton.disabled = false;
+    e.target.style.display = "none";
+});
+
+retryButton.addEventListener("click", () => {
+    const winner = game.getWinner();
+    if (winner?.constructor.name !== "Enemy") return;
+
+    // Aggiorno la pagina
+    window.location.reload();
 });
 
 function useActionButton(button, action) {
@@ -47,6 +58,7 @@ function useActionButton(button, action) {
                  - Sconfitta da parte dell'eroe (Ricomincia il gioco)
                  - Non ci sono più mostri da combattere (salvo lo stato della partita)
             */
+            checkGameStatus();
         } else {
             output.innerHTML = `${enemy.name} ha schivato l'attacco`;
             console.log("Attacco schivato");
@@ -81,6 +93,8 @@ function useActionButton(button, action) {
                     output.innerHTML = `${hero.name}, hai schivato l'attacco!`;
                     console.log("Attacco schivato");
                 }
+
+                checkGameStatus();
 
                 game.completeRound();
                 game.aggiornaUI();
@@ -125,26 +139,21 @@ useActionButton(magicButton, function (hero, enemy) {
 /*Fine sezione attacco del nemico*/
 
 // Annuncia la fine del gioco
-function announceEndGame(game) {
-    const winner = game.checkEndGame();
+function checkGameStatus() {
+    const winner = game.getWinner();
     if (!winner) return;
-    const endGameText = endGameScreen.getElementsByTagName("h2")[0];
     if (winner.constructor.name === "Hero") {
-        endGameText.innerHTML = 'Hai vinto!!';
+        if (!game.remaingEnemies()) {
+            // Mostra la schermata finale
+            // Salva la partita del db
+        } else {
+            continueButton.style.display = "block";
+            output.innerHTML = 'Hai vinto!!';
+        }
     } else {
-        endGameText.innerHTML = 'Hai perso...';
+        retryButton.style.display = "block";
+        output.innerHTML = 'Hai perso...';
     }
-
-    // Visualizzo la schermata di fine gioco
-
-    endGameScreen.style.display = "flex";
-
-    atkButton.disabled = true;
-    magicButton.disabled = true;
-    game.endGame = true;
-
-    output.style.pointerEvents = "none";
-    output.style.userSelect = "none";
 }
 
 // Evento gioca di nuovo
