@@ -46,21 +46,21 @@ def enemy_attack(userName):
     print("enemy healt: ", enemy_get_healt(userName,enemyName))
     print(queryLib.execute(f"""
         SELECT *
-        FROM m5_current_boss
+        FROM m5_play_data
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """))
 
 def enemy_get_boss_name(userName):
     enemyName = queryLib.execute(f"""
-                        select boss_name
-                        from m5_current_boss join utenti on m5_current_boss.utente = utenti.username
-                        where username = '{userName}'
+                        SELECT boss_name
+                        FROM m5_play_data
+                        WHERE utente = '{userName}'
                      """)[0][0]
     return enemyName
 
 def enemy_set_boss_name(userName, enemyName):
     queryLib.execute_no_return(f"""
-        UPDATE m5_current_boss
+        UPDATE m5_play_data
         SET boss_name = '{enemyName}'
         WHERE utente = '{userName}';
     """)
@@ -77,8 +77,8 @@ def enemy_damage(userName, enemyName, damage):
 
 def enemy_get_healt(userName, enemyName):
     healt = queryLib.execute(f"""
-        SELECT healt
-        FROM m5_current_boss
+        SELECT boss_healt
+        FROM m5_play_data
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
     if len(healt) > 0:
@@ -88,15 +88,15 @@ def enemy_get_healt(userName, enemyName):
 
 def enemy_set_healt(userName, enemyName, healt):
     queryLib.execute_no_return(f"""
-        UPDATE m5_current_boss
-        SET healt = {healt}
+        UPDATE m5_play_data
+        SET boss_healt = {healt}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
 def enemy_get_attack(userName, enemyName):
     attack = queryLib.execute(f"""
-        SELECT bonus_attack
-        FROM m5_current_boss
+        SELECT boss_bonus_attack
+        FROM m5_play_data
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
     if len(attack) > 0:
@@ -106,15 +106,15 @@ def enemy_get_attack(userName, enemyName):
 
 def enemy_set_attack(userName, enemyName, value):
     queryLib.execute_no_return(f"""
-        UPDATE m5_current_boss
-        SET bonus_attack = {value}
+        UPDATE m5_play_data
+        SET boss_bonus_attack = {value}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
 def enemy_get_defense(userName, enemyName):
     defense = queryLib.execute(f"""
-        SELECT bonus_defense
-        FROM m5_current_boss
+        SELECT boss_bonus_defense
+        FROM m5_play_data
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
     if len(defense) > 0:
@@ -124,29 +124,29 @@ def enemy_get_defense(userName, enemyName):
 
 def enemy_set_defense(userName, enemyName, value):
     queryLib.execute_no_return(f"""
-        UPDATE m5_current_boss
-        SET bonus_defense = {value}
+        UPDATE m5_play_data
+        SET boss_bonus_defense = {value}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
 def enemy_set_attack_duration(userName, enemyName, attack_duration):
     queryLib.execute_no_return(f"""
-        UPDATE m5_current_boss
-        SET bonus_attack_duration = {attack_duration}
+        UPDATE m5_play_data
+        SET boss_bonus_attack_duration = {attack_duration}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
 def enemy_set_defense_duration(userName, enemyName, defense_duration):
     queryLib.execute_no_return(f"""
-        UPDATE m5_current_boss
-        SET bonus_defense_duration = {defense_duration}
+        UPDATE m5_play_data
+        SET boss_bonus_defense_duration = {defense_duration}
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
 def enemy_get_attack_duration(userName, enemyName):
     attack_duration = queryLib.execute(f"""
-        SELECT bonus_attack_duration
-        FROM m5_current_boss
+        SELECT boss_bonus_attack_duration
+        FROM m5_play_data
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
     if len(attack_duration) > 0:
@@ -156,8 +156,8 @@ def enemy_get_attack_duration(userName, enemyName):
 
 def enemy_get_defense_duration(userName, enemyName):
     defense_duration = queryLib.execute(f"""
-        SELECT bonus_defense_duration
-        FROM m5_current_boss
+        SELECT boss_bonus_defense_duration
+        FROM m5_play_data
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
     if len(defense_duration) > 0:

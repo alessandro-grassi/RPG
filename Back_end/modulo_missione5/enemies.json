@@ -107,7 +107,7 @@
                 "damage_fis_perc": 5,
                 "vulnerabile_mag": true,
                 "durata": 1,
-                "description": "Il Re fende la sua spada e ti colpisce la tua anima attraverso il tuo corpo"
+                "description": "Il Re fende la sua spada attraversando il corpo raggiungendo la tua anima"
             },
             {
                 "move_name":"Aura immortale",
@@ -117,7 +117,7 @@
                 "damage_type": "magico",
                 "vulnerabile_fis": true,
                 "durata": 2,
-                "description": "Il Re evoca un aura intorno a sè con migliaia di spiriti che vagano incessatamente intorno"
+                "description": "Il Re evoca un aura spiritica da migliaia di anime"
             },
             {
                 "move_name":"Corona Indistruttibile",
