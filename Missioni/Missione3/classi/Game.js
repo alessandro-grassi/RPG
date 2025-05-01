@@ -73,7 +73,7 @@ class Game {
         return victoriousEntity;
     }
 
-    checkEndGame() {
+    remaingEnemies() {
         if (this.enemies.length === 0) return true;
         return false;
     }

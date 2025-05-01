@@ -18,6 +18,17 @@ document.addEventListener("DOMContentLoaded", (e) => {
     game.aggiornaUI();
 });
 
+document.getElementById("againButton").addEventListener("click", () => {
+    const winner = game.getWinner();
+    if (!winner) return;
+    if (winner.constructor.name === "Hero") {
+        game.reset();
+        game.aggiornaUI();
+        atkButton.disabled = false;
+        magicButton.disabled = false;
+    }
+});
+
 function useActionButton(button, action) {
     button.addEventListener("click", (e) => {
         if (game.endGame) return;
@@ -29,6 +40,13 @@ function useActionButton(button, action) {
 
         if (!enemy.avoid()) {
             action(hero, enemy);
+            // Controllo lo stato della partita
+            /*
+                Vince l'eroe (si prosegue)
+                Termina la partita:
+                 - Sconfitta da parte dell'eroe (Ricomincia il gioco)
+                 - Non ci sono più mostri da combattere (salvo lo stato della partita)
+            */
         } else {
             output.innerHTML = `${enemy.name} ha schivato l'attacco`;
             console.log("Attacco schivato");
@@ -59,8 +77,6 @@ function useActionButton(button, action) {
                     attackSound();
                     const enemyAtk = game.enemyAttack();
                     output.innerHTML = `${enemy.name} ti ha inflitto ${enemyAtk} punti di danno`;
-
-                    announceEndGame(game);
                 } else {
                     output.innerHTML = `${hero.name}, hai schivato l'attacco!`;
                     console.log("Attacco schivato");
@@ -89,7 +105,6 @@ useActionButton(atkButton, function (hero, enemy) {
     attackSound();
     const heroAtk = hero.attack(enemy);
     output.innerHTML = `Hai inflitto ${heroAtk} punti di danno a ${enemy.name}`;
-    announceEndGame(game);
 });
 
 /*Fine sezione attacco del nemico*/
@@ -106,8 +121,6 @@ useActionButton(magicButton, function (hero, enemy) {
     // Prendo la descrizione della magia dal dizionario
     const magiaUsata = magieDescriptions[hero.magic] || "Magia Sconosciuta";
     output.innerHTML = `Hai usato <b>${magiaUsata}</b> su ${enemy.name}!`;
-
-    announceEndGame(game);
 });
 /*Fine sezione attacco del nemico*/
 
