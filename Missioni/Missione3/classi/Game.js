@@ -74,7 +74,7 @@ class Game {
     }
 
     remaingEnemies() {
-        if (this.enemies.length !== 0) return false;
+        if (this.enemies.length === 0) return false;
         return true;
     }
 
