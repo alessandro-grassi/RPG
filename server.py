@@ -1,11 +1,15 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from Back_end import jslib
 import json
 from urllib.parse import urlparse
+from Back_end import complete_mission as cm
 
 from Back_end import missione3
 
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
-    "/missione3": missione3
+    "/cm" : cm,
+    "/jslib": jslib,
+    "missione3": missione3
 }
 
 
@@ -16,7 +20,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
-
         resp = check_get(path)
 
         self.wfile.write(resp)
@@ -58,7 +61,7 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
-    return "Modulo non trovato".encode("utf-8")
+    return "Modulo non trovato"
 
 
 def check_post(path, client_choice):
