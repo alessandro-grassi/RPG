@@ -1,1 +1,1 @@
-from .script import check_get, check_post, funz
+from .script import check_get, check_post
