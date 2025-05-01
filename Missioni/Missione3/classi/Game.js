@@ -73,9 +73,9 @@ class Game {
         return victoriousEntity;
     }
 
-    checkEndGame() {
-        if (this.enemies.length === 0) return true;
-        return false;
+    remaingEnemies() {
+        if (this.enemies.length !== 0) return false;
+        return true;
     }
 
     //Metodo che aggiorna l'interfaccia utente con le informazioni attuali del gioco

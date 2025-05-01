@@ -1,5 +1,9 @@
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
+
+const continueButton = document.getElementById("continueButton");
+const retryButton = document.getElementById("retryButton");
+
 const output = document.getElementById("output")
 const endGameScreen = document.getElementById("messaggioFineGioco");
 const playAgainButton = document.getElementById("giocaAncora");
@@ -18,6 +22,24 @@ document.addEventListener("DOMContentLoaded", (e) => {
     game.aggiornaUI();
 });
 
+continueButton.addEventListener("click", (e) => {
+    const winner = game.getWinner();
+    if (winner?.constructor.name !== "Hero") return;
+    game.reset();
+    game.aggiornaUI();
+    atkButton.disabled = false;
+    magicButton.disabled = false;
+    e.target.style.display = "none";
+});
+
+retryButton.addEventListener("click", () => {
+    const winner = game.getWinner();
+    if (winner?.constructor.name !== "Enemy") return;
+
+    // Aggiorno la pagina
+    window.location.reload();
+});
+
 function useActionButton(button, action) {
     button.addEventListener("click", (e) => {
         if (game.endGame) return;
@@ -29,6 +51,14 @@ function useActionButton(button, action) {
 
         if (!enemy.avoid()) {
             action(hero, enemy);
+            // Controllo lo stato della partita
+            /*
+                Vince l'eroe (si prosegue)
+                Termina la partita:
+                 - Sconfitta da parte dell'eroe (Ricomincia il gioco)
+                 - Non ci sono più mostri da combattere (salvo lo stato della partita)
+            */
+            checkGameStatus();
         } else {
             output.innerHTML = `${enemy.name} ha schivato l'attacco`;
             console.log("Attacco schivato");
@@ -59,12 +89,12 @@ function useActionButton(button, action) {
                     attackSound();
                     const enemyAtk = game.enemyAttack();
                     output.innerHTML = `${enemy.name} ti ha inflitto ${enemyAtk} punti di danno`;
-
-                    announceEndGame(game);
                 } else {
                     output.innerHTML = `${hero.name}, hai schivato l'attacco!`;
                     console.log("Attacco schivato");
                 }
+
+                checkGameStatus();
 
                 game.completeRound();
                 game.aggiornaUI();
@@ -89,7 +119,6 @@ useActionButton(atkButton, function (hero, enemy) {
     attackSound();
     const heroAtk = hero.attack(enemy);
     output.innerHTML = `Hai inflitto ${heroAtk} punti di danno a ${enemy.name}`;
-    announceEndGame(game);
 });
 
 /*Fine sezione attacco del nemico*/
@@ -106,32 +135,25 @@ useActionButton(magicButton, function (hero, enemy) {
     // Prendo la descrizione della magia dal dizionario
     const magiaUsata = magieDescriptions[hero.magic] || "Magia Sconosciuta";
     output.innerHTML = `Hai usato <b>${magiaUsata}</b> su ${enemy.name}!`;
-
-    announceEndGame(game);
 });
 /*Fine sezione attacco del nemico*/
 
 // Annuncia la fine del gioco
-function announceEndGame(game) {
-    const winner = game.checkEndGame();
+function checkGameStatus() {
+    const winner = game.getWinner();
     if (!winner) return;
-    const endGameText = endGameScreen.getElementsByTagName("h2")[0];
     if (winner.constructor.name === "Hero") {
-        endGameText.innerHTML = 'Hai vinto!!';
+        if (!game.remaingEnemies()) {
+            // Mostra la schermata finale
+            // Salva la partita del db
+        } else {
+            continueButton.style.display = "block";
+            output.innerHTML = 'Hai vinto!!';
+        }
     } else {
-        endGameText.innerHTML = 'Hai perso...';
+        retryButton.style.display = "block";
+        output.innerHTML = 'Hai perso...';
     }
-
-    // Visualizzo la schermata di fine gioco
-
-    endGameScreen.style.display = "flex";
-
-    atkButton.disabled = true;
-    magicButton.disabled = true;
-    game.endGame = true;
-
-    output.style.pointerEvents = "none";
-    output.style.userSelect = "none";
 }
 
 // Evento gioca di nuovo
