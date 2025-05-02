@@ -1,15 +1,13 @@
 document.addEventListener("DOMContentLoaded",()=>{ 
     fetchData("enemies-images-path", setImageEnemy)
     fetchData("enemies-list", setLifePoints)
-    setName();
-    setDialogue();
-    setLifePointsPG();
+    setNameBoss();
+    setFirstDialogue();
     setButtonAttack();
     setButtonNext();
 });
 
-
-
+//Manda al server
 function sendToServer(request,data)
 {
     fetch("http://localhost:8080/m5/" + request,{
@@ -35,6 +33,7 @@ function sendToServer(request,data)
     });
 }
 
+//Prendi dal server
 function fetchData(request, callback)
 {
     fetch("http://localhost:8080/m5/" + request)
@@ -63,6 +62,7 @@ function fetchData(request, callback)
     let rand = 0;
     let tempChance = 0;
 
+//carica l'immagine del boss
 function setImageEnemy(json){
     json.forEach(element => {
     if (element['enemy_name'] == NAME)
@@ -71,6 +71,7 @@ function setImageEnemy(json){
     document.getElementById('image_king').setAttribute('src', "http://localhost:8080/m5/get-image/"+ path);
 }
 
+//carica i punti vita del boss e del player
 function setLifePoints(json){
     json.forEach(enemy =>{
         if(enemy['name'] == NAME){
@@ -78,17 +79,19 @@ function setLifePoints(json){
             document.getElementById('vita').value = vita_corrente;
             document.getElementById('vita').max = vita_corrente;
             document.getElementById('vita-text').innerHTML = "PV:"+vita_corrente;
-            document.getElementById('vita_pg').value = vita_corrente_pg;
-            document.getElementById('vita_pg').max = vita_corrente_pg;
+            
         }
     })
+    document.getElementById('vita_pg').value = vita_corrente_pg;
+    document.getElementById('vita_pg').max = vita_corrente_pg;
+    document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }
 
-function setName(){
+function setNameBoss(){
     document.getElementById('name-text').innerHTML = NAME;
 }
 
-function setDialogue(){
+function setFirstDialogue(){
     document.getElementById('text').innerHTML = "Il Re sta aspettando...";
 }
 
@@ -186,11 +189,13 @@ function sendToServer(request,data)
 
 }
 
+// funzione che genera un numero da 1-100 per far decidere al boss quale mossa usare
 function getRand(json){
     rand = parseInt(json['result']);
     console.log(rand);
 }
 
+// funzione principale: scelta casuale del boss di una sua mossa
 function enemyAttack(json){
     json.forEach(enemy =>{
         if(enemy['name'] == NAME){
@@ -207,23 +212,27 @@ function enemyAttack(json){
                             danno_enemy = danno_fisico + Math.floor((vita_corrente_pg * (moves['damage_fis_perc']/100)));
                             vita_corrente_pg -= danno_enemy;
                             document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+                            document.getElementById('vita_pg').value = vita_corrente_pg;
                         }
                     }
                     else if(moves['move_type'] == 'buff'){
                         if(moves['move_name'] == 'Aura immortale'){
                             vita_corrente_pg -= danno_fisico;
                             document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+                            document.getElementById('vita_pg').value = vita_corrente_pg;
                         }
                         if(moves['move_name'] == 'Corona Indistruttibile'){
                             document.getElementById('image_king').style = "filter: brightness(150%);";
                             vita_corrente_pg -= danno_fisico;
                             document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+                            document.getElementById('vita_pg').value = vita_corrente_pg;
                         }
                     }
                     else if(moves['move_type'] == 'Unique'){
                         document.getElementById("img-Throne").style = "filter: invert(100%)"
                         vita_corrente_pg -= danno_fisico;
                         document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+                        document.getElementById('vita_pg').value = vita_corrente_pg;
                     }
                     else{
                         vita_corrente_pg -= danno_fisico;
@@ -262,6 +271,7 @@ function enemyAttack(json){
     })
 }
 
+// funzione fine gioco
 function gameover(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
     document.getElementById('text').innerHTML = "GAME OVER";
@@ -274,8 +284,4 @@ function gameover(){
         location.reload();
     });
     document.getElementById('dialog-box').appendChild(retry);
-}
-
-function setLifePointsPG(){
-    document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }
