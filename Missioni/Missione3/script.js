@@ -3,6 +3,8 @@ const magicButton = document.getElementById("magicButton");
 
 const continueButton = document.getElementById("continueButton");
 const retryButton = document.getElementById("retryButton");
+const exitButton = document.getElementById("exitButton");
+
 
 const output = document.getElementById("output")
 const endGameScreen = document.getElementById("messaggioFineGioco");
@@ -38,6 +40,12 @@ retryButton.addEventListener("click", () => {
 
     // Aggiorno la pagina
     window.location.reload();
+});
+
+// Pulsante per uscire dalla missione in caso di sconfitta
+exitButton.addEventListener("click", () => {
+    if (winner?.constructor.name !== "Enemy") return;
+    window.location.href = "../SceltaMissione/sm_home.html";
 });
 
 function useActionButton(button, action) {
@@ -152,6 +160,7 @@ function checkGameStatus() {
         }
     } else {
         retryButton.style.display = "block";
+        exitButton.style.display = "block";
         output.innerHTML = 'Hai perso...';
     }
 }

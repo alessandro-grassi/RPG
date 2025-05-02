@@ -107,6 +107,9 @@ button#continueButton {
 button#retryButton {
     display: none;
 }
+button#exitButton {
+    display: none;
+}
 
 /* Esito */
 #esito {
