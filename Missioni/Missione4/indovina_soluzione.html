@@ -38,10 +38,10 @@
                 .then(response => response.json())
                 .then(data => {
                     //estraggo i dettagli dal JSON restituito
-                    var tentativiIndovina = data[0];
-                    var tentativiIndovinaFatti = data[1];
-                    var indiziOttenuti = data[2]; //lista degli indizi
-                    var maxIndizi = data[3];
+                    var tentativiIndovina = data["tentativiIndovina"];
+                    var tentativiIndovinaFatti = data["tentativiIndovinaFatti"];
+                    var indiziOttenuti = data["IndiziOttenuti"]; //lista degli indizi
+                    var maxIndizi = data["maxIndizi"];
 
                     //tentativi per indovinare
                     var tentativiH = document.getElementById("tentativiH");

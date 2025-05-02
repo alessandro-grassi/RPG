@@ -41,12 +41,12 @@
                 .then(response => response.json())
                 .then(data => {
                     //estraggo i dettagli dal JSON restituito
-                    var obiettivo = data[0];
-                    var ricompensa = data[1];
-                    var tentativiIndovina = data[2];
-                    var tentativiIndovinaFatti = data[3];
-                    var indiziOttenuti = data[4]; //lista degli indizi
-                    var maxIndizi = data[5];
+                    var obiettivo = data["obiettivo"];
+                    var ricompensa = data["ricompensa"];
+                    var tentativiIndovina = data["tentativiIndovina"];
+                    var tentativiIndovinaFatti = data["tentativiIndovinaFatti"];
+                    var indiziOttenuti = data["indiziOttenuti"]; //lista degli indizi
+                    var maxIndizi = data["maxIndizi"];
 
                     //obiettivo
                     var obiettivoP = document.getElementById("obiettivoP");

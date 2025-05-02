@@ -156,36 +156,92 @@ DB = '''{
 
 dbDict = json.loads(DB)
 
-#funzioni per simulare db
+import json
+
+# ... (altre funzioni rimangono uguali)
+
 def getDettagliGenerali():
-    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativiIndovina"],dbDict["tentativiIndovinaFatti"],dbDict["indiziOttenuti"],dbDict["maxIndizi"]
+    dati = {
+        "obiettivo": dbDict["obiettivo"],
+        "ricompensa": dbDict["ricompensa"],
+        "tentativiIndovina": dbDict["tentativiIndovina"],
+        "tentativiIndovinaFatti": dbDict["tentativiIndovinaFatti"],
+        "indiziOttenuti": dbDict["indiziOttenuti"],
+        "maxIndizi": dbDict["maxIndizi"]
+    }
+    return json.dumps(dati).encode("utf-8")
 
 def getDettagliIndovina():
-    return dbDict["tentativiIndovina"],dbDict["tentativiIndovinaFatti"],dbDict["indiziOttenuti"],dbDict["maxIndizi"]
+    dati = {
+        "tentativiIndovina": dbDict["tentativiIndovina"],
+        "tentativiIndovinaFatti": dbDict["tentativiIndovinaFatti"],
+        "indiziOttenuti": dbDict["indiziOttenuti"],
+        "maxIndizi": dbDict["maxIndizi"]
+    }
+    return json.dumps(dati).encode("utf-8")
 
 def getDettagliGioco():
-    return dbDict["tentativiGioco"],dbDict["tentativiGiocoFatti"]
+    dati = {
+        "tentativiGioco": dbDict["tentativiGioco"],
+        "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"]
+    }
+    return json.dumps(dati).encode("utf-8")
 
 def getSoluzione(num):
     tentDict = dbDict["prove"][num - 1]
-    dbDict["indiziOttenuti"] += ", " + tentDict["ind"]
-    return "hai vinto!"
-
+    dbDict["indiziOttenuti"].append(tentDict["ind"])
+    dati = {
+        "risultato": "hai vinto!",
+        "tentativiGioco": dbDict["tentativiGioco"],
+        "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"],
+        "indizio": tentDict["ind"]
+    }
+    return json.dumps(dati).encode("utf-8")
 
 def controlla(num, tentativo, risposta):
     if tentativo <= dbDict["tentativiGioco"]:
-
-        #aggiungo tentativo
-        dbDict["tentativiGiocoFatti"] = str(int(dbDict["tentativiGiocoFatti"]) + 1)
-
+        dbDict["tentativiGiocoFatti"] += 1
+        
         dbProva = dbDict["prove"][num-1]
         if risposta == dbProva["soluz"]:
-            return getSoluzione(num), dbDict["tentativiGioco"], dbDict["tentativiGiocoFatti"]
+            return getSoluzione(num)
         else:
-            return "",dbDict["tentativiGioco"], dbDict["tentativiGiocoFatti"]
+            dati = {
+                "risultato": "",
+                "tentativiGioco": dbDict["tentativiGioco"],
+                "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"]
+            }
+            return json.dumps(dati).encode("utf-8")
     else:
-        dbDict["IndiziOttenuti"].append("")
-        return "tentativi esauriti"
+        dati = {
+            "risultato": "tentativi esauriti",
+            "tentativiGioco": dbDict["tentativiGioco"],
+            "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"]
+        }
+        return json.dumps(dati).encode("utf-8")
+
+def indovina(tentativo, risposta):
+    if tentativo <= dbDict["tentativiIndovina"]:
+        dbDict["tentativiIndovinaFatti"] += 1
+        
+        if risposta == dbDict["soluzione"]:
+            dati = {
+                "risultato": "corretto",
+                "tentativiIndovina": dbDict["tentativiIndovina"],
+                "tentativiIndovinaFatti": dbDict["tentativiIndovinaFatti"]
+            }
+        else:
+            dati = {
+                "risultato": "sbagliato",
+                "tentativiIndovina": dbDict["tentativiIndovina"],
+                "tentativiIndovinaFatti": dbDict["tentativiIndovinaFatti"]
+            }
+        return json.dumps(dati).encode("utf-8")
+    else:
+        dati = {
+            "risultato": "tentativi esauriti"
+        }
+        return json.dumps(dati).encode("utf-8")
     
 def resetGame():
     dbDict["tentativiGioco"] = "5"
@@ -195,16 +251,4 @@ def resetMissione():
     dbDict["tentativiIndovina"] = "3"
     dbDict["tentativiIndovinaFatti"] = "0"
     dbDict["indiziOttenuti"] = []
-
-def indovina(tentativo, risposta):
-    if tentativo <= dbDict["tentativiIndovina"]:
-        #aggiungo tentativo
-        dbDict["tentativiIndovinaFatti"] = str(int(dbDict["tentativiIndovinaFatti"]) + 1)
-
-        if risposta == dbDict["soluzione"]:
-            return "corretto", dbDict["tentativiIndovina"], dbDict["tentativiIndovinaFatti"]
-        else:
-            return "sbagliato", dbDict["tentativiIndovina"], dbDict["tentativiIndovinaFatti"]
-    else:
-        return "tentativi esauriti"
 

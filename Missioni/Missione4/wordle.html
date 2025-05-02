@@ -16,11 +16,11 @@
         <div id="griglia-wordle">
             <!--prima riga come esempio-->
             <div class="riga">
-                <input id="l0" type="text" maxlength="1" class="lettera">
-                <input id="l1" type="text" maxlength="1" class="lettera">
-                <input id="l2" type="text" maxlength="1" class="lettera">
-                <input id="l3" type="text" maxlength="1" class="lettera">
-                <input id="l4" type="text" maxlength="1" class="lettera">
+                <input id="l0" type="text" maxlength="1" class="lettera" required>
+                <input id="l1" type="text" maxlength="1" class="lettera" required>
+                <input id="l2" type="text" maxlength="1" class="lettera" required>
+                <input id="l3" type="text" maxlength="1" class="lettera" required>
+                <input id="l4" type="text" maxlength="1" class="lettera" required>
             </div>
             <!--altre righe da fare dinamicamente-->
         </div>
@@ -81,9 +81,9 @@
             .then(response => response.json())
             .then(data => {
                 //estraggo i dettagli dal JSON restituito
-                var risposta = data[0];
-                var tentGiocoMax = data[1];
-                var tentGiocoFatti = data[2];
+                var risposta = data["risultato"];
+                var tentGiocoMax = data["tetativiGioco"];
+                var tentGiocoFatti = data["tentativiGiocoFatti"];
 
                 //aggiorna tentativi + metti req input
                 if (risposta == "tentativi esauriti")
