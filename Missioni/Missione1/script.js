@@ -30,3 +30,9 @@ document.addEventListener("DOMContentLoaded", function(){ //esegue il codice sol
 //quando la pagina è pronta carico la massione
     caricaMissione();
 });
+function Sconfitta(){
+    window.location.href="../Missione5/Missione_Finale/pagina_boss_finale/sconfitta.html";
+}
+function MissioneSuccessiva(){
+    window.location.href="parte grafica.html";
+}

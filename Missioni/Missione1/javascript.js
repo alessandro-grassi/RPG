@@ -42,3 +42,10 @@ const esempio = {
 };
 
 updateMission(esempio);
+v
+function Sconfitta(){
+    window.location.href="../Missione5/Missione_Finale/pagina_boss_finale/sconfitta.html";
+}
+function MissioneSuccessiva(){
+    window.location.href="../Missione5/Missione2/memory/index.html";
+}
