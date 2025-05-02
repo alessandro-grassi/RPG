@@ -35,7 +35,7 @@ def aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username):
     queryLib.connetti()
     statsClasse = queryLib.execute(f''' SELECT classi."Vigore", classi."Forza", classi."Destrezza", classi."Intelligenza", classi."Fede" FROM "classi" WHERE classi.id ='{classe}' ''')[0]
     nuovo_personaggio = queryLib.execute(f''' INSERT INTO "personaggi" ("Nome", "Livello", "Vigore", "Forza", "Destrezza", "Intelligenza", "Fede", "id_classe", "creatore") VALUES ('{nome}', 0, '{statsClasse[0]}', '{statsClasse[1]}', '{statsClasse[2]}', '{statsClasse[3]}', '{statsClasse[4]}', '{classe}', '{username}')''')
-    id_personaggio = queryLib.execute(f'''SELECT personaggi.id FROM "personaggi" WHERE personaggi."Nome"= '{nome}' ''')[0][0]
+    id_personaggio = queryLib.execute(f'''SELECT personaggi.id FROM "personaggi" WHERE personaggi."Nome"= '{nome}' ORDER BY personaggi."Created_at" DESC ''')[0][0]
     nuovo_personaggio_abilita = queryLib.execute(f''' INSERT INTO "relazione_abilità" (personaggio, ab1, ab2, ab3) VALUES ({id_personaggio},'{ab1}','{ab2}','{ab3}')''')
     queryLib.disconnetti()
     return
