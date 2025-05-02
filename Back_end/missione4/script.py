@@ -1,5 +1,58 @@
 from Back_end import queryLib
 import json
+import random
+
+# Liste delle parole per il Wordle e delle soluzioni finali
+parole_wordle = ["pesca", "monte", "luogo", "tempo", "libro", "fiume", "canto", "passo", "vista", "fiore"]
+parole_finali = ["enigma", "tesoro", "vittoria", "mistero", "successo"]
+
+# Indizi per le parole finali
+tutti_indizi = {
+    "enigma": [
+        "Un rompicapo che sfida la mente",
+        "Deriva dal greco 'ainigma', che significa 'parlare in modo oscuro'",
+        "Spesso richiede un salto logico per essere risolto"
+    ],
+    "tesoro": [
+        "Oggetto di grande valore",
+        "Spesso nascosto e protetto",
+        "Cercato dai cacciatori di fortuna"
+    ],
+    "vittoria": [
+        "Rappresenta il trionfo dopo la lotta",
+        "È simboleggiata da una corona d'alloro",
+        "Deriva dal latino 'victoria'"
+    ],
+    "mistero": [
+        "Ciò che rimane incomprensibile",
+        "Deriva dal greco 'mysterion'",
+        "Richiede indagine e scoperta"
+    ],
+    "successo": [
+        "Raggiungimento di un obiettivo",
+        "Deriva dal latino 'successus', che significa 'avanzare'",
+        "Ricompensa per l'impegno e la perseveranza"
+    ]
+}
+
+# Inizializzazione del database
+parola_corrente = random.choice(parole_wordle)
+parola_finale = random.choice(parole_finali)
+
+# Simulazione database con JSON
+DB = json.dumps({
+    "obiettivo": "Risolvi i Wordle per ottenere indizi e scoprire la parola finale!",
+    "ricompensa": "Una sorpresa speciale!",
+    "tentativiGioco": 5,
+    "tentativiGiocoFatti": 0,
+    "tentativiIndovina": 3,
+    "tentativiIndovinaFatti": 0,
+    "parolaCorrente": parola_corrente,
+    "parolaFinale": parola_finale,
+    "indiziOttenuti": []
+})
+
+dbDict = json.loads(DB)
 
 def check_get(path):
     # Apre pagina principale
@@ -37,58 +90,43 @@ def check_get(path):
         f.close()
         return stringa.encode("utf-8")
     
-    # getDettagliGenerali
+    # API: Dettagli generali
     elif path.endswith("dettagliGenerali"):
         return json.dumps(getDettagliGenerali()).encode("utf-8")
     
-    # getDettagliGioco
+    # API: Dettagli gioco
     elif "dettagliGioco" in path:
-        num = path.rsplit('/', 1)[-1] if '/' in path else 1
-        return json.dumps(getDettagliGioco(int(num))).encode("utf-8")
+        return json.dumps(getDettagliGioco()).encode("utf-8")
+    
+    # API: Indizi
+    elif path.endswith("indizi"):
+        return json.dumps({"indizi": dbDict["indiziOttenuti"]}).encode("utf-8")
+    
+    # API: Tentativi rimasti
+    elif path.endswith("tentativi-rimasti"):
+        return json.dumps({"tentativiRimasti": dbDict["tentativiGioco"] - dbDict["tentativiGiocoFatti"]}).encode("utf-8")
     
     # Se non trova il path
     return '"Path not found"'.encode("utf-8")
 
 def check_post(path, client_choice):
-    if path.endswith("indovina"):
+    if path.endswith("verifica-parola"):
         try:
-            tentativo = client_choice["tentativo"]
-            risposta = client_choice["risposta"]
-            return indovina(tentativo, risposta).encode("utf-8")
+            parola = client_choice.get("parola", "")
+            risultato = verifica_parola(parola)
+            return json.dumps(risultato).encode("utf-8")
         except Exception as errore:
-            return f'"errore: {str(errore)}"'.encode("utf-8")
+            return json.dumps({"esito": "errore", "messaggio": str(errore)}).encode("utf-8")
     
-    elif "controlla" in path:
+    elif path.endswith("verifica-soluzione"):
         try:
-            num = int(path.rsplit('/', 1)[-1])
-            tentativo = client_choice["tentativo"]
-            return controlla_wordle(num, tentativo).encode("utf-8")
+            soluzione = client_choice.get("soluzione", "")
+            risultato = verifica_soluzione_finale(soluzione)
+            return json.dumps(risultato).encode("utf-8")
         except Exception as errore:
-            return f'"errore: {str(errore)}"'.encode("utf-8")
+            return json.dumps({"esito": "errore", "messaggio": str(errore)}).encode("utf-8")
     
     return '"Path not found"'.encode("utf-8")
-
-# PARTE PER SIMULARE DB
-# JSON per simulare il db
-DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
-     ' "ricompensa": "titolo di Kung Fury", ' \
-     ' "tentativiIndovina": 3, ' \
-     ' "tentativiIndovinaFatti": 0, ' \
-     ' "tentativiGioco": 5, ' \
-     ' "tentativiGiocoFatti": 0, ' \
-     ' "soluzione": "gabibbo",' \
-     ' "maxIndizi": 3,' \
-     ' "indiziOttenuti":' \
-     ' [' \
-     ' ],' \
-     ' "prove":' \
-     ' [' \
-     ' { "num": 1, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
-     ' { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-     ' { "num": 3, "soluz": "nonna", "ind": "è rosso" }' \
-     ' ] }'
-
-dbDict = json.loads(DB)
 
 # Funzioni per simulare db
 def getDettagliGenerali():
@@ -98,71 +136,91 @@ def getDettagliGenerali():
         "tentativiIndovina": dbDict["tentativiIndovina"],
         "tentativiIndovinaFatti": dbDict["tentativiIndovinaFatti"],
         "indiziOttenuti": dbDict["indiziOttenuti"],
-        "maxIndizi": dbDict["maxIndizi"]
+        "maxIndizi": len(tutti_indizi[dbDict["parolaFinale"]])
     }
 
-def getDettagliGioco(num=1):
-    prova = next((p for p in dbDict["prove"] if p["num"] == num), None)
-    if prova:
-        return {
-            "tentativiGioco": dbDict["tentativiGioco"],
-            "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"],
-            "soluzione": prova["soluz"]
-        }
+def getDettagliGioco():
     return {
         "tentativiGioco": dbDict["tentativiGioco"],
         "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"]
     }
 
-def getVincita(num):
-    prova = next((p for p in dbDict["prove"] if p["num"] == num), None)
-    if prova:
-        indizio = prova["ind"]
-        if indizio not in dbDict["indiziOttenuti"]:
-            dbDict["indiziOttenuti"].append(indizio)
-        return indizio
-    return "Indizio non trovato"
-
-def getSoluzione(num):
-    prova = next((p for p in dbDict["prove"] if p["num"] == num), None)
-    return prova["soluz"] if prova else ""
-
-def controlla_wordle(num, tentativo):
-    soluzione = getSoluzione(num)
-    if not soluzione:
-        return json.dumps({"stato": "errore", "messaggio": "Prova non trovata"})
+# Funzione per verificare una parola nel Wordle
+def verifica_parola(parola_tentativo):
+    parola_corretta = dbDict["parolaCorrente"]
+    parola_tentativo = parola_tentativo.lower()
     
-    if tentativo.lower() == soluzione.lower():
-        indizio = getVincita(num)
-        return json.dumps({"stato": "vittoria", "indizio": indizio})
-    else:
-        # Logica per verificare lettere corrette/posizione sbagliata
-        risultato = []
-        for i, lettera in enumerate(tentativo):
-            if i < len(soluzione) and lettera.lower() == soluzione[i].lower():
-                risultato.append({"lettera": lettera, "stato": "corretto"})
-            elif lettera.lower() in soluzione.lower():
-                risultato.append({"lettera": lettera, "stato": "presente"})
+    if len(parola_tentativo) != 5:
+        return {"esito": "errore", "messaggio": "La parola deve essere di 5 lettere"}
+    
+    risultato = []
+    
+    for i in range(5):
+        if i < len(parola_tentativo):
+            if parola_tentativo[i] == parola_corretta[i]:
+                risultato.append({"lettera": parola_tentativo[i], "stato": "corretto"})
+            elif parola_tentativo[i] in parola_corretta:
+                risultato.append({"lettera": parola_tentativo[i], "stato": "posizione_errata"})
             else:
-                risultato.append({"lettera": lettera, "stato": "assente"})
+                risultato.append({"lettera": parola_tentativo[i], "stato": "non_presente"})
+    
+    if parola_tentativo == parola_corretta:
+        # Sblocca un indizio
+        if len(dbDict["indiziOttenuti"]) < len(tutti_indizi[dbDict["parolaFinale"]]):
+            indizio_index = len(dbDict["indiziOttenuti"])
+            dbDict["indiziOttenuti"].append(tutti_indizi[dbDict["parolaFinale"]][indizio_index])
         
-        dbDict["tentativiGiocoFatti"] += 1
-        return json.dumps({
-            "stato": "tentativo", 
-            "risultato": risultato,
-            "tentativiRimasti": dbDict["tentativiGioco"] - dbDict["tentativiGiocoFatti"]
-        })
-
-def indovina(tentativo, risposta):
-    if dbDict["tentativiIndovinaFatti"] < dbDict["tentativiIndovina"]:
-        dbDict["tentativiIndovinaFatti"] += 1
-        if risposta.lower() == dbDict["soluzione"].lower():
-            return json.dumps({"stato": "vittoria", "messaggio": "Complimenti! Hai indovinato la soluzione finale!"})
-        else:
-            return json.dumps({
-                "stato": "errore", 
-                "messaggio": "Risposta errata. Tentativi rimasti: " + 
-                str(dbDict["tentativiIndovina"] - dbDict["tentativiIndovinaFatti"])
-            })
+        # Cambia la parola corrente per il prossimo round
+        vecchia_parola = dbDict["parolaCorrente"]
+        while dbDict["parolaCorrente"] == vecchia_parola:
+            dbDict["parolaCorrente"] = random.choice(parole_wordle)
+        
+        return {
+            "esito": "successo",
+            "messaggio": "Complimenti! Hai indovinato la parola!",
+            "risultato": risultato
+        }
     else:
-        return json.dumps({"stato": "errore", "messaggio": "Tentativi esauriti"})
+        dbDict["tentativiGiocoFatti"] += 1
+        
+        if dbDict["tentativiGiocoFatti"] >= dbDict["tentativiGioco"]:
+            # Reimposta i tentativi e cambia la parola
+            dbDict["tentativiGiocoFatti"] = 0
+            vecchia_parola = dbDict["parolaCorrente"]
+            while dbDict["parolaCorrente"] == vecchia_parola:
+                dbDict["parolaCorrente"] = random.choice(parole_wordle)
+            
+            return {
+                "esito": "fallimento",
+                "messaggio": f"Tentativi esauriti! La parola era: {parola_corretta}. Ne ho scelta una nuova.",
+                "risultato": risultato
+            }
+        
+        return {
+            "esito": "errore",
+            "messaggio": "Parola errata, riprova!",
+            "risultato": risultato
+        }
+
+# Funzione per verificare la soluzione finale
+def verifica_soluzione_finale(soluzione_tentativo):
+    soluzione_corretta = dbDict["parolaFinale"]
+    
+    dbDict["tentativiIndovinaFatti"] += 1
+    
+    if soluzione_tentativo.lower() == soluzione_corretta.lower():
+        # L'utente ha vinto il gioco!
+        return {
+            "esito": "successo",
+            "messaggio": f"Congratulazioni! Hai risolto l'enigma finale: {soluzione_corretta}!"
+        }
+    elif dbDict["tentativiIndovinaFatti"] >= dbDict["tentativiIndovina"]:
+        return {
+            "esito": "fallimento",
+            "messaggio": "Hai esaurito i tentativi! Missione fallita."
+        }
+    else:
+        return {
+            "esito": "errore",
+            "messaggio": f"Soluzione errata, raccogli più indizi! Tentativi rimasti: {dbDict['tentativiIndovina'] - dbDict['tentativiIndovinaFatti']}"
+        }
