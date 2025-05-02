@@ -3,49 +3,67 @@ import os
 import random
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-# Liste delle parole per il Wordle e delle soluzioni finali
-parole_wordle = ["pesca", "monte", "luogo", "tempo", "libro", "fiume", "canto", "passo", "vista", "fiore"]
-parole_finali = ["enigma", "tesoro", "vittoria", "mistero", "successo"]
+# Percorsi dei file
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+HTML_DIR = os.path.join(BASE_DIR, "Missioni", "Missione4")
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.json")
 
-# Variabili di stato del gioco
-stato_gioco = {
-    "tentativi_rimasti": 5,
-    "indizi_sbloccati": [],
-    "parola_corrente": random.choice(parole_wordle),
-    "parola_finale": random.choice(parole_finali)
-}
+# Funzioni per gestire il database JSON
+def carica_database():
+    try:
+        with open(DB_PATH, "r", encoding="utf-8") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        # Se il file non esiste, lo creiamo con valori predefiniti
+        db = {
+            "parole_wordle": ["pesca", "monte", "luogo", "tempo", "libro", "fiume", "canto", "passo", "vista", "fiore"],
+            "parole_finali": ["enigma", "tesoro", "vittoria", "mistero", "successo"],
+            "stato_gioco": {
+                "tentativi_rimasti": 5,
+                "indizi_sbloccati": [],
+                "parola_corrente": "",
+                "parola_finale": ""
+            },
+            "tutti_indizi": {
+                "enigma": [
+                    "Un rompicapo che sfida la mente",
+                    "Deriva dal greco 'ainigma', che significa 'parlare in modo oscuro'",
+                    "Spesso richiede un salto logico per essere risolto"
+                ],
+                "tesoro": [
+                    "Oggetto di grande valore",
+                    "Spesso nascosto e protetto",
+                    "Cercato dai cacciatori di fortuna"
+                ],
+                "vittoria": [
+                    "Rappresenta il trionfo dopo la lotta",
+                    "È simboleggiata da una corona d'alloro",
+                    "Deriva dal latino 'victoria'"
+                ],
+                "mistero": [
+                    "Ciò che rimane incomprensibile",
+                    "Deriva dal greco 'mysterion'",
+                    "Richiede indagine e scoperta"
+                ],
+                "successo": [
+                    "Raggiungimento di un obiettivo",
+                    "Deriva dal latino 'successus', che significa 'avanzare'",
+                    "Ricompensa per l'impegno e la perseveranza"
+                ]
+            }
+        }
+        # Inizializza le parole random
+        db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+        db["stato_gioco"]["parola_finale"] = random.choice(db["parole_finali"])
+        salva_database(db)
+        return db
 
-# Indizi per le parole finali
-tutti_indizi = {
-    "enigma": [
-        "Un rompicapo che sfida la mente",
-        "Deriva dal greco 'ainigma', che significa 'parlare in modo oscuro'",
-        "Spesso richiede un salto logico per essere risolto"
-    ],
-    "tesoro": [
-        "Oggetto di grande valore",
-        "Spesso nascosto e protetto",
-        "Cercato dai cacciatori di fortuna"
-    ],
-    "vittoria": [
-        "Rappresenta il trionfo dopo la lotta",
-        "È simboleggiata da una corona d'alloro",
-        "Deriva dal latino 'victoria'"
-    ],
-    "mistero": [
-        "Ciò che rimane incomprensibile",
-        "Deriva dal greco 'mysterion'",
-        "Richiede indagine e scoperta"
-    ],
-    "successo": [
-        "Raggiungimento di un obiettivo",
-        "Deriva dal latino 'successus', che significa 'avanzare'",
-        "Ricompensa per l'impegno e la perseveranza"
-    ]
-}
+def salva_database(db):
+    with open(DB_PATH, "w", encoding="utf-8") as file:
+        json.dump(db, file, indent=2)
 
-# Directory delle pagine HTML
-HTML_DIR = os.path.dirname(os.path.abspath(__file__))
+# Carica il database all'avvio
+db = carica_database()
 
 # Funzione per leggere i file HTML
 def leggi_file(nome_file):
@@ -57,7 +75,8 @@ def leggi_file(nome_file):
 
 # Funzione per verificare una parola nel Wordle
 def verifica_parola(parola_tentativo):
-    parola_corretta = stato_gioco["parola_corrente"]
+    global db
+    parola_corretta = db["stato_gioco"]["parola_corrente"]
     parola_tentativo = parola_tentativo.lower()
     
     if len(parola_tentativo) != 5:
@@ -75,13 +94,16 @@ def verifica_parola(parola_tentativo):
     
     if parola_tentativo == parola_corretta:
         # Sblocca un indizio
-        if len(stato_gioco["indizi_sbloccati"]) < len(tutti_indizi[stato_gioco["parola_finale"]]):
-            indizio_index = len(stato_gioco["indizi_sbloccati"])
-            stato_gioco["indizi_sbloccati"].append(tutti_indizi[stato_gioco["parola_finale"]][indizio_index])
-            # Cambia la parola corrente per il prossimo round
-            vecchia_parola = stato_gioco["parola_corrente"]
-            while stato_gioco["parola_corrente"] == vecchia_parola:
-                stato_gioco["parola_corrente"] = random.choice(parole_wordle)
+        indizi_disponibili = db["tutti_indizi"][db["stato_gioco"]["parola_finale"]]
+        if len(db["stato_gioco"]["indizi_sbloccati"]) < len(indizi_disponibili):
+            indizio_index = len(db["stato_gioco"]["indizi_sbloccati"])
+            db["stato_gioco"]["indizi_sbloccati"].append(indizi_disponibili[indizio_index])
+        
+        # Cambia la parola corrente per il prossimo round
+        vecchia_parola = db["stato_gioco"]["parola_corrente"]
+        while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
+            db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+        salva_database(db)
         
         return {
             "esito": "successo",
@@ -89,13 +111,16 @@ def verifica_parola(parola_tentativo):
             "risultato": risultato
         }
     else:
-        stato_gioco["tentativi_rimasti"] -= 1
-        if stato_gioco["tentativi_rimasti"] <= 0:
+        db["stato_gioco"]["tentativi_rimasti"] -= 1
+        salva_database(db)
+        
+        if db["stato_gioco"]["tentativi_rimasti"] <= 0:
             # Reimposta i tentativi e cambia la parola
-            stato_gioco["tentativi_rimasti"] = 5
-            vecchia_parola = stato_gioco["parola_corrente"]
-            while stato_gioco["parola_corrente"] == vecchia_parola:
-                stato_gioco["parola_corrente"] = random.choice(parole_wordle)
+            db["stato_gioco"]["tentativi_rimasti"] = 5
+            vecchia_parola = db["stato_gioco"]["parola_corrente"]
+            while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
+                db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+            salva_database(db)
             
             return {
                 "esito": "fallimento",
@@ -111,7 +136,7 @@ def verifica_parola(parola_tentativo):
 
 # Funzione per verificare la soluzione finale
 def verifica_soluzione_finale(soluzione_tentativo):
-    soluzione_corretta = stato_gioco["parola_finale"]
+    soluzione_corretta = db["stato_gioco"]["parola_finale"]
     
     if soluzione_tentativo.lower() == soluzione_corretta.lower():
         # L'utente ha vinto il gioco!
@@ -134,10 +159,10 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
-
+    
     def do_OPTIONS(self):
         self._set_headers()
-        
+    
     def do_GET(self):
         path = self.path
         
@@ -158,16 +183,16 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(leggi_file("stile.css").encode())
         elif path == "/api/indizi":
             self._set_headers("application/json")
-            response = json.dumps({"indizi": stato_gioco["indizi_sbloccati"]})
+            response = json.dumps({"indizi": db["stato_gioco"]["indizi_sbloccati"]})
             self.wfile.write(response.encode())
         elif path == "/api/tentativi-rimasti":
             self._set_headers("application/json")
-            response = json.dumps({"tentativiRimasti": stato_gioco["tentativi_rimasti"]})
+            response = json.dumps({"tentativiRimasti": db["stato_gioco"]["tentativi_rimasti"]})
             self.wfile.write(response.encode())
         else:
             self._set_headers()
             self.wfile.write("Pagina non trovata".encode())
-
+    
     def do_POST(self):
         path = self.path
         content_length = int(self.headers['Content-Length'])
