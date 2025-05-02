@@ -75,13 +75,9 @@ def carica_database():
             return json.load(file)
     except FileNotFoundError:
         print(f"File database non trovato in: {DB_PATH}")
-        
-        # Inizializza le parole random
-        db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
-        db["stato_gioco"]["parola_finale"] = random.choice(db["parole_finali"])
-        
-        salva_database(db)
-        return db
+    
+    salva_database(db)
+    return db
 
 def salva_database(db):
     # Assicurati che la directory esista
@@ -90,8 +86,22 @@ def salva_database(db):
     with open(DB_PATH, "w", encoding="utf-8") as file:
         json.dump(db, file, indent=2)
 
+def carica_database_avvio():
+    db = carica_database()
+
+    #scelta parole
+    db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+    db["stato_gioco"]["parola_finale"] = random.choice(db["parole_finali"])
+    #reimposta gioco ogni avvio
+    db["stato_gioco"]["tentativi_rimasti"] = 5
+    db["stato_gioco"]["tentativi_nella_partita_corrente"] = 0
+    db["stato_gioco"]["indizi_sbloccati"] = []
+
+    salva_database(db)
+    return db
+
 # Carica il database all'avvio
-db = carica_database()
+db = carica_database_avvio()
 print(f"Database caricato. Parola corrente: {db['stato_gioco']['parola_corrente']}, Parola finale: {db['stato_gioco']['parola_finale']}")
 
 # gestione GIOCO ------------------------------------------------------------------------
