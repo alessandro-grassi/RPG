@@ -1,15 +1,14 @@
 import json
 import os
 import random
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 
-# Percorsi corretti dei file
 # Otteniamo il percorso assoluto della directory base RPG
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = Path(__file__).parent.parent.parent
 # Percorso assoluto alla directory dei file HTML
-HTML_DIR = os.path.join(BASE_DIR, "Missioni", "Missione4")
+HTML_DIR = BASE_DIR / "Missioni" / "Missione4"
 # Percorso assoluto al file database nella stessa cartella dello script
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.json")
+DB_PATH = Path(__file__).parent / "database.json"
 
 # Funzioni per gestire il database JSON
 def carica_database():
@@ -17,6 +16,9 @@ def carica_database():
         with open(DB_PATH, "r", encoding="utf-8") as file:
             return json.load(file)
     except FileNotFoundError:
+        print(f"File database non trovato in: {DB_PATH}")
+        print("Creazione di un nuovo database...")
+        
         # Se il file non esiste, lo creiamo con valori predefiniti
         db = {
             "parole_wordle": ["pesca", "monte", "luogo", "tempo", "libro", "fiume", "canto", "passo", "vista", "fiore"],
@@ -62,25 +64,22 @@ def carica_database():
         return db
 
 def salva_database(db):
+    # Assicurati che la directory esista
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     with open(DB_PATH, "w", encoding="utf-8") as file:
         json.dump(db, file, indent=2)
 
 # Carica il database all'avvio
 db = carica_database()
-
-# Funzione per leggere i file HTML
-def leggi_file(nome_file):
-    try:
-        with open(os.path.join(HTML_DIR, nome_file), "r", encoding="utf-8") as file:
-            return file.read()
-    except FileNotFoundError:
-        return f"File {nome_file} non trovato"
+print(f"Database caricato. Parola corrente: {db['stato_gioco']['parola_corrente']}, Parola finale: {db['stato_gioco']['parola_finale']}")
 
 # Funzione per verificare una parola nel Wordle
 def verifica_parola(parola_tentativo):
     global db
     parola_corretta = db["stato_gioco"]["parola_corrente"]
     parola_tentativo = parola_tentativo.lower()
+    
+    print(f"Verifica parola: tentativo '{parola_tentativo}', corretta '{parola_corretta}'")
     
     if len(parola_tentativo) != 5:
         return {"esito": "errore", "messaggio": "La parola deve essere di 5 lettere"}
@@ -100,12 +99,16 @@ def verifica_parola(parola_tentativo):
         indizi_disponibili = db["tutti_indizi"][db["stato_gioco"]["parola_finale"]]
         if len(db["stato_gioco"]["indizi_sbloccati"]) < len(indizi_disponibili):
             indizio_index = len(db["stato_gioco"]["indizi_sbloccati"])
-            db["stato_gioco"]["indizi_sbloccati"].append(indizi_disponibili[indizio_index])
+            nuovo_indizio = indizi_disponibili[indizio_index]
+            db["stato_gioco"]["indizi_sbloccati"].append(nuovo_indizio)
+            print(f"Indizio sbloccato: {nuovo_indizio}")
         
         # Cambia la parola corrente per il prossimo round
         vecchia_parola = db["stato_gioco"]["parola_corrente"]
         while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
             db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+        
+        print(f"Nuova parola corrente: {db['stato_gioco']['parola_corrente']}")
         salva_database(db)
         
         return {
@@ -115,14 +118,18 @@ def verifica_parola(parola_tentativo):
         }
     else:
         db["stato_gioco"]["tentativi_rimasti"] -= 1
+        tentativi_rimasti = db["stato_gioco"]["tentativi_rimasti"]
+        print(f"Tentativo errato. Tentativi rimasti: {tentativi_rimasti}")
         salva_database(db)
         
-        if db["stato_gioco"]["tentativi_rimasti"] <= 0:
+        if tentativi_rimasti <= 0:
             # Reimposta i tentativi e cambia la parola
             db["stato_gioco"]["tentativi_rimasti"] = 5
             vecchia_parola = db["stato_gioco"]["parola_corrente"]
             while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
                 db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+            
+            print(f"Tentativi esauriti. Nuova parola corrente: {db['stato_gioco']['parola_corrente']}")
             salva_database(db)
             
             return {
@@ -141,86 +148,18 @@ def verifica_parola(parola_tentativo):
 def verifica_soluzione_finale(soluzione_tentativo):
     soluzione_corretta = db["stato_gioco"]["parola_finale"]
     
+    print(f"Verifica soluzione finale: tentativo '{soluzione_tentativo}', corretta '{soluzione_corretta}'")
+    
     if soluzione_tentativo.lower() == soluzione_corretta.lower():
         # L'utente ha vinto il gioco!
+        print("Soluzione corretta! Vittoria!")
         return {
             "esito": "successo",
             "messaggio": f"Congratulazioni! Hai risolto l'enigma finale: {soluzione_corretta}!"
         }
     else:
+        print("Soluzione errata")
         return {
             "esito": "errore",
             "messaggio": "Soluzione errata, raccogli più indizi!"
         }
-
-# Classe per gestire le richieste HTTP
-class RequestHandler(BaseHTTPRequestHandler):
-    def _set_headers(self, content_type="text/html"):
-        self.send_response(200)
-        self.send_header('Content-type', content_type)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        self.end_headers()
-    
-    def do_OPTIONS(self):
-        self._set_headers()
-    
-    def do_GET(self):
-        path = self.path
-        
-        if path == "/":
-            self._set_headers()
-            self.wfile.write(leggi_file("prima_pagina.html").encode())
-        elif path == "/wordle.html":
-            self._set_headers()
-            self.wfile.write(leggi_file("wordle.html").encode())
-        elif path == "/prima_pagina.html":
-            self._set_headers()
-            self.wfile.write(leggi_file("prima_pagina.html").encode())
-        elif path == "/indovina_soluzione.html":
-            self._set_headers()
-            self.wfile.write(leggi_file("indovina_soluzione.html").encode())
-        elif path == "/stile.css":
-            self._set_headers("text/css")
-            self.wfile.write(leggi_file("stile.css").encode())
-        elif path == "/api/indizi":
-            self._set_headers("application/json")
-            response = json.dumps({"indizi": db["stato_gioco"]["indizi_sbloccati"]})
-            self.wfile.write(response.encode())
-        elif path == "/api/tentativi-rimasti":
-            self._set_headers("application/json")
-            response = json.dumps({"tentativiRimasti": db["stato_gioco"]["tentativi_rimasti"]})
-            self.wfile.write(response.encode())
-        else:
-            self._set_headers()
-            self.wfile.write("Pagina non trovata".encode())
-    
-    def do_POST(self):
-        path = self.path
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-        data = json.loads(post_data)
-        
-        if path == "/api/verifica-parola":
-            parola = data.get("parola", "")
-            risultato = verifica_parola(parola)
-            self._set_headers("application/json")
-            self.wfile.write(json.dumps(risultato).encode())
-        elif path == "/api/verifica-soluzione":
-            soluzione = data.get("soluzione", "")
-            risultato = verifica_soluzione_finale(soluzione)
-            self._set_headers("application/json")
-            self.wfile.write(json.dumps(risultato).encode())
-        else:
-            self._set_headers()
-            self.wfile.write("API non trovata".encode())
-
-def run_server(server_class=HTTPServer, handler_class=RequestHandler, port=8080):
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    print(f"Server in ascolto sulla porta {port}...")
-    httpd.serve_forever()
-
-if __name__ == "__main__":
-    run_server()

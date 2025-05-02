@@ -102,7 +102,7 @@
         
         // Carica i tentativi rimasti all'avvio della pagina
         function caricaTentativiRimasti() {
-            fetch('http://localhost:8080/api/tentativi-rimasti', { method: 'GET' })
+            fetch('http://localhost:8080/missione4/api/tentativi-rimasti', { method: 'GET' })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('numero-tentativi').textContent = data.tentativiRimasti;
@@ -143,7 +143,7 @@
                     return;
                 }
                 
-                fetch('http://localhost:8080/api/verifica-parola', {
+                fetch('http://localhost:8080/missione4/api/verifica-parola', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ parola: parola })

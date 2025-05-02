@@ -33,7 +33,7 @@
     <script>
         // Carica gli indizi all'avvio della pagina
         function caricaIndizi() {
-            fetch('http://localhost:8080/api/indizi', { method: 'GET' })
+            fetch('http://localhost:8080/missione4/api/indizi', { method: 'GET' })
                 .then(response => response.json())
                 .then(data => {
                     const listaIndizi = document.getElementById('lista-indizi');
