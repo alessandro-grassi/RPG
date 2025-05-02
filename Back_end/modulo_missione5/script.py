@@ -64,7 +64,7 @@ def check_get(path:str):
         return ('{"result":"'+mana+'"}').encode("utf-8")
     
     elif path == PREFIX+"enemies-list":
-        with open("Missioni/Missione5/assets/Enemies.json", "r") as f:
+        with open("Missioni/Missione5/assets/enemies.json", "r") as f:
             r = f.read()
             f.close()
             return r.encode("utf-8") # encode
