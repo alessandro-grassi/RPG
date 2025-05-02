@@ -1,23 +1,6 @@
 from Back_end import queryLib
 
 #la parte post e coneessione al DB la tengo buona ma non so se conviene farla qui o su modulo
-
-def aggiungi_utente(user, pw, em):
-    queryLib.connetti()
-    a= queryLib.execute(f'''INSERT INTO "utenti" (username, hash, email) VALUES ('{user}','{pw}','{em}')''')
-    b=a
-    queryLib.disconnetti()
-
-def utente_registrato(user, pw):
-    flag = 0
-    queryLib.connetti()
-    flag = queryLib.execute(f'''SELECT username, hash FROM "utenti" WHERE username='{user}';''')
-    queryLib.disconnetti()
-    return len(flag)==1 and flag[0][1]==pw
-
-
-
-
 def check_get(path):
     #apre pagina principale
     if path == "/missione4":  
@@ -128,28 +111,25 @@ import json #simulo il db
 
 #json per simulare il db
 DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
-'       "ricompensa": "titolo di Kung Fury", ' \
+     ' "ricompensa": "titolo di Kung Fury", ' \
+     ' "tentativiIndovina": 3, ' \
+     ' "tentativiIndovinaFatti": 0, ' \
+     ' "tentativiGioco": 5, ' \
+     ' "tentativiGiocoFatti": 0, ' \
+     ' "soluzione": "gabibbo",' \
+     ' "maxIndizi": 3,' \
+     ' "indiziOttenuti":' \
+     ' [' \
+     ' "prova1",' \
+     ' "prova1"' \
+     ' ],' \
+     ' "prove":' \
+     ' [' \
+     ' { "num": 3, "soluz": "nonna", "ind": "è rosso" },' \
+     ' { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
+     ' { "num": 1, "soluz": "trave", "ind": "usa spesso il termine BELANDI" }' \
+     ' ] }'
 
-'       "tentativiIndovina": 3, ' \
-'       "tentativiIndovinaFatti": 0, ' \
-'       "tentativiGioco": 5, ' \
-'       "tentativiGiocoFatti": 0, ' \
-
-'       "soluzione": "gabibbo",' \
-
-'       "maxIndizi": 3,' \
-'       "indiziOttenuti":' \
-'       [' \
-'           "prova1",' \
-'           "prova1"' \
-'       ]' \
-
-'       "prove":' \
-'       [' \
-'           { "num": 3, "soluz": "nonna", "ind": "è rosso" },' \
-'           { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           { "num": 1, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
-'       ] }'
 
 dbDict = json.loads(DB)
 
