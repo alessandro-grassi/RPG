@@ -11,6 +11,11 @@ indovina:
     migilorare l'impaginatura
 
 GENERALE:
-    PROBLEMI: fetch non funzionante per spostarsi tra le pagine
+    PROBLEMI: 
+        fetch non funzionante per spostarsi tra le pagine
+        required non propriamente funzionante
+    
+    DA FINIRE: 
+        la lista dei TODO (mancano i cookies e complaint())
+
     si potrebbe aggiungere in automatico uno "sbiancamento" del testo
-    DA FINIRE: la lista dei TODO (mancano i cookies e complaint())
