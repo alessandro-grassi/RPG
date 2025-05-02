@@ -164,7 +164,6 @@ def verifica_parola(parola_tentativo):
             "esito": "successo",
             "messaggio": "Complimenti! Hai indovinato la parola!",
             "risultato": risultato,
-            "redirect": "/missione4/prima_pagina.html"
         }
     else:
         # Inizializza o incrementa i tentativi nella partita corrente

@@ -176,7 +176,7 @@
                             creaGriglia();
                             document.getElementById('messaggio-stato').textContent = 'Hai sbloccato un nuovo indizio! Prova con una nuova parola.';
                             caricaTentativiRimasti();
-                            window.location.href = response.redirect;
+                            //window.location.href = "/missione4/prima_pagina.html" METTI A POSTO ------------------------------------------------------------
                         }, 2000);
                     } else if (data.esito === 'fallimento') {
                         // Tentativi esauriti - mostra messaggio di fallimento
@@ -188,6 +188,7 @@
                             creaGriglia();
                             document.getElementById('messaggio-stato').textContent = '';
                             caricaTentativiRimasti();
+                            //window.location.href = "/missione4/prima_pagina.html" METTI A POSTO ------------------------------------------------------------
                         }, 3000);
                     } else {
                         // Tentativo errato - passa alla riga successiva

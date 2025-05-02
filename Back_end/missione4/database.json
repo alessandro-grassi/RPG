@@ -19,13 +19,13 @@
     "successo"
   ],
   "stato_gioco": {
-    "tentativi_rimasti": 3,
+    "tentativi_rimasti": 4,
     "tentativi_nella_partita_corrente": 0,
     "indizi_sbloccati": [
-      "Un rompicapo che sfida la mente"
+      "Rappresenta il trionfo dopo la lotta"
     ],
-    "parola_corrente": "monte",
-    "parola_finale": "enigma"
+    "parola_corrente": "fiore",
+    "parola_finale": "vittoria"
   },
   "tutti_indizi": {
     "enigma": [
