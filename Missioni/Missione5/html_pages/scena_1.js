@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     setUltiCharge();
 });
 
+let PREFIX_API = '/m5/api/';
+
 function sendToServer(request,data)
 {
     fetch("http://localhost:8080/m5/" + request,{
@@ -308,7 +310,7 @@ function getRand(json){
 }
 
 function enemyAttack(json){
-    json.forEach(enemy =>{
+    /*json.forEach(enemy =>{
         if(enemy['name'] == NAME){
             tempChance = 0;
             enemy['moves'].forEach(moves =>{
@@ -331,7 +333,11 @@ function enemyAttack(json){
                         vita_corrente_pg = 0;
                         gameover();
                     }
-                    tempChance -= 100;
+                    tempChance -= 100;*/
+
+                    fetch(PREFIX_API+"enemy-attack/"){
+                        
+                    }
 
                     document.getElementById('boss_sound').setAttribute('src', "http://localhost:8080/m5/get-audio/"+ moves['audio']);
 
