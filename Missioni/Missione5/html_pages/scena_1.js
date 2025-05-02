@@ -11,8 +11,6 @@ document.addEventListener("DOMContentLoaded",()=>{
     setUltiCharge();
 });
 
-
-
 function sendToServer(request,data)
 {
     fetch("http://localhost:8080/m5/" + request,{
@@ -65,6 +63,7 @@ function fetchData(request, callback)
     let danno_fisico = forza * 10;
     let rand = 0;
     let carica_ulti = 0;
+    let client_index;
 
 function setImageEnemy(json){
     json.forEach(element => {
@@ -259,9 +258,49 @@ function setButtonNext(){
             this.style = "visibility: hidden";
         }
         else {
-            window.location.replace('/m5/mission-start');
+            fetchFromServer("dialog-index").then(index=>{
+                client_index = index.current_index; // salva index su index globale
+                movelines(1);
+                window.location.replace('http://localhost:8080//m5/mission-start');
+            });
         }
     })
+}
+
+function movelines(step)
+{
+    client_index += step; // incrementa index di quanto indicato dallo step
+    const data = {"current_index": client_index}; // crea oggetto da inviare al server
+    sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
+}
+
+function fetchFromServer(request)
+{
+    return fetch("http://localhost:8080/m5/" + request)
+    .then((response) => { // check risposta 
+        if(!response.ok)
+            throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
+        return response.json(); // ritorna la risposta codificata in json
+    })
+    .then((data) => {
+        console.log("fetched data:",data);
+        return data; // return data
+    })
+    .catch((err) => {
+        console.error('request erro: ',err); //log errore a console
+        throw err;
+    })
+}
+
+// funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
+function sendToServer(request,data)
+{
+    fetch("http://localhost:8080/m5/" + request,{
+        method:"POST", // metodo richiesta
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(data) // dati da inviare in formato json
+    })
+
 }
 
 function getRand(json){
