@@ -3,6 +3,8 @@ const magicButton = document.getElementById("magicButton");
 
 const continueButton = document.getElementById("continueButton");
 const retryButton = document.getElementById("retryButton");
+const exitButton = document.getElementById("exitButton");
+
 
 const output = document.getElementById("output")
 const endGameScreen = document.getElementById("messaggioFineGioco");
@@ -38,6 +40,11 @@ retryButton.addEventListener("click", () => {
 
     // Aggiorno la pagina
     window.location.reload();
+});
+
+exitButton.addEventListener("click", () => {
+    if (winner?.constructor.name !== "Enemy") return;
+    window.location.href = "../SceltaMissione/sm_home.html";
 });
 
 function useActionButton(button, action) {
