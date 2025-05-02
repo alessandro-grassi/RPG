@@ -303,6 +303,45 @@ def get_bonuses_sums(userName, target, name):
     else:
         return 0
 
+def get_dialog_index(userName):
+    return {
+        "current_index": get_current_index(userName),
+        "last_image": get_last_image(userName)
+    }
+
+def get_current_index(userName):
+    current_index = queryLib.execute(f"""
+        SELECT current_index
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(current_index) > 0:
+        return current_index[0][0]
+    else:
+        return 0
+def get_last_image(userName):
+    last_image = queryLib.execute(f"""
+        SELECT last_image
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(last_image) > 0:
+        return last_image[0][0]
+    else:
+        return 0
+def set_current_index(userName, current_index):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET current_index = {current_index}
+        WHERE utente = '{userName}';
+    """)
+def set_last_image(userName, last_image):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET last_image = {last_image}
+        WHERE utente = '{userName}';
+    """)
+
 
 def set_seed(seed):
     random.seed(seed)
