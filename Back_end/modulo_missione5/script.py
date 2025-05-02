@@ -133,6 +133,7 @@ def check_get(path:str):
     elif path == PREFIX_API + "get-ability-data":
         abilityName = path.split("/")[4]
         abilityData = combactSystem.get_ability_data(abilityName)
+        return json.dumps(abilityData).encode("utf-8")
 
 
     else:
@@ -150,6 +151,7 @@ def check_post(path,clientchoice):
             # recupera il nome dell'attacco dalla richiesta
             attackName = clientchoice["attack_name"]
             combactSystem.player_attack(userName, attackName)
+            return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
 
         #aggiorna index dialoghi e immagini lore
         elif path == PREFIX + "update-index":
