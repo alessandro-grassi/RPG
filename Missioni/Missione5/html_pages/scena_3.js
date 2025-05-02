@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     document.getElementById('text').innerHTML = "Il Re sta aspettando...";
     setButtonAttack();
     setButtonNext();
+    setButtonMagic();
 });
 
 //Manda al server
@@ -63,12 +64,19 @@ function movelines(step) {
 
 //GLOBAL
     const NAME = "Il Re Eterno";
+
     let vita_corrente = 0;
     let vita_corrente_pg = 500;
-    let attacco_pg = 100;
-    let danno_fisico_pg = attacco_pg * 10;
+
+    let forza_pg = 10;
+    let danno_fisico_pg = forza_pg * 10;
+
+    let intelligenza_pg = 10
+    let danno_magico_pg = intelligenza_pg * 15;
+
     let forza = 10;
     let danno_fisico = forza * 10;
+
     let rand = 0;
     let tempChance = 0;
 
@@ -97,7 +105,7 @@ function setLifePoints(json){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }
 
-//Carica le funzioni del bottone di attacco
+//Carica le funzioni del bottone di attacco fisico
 function setButtonAttack(){
     document.getElementById('attack_button').addEventListener("click", function(){
 
@@ -123,6 +131,7 @@ function setButtonAttack(){
             document.getElementById('vita').remove();
             document.getElementById('vita-text').remove();
             document.getElementById('overlay').remove();
+            document.getElementById('magic_button').removeEventListener('click', setButtonMagic);
             document.getElementById('text').textContent = "HAI VINTO!!";
             document.getElementById('next_button').style = "visibility: visible;";
             this.removeEventListener('click', setButtonAttack);
@@ -140,6 +149,54 @@ function setButtonAttack(){
     })
 }
 
+//Carica le funzione del bottone di attacco magico
+function setButtonMagic() {
+    document.getElementById('magic_button').addEventListener("click", function() {
+
+        //Audio ed Effetti
+        const boss = document.getElementById('image_king');
+        const magic_sound = document.getElementById('magical_sound');
+
+        boss.classList.add('shake_boss');
+        boss.classList.add('hit');
+    
+        magic_sound.currentTime = 0;
+        magic_sound.play();
+
+        setTimeout(() => {
+            boss.classList.remove('shake_boss');
+            boss.classList.remove('hit');
+        }, 1300);
+
+        //Attacco magico fa variare il danno
+        let variabile_danno = Math.floor(danno_magico_pg * (Math.random() * 0.4 + 0.8));
+
+        vita_corrente -= variabile_danno;
+
+        if (vita_corrente <= 0) {
+            //Sconfitta del boss rimuove tutto
+            document.getElementById('image_king').remove();
+            document.getElementById('vita').remove();
+            document.getElementById('vita-text').remove();
+            document.getElementById('overlay').remove();
+            document.getElementById('attack_button').removeEventListener('click', setButtonAttack);
+            document.getElementById('text').textContent = "HAI VINTO!!";
+            document.getElementById('next_button').style = "visibility: visible;";
+            this.removeEventListener('click', setButtonMagic);
+        } else {
+            //Magia del player
+            document.getElementById('vita').value = vita_corrente;
+            document.getElementById('vita-text').innerHTML = "PV:" + vita_corrente;
+            document.getElementById('text').innerHTML = "'Hai inflitto " + variabile_danno + " danni magici!'";
+        }
+
+        document.getElementById('next_button').style = "visibility: visible;";
+        this.style = "visibility: hidden";
+
+        void boss.offsetWidth;
+    });
+}
+
 //Carica le funzioni del bottone 'Next'
 function setButtonNext(){
     document.getElementById('next_button').addEventListener("click", function(){
@@ -148,6 +205,7 @@ function setButtonNext(){
             fetchData("random-chance", getRand)
             fetchData("enemies-list", enemyAttack)
             document.getElementById('attack_button').style = "visibility: visible;";
+            document.getElementById('magic_button').style = "visibility: visible;";
             this.style = "visibility: hidden";
         }
         else {
@@ -255,6 +313,7 @@ function gameover(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
     document.getElementById('text').innerHTML = "GAME OVER";
     document.getElementById('attack_button').remove();
+    document.getElementById('magic_button').remove();
     document.getElementById('next_button').remove();
     //Crea bottone di riprova
     retry = document.createElement('button');
