@@ -1,197 +1,220 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raccolta Erbe</title>
     <style>
-        /* Contenitore per lo sfondo sfocato */
-        .background-blur {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://img.freepik.com/premium-photo/2d-medieval-village-background-environment-battle-arena-mobile-game-generative-ai_742252-13642.jpg?w=1380');
-            background-size: cover;
-            background-position: center;
-            filter: blur(8px); /* Sfocatura dello sfondo */
-            z-index: -1; 
-        }
+      /* Contenitore per lo sfondo sfocato */
+      .background-blur {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://img.freepik.com/premium-photo/2d-medieval-village-background-environment-battle-arena-mobile-game-generative-ai_742252-13642.jpg?w=1380");
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px); /* Sfocatura dello sfondo */
+        z-index: -1;
+      }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; 
-        }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
 
-        /* Barra di selezione al centro */
-        .selection-bar {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #E0F7FA; /* Nuovo colore di sfondo */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            width: 100%;
-            max-width: 600px;
-        }
+      /* Barra di selezione al centro */
+      .selection-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #e0f7fa; /* Nuovo colore di sfondo */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        width: 100%;
+        max-width: 600px;
+      }
 
-        .selection-bar label {
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
+      .selection-bar label {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
 
-        .selection-bar select, .selection-bar input {
-            margin: 5px 0;
-            padding: 8px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+      .selection-bar select,
+      .selection-bar input {
+        margin: 5px 0;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
 
-        .selection-bar button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #99BC85;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+      .selection-bar button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #99bc85;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-        .selection-bar button:hover {
-            background-color: #626F47;
-        }
+      .selection-bar button:hover {
+        background-color: #626f47;
+      }
 
-        /* Contenitore per l'area di gioco */
-        #game-container {
-            margin-top: 20px;
-            position: relative;
-            width: 80%;
-            max-width: 800px;
-            height: 500px;
-            background-image: url('https://i.redd.it/join-gmtk-and-paint-a-pixel-farm-v0-r28m69h9vtjd1.png?width=1922&format=png&auto=webp&s=b83efe83b8b3cc5fce97d27f87790b7f5469f19f'); /* Percorso relativo */
-            background-size: cover;
-            background-position: center;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: none; /* Nasconde l'area di gioco all'inizio */
-        }
+      /* Contenitore per l'area di gioco */
+      #game-container {
+        margin-top: 20px;
+        position: relative;
+        width: 80%;
+        max-width: 800px;
+        height: 500px;
+        background-image: url("https://i.redd.it/join-gmtk-and-paint-a-pixel-farm-v0-r28m69h9vtjd1.png?width=1922&format=png&auto=webp&s=b83efe83b8b3cc5fce97d27f87790b7f5469f19f"); /* Percorso relativo */
+        background-size: cover;
+        background-position: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: none; /* Nasconde l'area di gioco all'inizio */
+      }
 
-        #grass {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-image: url('http://localhost:8080/missione1/grass.png'); /* Percorso relativo */
-            background-size: cover;
-            cursor: pointer;
-        }
+      #grass {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-image: url("http://localhost:8080/missione1/grass.png"); /* Percorso relativo */
+        background-size: cover;
+        cursor: pointer;
+      }
 
-        #grass:hover {
-            background-image: url('http://localhost:8080/missione1/grassRed.png'); /* Percorso relativo */
-            background-size: cover;
-            cursor: pointer;
-        }
+      #grass:hover {
+        background-image: url("http://localhost:8080/missione1/grassRed.png"); /* Percorso relativo */
+        background-size: cover;
+        cursor: pointer;
+      }
 
-        /* Stile per il risultato */
-        #result {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 20px;
-            font-weight: bold;
-            color: #007bff;
-            display: none;
-        }
+      /* Stile per il risultato */
+      #result {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: bold;
+        color: #007bff;
+        display: none;
+      }
 
-        /* Pulsante Rigioca */
-        #restart-button {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #28a745;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            display: none; /* Nascondi il pulsante all'inizio */
-        }
+      /* Pulsante Rigioca */
+      #back-button {
+        position: absolute;
+        bottom: 20px;
+        left: 57%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: none; /* Nascondi il pulsante all'inizio */
+      }
 
-        #restart-button:hover {
-            background-color: #218838;
-        }
+      #back-button:hover {
+        background-color: #218838;
+      }
 
-        /* Timer */
-        #timer {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
+      /* Pulsante Rigioca */
+      #restart-button {
+        position: absolute;
+        bottom: 20px;
+        left: 43%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #28a745;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: none; /* Nascondi il pulsante all'inizio */
+      }
 
-        /* Click Counter */
-        #click-counter {
-            position: absolute;
-            top: 40px; /* Sotto il timer */
-            left: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
+      #restart-button:hover {
+        background-color: #218838;
+      }
+
+      /* Timer */
+      #timer {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      /* Click Counter */
+      #click-counter {
+        position: absolute;
+        top: 40px; /* Sotto il timer */
+        left: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Contenitore per lo sfondo sfocato -->
     <div class="background-blur"></div>
 
-    <div class="container">
-    </div>
+    <div class="container"></div>
     <div class="selection-bar">
-        <label for="classe">Seleziona la tua classe:</label>
-        <select id="classe">
-            <option value="assassino">Assassino</option>
-            <option value="guerriero">Guerriero</option>
-            <option value="clerico">Clerico</option>
-            <option value="mago">Mago</option>
-        </select>
-        <label>Seleziona le tue abilita:</label>
-        <input type="checkbox" name="abilita" value="forza"> Forza<br>
-        <input type="checkbox" name="abilita" value="raccoglimento risorse"> Raccoglimento Risorse<br>
+      <label for="classe">Seleziona la tua classe:</label>
+      <select id="classe">
+        <option value="assassino">Assassino</option>
+        <option value="guerriero">Guerriero</option>
+        <option value="clerico">Clerico</option>
+        <option value="mago">Mago</option>
+      </select>
+      <label>Seleziona le tue abilita:</label>
+      <input type="checkbox" name="abilita" value="forza" /> Forza<br />
+      <input type="checkbox" name="abilita" value="raccoglimento risorse" />
+      Raccoglimento Risorse<br />
 
-        <button onclick="startMission()">Inizia Missione</button>
+      <button onclick="startMission()">Inizia Missione</button>
     </div>
 
     <!-- Area di gioco -->
     <div id="game-container">
-        <div id="timer">Tempo rimasto: 60s</div>
-        <p id="click-counter">Click effettuati: 0</p> 
-        <div id="grass"></div>
-        <p id="result"></p>
-        <button id="restart-button" onclick="restartGame()">Rigioca</button>
+      <div id="timer">Tempo rimasto: 60s</div>
+      <p id="click-counter">Click effettuati: 0</p>
+      <div id="grass"></div>
+      <p id="result"></p>
+      <button id="restart-button" onclick="restartGame()">Rigioca</button>
+      <button id="back-button" onclick="">Back</button>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
