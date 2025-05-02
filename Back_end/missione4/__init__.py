@@ -1,1 +1,1 @@
-from .script import check_get, check_post
+from ...Missioni.Missione4.versM.script import check_get, check_post
