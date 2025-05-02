@@ -159,6 +159,7 @@ function checkGameStatus() {
         }
     } else {
         retryButton.style.display = "block";
+        exitButton.style.display = "block";
         output.innerHTML = 'Hai perso...';
     }
 }
