@@ -57,6 +57,7 @@ function listaClassi(){
 
 }
 
+
 async function cerca_personaggi(){
   let resp = await fetch('http://localhost:8080/personaggio/listaPersonaggi',{
     "method":"POST",
@@ -72,6 +73,38 @@ async function cerca_personaggi(){
   document.getElementById("my_pers").innerHTML=str;
 	  
 }
+
+
+async function statistics() {
+  const A = document.getElementById("A");
+  const B = document.getElementById("B");
+  const C = document.getElementById("C");
+  const D = document.getElementById("D");
+  const E = document.getElementById("E");
+
+
+    const response = await fetch('http://localhost:8080/personaggio/statistiche', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({classe: document.getElementById("choice").value})
+    });
+
+    if (!response.ok)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    
+    const data = await response.json();
+
+    A.textContent = 'Vigore: ' + data[0];
+    B.textContent = 'Forza: ' + data[1];
+    C.textContent = 'Destrezza: ' + data[2];
+    D.textContent = 'Intelligenza: ' + data[3];
+    E.textContent = 'Fede: ' + data[4];
+
+}
+
+
 
 function mostraAbilita(){
   document.getElementById("ab1").style.visibility = 'visible';

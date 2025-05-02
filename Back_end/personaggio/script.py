@@ -31,6 +31,7 @@ def ottieni_abilita(classe):
             array.append(ab[0])
     return json.dumps(array).encode("utf-8")
 
+
 def aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username):
     queryLib.connetti()
     statsClasse = queryLib.execute(f''' SELECT classi."Vigore", classi."Forza", classi."Destrezza", classi."Intelligenza", classi."Fede" FROM "classi" WHERE classi.id ='{classe}' ''')[0]
@@ -39,6 +40,18 @@ def aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username):
     nuovo_personaggio_abilita = queryLib.execute(f''' INSERT INTO "relazione_abilità" (personaggio, ab1, ab2, ab3) VALUES ({id_personaggio},'{ab1}','{ab2}','{ab3}')''')
     queryLib.disconnetti()
     return
+
+def ottieni_statistiche(client_choice):
+    """Test"""
+    if client_choice['classe'] == 'default':
+        return json.dumps([0, 0, 0, 0, 0]).encode('utf-8')
+
+    queryLib.connetti()
+    stats = queryLib.execute(f'''SELECT classi."Vigore", classi."Forza", classi."Destrezza", classi."Intelligenza", classi."Fede" FROM "classi" WHERE classi.id = '{client_choice['classe']}' ''')[0]
+    queryLib.disconnetti()
+
+    return json.dumps(stats).encode('utf-8')
+
 
 
 
@@ -90,7 +103,6 @@ def personaggiUtente(utente):
 def check_post(path, client_choice):
 
     if path.endswith("listaAbilita"):
-        #chris da qui per inviarti le cose. Ricordati di sistemare il json
         f = ottieni_abilita(client_choice)
         return f
 
@@ -109,4 +121,8 @@ def check_post(path, client_choice):
     elif  path.endswith("listaPersonaggi"):
         return personaggiUtente(client_choice)
 
+    elif path.endswith("statistiche"):
+        return ottieni_statistiche(client_choice)
+    
     else: return '"errore"'.encode("utf-8")
+

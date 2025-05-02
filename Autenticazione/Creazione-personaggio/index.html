@@ -28,10 +28,19 @@
                 <!-- Lista a discesa con opzioni e immagine a destra -->
                 <div class="form-group flex-row">
                     <label id="classe" for="choice">Classe:</label>
-                    <select id="choice"  onchange="cambiaImmagine(); mostraAbilita();listaAbilita()">
+
+                    <select id="choice"  onchange=" mostraAbilita();listaAbilita();statistics()">
+
+
                         <option value="default">Seleziona classe</option>
                     </select>
-                    <img id="class-image" src="https://cdn.pixabay.com/photo/2016/09/28/02/14/user-1699635_1280.png" alt="Immagine classe" class="classe-immagine">
+                    <div class="statistics">
+                        <div id="A" onload="statistics()"></div>
+                        <div id="B" onload="statistics()"></div>
+                        <div id="C" onload="statistics()"></div>
+                        <div id="D" onload="statistics()"></div>
+                        <div id="E" onload="statistics()"></div>
+                    </div>
                 </div><br><br>
     
                 <!-- Lista della sofferenza  
