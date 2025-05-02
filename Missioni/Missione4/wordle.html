@@ -22,14 +22,14 @@
                 <input id="l3" type="text" maxlength="1" class="lettera">
                 <input id="l4" type="text" maxlength="1" class="lettera">
             </div>
-            
-            <p id="messaggio"></p>
-            <p id="tentativi-info">Tentativi rimasti: <span id="tentativi-rimasti">5</span></p>
+            <!--altre righe da fare dinamicamente-->
         </div>
-        
-        <button id="indietro-btn" class="action-button">Indietro</button>
+        <div id="pulsanti">
+            <button id="indovina" onclick="controllaSoluzioni()">Indovina</button>
+        </div>
     </div>
-    
+
+
     <script>
         //onload dei dettagli di gioco
         function getDettagliGioco()
@@ -160,68 +160,15 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.stato === 'vittoria') {
-                        // Aggiorna la griglia con il tentativo corretto
-                        aggiornaGriglia(tentativiFatti, data.risultato || Array.from(tentativo).map(l => ({lettera: l, stato: 'corretto'})));
-                        
-                        document.getElementById('messaggio').textContent = `Hai indovinato! Indizio ottenuto: ${data.indizio}`;
-                        document.getElementById('messaggio').className = 'success-message';
-                        
-                        // Disabilita l'input e il pulsante dopo la vittoria
-                        document.getElementById('parola-input').disabled = true;
-                        document.getElementById('invia-btn').disabled = true;
-                        
-                        // Aggiungi pulsante per tornare alla pagina principale
-                        const tornaBtn = document.createElement('button');
-                        tornaBtn.textContent = 'Torna alla Pagina Principale';
-                        tornaBtn.className = 'action-button';
-                        tornaBtn.addEventListener('click', function() {
-                            window.location.href = '/missione4';
-                        });
-                        document.getElementById('game-container').appendChild(tornaBtn);
-                    } else if (data.stato === 'tentativo') {
-                        // Aggiorna la griglia con il risultato del tentativo
-                        aggiornaGriglia(tentativiFatti, data.risultato);
-                        
-                        tentativiFatti++;
-                        document.getElementById('tentativi-rimasti').textContent = tentativiTotali - tentativiFatti;
-                        document.getElementById('parola-input').value = '';
-                        
-                        if (tentativiFatti >= tentativiTotali) {
-                            document.getElementById('messaggio').textContent = 'Hai esaurito i tentativi!';
-                            document.getElementById('messaggio').className = 'error-message';
-                            document.getElementById('parola-input').disabled = true;
-                            document.getElementById('invia-btn').disabled = true;
-                        }
-                    } else {
-                        // Gestisci errori
-                        document.getElementById('messaggio').textContent = data.messaggio || 'Si è verificato un errore';
-                        document.getElementById('messaggio').className = 'error-message';
-                    }
+                    //se giusta allert ok
+                    //bisogna fare che se non si riesce a trovare entro le 5 righe si diminuiscono i tentativi
                 })
-                .catch(error => {
-                    console.error('Errore nell\'invio del tentativo:', error);
-                    alert('Si è verificato un errore. Riprova più tardi.');
-                });
-            });
-            
-            function aggiornaGriglia(riga, risultato) {
-                const rows = document.querySelectorAll('.grid-row');
-                if (riga < rows.length) {
-                    const cells = rows[riga].querySelectorAll('.grid-cell');
-                    
-                    for (let i = 0; i < risultato.length && i < cells.length; i++) {
-                        cells[i].textContent = risultato[i].lettera;
-                        cells[i].classList.add(risultato[i].stato);
-                    }
-                }
-            }
-            
-            // Event listener per il pulsante Indietro
-            document.getElementById('indietro-btn').addEventListener('click', function() {
-                window.location.href = '/missione4';
-            });
+                .catch(error => console.error("Si è verificato un errore:", error));
         });
+
+        // Carica i tentativi rimasti all'avvio della pagina
+        window.onload = caricaTentativiRimasti;
     </script>
+-->
 </body>
 </html>

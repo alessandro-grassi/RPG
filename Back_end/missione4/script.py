@@ -1,98 +1,62 @@
 from Back_end import queryLib
-import json
-import random
 
-# Liste delle parole per il Wordle e delle soluzioni finali
-parole_wordle = ["pesca", "monte", "luogo", "tempo", "libro", "fiume", "canto", "passo", "vista", "fiore"]
-parole_finali = ["enigma", "tesoro", "vittoria", "mistero", "successo"]
+#la parte post e coneessione al DB la tengo buona ma non so se conviene farla qui o su modulo
 
-# Indizi per le parole finali
-tutti_indizi = {
-    "enigma": [
-        "Un rompicapo che sfida la mente",
-        "Deriva dal greco 'ainigma', che significa 'parlare in modo oscuro'",
-        "Spesso richiede un salto logico per essere risolto"
-    ],
-    "tesoro": [
-        "Oggetto di grande valore",
-        "Spesso nascosto e protetto",
-        "Cercato dai cacciatori di fortuna"
-    ],
-    "vittoria": [
-        "Rappresenta il trionfo dopo la lotta",
-        "È simboleggiata da una corona d'alloro",
-        "Deriva dal latino 'victoria'"
-    ],
-    "mistero": [
-        "Ciò che rimane incomprensibile",
-        "Deriva dal greco 'mysterion'",
-        "Richiede indagine e scoperta"
-    ],
-    "successo": [
-        "Raggiungimento di un obiettivo",
-        "Deriva dal latino 'successus', che significa 'avanzare'",
-        "Ricompensa per l'impegno e la perseveranza"
-    ]
-}
+def aggiungi_utente(user, pw, em):
+    queryLib.connetti()
+    a= queryLib.execute(f'''INSERT INTO "utenti" (username, hash, email) VALUES ('{user}','{pw}','{em}')''')
+    b=a
+    queryLib.disconnetti()
 
-# Inizializzazione del database
-parola_corrente = random.choice(parole_wordle)
-parola_finale = random.choice(parole_finali)
+def utente_registrato(user, pw):
+    flag = 0
+    queryLib.connetti()
+    flag = queryLib.execute(f'''SELECT username, hash FROM "utenti" WHERE username='{user}';''')
+    queryLib.disconnetti()
+    return len(flag)==1 and flag[0][1]==pw
 
-# Simulazione database con JSON
-DB = json.dumps({
-    "obiettivo": "Risolvi i Wordle per ottenere indizi e scoprire la parola finale!",
-    "ricompensa": "Una sorpresa speciale!",
-    "tentativiGioco": 5,
-    "tentativiGiocoFatti": 0,
-    "tentativiIndovina": 3,
-    "tentativiIndovinaFatti": 0,
-    "parolaCorrente": parola_corrente,
-    "parolaFinale": parola_finale,
-    "indiziOttenuti": []
-})
 
-dbDict = json.loads(DB)
+
 
 def check_get(path):
-    # Apre pagina principale
-    if path == "/missione4":
+    #apre pagina principale
+    if path == "/missione4":  
         f = open("Missioni/Missione4/primapagina.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    # Apre il css
+    #apre il css
     elif path.endswith("stile"):
         f = open("Missioni/Missione4/stile.css", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    # Apre la pagina per indovinare
+    #apre la pagina per indovinare
     elif path.endswith("indovina"):
         f = open("Missioni/Missione4/indovina_soluzione.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    # Apre la pagina per giocare
+    #apre la pagina per giocare
     elif path.endswith("gioca"):
         f = open("Missioni/Missione4/wordle.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    # Torna alla home
+    #torna alla home
     elif path.endswith("sm_home"):
         f = open("SceltaMissione/index.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    # API: Dettagli generali
+    #getDetteagliGenerali
     elif path.endswith("dettagliGenerali"):
-        return json.dumps(getDettagliGenerali()).encode("utf-8")
+        return getDettagliGenerali()
     
     #getDettagliGioco
     elif path.endswith("dettagliGioco"):
@@ -113,16 +77,32 @@ def check_get(path):
     #se non trova il path
     return '"Path not found"'.encode("utf-8")
 
+
+
+
 def check_post(path, client_choice):
-    if path.endswith("verifica-parola"):
+    if path.endswith("registrazione"):
         try:
-            parola = client_choice.get("parola", "")
-            risultato = verifica_parola(parola)
-            return json.dumps(risultato).encode("utf-8")
+            username = client_choice["user"]
+            password = client_choice["pw"]
+            email = client_choice["mail"]
+            aggiungi_utente(username, password, email)
+            return "Registrazione effettuata con successo!".encode("utf-8")
         except Exception as errore:
-            return json.dumps({"esito": "errore", "messaggio": str(errore)}).encode("utf-8")
-    
-    elif path.endswith("verifica-soluzione"):
+            return '"errore"'.encode("utf-8")
+
+    elif path.endswith("accesso"):
+        try:
+            username = client_choice["user"]
+            password = client_choice["pw"]
+            if(utente_registrato(username, password)):
+                return '"Successo"'.encode("utf-8")
+            else:
+                return '"errore"'.encode("utf-8")
+        except Exception as errore:
+            return '"errore"'.encode("utf-8")
+        
+    elif path.endswith("indovina"):
         try:
             tentativo = client_choice["tentativo"]
             risposta = client_choice["risposta"]
@@ -137,7 +117,9 @@ def check_post(path, client_choice):
             risposta = client_choice["risposta"]
             return indovina(num, tentativo, risposta)
         except Exception as errore:
-            return json.dumps({"esito": "errore", "messaggio": str(errore)}).encode("utf-8")
+                return '"errore"'.encode("utf-8")
+    
+    
     
     return '"Path not found"'.encode("utf-8")
 
@@ -151,42 +133,33 @@ def check_post(path, client_choice):
 import json #simulo il db
 
 #json per simulare il db
-DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
-'       "ricompensa": "titolo di Kung Fury", ' \
-
-'       "tentativiIndovina": 3, ' \
-'       "tentativiIndovinaFatti": 0, ' \
-'       "tentativiGioco": 5, ' \
-'       "tentativiGiocoFatti": 0, ' \
-
-'       "soluzione": "gabibbo",' \
-
-'       "maxIndizi": 3,' \
-'       "indiziOttenuti":' \
-'       [' \
-'           "prova1",' \
-'           "prova1"' \
-'       ],' \
-
-'       "prove":' \
-'       [' \
-'           {"soluz": "nonna", "ind": "usa spesso il termine BELANDI" },' \
-'           {"soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           {"soluz": "trave", "ind": "è rosso" }' \
-'       ] }'
-
+DB = """
+{
+  "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!",
+  "ricompensa": "titolo di Kung Fury",
+  "tentativiIndovina": 3,
+  "tentativiIndovinaFatti": 0,
+  "tentativiGioco": 5,
+  "tentativiGiocoFatti": 0,
+  "soluzione": "gabibbo",
+  "maxIndizi": 3,
+  "indiziOttenuti": [
+    "prova1",
+    "prova1"
+  ],
+  "prove": [
+    {"soluz": "nonna", "ind": "usa spesso il termine BELANDI"},
+    {"soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia"},
+    {"soluz": "trave", "ind": "è rosso"}
+  ]
+}
+"""
 dbDict = json.loads(DB)
+
 
 #funzioni per simulare db
 def getDettagliGenerali():
-    return {
-        "obiettivo": dbDict["obiettivo"],
-        "ricompensa": dbDict["ricompensa"],
-        "tentativiIndovina": dbDict["tentativiIndovina"],
-        "tentativiIndovinaFatti": dbDict["tentativiIndovinaFatti"],
-        "indiziOttenuti": dbDict["indiziOttenuti"],
-        "maxIndizi": len(tutti_indizi[dbDict["parolaFinale"]])
-    }
+    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativiIndovina"],dbDict["tentativiIndovinaFatti"],dbDict["indiziOttenuti"],dbDict["maxIndizi"]
 
 def getDettagliGioco():
     return dbDict["tentativiGioco"],dbDict["tentativiGiocoFatti"]
@@ -218,4 +191,3 @@ def indovina(num, tentativo, risposta):
 def resetGame():
     dbDict["tentativiGioco"] = "5"
     dbDict["tentativiGiocoFatti"] = "0"
-
