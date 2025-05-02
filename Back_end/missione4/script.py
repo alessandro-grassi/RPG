@@ -17,51 +17,12 @@ def carica_database():
             return json.load(file)
     except FileNotFoundError:
         print(f"File database non trovato in: {DB_PATH}")
-        print("Creazione di un nuovo database...")
-        
-        # Se il file non esiste, lo creiamo con valori predefiniti
-        db = {
-            "parole_wordle": ["pesca", "monte", "luogo", "tempo", "libro", "fiume", "canto", "passo", "vista", "fiore"],
-            "parole_finali": ["enigma", "tesoro", "vittoria", "mistero", "successo"],
-            "stato_gioco": {
-                "tentativi_rimasti": 5,
-                "indizi_sbloccati": [],
-                "parola_corrente": "",
-                "parola_finale": ""
-            },
-            "tutti_indizi": {
-                "enigma": [
-                    "Un rompicapo che sfida la mente",
-                    "Deriva dal greco 'ainigma', che significa 'parlare in modo oscuro'",
-                    "Spesso richiede un salto logico per essere risolto"
-                ],
-                "tesoro": [
-                    "Oggetto di grande valore",
-                    "Spesso nascosto e protetto",
-                    "Cercato dai cacciatori di fortuna"
-                ],
-                "vittoria": [
-                    "Rappresenta il trionfo dopo la lotta",
-                    "È simboleggiata da una corona d'alloro",
-                    "Deriva dal latino 'victoria'"
-                ],
-                "mistero": [
-                    "Ciò che rimane incomprensibile",
-                    "Deriva dal greco 'mysterion'",
-                    "Richiede indagine e scoperta"
-                ],
-                "successo": [
-                    "Raggiungimento di un obiettivo",
-                    "Deriva dal latino 'successus', che significa 'avanzare'",
-                    "Ricompensa per l'impegno e la perseveranza"
-                ]
-            }
-        }
-        # Inizializza le parole random
-        db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
-        db["stato_gioco"]["parola_finale"] = random.choice(db["parole_finali"])
-        salva_database(db)
-        return db
+    
+    # Inizializza le parole random
+    db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+    db["stato_gioco"]["parola_finale"] = random.choice(db["parole_finali"])
+    salva_database(db)
+    return db
 
 def salva_database(db):
     # Assicurati che la directory esista

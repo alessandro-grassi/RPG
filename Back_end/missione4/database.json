@@ -1,10 +1,31 @@
 {
-  "parole_wordle": ["pesca", "monte", "luogo", "tempo", "libro", "fiume", "canto", "passo", "vista", "fiore"],
-  "parole_finali": ["enigma", "tesoro", "vittoria", "mistero", "successo"],
+  "parole_wordle": [
+    "pesca",
+    "monte",
+    "luogo",
+    "tempo",
+    "libro",
+    "fiume",
+    "canto",
+    "passo",
+    "vista",
+    "fiore"
+  ],
+  "parole_finali": [
+    "enigma",
+    "tesoro",
+    "vittoria",
+    "mistero",
+    "successo"
+  ],
   "stato_gioco": {
     "tentativi_rimasti": 5,
-    "indizi_sbloccati": [],
-    "parola_corrente": "pesca",
+    "indizi_sbloccati": [
+      "Un rompicapo che sfida la mente",
+      "Deriva dal greco 'ainigma', che significa 'parlare in modo oscuro'",
+      "Spesso richiede un salto logico per essere risolto"
+    ],
+    "parola_corrente": "passo",
     "parola_finale": "enigma"
   },
   "tutti_indizi": {
@@ -20,11 +41,11 @@
     ],
     "vittoria": [
       "Rappresenta il trionfo dopo la lotta",
-      "È simboleggiata da una corona d'alloro",
+      "\u00c8 simboleggiata da una corona d'alloro",
       "Deriva dal latino 'victoria'"
     ],
     "mistero": [
-      "Ciò che rimane incomprensibile",
+      "Ci\u00f2 che rimane incomprensibile",
       "Deriva dal greco 'mysterion'",
       "Richiede indagine e scoperta"
     ],
