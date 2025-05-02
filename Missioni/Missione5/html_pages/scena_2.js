@@ -186,13 +186,13 @@ function setButtonHeal() {
 
 // Bottone NEXT
 function setButtonNext(){
-    document.getElementById('next_button').addEventListener("click", function(){
-        console.log("Bottone Cliccato");
-        if (!enemyAlive) return; 
-
+    document.getElementById('next_button').addEventListener("click", function(){        
+        if (!enemyAlive) window.location.replace('http://localhost:8080//m5/mission-start'); 
+        else {
         fetchData("random-chance", getRand);
         fetchData("enemies-list", enemyAttack);
         this.style = "visibility: hidden";
+        }
     });
 }
 
