@@ -16,23 +16,23 @@ def utente_registrato(user, pw):
 
 def check_get(path):
     if path == "/login":  # per aprire la pagina di login principale
-        f = open(sys.path[0]+"/Autenticazione/Login/login.html", "rb")
+        f = open("./Autenticazione/Login/login.html", "rb")
         stringa = f.read()
         f.close()
         return stringa
     elif path.endswith("stile"):
-        f = open(sys.path[0] +"/Autenticazione/Login/login.css", "r")
+        f = open("./Autenticazione/Login/login.css", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
     elif path.endswith("backend"):
-        f = open("Autenticazione/Login/login.js", "r")
+        f = open("./Autenticazione/Login/login.js", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     elif path.endswith("trycookie"):
-        f = open(sys.path[0] +"/SceltaPersonaggio/scelta.html", "r")
+        f = open("./SceltaPersonaggio/scelta.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
