@@ -78,6 +78,15 @@ body {
 progress {
     accent-color: red;
   }
+<<<<<<< HEAD
+=======
+  
+
+#vita-pg {
+    accent-color: green;
+  }
+
+>>>>>>> b22200f241726593f8727dc53fce9fc9e050858f
 
 .life-text, .prompt-text {
     font-size: 18px;
@@ -102,4 +111,71 @@ progress {
 
 .dialog-button:hover, .prompt-button:hover {
     background: #d3869b;
+<<<<<<< HEAD
 }
+=======
+}
+
+.hit-effect {
+    animation: flashRed 0.3s ease, shake 0.3s ease;
+}
+
+@keyframes flashRed {
+    0%   { filter: none; }
+    50%  { filter: brightness(1.2) contrast(1.5) saturate(2) sepia(1) hue-rotate(-50deg); }
+    100% { filter: none; }
+}
+
+@keyframes shake {
+    0% { transform: translate(0px, 0px); }
+    25% { transform: translate(-5px, 2px); }
+    50% { transform: translate(5px, -2px); }
+    75% { transform: translate(-3px, 3px); }
+    100% { transform: translate(0px, 0px); }
+}
+
+#screen-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 0, 0, 0.4);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 9999;
+    transition: opacity 0.2s ease;
+}
+
+#screen-flash.active {
+    opacity: 1;
+}
+
+.player-life-text {
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #ebdbb2;
+    border: 3px solid #d79921;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#screen-flash.green {
+    background: rgba(0, 255, 0, 0.4);
+}
+
+@keyframes magicShake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(3deg); }
+    50% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.magic-effect {
+    animation: flashRed 0.3s ease, magicShake 0.4s ease;
+}
+>>>>>>> b22200f241726593f8727dc53fce9fc9e050858f
