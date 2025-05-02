@@ -4,14 +4,14 @@ import random
 from pathlib import Path
 from urllib.parse import urlparse
 
-# directories -------------------------------
+# directories ----------------------------------------------------------------------------
 BASE_DIR = Path(__file__).parent.parent.parent  # directory base, RPG
 HTML_DIR = BASE_DIR / "Missioni" / "Missione4"  # directory missione4
 DB_PATH = Path(__file__).parent / "database.json" # directory database.json
-# -------------------------------------------
+# ----------------------------------------------------------------------------------------
 
-# GET e POST --------------------------------
-# gestore GET
+# GET e POST -----------------------------------------------------------------------------
+# gestore GET ----------------------------------------------------------------------------
 def check_get(path):
     path = urlparse(path).path
     
@@ -50,7 +50,7 @@ def check_get(path):
         
         return f"File non trovato: {path}".encode("utf-8")
 
-# gestore POST
+# gestore POST ------------------------------------------------------------------------------
 def check_post(path, client_choice):
     path = urlparse(path).path
     
@@ -67,9 +67,9 @@ def check_post(path, client_choice):
             return json.dumps(result).encode("utf-8")
     
     return json.dumps({"esito": "errore", "messaggio": "Richiesta non valida"}).encode("utf-8")
-# --------------------------------------------------------
+# ---------------------------------------------------------------------------------------------
 
-# gestione DATABASE (json) -------------------------------
+# gestione DATABASE (json) --------------------------------------------------------------------
 def carica_database():
     try:
         with open(DB_PATH, "r", encoding="utf-8") as file:
@@ -92,10 +92,10 @@ def salva_database(db):
 # Carica il database all'avvio
 db = carica_database()
 print(f"Database caricato. Parola corrente: {db['stato_gioco']['parola_corrente']}, Parola finale: {db['stato_gioco']['parola_finale']}")
-# --------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 
-# gestione GIOCO -----------------------------------------
-# verificare una parola nel Wordle -----------------------
+# gestione GIOCO ------------------------------------------------------------------------
+# verificare una parola nel Wordle ------------------------------------------------------
 def verifica_parola(parola_tentativo):
     global db
     parola_corretta = db["stato_gioco"]["parola_corrente"]
@@ -166,7 +166,7 @@ def verifica_parola(parola_tentativo):
             "risultato": risultato
         }
 
-# verificare la soluzione finale ------------------------
+# verificare la soluzione finale -----------------------------------------------------------
 def verifica_soluzione_finale(soluzione_tentativo):
     soluzione_corretta = db["stato_gioco"]["parola_finale"]
     
@@ -185,4 +185,4 @@ def verifica_soluzione_finale(soluzione_tentativo):
             "esito": "errore",
             "messaggio": "Soluzione errata, raccogli più indizi!"
         }
-# --------------------------------------------------------
+# -----------------------------------------------------------------------------------------

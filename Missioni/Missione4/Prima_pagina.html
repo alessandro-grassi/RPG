@@ -39,17 +39,14 @@
                     const listaIndizi = document.getElementById('lista-indizi');
                     
                     if (data.indizi && data.indizi.length > 0) {
-                        // Svuota la lista
-                        listaIndizi.innerHTML = '';
+                        listaIndizi.innerHTML = ''; //svuota la lista
                         
-                        // Aggiungi ogni indizio
-                        data.indizi.forEach(indizio => {
+                        data.indizi.forEach(indizio => {    //aggiungi ogni indizio
                             const elemento = document.createElement('li');
                             elemento.textContent = indizio;
                             listaIndizi.appendChild(elemento);
                         });
                     } else {
-                        // Nessun indizio disponibile
                         listaIndizi.innerHTML = '<li>Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</li>';
                     }
                 })
@@ -59,8 +56,7 @@
                 });
         }
 
-        // Carica gli indizi all'avvio della pagina
-        window.onload = caricaIndizi;
+        window.onload = caricaIndizi;   //carica all'avvio
     </script>
 </body>
 </html>
