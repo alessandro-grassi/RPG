@@ -74,41 +74,37 @@ function mostraAbilita(){
   j=1;
 
 }
-
-function listaAbilità(){
-if(j!=0){
-  let classe = document.getElementById("choice").value;
-  const message={
-    class : classe
-  };
-  fetch('http://localhost:8080/personaggio/listaAbilita', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message)
+function fillAb(json){
+  str = "<option value='default'>Seleziona abilita'</option>"
+  json.forEach(a =>{
+    str+="<option value='"+a+"'>"+a+"</option>";
   })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Errore nella risposta del server.');
-    }
-    return response.json();
-  })
-  .then(data => {
-    if (data.error) {
-      alert("Errore di connessione, riprova più tardi!")
-    } else {
-      if (data=="errore") alert("Errore Client")
-        else alert("Registrazione effettuata con successo");
-    }
-  })
-  .catch(error => {
-    console.error("Errore:", error);
-
-  });
+  document.getElementById("ab1").innerHTML=str;
+  document.getElementById("ab2").innerHTML=str;
+  document.getElementById("ab3").innerHTML=str;
 }
-j=0;
-  
+async function listaAbilita(){
+  if(j!=0){
+    let classe = document.getElementById("choice").value;
+    const message={
+      class : classe
+    };
+    let resp = await fetch('http://localhost:8080/personaggio/listaAbilita', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message)
+    });
+    if (resp.ok){
+      json = await resp.json();
+      console.log(json);
+      fillAb(json);
+    }
+    
+  j=0;
+    
+  }
 }
 
 function crea_personaggio(){

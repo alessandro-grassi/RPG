@@ -19,12 +19,17 @@ def ottieni_classi():
     return stringa.encode("utf-8")
 
 def ottieni_abilita(classe):
+    if classe["class"]=="default":return json.dumps([]).encode("utf-8");
     #confrontare le stats della classe scelta dall'utente con le sigole stats delle abilita. Se minori della soglia richiesta dalle abilità non mostrare l'abilità in lista
     queryLib.connetti()
-    statsClasse = queryLib.execute(f''' SELECT classe.Forza, classe.Destrezza, classe.Intelligenza, classe.Fede FROM "classi" WHERE classe.id ='{classe}' ''')
-    listaAbilita = queryLib.execute(f''' SELECT abilita.id, abilita.Forza, abilita.Destrezza, abilita.Intelligenza, abilita.Fede FROM "abilita" ''')
+    statsClasse = queryLib.execute(f''' SELECT classi."Forza", classi."Destrezza", classi."Intelligenza", classi."Fede" FROM "classi" WHERE classi.id ='{classe["class"]}' ''')[0]
+    listaAbilita = queryLib.execute(f''' SELECT abilita.id, abilita."Forza", abilita."Destrezza", abilita."Intelligenza", abilita."Fede" FROM "abilita" ''')
     queryLib.disconnetti()
-    return 
+    array=[]
+    for ab in listaAbilita:
+        if statsClasse[0]>=ab[1] and statsClasse[1]>=ab[2] and statsClasse[2]>=ab[3] and statsClasse[3]>=ab[4]:
+            array.append(ab[0])
+    return json.dumps(array).encode("utf-8");
 
 def aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username):
     queryLib.connetti()
@@ -82,6 +87,7 @@ def check_post(path, client_choice):
     if path.endswith("listaAbilita"):
         #chris da qui per inviarti le cose. Ricordati di sistemare il json
         f = ottieni_abilita(client_choice)
+        return f;
 
     elif path.endswith("crea_personaggio"):
         try:
