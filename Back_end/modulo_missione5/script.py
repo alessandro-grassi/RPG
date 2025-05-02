@@ -68,13 +68,8 @@ def check_get(path:str):
         
     elif path.startswith( PREFIX_API+"get-life/"):
         name = path.split("/")[4]
-        life = str (combactSystem.get_life(name))
-        return ('{"result":"'+life+'"}').encode("utf-8")
-    
-    elif path.startswith(PREFIX_API+"get-mana/"):
-        name = path.split("/")[4]
-        mana = str(combactSystem.get_mana(name))
-        return ('{"result":"'+mana+'"}').encode("utf-8")
+        combactSystem.enemy_attack('provaM5')
+        return ('{"result":"'+'0'+'"}').encode("utf-8")
     
     elif path == PREFIX+"enemies-list":
         with open("Missioni/Missione5/assets/enemies.json", "r") as f:
@@ -107,12 +102,11 @@ def check_get(path:str):
     
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":
-        with open("Missioni/Missione5/assets/progress.json") as f:
-            r = f.read()
-            f.close()
-            return r.encode("utf-8")
-        
-     #funzione usata per recuperare le immagini in base al nome richiesto
+        out = combactSystem.get_dialog_index("provaM5")
+        out = json.dumps(out, indent=4) # converte in formato json
+        return out.encode("utf-8")
+     
+    #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):
         image_name = path.split("/")[3] # fa uno split e prende la 4a cella
         with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
@@ -137,51 +131,62 @@ def check_get(path:str):
         r = f.read()
         f.close()
         return r
+    
+    # combactSystem
+    elif path.startswith(PREFIX_API + "get-enemy-life/"):
+        username = path.split("/")[4]
+        life = combactSystem.enemy_get_healt(username)
+        return ('{"result":"' + str(life) + '"}').encode("utf-8")
+    elif path.startswith(PREFIX_API + "get-player-life/"):
+        username = path.split("/")[4]
+        life = combactSystem.player_get_healt(username)
+        return ('{"result":"' + str(life) + '"}').encode("utf-8")
+    elif path.startswith(PREFIX_API + "get-player-max-life/"):
+        characterId = path.split("/")[4]
+        life = combactSystem.get_max_player_healt(characterId)
+        return ('{"result":"' + str(life) + '"}').encode("utf-8")
+    elif path.startswith(PREFIX_API + "get-ability-list/"):
+        characterId = path.split("/")[4]
+        attack_list = combactSystem.get_character_abilities(characterId)
+        return json.dumps(attack_list).encode("utf-8")
+    elif path.startswith(PREFIX_API + "get-ability-data/"):
+        abilityName = path.split("/")[4]
+        abilityData = combactSystem.get_ability_data(abilityName)
+        return json.dumps(abilityData).encode("utf-8")
+
+
     else:
         return "Percorso non valido!".encode("utf-8")
+    
+
         
 def check_post(path,clientchoice):
     try:
-        if path == PREFIX_API+"set-life":
-            name = clientchoice['name']
-            value = clientchoice['value']
-            combactSystem.set_life(name, int(value))
-            return '{"result":"Life set successfully"}'.encode("utf-8")
+
+        # combactSystem
+        if path == PREFIX_API + "enemy-attack":
+            userName = clientchoice["username"]
+            characterId = clientchoice["characterId"]
+            combactSystem.enemy_attack(userName, characterId)
+            return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
         
-        elif path == PREFIX_API+"set-mana":
-            name = clientchoice['name']
-            value = clientchoice['value']
-            combactSystem.set_mana(name, int(value))
-            return '{"result":"Mana set successfully"}'.encode("utf-8")
-        
-        elif path == PREFIX_API+"do-damage":
-            name = clientchoice['name']
-            value = clientchoice['value']
-            combactSystem.do_damage(name, int(value))
-            return '{"result":"Damage done successfully"}'.encode("utf-8")
-        
-        elif path == PREFIX_API+"use-mana":
-            name = clientchoice['name']
-            value = clientchoice['value']
-            combactSystem.use_mana(name, int(value))
-            return '{"result":"Mana used successfully"}'.encode("utf-8")
-        
-        elif path == PREFIX_API+"attack":
-            attacker_name = clientchoice['attacker_name']
-            attacked_name = clientchoice['attacked_name']
-            attack_name = clientchoice['attack_name']
-            combactSystem.attack(attacker_name, attacked_name, attack_name)
-            return '{"result":"Attack executed successfully"}'.encode("utf-8")
+        if path == PREFIX_API + "player-attack":
+            # recupera il nome dell'utente dalla richiesta
+            userName = clientchoice["username"]
+            # recupera il nome dell'attacco dalla richiesta
+            attackName = clientchoice["attack_name"]
+            combactSystem.player_attack(userName, attackName)
+            return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
 
         #aggiorna index dialoghi e immagini lore
         elif path == PREFIX + "update-index":
             print(clientchoice) # print per debug
-            update_progress(clientchoice["current_index"],"current_index")
+            combactSystem.set_current_index("provaM5", clientchoice["current_index"]) # aggiorna l'index del dialogo
             return json.dumps({"status": "success"}).encode() 
         
         #aggiorna l'ultima immagine vista nel file json
         elif path == PREFIX + "update-last_image":
-            update_progress(clientchoice["last_image"],"last_image")
+            combactSystem.set_last_image("provaM5",clientchoice["last_image"]) # aggiorna l'index del dialogo
             return json.dumps({"status": "success"}).encode() 
         
         return json.dumps({"status": "error"}).encode()
@@ -209,6 +214,7 @@ def update_progress(data,target):
     json_file.write(converted_data) # scrive sul file json i dati
     json_file.close() # chiude il file
     
+
 
 
 if __name__ == "__main__":
