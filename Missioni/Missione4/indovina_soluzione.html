@@ -3,61 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indovina la soluzione</title>
-    <link rel="stylesheet" href="stile.css">
+    <title>Indovina la Soluzione</title>
+    <link rel="stylesheet" href="stile">
 </head>
 <body>
-    <div id="header">
-        <h1 id="titolo-missione">missione 4</h1>
-    </div>
-
-    <div id="indizi">
-        <h2>Indizi</h2>
-        <ul id="lista-indizi">
-            <li>Nessun indizio disponibile.</li>
-        </ul>
-    </div>
-
-    <div id="soluzione">
-        <h2>Indovina la Soluzione</h2>
-        <input type="text" id="parola-finale" placeholder="Inserisci la soluzione">
-        <div id="pulsanti">
-            <button id="indovina">Indovina</button>
-            <button onclick="location.href='prima_pagina.html'">Indietro</button>
+    <div class="container">
+        <h1>Indovina la Soluzione Finale</h1>
+        
+        <div class="indizi-section">
+            <h2>Indizi Raccolti</h2>
+            <div id="indizi-container">
+                <p id="no-indizi">Nessun indizio disponibile.</p>
+                <ul id="indizi-lista" style="display: none;"></ul>
+            </div>
         </div>
+        
+        <div class="soluzione-section">
+            <h2>Indovina la Soluzione</h2>
+            <div class="input-container">
+                <input type="text" id="soluzione-input" placeholder="Inserisci la tua risposta">
+                <p id="tentativi-info">Tentativi rimasti: <span id="tentativi-rimasti">0</span></p>
+                <p id="risultato-messaggio"></p>
+            </div>
+            <button id="indovina-btn" class="action-button">Indovina</button>
+        </div>
+        
+        <button id="indietro-btn" class="action-button">Indietro</button>
     </div>
-
-    <!--chiamate rest-->
+    
     <script>
-        //windowonload degli indizi
-        function caricaIndizi() {
-            fetch('http://localhost:8080/api/indizi', { method: 'GET' })  //nome api di esempio
+        document.addEventListener('DOMContentLoaded', function() {
+            let tentativiTotali = 0;
+            let tentativiFatti = 0;
+            
+            // Carica i dettagli generali
+            fetch('/missione4/dettagliGenerali')
                 .then(response => response.json())
                 .then(data => {
-                    //quindi qua bisogna fare la get della lista degli indizi da mettere dentro
-                    //<p> id="lista-indizi"></p>
+                    tentativiTotali = data.tentativiIndovina;
+                    tentativiFatti = data.tentativiIndovinaFatti;
+                    document.getElementById('tentativi-rimasti').textContent = tentativiTotali - tentativiFatti;
+                    
+                    // Aggiorna gli indizi
+                    aggiornaIndizi(data.indiziOttenuti);
                 })
-                .catch(error => console.error("Si è verificato un errore:", error));
-        }
-
-        //quando indovini la soluzione
-        document.getElementById('indovina').addEventListener('click', function () {
-            const soluzione = document.getElementById('parola-finale').value;
-
-            fetch('http://localhost:8080/api/verifica-soluzione', { //nome api di esempio
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ soluzione: soluzione })
-            })
+                .catch(error => console.error('Errore nel caricamento dei dettagli:', error));
+            
+            // Funzione per aggiornare gli indizi
+            function aggiornaIndizi(indizi) {
+                const noIndizi = document.getElementById('no-indizi');
+                const listaIndizi = document.getElementById('indizi-lista');
+                
+                if (indizi && indizi.length > 0) {
+                    noIndizi.style.display = 'none';
+                    listaIndizi.style.display = 'block';
+                    listaIndizi.innerHTML = '';
+                    
+                    indizi.forEach(indizio => {
+                        const li = document.createElement('li');
+                        li.textContent = indizio;
+                        listaIndizi.appendChild(li);
+                    });
+                } else {
+                    noIndizi.style.display = 'block';
+                    listaIndizi.style.display = 'none';
+                }
+            }
+            
+            // Event listener per il pulsante Indovina
+            document.getElementById('indovina-btn').addEventListener('click', function() {
+                const risposta = document.getElementById('soluzione-input').value.trim();
+                if (!risposta) {
+                    alert('Inserisci una risposta prima di indovinare!');
+                    return;
+                }
+                
+                // Invia la risposta al server
+                fetch('/missione4/indovina', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        tentativo: tentativiFatti + 1,
+                        risposta: risposta
+                    }),
+                })
                 .then(response => response.json())
                 .then(data => {
-                    //se data è giusto, alert di ricompensa e aggiunta ricompensa nel database
+                    const messaggioElement = document.getElementById('risultato-messaggio');
+                    
+                    if (data.stato === 'vittoria') {
+                        messaggioElement.textContent = data.messaggio;
+                        messaggioElement.className = 'success-message';
+                        // Disabilita l'input e il pulsante dopo la vittoria
+                        document.getElementById('soluzione-input').disabled = true;
+                        document.getElementById('indovina-btn').disabled = true;
+                    } else {
+                        messaggioElement.textContent = data.messaggio;
+                        messaggioElement.className = 'error-message';
+                        document.getElementById('tentativi-rimasti').textContent = tentativiTotali - (tentativiFatti + 1);
+                        tentativiFatti++;
+                    }
                 })
-                .catch(error => console.error("Si è verificato un errore:", error));
+                .catch(error => {
+                    console.error('Errore nell\'invio della risposta:', error);
+                    alert('Si è verificato un errore. Riprova più tardi.');
+                });
+            });
+            
+            // Event listener per il pulsante Indietro
+            document.getElementById('indietro-btn').addEventListener('click', function() {
+                window.location.href = '/missione4';
+            });
         });
-
-        //carica gli indizi all'avvio della pagina
-        window.onload = caricaIndizi;
     </script>
 </body>
 </html>
