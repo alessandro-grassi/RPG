@@ -5,7 +5,9 @@ import json
 
 def enemy_attack(userName):
 
-    player_set_healt(userName, 600)
+    
+    initialize_boss(userName)
+
     #get enemy name
     #enemy_set_boss_name(userName, "Guardiano di Rocciascura")
     enemyName = enemy_get_boss_name(userName)
@@ -20,8 +22,9 @@ def enemy_attack(userName):
 
     if move.get("chance") != None:
         chance = move["chance"]
-        if rand(0, 100) > chance:
-            print("miss")
+        randn = rand(0, 100)
+        if randn > chance:
+            print("miss: ", randn)
             missed = True
     criticoMissed = False
     if enemyData.get("critico") != None:
@@ -89,26 +92,149 @@ def enemy_attack(userName):
             print("bonus attack: ", bonus_attack)
             print("bonus attack duration: ", move["durata"])
 
+    player_attack(userName, "Katana")
 
-    print("enemyName: ", enemyName)
-    print("enemy healt: ", enemy_get_healt(userName,enemyName))
-    print(queryLib.execute(f"""
+
+
+def player_attack(userName, attackName):
+    initialize_boss(userName)
+
+    #get enemy name
+    enemyName = enemy_get_boss_name(userName)
+
+    abData = get_ability_data(attackName) 
+    missed = False
+    if abData.get("chance") != None:
+        chance = abData["chance"]
+        randn = rand(0, 100)
+        if randn > chance:
+            print("miss: ", randn)
+            missed = True
+            return
+    if not missed:
+        damage = 0
+        if abData.get("damage_type") != None:
+            damage_type = abData["damage_type"]
+            if damage_type == "fisico":
+                damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
+            if damage_type == "magico":
+                damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
+            if damage_type == "both":
+                damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
+            
+            damage -= get_bonuses_sums(userName, "boss", "defense")
+
+            enemy_damage(userName, enemyName, damage)
+            print("damage: ", damage)
+            print("damage type: ", damage_type)
+
+        if abData.get("heal") != None:
+            heal = abData["heal"]
+            player_set_healt(userName, player_get_healt(userName) + heal)
+            print("heal: ", heal)        
+    
+
+    #decrement attack and defense duration
+    decrement_bonuses_duration(userName, "player")
+    #add duration to attack and defense
+    if not missed:
+        if abData.get("bonus_value") != None:
+            bonus_value = abData["bonus_value"]
+            if abData["bonus_type"] == "attack":
+                add_bonuses(userName, "attack", bonus_value, abData["bonus_duration"], "player")
+                print("bonus attack: ", bonus_value)
+                print("bonus attack duration: ", abData["bonus_duration"])
+            if abData["bonus_type"] == "defense":
+                add_bonuses(userName, "defense", bonus_value, abData["bonus_duration"], "player")
+                print("bonus defense: ", bonus_value)
+                print("bonus defense duration: ", abData["bonus_duration"])
+    
+
+    
+
+
+def get_character_abilities(characterId):
+    data = queryLib.execute(f"""
         SELECT *
-        FROM m5_play_data
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """))
-    print("enemyData: ", enemyData) 
-    print("enemyData moves count: ", moveCount)
+        FROM relazione_abilità
+        WHERE personaggio = {characterId};
+    """) 
+    if len(data) > 0:
+        data = data[0]
+        out = {
+            "ab1": data[1],
+            "ab2": data[2],
+            "ab3": data[3],
+        }
+    else:
+        out = None
+    return out
+
+def get_ability_data(abilityName):
+    data = queryLib.execute(f"""
+        SELECT *
+        FROM abilita
+        WHERE id = '{abilityName}';
+    """)
+    data2 = queryLib.execute(f"""
+        SELECT *
+        FROM m5_ability_effects
+        WHERE abilita = '{abilityName}';
+    """)
+    out = None
+    if len(data) > 0:
+        data = data[0]
+        out = {
+            "name": data[0],    
+            "forza": data[1],
+            "destrezza": data[2],
+            "intelligenza": data[3],
+            "fede": data[4],
+            "descrizione": data[5],
+        }
+        if len(data2) > 0:
+            data2 = data2[0]
+            out["chance"] = data2[1]
+            out["damage_type"] = data2[2]
+            out["damage_value"] = data2[3]
+            out["bonus_value"] = data2[4]
+            out["bonus_type"] = data2[5]
+            out["bonus_duration"] = data2[6]
+            out["heal"] = data2[7]
+    
+            
+    return out
+                            
+
+def initialize_boss(userName):
+    index = get_current_index(userName)
+    with open("Missioni/Missione5/assets/dialogs.json", "r") as f:
+        data = json.load(f)
+        print("data: ", data[0])
+        fight = None
+        if isinstance(data[index][0], dict):
+            fight = data[index][0].get("fight")
+        else:
+            print(f"Unexpected data format: {data[index][0]}")
+    if fight != None:
+        bossNumber = int(fight.split("-")[-1])-1
+        with open("Back_end/modulo_missione5/enemies.json", "r") as f:    
+            enemiesData = json.load(f)
+        bossName = enemiesData[bossNumber]["name"]
+        if enemy_get_boss_name(userName) != bossName:
+            enemy_set_boss_name(userName, bossName)
+            set_page(userName, bossName)
 
 
 
 def set_page(userName, page):
-    if not page.startswith("pagina"):
-        bossName = enemy_get_data(page)
+    bossName = enemy_get_data(page)
+
+    if bossName != None:
         queryLib.execute_no_return(f"""
             UPDATE m5_play_data
             SET boss_name = '{bossName["name"]}',
-                boss_healt = {bossName["stats"]["healt"]}
+                boss_healt = {bossName["stats"]["vita"]}
             WHERE utente = '{userName}';
         """)
     else:
@@ -120,8 +246,14 @@ def set_page(userName, page):
         """)
     remove_all_bonuses(userName)
 
-def get_max_player_healt(userName):
-    return 300
+def get_max_player_healt(characterId):
+    vigore = queryLib.execute(f"""
+        SELECT "Vigore"
+        FROM personaggi
+        WHERE id = {characterId};
+    """)   
+    print("vigore: ", vigore)
+    return vigore[0][0] * 100
 
 def player_die(userName):
     page = enemy_get_boss_name(userName)                        
@@ -159,12 +291,22 @@ def enemy_set_boss_name(userName, enemyName):
         WHERE utente = '{userName}';
     """)
 
+def enemy_get_max_healt(userName):
+    enemyName = enemy_get_boss_name(userName)
+    enemyData = enemy_get_data(enemyName)
+    if enemyData != None:
+        return enemyData["stats"]["vita"]
+    else:
+        return 0
+
 def enemy_damage(userName, enemyName, damage):
     currentHealt = enemy_get_healt(userName, enemyName)
     if currentHealt > 0:
         newHealt = currentHealt - damage
         if newHealt < 0:
             newHealt = 0
+        if newHealt > enemy_get_max_healt(userName):
+            newHealt = enemy_get_max_healt(userName)
         enemy_set_healt(userName, enemyName, newHealt)
     else:
         enemy_set_healt(userName, enemyName, 0)
@@ -212,6 +354,8 @@ def player_damage(userName, damage):
         newHealt = currentHealt - damage
         if newHealt < 0:
             newHealt = 0
+        if newHealt > get_max_player_healt(userName):
+            newHealt = get_max_player_healt(userName)
         player_set_healt(userName, newHealt)
     else:
         player_set_healt(userName, 0)
@@ -299,7 +443,10 @@ def get_bonuses_sums(userName, target, name):
         WHERE utente = '{userName}' AND target = '{target}' AND name = '{name}';
     """)
     if len(bonuses) > 0:
-        return bonuses[0][0]
+        if bonuses[0][0] != None:
+            return bonuses[0][0]
+        else:
+            return 0
     else:
         return 0
 
@@ -355,5 +502,3 @@ if __name__ == "__main__":
     set_seed(123)
     print(random.random())
     print(rand(0,3))
-    print(set_mana("playe",3))
-
