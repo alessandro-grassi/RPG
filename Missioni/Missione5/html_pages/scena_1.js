@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     setButtonAttack();
     setButtonHeal();
     setButtonUlti();
+    setButtonMagic();
     setButtonNext();
     setUltiCharge();
 });
@@ -58,14 +59,25 @@ function fetchData(request, callback)
 //GLOBAL
     const NAME = "Guardiano di Rocciascura";
     let vita_corrente = 0;
-    let vita_corrente_pg = 500;
-    let attacco_pg = 10;
+    
+    let vigore=5;
+    let vita_corrente_pg = vigore * 100;
+
+    let forza_pg = 10;
     let danno_fisico_pg = attacco_pg * 10;
+    
+    let intelligenza_pg = 8;
+    let danno_magico_pg = intelligenza_pg *15;
+
     let forza = 10;
     let danno_fisico = forza * 10;
+
     let rand = 0;
+    let tempChance = 0;
+
     let carica_ulti = 0;
     let client_index;
+
 
 function setImageEnemy(json){
     json.forEach(element => {
@@ -123,18 +135,8 @@ function setButtonAttack(){
         vita_corrente -= danno_fisico_pg;
         carica_ulti += 1;
         if(vita_corrente <= 0){
-            document.getElementById('image_guardian').remove();
-            document.getElementById('vita').remove();
-            document.getElementById('ulti').remove();
-            document.getElementById('vita-text').remove();
-            document.getElementById('overlay').remove();
-            document.getElementById('attack_button').remove();
-            document.getElementById('heal_button').remove();
-            document.getElementById('ulti_button').remove();
-            document.getElementById('text').innerHTML = "HAI VINTO!!";
 
-            document.getElementById('next_button').style = "visibility: visible;"; 
-
+            victory();
             this.removeEventListener();
         }
         else{
@@ -147,11 +149,70 @@ function setButtonAttack(){
         document.getElementById('ulti_button').style = "visibility: hidden;";
         document.getElementById('next_button').style = "visibility: visible;"; 
         document.getElementById('heal_button').style = "visibility: hidden;";
+        document.getElementById('magic_button').style = "visibility: hidden;";
         document.getElementById('ulti').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
         void boss.offsetWidth; // Trigger reflow to restart animation
     })
+}
+
+function victory(){
+    document.getElementById('image_guardian').remove();
+    document.getElementById('vita').remove();
+    document.getElementById('ulti').remove();
+    document.getElementById('vita-text').remove();
+    document.getElementById('overlay').remove();
+    document.getElementById('attack_button').remove();
+    document.getElementById('heal_button').remove();
+    document.getElementById('ulti_button').remove();
+    document.getElementById('magic_button').remove();
+    document.getElementById('text').innerHTML = "HAI VINTO!!";
+    document.getElementById('next_button').style = "visibility: visible;"; 
+}
+
+function setButtonMagic() {
+    document.getElementById('magic_button').addEventListener("click", function() {
+
+        //Audio ed Effetti
+        const boss = document.getElementById('image_guardian');
+        const magic_sound = document.getElementById('magical_sound');
+
+        boss.classList.add('shake_boss');
+        boss.classList.add('hit');
+    
+        magic_sound.currentTime = 0;
+        magic_sound.play();
+
+        setTimeout(() => {
+            boss.classList.remove('shake_boss');
+            boss.classList.remove('hit');
+        }, 1300);
+
+        //Attacco magico fa variare il danno
+        let variabile_danno = Math.floor(danno_magico_pg * (Math.random() * 0.4 + 0.8));
+
+        vita_corrente -= variabile_danno;
+
+        if (vita_corrente <= 0) {
+            //Sconfitta del boss
+            victory();
+        } else {
+            //Magia del player
+            document.getElementById('vita').value = vita_corrente;
+            document.getElementById('vita-text').innerHTML = "PV:" + vita_corrente;
+            document.getElementById('text').innerHTML = "'Hai inflitto " + variabile_danno + " danni magici!'";
+        }
+
+        document.getElementById('next_button').style = "visibility: visible;";
+        document.getElementById('attack_button').style = "visibility: hidden;";
+        document.getElementById('heal_button').style = "visibility: hidden;";
+        document.getElementById('ulti').style = "visibility: hidden;";
+        document.getElementById('ulti_button').style = "visibility: hidden;";
+        this.style = "visibility: hidden";
+
+        void boss.offsetWidth;
+    });
 }
 
 function setButtonHeal(){
@@ -183,6 +244,7 @@ function setButtonHeal(){
         document.getElementById('ulti_button').style = "visibility: hidden;";
         document.getElementById('next_button').style = "visibility: visible;"; 
         document.getElementById('attack_button').style = "visibility: hidden;";
+        document.getElementById('magic_button').style = "visibility: hidden;";
         document.getElementById('ulti').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
@@ -211,18 +273,7 @@ function setButtonUlti(){
         carica_ulti = 0;
 
         if(vita_corrente <= 0){
-            document.getElementById('image_guardian').remove();
-            document.getElementById('vita').remove();
-            document.getElementById('ulti').remove();
-            document.getElementById('vita-text').remove();
-            document.getElementById('overlay').remove();
-            document.getElementById('attack_button').remove();
-            document.getElementById('heal_button').remove();
-            document.getElementById('ulti_button').remove();
-            document.getElementById('text').innerHTML = "HAI VINTO!!";
-
-            document.getElementById('next_button').style = "visibility: visible;"; 
-
+            victory();
             this.removeEventListener();
         }
         else{
@@ -235,6 +286,7 @@ function setButtonUlti(){
         document.getElementById('attack_button').style = "visibility: hidden;";
         document.getElementById('next_button').style = "visibility: visible;"; 
         document.getElementById('heal_button').style = "visibility: hidden;";
+        document.getElementById('magic_button').style = "visibility: hidden;";
         document.getElementById('ulti').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
@@ -250,6 +302,7 @@ function setButtonNext(){
             document.getElementById('attack_button').style = "visibility: visible;";
             document.getElementById('heal_button').style = "visibility: visible;";
             document.getElementById('ulti_button').style = "visibility: visible;";
+            document.getElementById('magic_button').style = "visibility: hidden;";
             document.getElementById('ulti').style = "visibility: visible;";
             if(carica_ulti >=3){
                 document.getElementById('ulti_button').disabled = false;
