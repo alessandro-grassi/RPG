@@ -127,9 +127,9 @@ def enemy_attack(userName):
 
 
 
-def set_level(userName, level):
-    if not level.startswith("pagina"):
-        bossName = enemy_get_data(level)
+def set_page(userName, page):
+    if not page.startswith("pagina"):
+        bossName = enemy_get_data(page)
         queryLib.execute_no_return(f"""
             UPDATE m5_play_data
             SET boss_name = '{bossName["name"]}',
@@ -139,7 +139,7 @@ def set_level(userName, level):
     else:
         queryLib.execute_no_return(f"""
             UPDATE m5_play_data
-            SET boss_name = '{level}',
+            SET boss_name = '{page}',
                 boss_healt = 0
             WHERE utente = '{userName}';
         """)
@@ -149,8 +149,8 @@ def get_max_player_healt(userName):
     return 300
 
 def player_die(userName):
-    level = enemy_get_boss_name(userName)                        
-    set_level(userName, level)
+    page = enemy_get_boss_name(userName)                        
+    set_page(userName, page)
     player_set_healt(userName, get_max_player_healt(userName))
         
 
