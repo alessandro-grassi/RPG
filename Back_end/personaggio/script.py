@@ -26,6 +26,16 @@ def ottieni_abilita(classe):
     queryLib.disconnetti()
     return 
 
+def ottieni_statistiche(client_choice):
+    """Test"""
+    if client_choice['classe'] == 'default':
+        return json.dumps([0, 0, 0, 0, 0]).encode('utf-8')
+
+    queryLib.connetti()
+    stats = queryLib.execute(f'''SELECT classi."Vigore", classi."Forza", classi."Destrezza", classi."Intelligenza", classi."Fede" FROM "classi" WHERE classi.id = '{client_choice['classe']}' ''')[0]
+    queryLib.disconnetti()
+
+    return json.dumps(stats).encode('utf-8')
 def aggiungi_personaggio():
     return
 
@@ -74,8 +84,10 @@ def check_get(path):
 def check_post(path, client_choice):
 
     if path.endswith("listaAbilita"):
-        #chris da qui per inviarti le cose. Ricordati di sistemare il json
         f = ottieni_abilita(client_choice)
 
     elif path.endswith("crea_personaggio"):
         aggiungi_personaggio()
+    
+    elif path.endswith("statistiche"):
+        return ottieni_statistiche(client_choice)
