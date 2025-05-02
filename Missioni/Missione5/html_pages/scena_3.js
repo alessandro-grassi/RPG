@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     setButtonAttack();
     setButtonNext();
     setButtonMagic();
+    setButtonHeal();
 });
 
 //Manda al server
@@ -66,7 +67,9 @@ function movelines(step) {
     const NAME = "Il Re Eterno";
 
     let vita_corrente = 0;
-    let vita_corrente_pg = 500;
+
+    let vigore = 5;
+    let vita_corrente_pg = vigore * 100;
 
     let forza_pg = 10;
     let danno_fisico_pg = forza_pg * 10;
@@ -126,15 +129,8 @@ function setButtonAttack(){
 
         vita_corrente -= danno_fisico_pg;
         if(vita_corrente <= 0){
-            //Sconfitta del boss rimuove tutto
-            document.getElementById('image_king').remove();
-            document.getElementById('vita').remove();
-            document.getElementById('vita-text').remove();
-            document.getElementById('overlay').remove();
-            document.getElementById('magic_button').removeEventListener('click', setButtonMagic);
-            document.getElementById('text').textContent = "HAI VINTO!!";
-            document.getElementById('next_button').style = "visibility: visible;";
-            this.removeEventListener('click', setButtonAttack);
+            //Sconfitta del boss
+            victory();
         }
         else{
             //Attacco del player
@@ -143,6 +139,8 @@ function setButtonAttack(){
             document.getElementById('text').textContent = "'Hai inflitto "+danno_fisico_pg+" danni fisici!'";
         }
         document.getElementById('next_button').style = "visibility: visible;"; 
+        document.getElementById('heal_button').style = "visibility: hidden;";
+        document.getElementById('magic_button').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
         void boss.offsetWidth;
@@ -174,15 +172,8 @@ function setButtonMagic() {
         vita_corrente -= variabile_danno;
 
         if (vita_corrente <= 0) {
-            //Sconfitta del boss rimuove tutto
-            document.getElementById('image_king').remove();
-            document.getElementById('vita').remove();
-            document.getElementById('vita-text').remove();
-            document.getElementById('overlay').remove();
-            document.getElementById('attack_button').removeEventListener('click', setButtonAttack);
-            document.getElementById('text').textContent = "HAI VINTO!!";
-            document.getElementById('next_button').style = "visibility: visible;";
-            this.removeEventListener('click', setButtonMagic);
+            //Sconfitta del boss
+            victory();
         } else {
             //Magia del player
             document.getElementById('vita').value = vita_corrente;
@@ -191,10 +182,54 @@ function setButtonMagic() {
         }
 
         document.getElementById('next_button').style = "visibility: visible;";
+        document.getElementById('attack_button').style = "visibility: hidden;";
+        document.getElementById('heal_button').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
         void boss.offsetWidth;
     });
+}
+
+//Carica le funzione del bottone di cura
+function setButtonHeal(){
+    document.getElementById('heal_button').addEventListener("click", function(){
+
+        //Audio ed Effetti
+        const heal_sound = document.getElementById('heal_sound');
+
+        heal_sound.currentTime = 0;
+        heal_sound.play();
+
+        if(vita_corrente <= 0){
+            this.removeEventListener();
+        }
+        let temp_vita = vita_corrente_pg;
+        let cura = vigore*30;
+        if(vigore*100-vita_corrente_pg < cura){
+            cura = vigore*100-vita_corrente_pg;
+            vita_corrente_pg += cura;
+        }
+        else
+            vita_corrente_pg += cura;
+
+        if(temp_vita ==  vigore * 100){
+            vita_corrente_pg = vigore*100;
+            document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
+            document.getElementById('text').innerHTML = "'Non puoi curarti oltre i "+ vigore * 100 +" PV!'";
+        }
+        else{
+            document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
+            document.getElementById('text').innerHTML = "'Ti sei curato di " + cura + " PV!'";
+        }
+
+        document.getElementById('next_button').style = "visibility: visible;"; 
+        document.getElementById('attack_button').style = "visibility: hidden;";
+        document.getElementById('magic_button').style = "visibility: hidden;";
+        this.style = "visibility: hidden";
+
+    })
 }
 
 //Carica le funzioni del bottone 'Next'
@@ -206,6 +241,7 @@ function setButtonNext(){
             fetchData("enemies-list", enemyAttack)
             document.getElementById('attack_button').style = "visibility: visible;";
             document.getElementById('magic_button').style = "visibility: visible;";
+            document.getElementById('heal_button').style = "visibility: visible;";
             this.style = "visibility: hidden";
         }
         else {
@@ -315,6 +351,7 @@ function gameover(){
     document.getElementById('attack_button').remove();
     document.getElementById('magic_button').remove();
     document.getElementById('next_button').remove();
+    document.getElementById('heal_button').remove();
     //Crea bottone di riprova
     retry = document.createElement('button');
     retry.textContent = "Retry";
@@ -323,4 +360,17 @@ function gameover(){
         location.reload();
     });
     document.getElementById('dialog-box').appendChild(retry);
+}
+
+// funzione vittoria
+function victory(){
+    document.getElementById('image_king').remove();
+    document.getElementById('vita').remove();
+    document.getElementById('vita-text').remove();
+    document.getElementById('overlay').remove();
+    document.getElementById('attack_button').removeEventListener('click', setButtonAttack);
+    document.getElementById('magic_button').removeEventListener('click', setButtonMagic);
+    document.getElementById('heal_button').removeEventListener('click', setButtonHeal);
+    document.getElementById('text').textContent = "HAI VINTO!!";
+    document.getElementById('next_button').style = "visibility: visible;";
 }
