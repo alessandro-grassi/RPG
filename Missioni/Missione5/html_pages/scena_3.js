@@ -1,7 +1,29 @@
+//GLOBAL
+const NAME = "Il Re Eterno";
+const USERNAME = "provaM5";
+
+let vita_corrente = 0;
+
+let vigore = 5;
+let vita_corrente_pg = vigore * 100;
+
+let forza_pg = 10;
+let danno_fisico_pg = forza_pg * 10;
+
+let intelligenza_pg = 10
+let danno_magico_pg = intelligenza_pg * 15;
+
+let forza = 10;
+let danno_fisico = forza * 10;
+
+let rand = 0;
+let tempChance = 0;
+
 //Al caricamento della pagina, fa questo:
 document.addEventListener("DOMContentLoaded",()=>{ 
     fetchData("enemies-images-path", setImageEnemy)
-    fetchData("enemies-list", setLifePoints)
+    fetchData("enemies-list", setLifePointsEnemy)
+    //fetchDataCombact("get-player-life/"+USERNAME, setLifePointsPG)
     document.getElementById('name-text').innerHTML = NAME;
     document.getElementById('text').innerHTML = "Il Re sta aspettando...";
     setButtonAttack();
@@ -19,10 +41,28 @@ function sendToServer(request, data) {
     });
 }
 
-//Prende dal server, con callback
+//Prende dal server, con callback, m5
 function fetchData(request, callback)
 {
     fetch("http://localhost:8080/m5/" + request)
+    .then(response => {
+        if(!response.ok) 
+            throw new Error(`response fetch error ${response.status}`);
+        return response.json();
+    })
+    .then(data => { 
+        console.log("GET body data: ");
+        callback(data);
+    })
+    .catch(err => { 
+        console.error('request error',err);
+    });
+}
+
+//Prende dal server, con callback, api m5
+function fetchDataCombact(request, callback)
+{
+    fetch("http://localhost:8080/m5/api/" + request)
     .then(response => {
         if(!response.ok) 
             throw new Error(`response fetch error ${response.status}`);
@@ -63,26 +103,6 @@ function movelines(step) {
     return sendToServer("update-index", data);
 }
 
-//GLOBAL
-    const NAME = "Il Re Eterno";
-
-    let vita_corrente = 0;
-
-    let vigore = 5;
-    let vita_corrente_pg = vigore * 100;
-
-    let forza_pg = 10;
-    let danno_fisico_pg = forza_pg * 10;
-
-    let intelligenza_pg = 10
-    let danno_magico_pg = intelligenza_pg * 15;
-
-    let forza = 10;
-    let danno_fisico = forza * 10;
-
-    let rand = 0;
-    let tempChance = 0;
-
 //carica l'immagine del boss
 function setImageEnemy(json){
     json.forEach(element => {
@@ -92,8 +112,8 @@ function setImageEnemy(json){
     document.getElementById('image_king').setAttribute('src', "http://localhost:8080/m5/get-image/"+ path);
 }
 
-//carica i punti vita del boss e del player
-function setLifePoints(json){
+//carica i punti vita del boss
+function setLifePointsEnemy(json){
     json.forEach(enemy =>{
         if(enemy['name'] == NAME){
             vita_corrente = enemy['stats'].vita;
@@ -106,6 +126,10 @@ function setLifePoints(json){
     document.getElementById('vita_pg').value = vita_corrente_pg;
     document.getElementById('vita_pg').max = vita_corrente_pg;
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
+}
+
+function setLifePointsPG(json){
+    console.log(json);
 }
 
 //Carica le funzioni del bottone di attacco fisico

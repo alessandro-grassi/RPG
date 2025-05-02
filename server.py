@@ -2,11 +2,10 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
 import Back_end.modulo_missione5 as m5
-dict = { # dizionario per prendere i suffissi dei moduli
+dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/m5": m5,
 }
 
-from Back_end import queryLib
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -15,14 +14,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
-    
-        resp = check_get(path)
-        try:
-            self.wfile.write(resp)
 
-        except:
-            print(f"Errore durante la richiesta get a '{path}'")
-            self.wfile.write(b"")
+        resp = check_get(path)
+
+        self.wfile.write(resp)
         return
 
     def do_POST(self):
@@ -43,7 +38,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         return
 
     def do_OPTIONS(self):
-        
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
@@ -62,17 +56,15 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
-    return "Modulo non trovato".encode("utf-8")
+    return "Modulo non trovato"
 
 
 def check_post(path, client_choice):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_post(path, client_choice)
-    return "Modulo non trovato".encode("utf-8")
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":
-    queryLib.connetti()
     run_server()
-    queryLib.disconnetti()
