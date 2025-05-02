@@ -26,6 +26,9 @@ def ottieni_abilita(classe):
     queryLib.disconnetti()
     return 
 
+def aggiungi_personaggio():
+    return
+
 
 
 def check_get(path):
@@ -73,3 +76,6 @@ def check_post(path, client_choice):
     if path.endswith("listaAbilita"):
         #chris da qui per inviarti le cose. Ricordati di sistemare il json
         f = ottieni_abilita(client_choice)
+
+    elif path.endswith("crea_personaggio"):
+        aggiungi_personaggio()

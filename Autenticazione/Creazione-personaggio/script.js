@@ -13,14 +13,6 @@ function changeVisibility(){
   }
 }
 
-function crea_personaggio(){
-    const name = document.getElementById("name");
-    const classe = document.getElementById("classe");
-    const ab1 = documentgetElementById("ab1");
-    const ab2 = documentgetElementById("ab2");
-    const ab3 = documentgetElementById("ab3");
-}
-
 function cambiaImmagine() {
     var selezione = document.getElementById("choice").value;
     var class_image = document.getElementById("class-image");
@@ -117,4 +109,44 @@ if(j!=0){
 }
 j=0;
   
+}
+
+function crea_personaggio(){
+  const nome = document.getElementById("name").value;
+  const classe = document.getElementById("classe").value;
+  const ab1 = document.getElementById("ab1").value;
+  const ab2 = document.getElementById("ab2").value;
+  const ab3 = document.getElementById("ab3").value;
+  const message={
+      name: nome,
+      class: classe,
+      ability1 : ab1,
+      ability2 : ab2,
+      ability2 : ab2
+  };
+  fetch('http://localhost:8080/personaggio/crea_personaggio', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Errore nella risposta del server.');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.error) {
+      alert("Errore di connessione, riprova più tardi!")
+    } else {
+      if (data=="errore") alert("Errore Client")
+        else alert("Personaggio registrato con successo");
+    }
+  })
+  .catch(error => {
+    console.error("Errore:", error);
+
+  });
 }
