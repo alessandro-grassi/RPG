@@ -29,7 +29,7 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8") # encode 
         
-    elif path == PREFIX+"mission-scene-2":
+    elif path == PREFIX+"mission-scena-2":
         with open("Missioni/Missione5/html_pages/scena_2.html", "r") as f:
             r = f.read()
             f.close()

@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded",()=>{
     setButtonNext();
 });
 
+let client_index;
+
 // Funzione per inviare dati al server
 function sendToServer(request,data)
 {
@@ -17,22 +19,6 @@ function sendToServer(request,data)
         method:"POST", 
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(data)
-    })
-    .then((response)=>{ 
-        if(!response.ok) 
-        {
-            alert('Operazione fallita, riprovare o ricaricare la pagina'); 
-            throw new Error(`error posting content to server: ${response.status}`); 
-        }
-        return response.json(); 
-    })
-    .then((result)=>{
-        console.log(result);
-        return result;
-    })
-    .catch((err)=>{ 
-        console.error('Errore POST dati: ',err);
-        alert('Operazione fallita, riprovare o ricaricare la pagina.\n\nCodice di errore: '+ err); 
     });
 }
 
@@ -187,7 +173,14 @@ function setButtonHeal() {
 // Bottone NEXT
 function setButtonNext(){
     document.getElementById('next_button').addEventListener("click", function(){        
-        if (!enemyAlive) window.location.replace('http://localhost:8080//m5/mission-start'); 
+        if (!enemyAlive)
+        {
+            fetchFromServer("dialog-index").then(index=>{
+                client_index = index.current_index; // salva index su index globale
+                movelines(1);
+                window.location.replace('http://localhost:8080//m5/mission-start');
+            });
+        }
         else {
         fetchData("random-chance", getRand);
         fetchData("enemies-list", enemyAttack);
@@ -282,4 +275,29 @@ function toggleActionButtons(show) {
     document.getElementById('magic_button').style.visibility = visibility;
     document.getElementById('heal_button').style.visibility = visibility;
     document.getElementById('next_button').style.visibility = show ? "hidden" : "visible";
+}
+
+function movelines(step)
+{
+    client_index += step; // incrementa index di quanto indicato dallo step
+    const data = {"current_index": client_index}; // crea oggetto da inviare al server
+    sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
+}
+
+function fetchFromServer(request)
+{
+    return fetch("http://localhost:8080/m5/" + request)
+    .then((response) => { // check risposta 
+        if(!response.ok)
+            throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
+        return response.json(); // ritorna la risposta codificata in json
+    })
+    .then((data) => {
+        console.log("fetched data:",data);
+        return data; // return data
+    })
+    .catch((err) => {
+        console.error('request erro: ',err); //log errore a console
+        throw err;
+    })
 }
