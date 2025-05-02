@@ -36,16 +36,32 @@ function updateMission(data) {
 
 // Esempio di dati ricevuti dal server
 const esempio = {
-    description: "Sono il perfido Dr. Malvagio! Se non rispondi correttamente a questa domanda, ti trasformerò in un gatto! Quant'è 2 + 2?",
-    answers: ["5", "4", "Cane", "134523"],
-    image: "https://spacejockeyreviews.com/wp-content/uploads/2013/08/Dr.-Malvegio-011.jpg"
+    description: "Sono la strega cattiva, rispondi correttamente o ti ridurrò in polvere! Ho città, ma non case. Ho montagne, ma non alberi. Ho acqua, ma non pesce. Che cosa sono?",
+    answers: ["Una mappa", "Un castello", "L'Italia", "Una valigia"],
+    image: "https://www.onestoespietato.com/wp-content/uploads/2014/06/maleficent.jpg"
 };
 
 updateMission(esempio);
-v
 function Sconfitta(){
     window.location.href="../Missione5/Missione_Finale/pagina_boss_finale/sconfitta.html";
 }
 function MissioneSuccessiva(){
     window.location.href="../Missione5/Missione2/memory/index.html";
+}
+
+function invia() {
+    const risposta = document.querySelector('input[name="answer"]:checked');
+    if (!risposta) {
+        alert("Seleziona una risposta!");
+        return;
+    }
+
+    const rispostaCorretta = 1; // Indice corretto (1 = "Una mappa")
+    if (parseInt(risposta.value) === rispostaCorretta) {
+        alert("Risposta corretta!");
+        MissioneSuccessiva();
+    } else {
+        alert("Risposta sbagliata!");
+        Sconfitta();
+    }
 }

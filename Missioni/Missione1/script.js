@@ -36,3 +36,20 @@ function Sconfitta(){
 function MissioneSuccessiva(){
     window.location.href="parte grafica.html";
 }
+
+function invia(){
+    let risposta = document.querySelector('input[name="risposta"]:checked');
+    console.log(risposta.value); 
+    if (!risposta) {
+        alert("Seleziona una risposta!");
+        return;
+    }
+    let rispostaCorretta = "Blu"; //risposta corretta
+    if (risposta.value === rispostaCorretta) { //se la risposta è corretta
+        alert("Risposta corretta!"); //messaggio di successo
+        MissioneSuccessiva(); //passa alla missione successiva
+    } else {
+        alert("Risposta sbagliata!"); //messaggio di errore
+        Sconfitta(); //passa alla schermata di sconfitta
+    }
+}
