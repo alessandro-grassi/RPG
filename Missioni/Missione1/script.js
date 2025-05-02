@@ -2,6 +2,7 @@ const timerDisplay = document.getElementById("timer");
 const gameContainer = document.getElementById("game-container");
 const restartButton = document.getElementById("restart-button");
 const backButton = document.getElementById("back-button");
+//const character = get_personaggio();
 
 let clicks = 0;
 
@@ -18,11 +19,13 @@ function startGame() {
 // Inizia la missione
 function startMission() {
   const playerClass = document.getElementById("classe").value;
+
   const abilities = Array.from(
     document.querySelectorAll('input[name="abilita"]:checked')
   ).map((checkbox) => checkbox.value);
 
   // Simulazione dei dati ricevuti dal server
+
   const data = {
     tempo:
       playerClass === "assassino" ? 50 : playerClass === "clerico" ? 70 : 60,
