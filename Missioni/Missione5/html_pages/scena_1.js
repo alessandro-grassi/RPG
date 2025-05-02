@@ -260,20 +260,20 @@ function setButtonNext(){
             this.style = "visibility: hidden";
         }
         else {
-            fetchFromServer("dialog-index").then(index=>{
-                client_index = index.current_index; // salva index su index globale
-                movelines(1);
-                window.location.replace('http://localhost:8080//m5/mission-start');
+            fetchFromServer("dialog-index").then(index => {
+                client_index = index.current_index;
+                movelines(1).then(() => {
+                    window.location.replace('http://localhost:8080/m5/mission-start');
+                });
             });
         }
     })
 }
 
-function movelines(step)
-{
-    client_index += step; // incrementa index di quanto indicato dallo step
-    const data = {"current_index": client_index}; // crea oggetto da inviare al server
-    sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
+function movelines(step) {
+    client_index += step;
+    const data = { "current_index": client_index };
+    return sendToServer("update-index", data);
 }
 
 function fetchFromServer(request)
@@ -294,15 +294,13 @@ function fetchFromServer(request)
     })
 }
 
-// funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
-function sendToServer(request,data)
-{
-    fetch("http://localhost:8080/m5/" + request,{
-        method:"POST", // metodo richiesta
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(data) // dati da inviare in formato json
-    })
-
+// Funzione per inviare dati al server
+function sendToServer(request, data) {
+    return fetch("http://localhost:8080/m5/" + request, {
+        method: "POST", 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
 }
 
 function getRand(json){
@@ -385,4 +383,3 @@ function gameover(){
 function setLifePointsPG(){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }
-
