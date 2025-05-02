@@ -2,21 +2,21 @@
 <html lang="it">
     <head>
         <meta charset="UTF-8">
-        <title>mission-start-1</title>
+        <title>mission-scena-1</title>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="http://localhost:8080/m5/styletest">
         <script src="http://localhost:8080/m5/script-scena-1"></script>
     </head>
     <body>
         <div class="image-container">
-            <img src="http://localhost:8080/m5/get-image/Castle_gates.jpg" alt="RPG Scene" class="game_image" >
+            <img src="http://localhost:8080/m5/get-image/Castle_gates.jpg" alt="RPG Scene" class="game-image" >
             <div class="overlay-image" id="overlay">
                 <div class="life-text" id="Center-text-box">
                     <p id="name-text" style="font-size: 25px;"></p>
                     <p id="vita-text"></p>
                     <progress class="life" id="vita"></progress>
                 </div>
-                <img id="image_guardian" class="boss" src="">
+                <img id="image_guardian" class="boss" style="zoom:80%;" src="">
             </div>
         </div>
         
@@ -42,7 +42,7 @@
                 <p class="dialog-text" id="text"></p>
                 <button class="dialog-button" id="next_button" style="visibility: hidden;">Next</button>
             </div>
-            <audio id="boss_sound" src="" preload="auto"></audio>
+            <audio id="boss_sound" src="" type="audio/wav" preload="auto"></audio>
         </div>
     </body>
 </html>

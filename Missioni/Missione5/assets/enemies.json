@@ -96,6 +96,7 @@
                 "move_name": "Spada delle Mille Anime",
                 "move_type": "Unique",
                 "bonus_schivata": 25,
+                "chance": 0,
                 "damage_type": "both"
             },
             {
