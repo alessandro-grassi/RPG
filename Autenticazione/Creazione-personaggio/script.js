@@ -77,6 +77,7 @@ function mostraAbilita(){
 function fillAb(json){
   str = "<option value='default'>Seleziona abilita'</option>"
   json.forEach(a =>{
+    if (a!="default")
     str+="<option value='"+a+"'>"+a+"</option>";
   })
   document.getElementById("ab1").innerHTML=str;
@@ -120,7 +121,7 @@ function crea_personaggio(){
     class: classe,
     ability1 : ab1,
     ability2 : ab2,
-    ability2 : ab2
+    ability3 : ab3
   };
   fetch('http://localhost:8080/personaggio/crea_personaggio', {
     method: 'POST',
