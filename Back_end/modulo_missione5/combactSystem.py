@@ -2,35 +2,10 @@ import random
 from Back_end import queryLib
 import json
 
-lifes = {
-    "player" : 10,
-    "enemy1" : 5
-}
-manas = {
-    "player" : 10,
-    "enemy1" : 5
-}
-
-# defaul insert
-#  INSERT INTO m5_current_boss (utente, boss_name, healt, bonus_attack, bonus_attack_duration, bonus_defense, bonus_defense_duration)
-#  VALUES ('nome utente', 'pagina 0', 0, 0, 0, 0, 0);
-
-#  UPDATE m5_current_boss
-#  SET boss_name = 'Nuovo Nome Boss',
-#      healt = 100,
-#      bonus_attack = 5,
-#      bonus_attack_duration = 10,
-#      bonus_defense = 2,
-#      bonus_defense_duration = 5
-#  WHERE utente = 'nome utente';
-
-# !! da aggiungere vulnerabilita fisica e magica sul database
 
 def enemy_attack(userName):
 
     player_set_healt(userName, 600)
-    queue_defense_duration = None
-    queue_attack_duration = None
     #get enemy name
     #enemy_set_boss_name(userName, "Guardiano di Rocciascura")
     enemyName = enemy_get_boss_name(userName)
