@@ -124,9 +124,6 @@ def check_get(path:str):
         r = f.read()
         f.close()
         return r.encode("utf-8")
-    else:
-        return "Percorso non valido!".encode("utf-8")
-
 
     elif path== PREFIX + "script-scena-1":
         f = open("Missioni/Missione5/html_pages/scena_1.js", "rb")
