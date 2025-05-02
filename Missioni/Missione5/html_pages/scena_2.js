@@ -281,8 +281,6 @@ function toggleActionButtons(show) {
 function movelines(step) {
     client_index += step;
     const data = { "current_index": client_index };
-
-    // Return the fetch Promise so we can wait for it
     return sendToServer("update-index", data);
 }
 
