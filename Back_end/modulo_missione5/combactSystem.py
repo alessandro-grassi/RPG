@@ -253,7 +253,7 @@ def get_max_player_healt(characterId):
         WHERE id = {characterId};
     """)   
     print("vigore: ", vigore)
-    return 300
+    return vigore[0][0] * 100
 
 def player_die(userName):
     page = enemy_get_boss_name(userName)                        
@@ -291,12 +291,22 @@ def enemy_set_boss_name(userName, enemyName):
         WHERE utente = '{userName}';
     """)
 
+def enemy_get_max_healt(userName):
+    enemyName = enemy_get_boss_name(userName)
+    enemyData = enemy_get_data(enemyName)
+    if enemyData != None:
+        return enemyData["stats"]["vita"]
+    else:
+        return 0
+
 def enemy_damage(userName, enemyName, damage):
     currentHealt = enemy_get_healt(userName, enemyName)
     if currentHealt > 0:
         newHealt = currentHealt - damage
         if newHealt < 0:
             newHealt = 0
+        if newHealt > enemy_get_max_healt(userName):
+            newHealt = enemy_get_max_healt(userName)
         enemy_set_healt(userName, enemyName, newHealt)
     else:
         enemy_set_healt(userName, enemyName, 0)
@@ -344,6 +354,8 @@ def player_damage(userName, damage):
         newHealt = currentHealt - damage
         if newHealt < 0:
             newHealt = 0
+        if newHealt > get_max_player_healt(userName):
+            newHealt = get_max_player_healt(userName)
         player_set_healt(userName, newHealt)
     else:
         player_set_healt(userName, 0)
