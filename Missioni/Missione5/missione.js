@@ -12,12 +12,18 @@ let dialogLines; // variabile globale per lo store delle linee di dialogo da sco
 let imageMapping; // variabile usata per salvare la mappatura delle immagini
 let client_index; // variabile globale per lo store lato client dell'index a cui si trova il dialogo e le immagini
 
-
 // funzione usata per impostare l'evento legato al bottone per far avanzare o tornare indietro il testo
 function setButton(){
-    document.getElementById("next-button").addEventListener("click",function(){
-        movelines(1); // imposta incremento linee
+    const container = document.getElementById("dialog-container"); // prende container per bottone
+    const nextButton = document.createElement("button"); // crea bottone next
+    nextButton.className = "dialog-button";
+    nextButton.id = "next-button"; // aggiunge id bottone
+    nextButton.textContent = "next"; // imposta text content
+    nextButton.addEventListener("click",()=>{
+            movelines(1); // imposta incremento linee
     });
+    container.appendChild(nextButton); // appende bottone a container
+    skipButton(); // aggiunge skip button assieme a next-button
 }
 
 //funzione che formatta il blocco di dialogo e controlla se ci sono immagini
@@ -32,6 +38,15 @@ function formatDialog(dialogLines)
             });
             return "";
         }
+        if(line.choice == "end") // caso in cui si arriva alla fine della missione
+        {
+            if(line.image == null) // nel caso non ci siano immagini da cambiare
+                finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
+            updateImage(line.image); // fa un update delle immagini
+            endChoice(); // aggiunge bottone di restart missione
+            endMission(); // tasto per uscire dalla missione
+            removeNext(true); // rimuove tasto next
+        }
         else
         {
             if(line.image == null) // nel caso non ci siano immagini da cambiare
@@ -40,6 +55,85 @@ function formatDialog(dialogLines)
         }
     })
     return finalDialog; // restituisce dialogo finale
+}
+
+// funzione che genera due button per ricominciare la missione
+function endChoice()
+{
+    const container = document.getElementById("dialog-container"); // prende container dove mettere bottoni
+    const newRun = document.createElement("button"); // crea bottone di restart missione
+    newRun.textContent = "nuova run"; // imposta text content bottone
+    newRun.id = "new-run-button"; // imposta id al bottone incaso servisse
+    newRun.className = "dialog-button"; // classe per styling
+    newRun.onclick = function() { // event handler per click bottone
+        const data = {"current_index":0}; // setta index a 0 per far ricominciare la missione
+        sendToServer("update-index",data).then(function(){// invia dati al server
+            window.location.reload(); // ricarica la pagina a nuovo index
+        }); 
+    }
+    container.appendChild(newRun); // appende il bottone al div container
+}
+
+// funzione che fa uscire dalla missione
+function endMission()
+{
+    const container = document.getElementById("dialog-container");
+    const endRun = document.createElement("button");
+    endRun.textContent = "termina missione";
+    endRun.id = "exit-run";
+    endRun.className = "dialog-button";
+    endRun.onclick = function() {
+        console.log("aggiungere parte che rimanda a selezione missioni");
+    }
+    container.appendChild(endRun);
+}
+
+// sotto funzione che rimuove il button next
+function removeNext(flag)
+{
+    if(flag) // se flag true rimuove next-button
+    {
+        document.getElementById("next-button").remove();
+        document.getElementById("skip-button").remove();
+    }
+    else // rimuove tasti di fine missione
+    {
+        document.getElementById("new-run-button").remove(); // rimuove bottone 
+        document.getElementById("exit-run").remove(); // rimuove bottone
+        setButton(); // imposta bottone next
+    }
+}
+
+// funzione che crea il tasto skip
+function skipButton()
+{
+    const container = document.getElementById("dialog-container"); // prende container
+    const skipButton = document.createElement("button"); // crea bottone di skip
+    skipButton.textContent = "salta dialoghi"; // textcontent bottone
+    skipButton.id = "skip-button"; // setta id
+    skipButton.className = "dialog-button"; // classe per styling
+    skipButton.onclick = function() {
+        moveToFight(); // sposta al primo fight trovato
+    }
+    container.appendChild(skipButton); // aggiunge bottone skip a container
+}
+
+// sotto funzione che recuperar gli index che fanno partire i fight
+function moveToFight()
+{
+    let flag = false; // indica se è stata trovata una fight
+    let i = client_index;
+    while( i+1 < dialogLines.length && flag == false) // while itera i blocchi di dialogo a partire da quello corrente
+    {
+        dialogLines[i].forEach(line => { // itera ogni linea del blocco
+            if(line.fight != null || line.choice != null) // caso in cui trova una linea che avvia un fight
+            {
+                flag = true; // fa terminare loop
+                movelines(i-client_index); // sposta la pagina allo start della boss fight
+            }
+        });
+        i ++; // incrementa i per andare al prossimo blocco di dialogo
+    }
 }
 
 // funzione che permette di modificare l'index dei dialoghi
