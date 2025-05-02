@@ -146,19 +146,25 @@ def verifica_parola(parola_tentativo):
             indizio_index = len(db["stato_gioco"]["indizi_sbloccati"])
             nuovo_indizio = indizi_disponibili[indizio_index]
             db["stato_gioco"]["indizi_sbloccati"].append(nuovo_indizio)
-            print(f"Indizio sbloccato: {nuovo_indizio}")
+            
+        # -1 contatore delle partite rimaste
+        db["stato_gioco"]["tentativi_rimasti"] -= 1
+        
+        # reset contatore dei tentativi
+        db["stato_gioco"]["tentativi_nella_partita_corrente"] = 0
         
         # Cambia la parola corrente per il prossimo round
         vecchia_parola = db["stato_gioco"]["parola_corrente"]
         while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
             db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
-        print(f"Nuova parola corrente: {db['stato_gioco']['parola_corrente']}")
         
         salva_database(db)
+        
         return {
             "esito": "successo",
             "messaggio": "Complimenti! Hai indovinato la parola!",
-            "risultato": risultato
+            "risultato": risultato,
+            "redirect": "/missione4/prima_pagina.html"
         }
     else:
         # Inizializza o incrementa i tentativi nella partita corrente

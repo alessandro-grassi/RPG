@@ -176,6 +176,7 @@
                             creaGriglia();
                             document.getElementById('messaggio-stato').textContent = 'Hai sbloccato un nuovo indizio! Prova con una nuova parola.';
                             caricaTentativiRimasti();
+                            window.location.href = response.redirect;
                         }, 2000);
                     } else if (data.esito === 'fallimento') {
                         // Tentativi esauriti - mostra messaggio di fallimento

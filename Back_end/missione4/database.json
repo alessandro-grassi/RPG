@@ -19,11 +19,13 @@
     "successo"
   ],
   "stato_gioco": {
-    "tentativi_rimasti": 5,
+    "tentativi_rimasti": 3,
     "tentativi_nella_partita_corrente": 0,
-    "indizi_sbloccati": [],
-    "parola_corrente": "luogo",
-    "parola_finale": "tesoro"
+    "indizi_sbloccati": [
+      "Un rompicapo che sfida la mente"
+    ],
+    "parola_corrente": "monte",
+    "parola_finale": "enigma"
   },
   "tutti_indizi": {
     "enigma": [
