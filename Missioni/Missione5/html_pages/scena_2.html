@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <title>mission-start</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="http://localhost:8080/m5/styletest">
+        <script src="http://localhost:8080/m5/script-scena-2"></script>
+    </head>
+    <body>
+        <div class="image-container">
+            <img src="http://localhost:8080/m5/get-image/Library.png" alt="RPG Scene" class="game_image">
+            <div class="overlay-image" id="overlay">
+                <div class="life-text" id="Center-text-box">
+                    <p id="name-text" style="font-size: 25px;"></p>
+                    <p id="vita-text"></p>
+                    <progress id="vita"></progress>
+                </div>
+                <img id="image_mage" src="">
+            </div>
+        </div>
+        
+        <div class="combat-box">
+            <div class="dialog-box">
+                <div class="player-life-text" id="player-life-box">
+                    <p id="vita-text-pg"> </p>
+                    <progress id="vita-pg" value="500" max="500"></progress>
+                </div>                                           
+                <button class="dialog-button" id="attack_button">Attack</button>
+                <button class="dialog-button" id="magic_button">Magic</button>
+                <button class="dialog-button" id="heal_button">Cure</button>
+            </div>
+            <div class="dialog-box">
+                <p class="dialog-text" id="text"></p>
+                <button class="dialog-button" id="next_button" style="visibility: hidden;">Next</button>
+            </div>
+        </div>
+        <div id="screen-flash"></div>
+    </body>
+</html>

@@ -67,13 +67,6 @@ def connetti()->None:
     global connection
     print("Connessione al DB...")
     try:
-        connection = psycopg2.connect(
-            user=user,
-            password=r"Magistri.cumacini25",
-            host=host,
-            port=port,
-            dbname=dbname
-        )
         print("Connection successful!")
 
         # Create a cursor to execute SQL queries
@@ -81,11 +74,3 @@ def connetti()->None:
 
     except Exception as e:
         raise ConnectionError(f"La connessione a Supabase è fallita. Motivo: \n\t{e}")
-
-
-user = "postgres.wzpwffetdfjgngwcpyuq"
-host = "aws-0-eu-central-1.pooler.supabase.com"
-port = 6543
-dbname = "postgres"
-connection = None
-cursor = None
