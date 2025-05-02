@@ -1,0 +1,14 @@
+{
+    "nemico1":{
+        "nome":"pietro",
+        "vita":500,
+        "mosse":["fendente","magia"],
+        "dialoghi":["frase1","frase2"]
+    },
+    "nemico2":{
+        "nome":"giovanni",
+        "vita":500,
+        "mosse":["fendente","magia"],
+        "dialoghi":["frase1","frase2"]
+    }
+}

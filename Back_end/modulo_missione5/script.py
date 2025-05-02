@@ -39,13 +39,20 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-    
-    elif path == PREFIX+"castle-front":
-        with open("Missioni/Missione5/assets/castle-front.jpg", "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
+        
+    # getter pagine missioni, da cambiare in una funzione generalizzata
+    elif path == PREFIX+"mission-scena-1":
+        with open("Missioni/Missione5/html_pages/scena_1.html", "r") as f:
             r = f.read()
             f.close()
-            return r
-        
+            return r.encode("utf-8")
+    
+    elif path == PREFIX+"mission-scena-3":
+        with open("Missioni/Missione5/html_pages/scena_3.html", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+
     elif path == PREFIX+"api-test":
         with open("Missioni/Missione5/api-test.html", "r") as f: # usare r per richieste sui file
             r = f.read()
@@ -56,11 +63,6 @@ def check_get(path:str):
         name = path.split("/")[4]
         life = str (combactSystem.get_life(name))
         return ('{"result":"'+life+'"}').encode("utf-8")
-    
-    elif path.startswith( PREFIX_API+"get-stats/"):
-        stats = combactSystem.get_stats()
-        resp = json.dumps({"result": stats}).encode("utf-8")  # Converto in stringa JSON e poi in bytes
-        return resp
     
     elif path.startswith(PREFIX_API+"get-mana/"):
         name = path.split("/")[4]
@@ -81,13 +83,19 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-    
-    # prende le linee di testo da far scorrere per i dialoghi
-    elif path == PREFIX + "get-dialogue":
-        with open("Missioni/Missione5/assets/dialogs.json", "r") as f:
+        
+    elif path == PREFIX + "script-scena-3":
+        with open("Missioni/Missione5/html_pages/scena_3.js") as f:
             r = f.read()
             f.close()
-            return r.encode("utf-8") # encode per restituire i contenuti del file json come stringa da convertire in json dopo
+            return r.encode("utf-8")
+    
+    # prende le linee di testo da far scorrere per i dialoghi
+    elif path == PREFIX + "get-dialog":
+        with open("Missioni/Missione5/assets/dialogs.json", "rb") as f:
+            r = f.read()
+            f.close()
+            return r # encode per restituire i contenuti del file json come stringa da convertire in json dopo
     
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":
@@ -130,11 +138,6 @@ def check_post(path,clientchoice):
             combactSystem.do_damage(name, int(value))
             return '{"result":"Damage done successfully"}'.encode("utf-8")
         
-        elif path == PREFIX_API+"do-damage-boss":
-            mossa = combactSystem.do_damage_boss()
-            resp = json.dumps({"result": "Il boss ha usato la mossa "+mossa["mossa"]+ " causando "+ str(mossa["danno"])+" danni"}).encode("utf-8")  # Converto in stringa JSON e poi in bytes
-            return resp
-        
         elif path == PREFIX_API+"use-mana":
             name = clientchoice['name']
             value = clientchoice['value']
@@ -147,13 +150,22 @@ def check_post(path,clientchoice):
             attack_name = clientchoice['attack_name']
             combactSystem.attack(attacker_name, attacked_name, attack_name)
             return '{"result":"Attack executed successfully"}'.encode("utf-8")
-        
+
         #aggiorna index dialoghi e immagini lore
         elif path == PREFIX + "update-index":
             print(clientchoice) # print per debug
-            update_index(clientchoice["current_index"])
-            return json.dumps({"status": "success"}).encode()  # Return JSON-encoded bytes
-        return json.dumps({"status": "error"}).encode()  # Ensure a valid JSON response
+            update_progress(clientchoice["current_index"],"current_index")
+            return json.dumps({"status": "success"}).encode() 
+        
+        #aggiorna l'ultima immagine vista nel file json
+        elif path == PREFIX + "update-last_image":
+            update_progress(clientchoice["last_image"],"last_image")
+            return json.dumps({"status": "success"}).encode() 
+        
+        return json.dumps({"status": "error"}).encode()
+    
+    
+
 
         
     except KeyError as e:
@@ -164,16 +176,18 @@ def check_post(path,clientchoice):
         return f'{{"error":"An error occurred: {str(e)}"}}'.encode("utf-8")
     
 
-# funzione usata per aggiornare l'index del dialogo a cui si è arrivati nella storia
-def update_index(index):
+# funzione usata per aggiornare l'index del dialogo e ultima immagine a cui si è arrivati nella storia
+def update_progress(data,target):
     json_file = open("Missioni/Missione5/assets/progress.json", "r")  # legge il file json
     parsed_data = json.loads(json_file.read()) # fa il parse in formato json della stringa
     json_file.close()
-    parsed_data["current_index"] = index # imposta il nuovo index
+    parsed_data[target] = data # imposta il campo con i dati 
     converted_data = json.dumps(parsed_data, indent=4) # converte i dati in formato json
     json_file = open("Missioni/Missione5/assets/progress.json", "w") # apre il file in lettura
     json_file.write(converted_data) # scrive sul file json i dati
     json_file.close() # chiude il file
+    
+
 
 if __name__ == "__main__":
     print(

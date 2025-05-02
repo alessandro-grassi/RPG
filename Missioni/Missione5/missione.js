@@ -1,34 +1,53 @@
 document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
-    fetchData("get-dialogue",setLines); // prende le linee di testo
-    fetchData("dialog-index",moveLines); // aggiorna l'index per le linee correnti e le prossime
+    fetchFromServer("get-dialog").then(data=>{ // fetch dei dialoghi dal server
+        dialogLines = data;// assegna le linee di dialogo alla variabile globale});
+     });
+    fetchFromServer("dialog-index").then(index=>{
+        document.getElementById("dialog-box").textContent = formatDialog(dialogLines[index.current_index]); // imposta index corrente
+        client_index = index.current_index; // salva index su index globale
+    });
     setButton();
 });
-
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
+let imageMapping; // variabile usata per salvare la mappatura delle immagini
+let client_index; // variabile globale per lo store lato client dell'index a cui si trova il dialogo e le immagini
 
-// funzione usata per impostare l'evento legato al bottone per far avanzare il testo
+
+// funzione usata per impostare l'evento legato al bottone per far avanzare o tornare indietro il testo
 function setButton(){
     document.getElementById("next-button").addEventListener("click",function(){
-        fetchData("dialog-index",moveLines) // fa un fetch dell'index
+        movelines(1); // imposta incremento linee
     });
 }
 
-// funzione che fa avanzare le linee di testo in base all'index ricevuto e aggiorna l'index lato server
-function moveLines(index)
+//funzione che formatta il blocco di dialogo e controlla se ci sono immagini
+function formatDialog(dialogLines)
 {
-    console.log("index:");
-    console.log(index);
-    document.getElementById("dialog-box").textContent = dialogLines[index.current_index];
-    const data = {"current_index": index.current_index + 1}; // dati con index da inviare
-    sendToServer("update-index",data); // invia il nuovo index al server
+    let finalDialog = "" // crea una variabile in cui fare lo store delle linee
+    dialogLines.forEach(line =>{ // itera ogni linea della cella di dialogo
+        if(line.fight != null) // controlla se ci sono reindirizzamenti a pagine di combattimento
+            window.location.replace("http://localhost:8080/m5/" + line.fight); // redirect in modo che non si possa fare back alla pagina precedente
+        else
+        {
+            if(line.image == null) // nel caso non ci siano immagini da cambiare
+                finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
+            updateImage(line.image); // fa un update delle immagini
+        }
+    })
+    return finalDialog; // restituisce dialogo finale
 }
 
-// funzione che aggiusta il formato dele linee passate dal database e le inserisce in una variabile
-function setLines(data)
+// funzione che permette di modificare l'index dei dialoghi
+function movelines(step)
 {
-    let lines = data.flatMap(obj => obj.text); // prende ogni linea di testo per gli oggetti estratti e la mappa all'oggetto
-    console.log (lines); // log del risultato per check e debug
-    dialogLines = lines; // assegna le linee di dialogo alla variabile globale
+    if(client_index + step < dialogLines.length)
+    {
+        client_index += step; // incrementa index di quanto indicato dallo step
+        const data = {"current_index": client_index}; // crea oggetto da inviare al server
+        sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
+    }
+    document.getElementById("dialog-box").textContent = formatDialog(dialogLines[client_index]); // imposta i dialoghi all' index corrente
+    updateImage();
 }
 
 // funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
@@ -56,21 +75,36 @@ function sendToServer(request,data)
     });
 }
 
-// funzione usata per fare il fetch dei dati dal server e passarli a una funzione data come parametro
-function fetchData(request,callback)
+// funzione di fetch a server a scopo generico
+function fetchFromServer(request)
 {
-    fetch("http://localhost:8080/m5/" + request) // fetch url con richiesta
-    .then(response => {
-        if(!response.ok) // check stato risposta
+    return fetch("http://localhost:8080/m5/" + request)
+    .then((response) => { // check risposta 
+        if(!response.ok)
             throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
         return response.json(); // ritorna la risposta codificata in json
     })
-    .then(data => { // prende i dati ottenuti
-        console.log("fetched data: ");
-        console.log(data) // log dati per debug
-        callback(data); // chiama la funzione di callback a cui passare i dati ottenuti
+    .then((data) => {
+        console.log("fetched data:",data);
+        return data; // return data
     })
-    .catch(err => { // catch dell'errore in modo da stamparlo a console
-        console.error('request error',err); // log dell'errore a console
-    });
+    .catch((err) => {
+        console.error('request erro: ',err); //log errore a console
+        throw err;
+    })
+}
+
+// funzione per aggiornare le immagini in base al dialogo
+function updateImage(current_image)
+{
+    if(current_image != null)
+    {
+        document.getElementById("background-image").setAttribute("src", "http://localhost:8080/m5/get-image/" + current_image); // cambia l'attributo del tag con il percorso per l'immagine necessaria
+        const data = {"last_image": current_image}; // crea oggetto da inviare al server
+        sendToServer("update-last_image", data);
+    }
+    else
+        fetchFromServer("dialog-index").then((image)=>{ // in caso non ci siano immagini da impostare prende l'ultima salvata
+            document.getElementById("background-image").setAttribute("src","http://localhost:8080/m5/get-image/" + image.last_image); // carica ultima immagine salvata su progress.json
+        });
 }
