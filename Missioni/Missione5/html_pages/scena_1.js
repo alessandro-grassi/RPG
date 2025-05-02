@@ -313,12 +313,7 @@ function setButtonNext(){
             this.style = "visibility: hidden";
         }
         else {
-            fetchFromServer("dialog-index").then(index => {
-                client_index = index.current_index;
-                movelines(1).then(() => {
-                    window.location.replace('http://localhost:8080/m5/mission-start');
-                });
-            });
+            window.location.replace("http://localhost:8080/m5/mission-start"); // rimanda a mission start
         }
     })
 }

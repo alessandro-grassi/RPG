@@ -102,12 +102,20 @@ def check_get(path:str):
     
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":
+<<<<<<< HEAD
         with open("Missioni/Missione5/assets/progress.json") as f:
             r = f.read()
             f.close()
             return r.encode("utf-8")
         
      #funzione usata per recuperare le immagini in base al nome richiesto
+=======
+        out = combactSystem.get_dialog_index("provaM5")
+        out = json.dumps(out, indent=4) # converte in formato json
+        return out.encode("utf-8")
+     
+    #funzione usata per recuperare le immagini in base al nome richiesto
+>>>>>>> 0ada948721d2af7ee6f76019b2142a0abf6e338a
     elif path.startswith(PREFIX+"get-image/"):
         image_name = path.split("/")[3] # fa uno split e prende la 4a cella
         with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
@@ -134,10 +142,6 @@ def check_get(path:str):
         return r
     
     # combactSystem
-    elif path.startswith(PREFIX_API + "enemy-attack/"):
-        username = path.split("/")[4]
-        combactSystem.enemy_attack(username)
-        return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
     elif path.startswith(PREFIX_API + "get-enemy-life/"):
         username = path.split("/")[4]
         life = combactSystem.enemy_get_healt(username)
@@ -150,7 +154,7 @@ def check_get(path:str):
         characterId = path.split("/")[4]
         life = combactSystem.get_max_player_healt(characterId)
         return ('{"result":"' + str(life) + '"}').encode("utf-8")
-    elif path.startswith(PREFIX_API + "get-attack-list/"):
+    elif path.startswith(PREFIX_API + "get-ability-list/"):
         characterId = path.split("/")[4]
         attack_list = combactSystem.get_character_abilities(characterId)
         return json.dumps(attack_list).encode("utf-8")
@@ -169,6 +173,12 @@ def check_post(path,clientchoice):
     try:
 
         # combactSystem
+        if path == PREFIX_API + "enemy-attack":
+            userName = clientchoice["username"]
+            characterId = clientchoice["characterId"]
+            combactSystem.enemy_attack(userName, characterId)
+            return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
+        
         if path == PREFIX_API + "player-attack":
             # recupera il nome dell'utente dalla richiesta
             userName = clientchoice["username"]
