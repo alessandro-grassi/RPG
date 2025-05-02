@@ -15,17 +15,25 @@ def enemy_attack(userName, characterId):
     enemyData = enemy_get_data(enemyName)
     #choose random attack
     moveCount = len(enemyData["moves"])
-    moveIndex = rand(0, moveCount - 1)
+    movesChances = []
+    for move in enemyData["moves"]:
+        if move.get("chance") != None:
+            movesChances.append(move["chance"])
+    randn = rand(0, 100)
+    chanceSum = 0
+    moveIndex = 0
+    for chance in movesChances:
+        chanceSum += chance
+        if randn < chanceSum:
+            break
+        moveIndex += 1
+    if moveIndex >= moveCount:
+        moveIndex = moveCount - 1
+
     move = enemyData["moves"][moveIndex]
     missed = False
 
 
-    if move.get("chance") != None:
-        chance = move["chance"]
-        randn = rand(0, 100)
-        if randn > chance:
-            print("miss: ", randn)
-            missed = True
     criticoMissed = False
     if enemyData.get("critico") != None:
         critico = enemyData["critico"]
@@ -34,35 +42,35 @@ def enemy_attack(userName, characterId):
             criticoMissed = True
 
     #execute move
-    if not missed:
-        if move.get("damage_type") != None:
 
-            damage_type = move["damage_type"]
-            if move.get("damge_fis_perc") != None:
-                damage = player_get_healt * move["damge_fis_perc"] / 100
-            if move.get("damge_mag_perc") != None:
-                damage = player_get_healt * move["damge_mag_perc"] / 100
-            else:
-                if damage_type == "fisico":
-                    damage = enemyData["stats"]["danno_fis_base"]
-                if damage_type == "magico":
-                    damage = enemyData["stats"]["danno_mag_base"]
-                if damage_type == "both":
-                    damage = enemyData["stats"]["danno_fis_base"] + enemyData["danno_mag_base"]
-            
-            damage += get_bonuses_sums(userName, "boss", "attack")
-            damage -= get_bonuses_sums(userName, "player", "defense")
+    if move.get("damage_type") != None:
 
-            player_damage(userName, damage)
-            print("damage: ", damage)
-            print("damage type: ", damage_type)
+        damage_type = move["damage_type"]
+        if move.get("damge_fis_perc") != None:
+            damage = player_get_healt * move["damge_fis_perc"] / 100
+        if move.get("damge_mag_perc") != None:
+            damage = player_get_healt * move["damge_mag_perc"] / 100
+        else:
+            if damage_type == "fisico":
+                damage = enemyData["stats"]["danno_fis_base"]
+            if damage_type == "magico":
+                damage = enemyData["stats"]["danno_mag_base"]
+            if damage_type == "both":
+                damage = enemyData["stats"]["danno_fis_base"] + enemyData["danno_mag_base"]
+        
+        damage += get_bonuses_sums(userName, "boss", "attack")
+        damage -= get_bonuses_sums(userName, "player", "defense")
+
+        player_damage(userName, damage)
+        print("damage: ", damage)
+        print("damage type: ", damage_type)
 
 
 
-        if move.get("recupero_vita") != None:
-            recupero_vita = move["recupero_vita"]
-            enemy_damage(userName, enemyName, -recupero_vita)
-            print("recupero vita: ", recupero_vita)
+    if move.get("recupero_vita") != None:
+        recupero_vita = move["recupero_vita"]
+        enemy_damage(userName, enemyName, -recupero_vita)
+        print("recupero vita: ", recupero_vita)
         
 
     print(get_bonuses(userName))
@@ -104,34 +112,28 @@ def player_attack(userName, attackName):
 
     abData = get_ability_data(attackName) 
     missed = False
-    if abData.get("chance") != None:
-        chance = abData["chance"]
-        randn = rand(0, 100)
-        if randn > chance:
-            print("miss: ", randn)
-            missed = True
-            return
-    if not missed:
-        damage = 0
-        if abData.get("damage_type") != None:
-            damage_type = abData["damage_type"]
-            if damage_type == "fisico":
-                damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
-            if damage_type == "magico":
-                damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
-            if damage_type == "both":
-                damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
-            
-            damage -= get_bonuses_sums(userName, "boss", "defense")
+ 
+ 
+    damage = 0
+    if abData.get("damage_type") != None:
+        damage_type = abData["damage_type"]
+        if damage_type == "fisico":
+            damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
+        if damage_type == "magico":
+            damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
+        if damage_type == "both":
+            damage = abData["damage_value"] + get_bonuses_sums(userName, "player", "attack")
+        
+        damage -= get_bonuses_sums(userName, "boss", "defense")
 
-            enemy_damage(userName, enemyName, damage)
-            print("damage: ", damage)
-            print("damage type: ", damage_type)
+        enemy_damage(userName, enemyName, damage)
+        print("damage: ", damage)
+        print("damage type: ", damage_type)
 
-        if abData.get("heal") != None:
-            heal = abData["heal"]
-            player_set_healt(userName, player_get_healt(userName) + heal)
-            print("heal: ", heal)        
+    if abData.get("heal") != None:
+        heal = abData["heal"]
+        player_set_healt(userName, player_get_healt(userName) + heal)
+        print("heal: ", heal)        
     
 
     #decrement attack and defense duration
@@ -194,13 +196,12 @@ def get_ability_data(abilityName):
         }
         if len(data2) > 0:
             data2 = data2[0]
-            out["chance"] = data2[1]
-            out["damage_type"] = data2[2]
-            out["damage_value"] = data2[3]
-            out["bonus_value"] = data2[4]
-            out["bonus_type"] = data2[5]
-            out["bonus_duration"] = data2[6]
-            out["heal"] = data2[7]
+            out["damage_type"] = data2[1]
+            out["damage_value"] = data2[2]
+            out["bonus_value"] = data2[3]
+            out["bonus_type"] = data2[4]
+            out["bonus_duration"] = data2[5]
+            out["heal"] = data2[6]
     
             
     return out
