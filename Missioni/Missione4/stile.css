@@ -111,3 +111,175 @@ body {
 #indizi li {
     margin: 5px 0;
 }
+
+/* Pagina di Vittoria */
+#vittoria-container {
+    background-color: #ece0c8;
+    padding: 40px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    margin: 20px 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+#vittoria-container h1 {
+    font-weight: 700;
+    color: #b58339;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#vittoria-container .back-button {
+    margin: 15px;
+    padding: 12px 30px;
+    background-color: #b58339;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+#vittoria-container .back-button:hover {
+    background-color: #a06f2e;
+    transform: scale(1.05);
+}
+
+.confetti {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    opacity: 0.8;
+    animation: fall 5s linear infinite;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
+/* Animazione aggiuntiva per i coriandoli */
+@keyframes float {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(20px);
+    }
+}
+
+/* Responsive per dispositivi mobili */
+@media (max-width: 600px) {
+    #vittoria-container h1 {
+        font-size: 1.8rem;
+    }
+    
+    #vittoria-container .back-button {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Pagina di Sconfitta */
+#sconfitta-container {
+    background-color: #ece0c8;
+    padding: 40px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    margin: 20px 0;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+#sconfitta-container h1 {
+    font-weight: 700;
+    color: #6d6d6d;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+}
+
+#sconfitta-container .button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#sconfitta-container .back-button,
+#sconfitta-container .restart-button {
+    margin: 10px;
+    padding: 12px 25px;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+#sconfitta-container .back-button {
+    background-color: #6d6d6d;
+}
+
+#sconfitta-container .back-button:hover {
+    background-color: #5a5a5a;
+    transform: scale(1.05);
+}
+
+#sconfitta-container .restart-button {
+    background-color: #8a5c24;
+}
+
+#sconfitta-container .restart-button:hover {
+    background-color: #6e4a1d;
+    transform: scale(1.05);
+}
+
+/* Effetto pioggia (invece dei coriandoli) */
+.raindrop {
+    position: fixed;
+    width: 2px;
+    height: 15px;
+    background-color: #6d6d6d;
+    opacity: 0.6;
+    animation: rain 3s linear infinite;
+    z-index: 0;
+}
+
+@keyframes rain {
+    0% {
+        transform: translateY(-10vh) translateX(0);
+    }
+    100% {
+        transform: translateY(110vh) translateX(10px);
+    }
+}
+
+/* Responsive per mobile */
+@media (max-width: 600px) {
+    #sconfitta-container h1 {
+        font-size: 1.8rem;
+    }
+    
+    #sconfitta-container .back-button,
+    #sconfitta-container .restart-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}

@@ -81,9 +81,9 @@
             { method: 'POST', body: JSON.stringify({ soluzione: soluz })})
             .then(response => response.json())
             .then(data => {
-                var risposta = data[0];
-                var tentGiocoMax = data[1];
-                var tentGiocoFatti = data[2];
+                var risposta = data["risultato"];
+                var tentGiocoMax = data["tentativiGioco"];
+                var tentGiocoFatti = data["tentativiGiocoFatti"];
 
                 //aggiorna tentativi + metti req input
                 if (risposta == "tentativi esauriti")
@@ -91,10 +91,16 @@
                     alert("mi dispiace ma hai esaurito i tentativi...");
                     var indovinaBtn = document.getElementById("indovinaBtn");
                     indovinaBtn.disabled = true;
+                    resetMissione();
+                    ReindirizzamentoSconfitta();
                 }   
                 else if (risposta == "hai vinto!")
                 {
                     alert("Complimenti, Hai vinto!!!");
+                    var indovinaBtn = document.getElementById("indovinaBtn");
+                    indovinaBtn.disabled = true;
+                    resetMissione();
+                    ReindirizzamentoVittoria();
                 }
                 else
                 {
@@ -106,6 +112,42 @@
                 tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentGiocoMax) - int(tentGiocoFatti));
             })
             .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        ReindirizzamentoPrimaPagina()
+        {
+            fetch('http://localhost:8080/missione4', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        resetMissione()
+        {
+            fetch('http://localhost:8080/resetMissione', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        ReindirizzamentoSconfitta()
+        {
+            fetch('http://localhost:8080/sconfitta', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+        
+        ReindirizzamentoVittoria()
+        {
+            fetch('http://localhost:8080/vittoria', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
         }
 
         //carica gli indizi all'avvio della pagina

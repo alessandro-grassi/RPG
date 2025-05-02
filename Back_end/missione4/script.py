@@ -1,7 +1,6 @@
 from Back_end import queryLib
 
 #la parte post e coneessione al DB la tengo buona ma non so se conviene farla qui o su modulo
-
 def aggiungi_utente(user, pw, em):
     queryLib.connetti()
     a= queryLib.execute(f'''INSERT INTO "utenti" (username, hash, email) VALUES ('{user}','{pw}','{em}')''')
@@ -54,6 +53,20 @@ def check_get(path):
         f.close()
         return stringa.encode("utf-8")
     
+    #pagina vittoria
+    elif path.endswith("vittoria"):
+        f = open("Missioni/Missione4/vittoria.html", "r")
+        stringa = f.read()
+        f.close()
+        return stringa.encode("utf-8")
+    
+    #pagina sconfitta
+    elif path.endswith("sm_home"):
+        f = open("Missioni/Missione4/sconfitta.html", "r")
+        stringa = f.read()
+        f.close()
+        return stringa.encode("utf-8")
+    
     #getDetteagliGenerali
     elif path.endswith("dettagliGenerali"):
         return getDettagliGenerali()
@@ -69,8 +82,11 @@ def check_get(path):
     
     #reset dati gioco
     elif path.endswith("resetGame"):
-    #elif path.contains("dettagliGioco/"):
         return resetGame()
+    
+    #reset dati missione
+    elif path.endswith("resetMissione"):
+        return resetMissione()
     
     '''
     elif path.endswith("trycookie"):

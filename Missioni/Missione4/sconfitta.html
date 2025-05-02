@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peccato, hai perso</title>
+    <link rel="stylesheet" href="http://localhost:8080/missione4/stile"> 
+</head>
+<body>
+    <div id="sconfitta-container">
+        <h1>Peccato, hai perso...</h1>
+        <p>Ma puoi riprovare!</p>
+        <div class="button-group">
+            <button class="back-button" onclick="ReindirizzamentoSceltaMissioni()">Indietro</button>
+            <button class="restart-button" onclick="restartMissione()">Ricomincia</button>
+        </div>
+    </div>
+
+    <script>
+        // Genera gocce di pioggia
+        function createRain() {
+            const container = document.getElementById('sconfitta-container');
+            for (let i = 0; i < 60; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'raindrop';
+                drop.style.left = Math.random() * 100 + 'vw';
+                drop.style.opacity = Math.random() * 0.5 + 0.2;
+                drop.style.height = (Math.random() * 12 + 8) + 'px';
+                drop.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+                drop.style.animationDelay = (Math.random() * 2) + 's';
+                document.body.appendChild(drop);
+            }
+        }
+
+        function ReindirizzamentoSceltaMissioni()
+        {
+            fetch('http://localhost:8080/missione4/sm_home', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        function restartMissione()
+        {
+            fetch('http://localhost:8080/missione4', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        window.addEventListener('load', createRain);
+    </script>
+</body>
+</html>
