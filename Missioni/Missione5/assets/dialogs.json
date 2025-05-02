@@ -151,11 +151,10 @@
   ],
   [
       "Afferando la spada risuonavano ancora in essa urla affievolite del popolo,",
-      "le anime delle persone dentro la spada erano grate ma ancora spaventate.",
-      "Ora era il momento di fare una scelta:"
+      "le anime delle persone dentro la spada erano grate ma ancora spaventate."
   ],
   [
-      "PURIFICA LA SPADA E RIPORTA LA PACE ALLE ANIME DEL REGNO",
-      "MANTIENI LA SPADA IN QUELLE CONDIZIONI PER LE TUE PROSSIME AVVENTURE"
+    "Sei giunto alla fine della tua avventura, cosa vuoi fare?",
+    {"choice":"end"}
   ]
 ]
