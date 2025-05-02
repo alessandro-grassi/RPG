@@ -12,15 +12,15 @@
     </div>
 
     <div id="wordle-container">
-        <h2 id="tentativiH">Tentativi per indovinare: </h2>
+        <h2 id="tentativiH">Tentativi per indovinare: <span id="tentativiSpan"></span></h2>
         <div id="griglia-wordle">
             <!--prima riga come esempio-->
             <div class="riga">
-                <input type="text" maxlength="1" class="lettera">
-                <input type="text" maxlength="1" class="lettera">
-                <input type="text" maxlength="1" class="lettera">
-                <input type="text" maxlength="1" class="lettera">
-                <input type="text" maxlength="1" class="lettera">
+                <input id="l0" type="text" maxlength="1" class="lettera">
+                <input id="l1" type="text" maxlength="1" class="lettera">
+                <input id="l2" type="text" maxlength="1" class="lettera">
+                <input id="l3" type="text" maxlength="1" class="lettera">
+                <input id="l4" type="text" maxlength="1" class="lettera">
             </div>
             <!--altre righe da fare dinamicamente-->
         </div>
@@ -34,8 +34,8 @@
         //onload dei dettagli di gioco
         function getDettagliGioco()
         {
-            numeroProva = localStorage.getItem("numeroProva");
-            fetch('http://localhost:8080/missione4/dettagliGioco/' + numeroProva, 
+            //numeroProva = localStorage.getItem("numeroProva");
+            fetch('http://localhost:8080/missione4/dettagliGioco/' /* + numeroProva*/, 
             { method: 'GET' })  
                 .then(response => response.json())
                 .then(data => {
@@ -44,8 +44,8 @@
                     var tentGiocoFatti = data[1];
 
                     //tentativi per indovinare
-                    var tentativiH = document.getElementById("tentativiH");
-                    tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentGiocoMax) - int(tentGiocoFatti));
+                    var tentSpan = document.getElementById("tentativiSpan");
+                    tentSpan.innerText = str(int(tentGiocoMax) - int(tentGiocoFatti));
                 
                 })
                 .catch(error => console.error("Si è verificato un errore:", error));
@@ -53,12 +53,24 @@
 
         function controllaSoluzioni()
         {
+            //ottengo numero prova
             numeroProva = localStorage.getItem("numeroProva");
-
-
             
-            fetch('http://localhost:8080/missione4/gioca', 
-            {method: 'POST', body: JSON.stringify({numProva: numeroProva})})
+            //inizializzo la variabile della risposta
+            risp = "";
+
+            //ottengo il tentativo di risposta
+            for(var i = 0; i <= 5; i++)
+            {
+                var tempTxt = document.getElementById("l" + i);
+                soluz += tempTxt.innerText;
+            }
+
+            //ottengo il numero del tentativo
+            var tent = document.getElementById("tentativiSpan")
+
+            fetch('http://localhost:8080/missione4/controlla/' + numeroProva, 
+            {method: 'POST', body: JSON.stringify({tentativo: tent.innerText, risposta: risp})})
             .then(response => response.json())
             .then(data => {
                 //estraggo i dettagli dal JSON restituito

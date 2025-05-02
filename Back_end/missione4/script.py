@@ -58,8 +58,8 @@ def check_get(path):
     elif path.endswith("dettagliGenerali"):
         return getDettagliGenerali()
     
-    #elif path.endswith("dettagliGioco"):
-    elif path.contains("dettagliGioco/"):
+    elif path.endswith("dettagliGioco"):
+    #elif path.contains("dettagliGioco/"):
         return getDettagliGioco()
     
     '''
@@ -109,7 +109,7 @@ def check_post(path, client_choice):
             num = path.rsplit('/', 1)[-1]
             tentativo = client_choice["tentativo"]
             risposta = client_choice["risposta"]
-            return indovina(tentativo, risposta)
+            return indovina(num, tentativo, risposta)
         except Exception as errore:
                 return '"errore"'.encode("utf-8")
     
@@ -142,13 +142,13 @@ DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
 '       [' \
 '           "prova1",' \
 '           "prova1"' \
-'       ]' \
+'       ],' \
 
 '       "prove":' \
 '       [' \
-'           { "num": 3, "soluz": "nonna", "ind": "è rosso" },' \
-'           { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           { "num": 1, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
+'           {"soluz": "nonna", "ind": "è rosso" },' \
+'           {"soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
+'           {"soluz": "trave", "ind": "usa spesso il termine BELANDI" }' \
 '       ] }'
 
 dbDict = json.loads(DB)
@@ -169,9 +169,10 @@ def getSoluzione(num):
     return tentDict["soluz"]
 
 
-def indovina(tentativo, risposta):
-    if tentativo <= dbDict["tentativi"]:
-        if risposta == dbDict["soluzione"]:
+def indovina(num, tentativo, risposta):
+    if tentativo <= dbDict["tentativiGioco"]:
+        dbProva = dbDict["prove"][num]
+        if risposta == dbProva["soluz"]:
             print("complimenti! hai indovinato")
         else:
             print("mi dispiace ma non è la risposta corretta")
