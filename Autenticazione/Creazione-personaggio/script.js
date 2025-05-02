@@ -117,17 +117,19 @@ function crea_personaggio(){
   const ab1 = document.getElementById("ab1").value;
   const ab2 = document.getElementById("ab2").value;
   const ab3 = document.getElementById("ab3").value;
-  if(nome==null){
+  const usname = get_utente();
+  if(nome==""){
     alert("Inserisci il nome del personaggio");
   }else{
-    if(classe == null){
+    if(classe == "default"){
       alert("Non hai scelto una classe");
     }else{
-      if(ab1==ab2 || ab1==ab3 || ab2==ab){
+      if(ab1==ab2 || ab1==ab3 || ab2==ab3){
         alert("Non possono esserci abilità uguali");
       }else{
-        if(ab1!=null && ab2==null && ab2==ab3){
+        if(ab1!="default" && ab2=="default" && ab2==ab3){
           const message={
+            username: usname,
             name: nome,
             class: classe,
             ability1 : ab1,

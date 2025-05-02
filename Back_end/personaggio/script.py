@@ -26,7 +26,13 @@ def ottieni_abilita(classe):
     queryLib.disconnetti()
     return 
 
-def aggiungi_personaggio():
+def aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username):
+    queryLib.connetti()
+    statsClasse = queryLib.execute(f''' SELECT classi."Forza", classi."Destrezza", classi."Intelligenza", classi."Fede" FROM "classi" WHERE classi.id ='{classe}' ''')
+    nuovo_personaggio = queryLib.execute(f''' INSERT INTO "personaggi" ("Nome", "Livello", "Vigore", "Forza", "Destrezza", "Intelligenza", "Fede", "id_classe", "creatore") VALUES ('{nome}', 0, '{statsClasse[0]}', '{statsClasse[1]}', '{statsClasse[2]}', '{statsClasse[3]}', '{statsClasse[4]}', '{classe}', '{username}')''')
+    id_personaggio = queryLib.execute(f'''SELECT personaggi.id FROM "personaggi" WHERE personaggi."Nome"= '{nome}' ''')
+    nuovo_personaggio_abilita = queryLib.execute(f''' INSERT INTO "relazione_abilità" (id, ab1, ab2, ab3) VALUES ('{id_personaggio}','{ab1}','{ab2}','{ab3}')''')
+    queryLib.disconnetti()
     return
 
 
@@ -78,4 +84,14 @@ def check_post(path, client_choice):
         f = ottieni_abilita(client_choice)
 
     elif path.endswith("crea_personaggio"):
-        aggiungi_personaggio()
+        try:
+            username = client_choice["username"]
+            nome = client_choice["name"]
+            classe = client_choice["class"]
+            ab1 = client_choice["ability1"]
+            ab2 = client_choice["ability2"]
+            ab3 = client_choice["ability3"]
+            aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username)
+            return '"Registrazione personaggio effettuata con successo!"'.encode("utf-8")
+        except Exception as errore:
+            return '"errore"'.encode("utf-8")
