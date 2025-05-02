@@ -27,6 +27,8 @@ manas = {
 # !! da aggiungere vulnerabilita fisica e magica sul database
 
 def enemy_attack(userName):
+
+
     player_set_healt(userName, 600)
     queue_defense_duration = None
     queue_attack_duration = None
@@ -89,6 +91,9 @@ def enemy_attack(userName):
             recupero_vita = move["recupero_vita"]
             enemy_damage(userName, enemyName, -recupero_vita)
             print("recupero vita: ", recupero_vita)
+        
+
+    print(get_bonuses(userName))
 
         
     
@@ -139,6 +144,7 @@ def enemy_get_boss_name(userName):
                         WHERE utente = '{userName}'
                      """)[0][0]
     return enemyName
+
 
 def enemy_set_boss_name(userName, enemyName):
     queryLib.execute_no_return(f"""
@@ -374,6 +380,75 @@ def player_decrement_defense_bonus_duration(userName):
         player_set_defense_bonus_duration(userName, defense_duration - 1)
     else:
         player_set_defense_bonus_duration(userName, 0)
+
+def get_status(userName):
+    status = queryLib.execute(f"""
+        SELECT status
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(status) > 0:
+        return status[0][0]
+    else:
+        return None
+
+def set_status(userName, status):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET status = '{status}'
+        WHERE utente = '{userName}';
+    """)
+
+def get_bonuses(userName):
+    bonuses = queryLib.execute(f"""
+        SELECT *
+        FROM m5_bonuses
+        WHERE utente = '{userName}';
+    """)
+    if len(bonuses) > 0:
+        return bonuses
+    else:
+        return None
+    
+def decrement_bonuses_duration(userName,target):
+    bonuses = get_bonuses(userName)
+    if bonuses != None:
+        for bonus in bonuses:
+            if bonus[4] == target:
+                duration = bonus[3]
+                if duration > 0:
+                    duration -= 1
+                    if duration == 0:
+                        remove_bonus(userName, bonus[0])
+                        print("bonus rimosso")
+                    else:
+                        update_bonus_duration(userName, bonus[0], duration)
+                        print("bonus aggiornato")
+                else:
+                    remove_bonus(userName, bonus[0])
+                    print("bonus rimosso")
+    else:
+        print("Nessun bonus trovato")
+
+def remove_bonus(userName, bonus_id):
+    queryLib.execute_no_return(f"""
+        DELETE FROM m5_bonuses
+        WHERE utente = '{userName}' AND bonus_id = {bonus_id};
+    """)
+
+def update_bonus_duration(userName, bonus_id, duration):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_bonuses
+        SET duration = {duration}
+        WHERE utente = '{userName}' AND bonus_id = {bonus_id};
+    """)
+
+def add_bonuses(userName, name, value, duration, target):
+    queryLib.execute_no_return(f"""
+        INSERT INTO m5_bonuses (utente, name, value, duration, target)
+        VALUES ('{userName}', '{name}', {value}, {duration}, '{target}');
+    """)
+
 
 def mele(attackedName, attackerName):
     do_damage(attackedName,rand(3,7))
