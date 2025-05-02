@@ -21,21 +21,21 @@ def check_get(path):
         f.close()
         return stringa
     elif path.endswith("stile"):
-        f = open("./Autenticazione/Login/login.css", "r")
+        f = open("./Autenticazione/Login/login.css", "rb")
         stringa = f.read()
         f.close()
-        return stringa.encode("utf-8")
+        return stringa
     
     elif path.endswith("backend"):
-        f = open("./Autenticazione/Login/login.js", "r")
+        f = open("./Autenticazione/Login/login.js", "rb")
         stringa = f.read()
         f.close()
-        return stringa.encode("utf-8")
+        return stringa
     elif path.endswith("trycookie"):
-        f = open("./SceltaPersonaggio/scelta.html", "r")
+        f = open("./SceltaPersonaggio/scelta.html", "rb")
         stringa = f.read()
         f.close()
-        return stringa.encode("utf-8")
+        return stringa
     return '"Path not found"'.encode("utf-8")
 
 def check_post(path, client_choice):
