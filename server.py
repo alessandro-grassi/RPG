@@ -15,6 +15,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Connection", "close")
         self.end_headers()
         path = self.path
         path = urlparse(path).path
@@ -66,6 +67,7 @@ def check_get(path):
         return r
     elif path=="/":
         return check_get("/login")
+    print(path)
     return "Modulo non trovato".encode("utf-8")
 
 

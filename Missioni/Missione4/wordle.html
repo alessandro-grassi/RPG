@@ -110,11 +110,12 @@
 
         function ripristinaDati()
         {
-            fetch('http://localhost:8080/missione4/resetGame', 
+            /*fetch('http://localhost:8080/missione4/resetGame', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
-                .catch(error => console.error("Si è verificato un errore:", error));
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/resetGame';
         }
 
 
@@ -122,11 +123,12 @@
         {
             ripristinaDati();
 
-            fetch('http://localhost:8080/missione4', 
+            /*fetch('http://localhost:8080/missione4', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
-                .catch(error => console.error("Si è verificato un errore:", error));
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/missione4';
         }
 
         //carica gli indizi all'avvio della pagina

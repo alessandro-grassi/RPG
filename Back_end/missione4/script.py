@@ -1,4 +1,5 @@
 from Back_end import queryLib
+import json #simulo il db
 
 #la parte post e coneessione al DB la tengo buona ma non so se conviene farla qui o su modulo
 def aggiungi_utente(user, pw, em):
@@ -150,8 +151,6 @@ def check_post(path, client_choice):
 
 
 #PARTE PER SIMULARE DB
-import json #simulo il db
-
 #json per simulare il db
 DB = '''{
     "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!",
@@ -162,7 +161,7 @@ DB = '''{
     "tentativiGiocoFatti": 0,
     "soluzione": "gabibbo",
     "maxIndizi": 3,
-    "indiziOttenuti": ["prova1", "prova1"],
+    "indiziOttenuti": [],
     "prove": [
         {"soluz": "nonna", "ind": "usa spesso il termine BELANDI"},
         {"soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia"},
@@ -172,9 +171,6 @@ DB = '''{
 
 dbDict = json.loads(DB)
 
-import json
-
-# ... (altre funzioni rimangono uguali)
 
 def getDettagliGenerali():
     dati = {

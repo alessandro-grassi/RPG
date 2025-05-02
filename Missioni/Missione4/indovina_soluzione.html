@@ -116,11 +116,12 @@
 
         ReindirizzamentoPrimaPagina()
         {
-            fetch('http://localhost:8080/missione4', 
+            /*fetch('http://localhost:8080/missione4', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
-                .catch(error => console.error("Si è verificato un errore:", error));
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/missione4';
         }
 
         resetMissione()
@@ -134,20 +135,22 @@
 
         ReindirizzamentoSconfitta()
         {
-            fetch('http://localhost:8080/sconfitta', 
+            /*fetch('http://localhost:8080/sconfitta', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
-                .catch(error => console.error("Si è verificato un errore:", error));
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/sconfitta';
         }
         
         ReindirizzamentoVittoria()
         {
-            fetch('http://localhost:8080/vittoria', 
+            /*fetch('http://localhost:8080/vittoria', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
-                .catch(error => console.error("Si è verificato un errore:", error));
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/vittoria';
         }
 
         //carica gli indizi all'avvio della pagina

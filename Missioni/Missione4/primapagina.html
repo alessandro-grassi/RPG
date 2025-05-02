@@ -9,11 +9,11 @@
 <body>
     <div id="header">
         <h1 id="titoloMissioneH">Missione 4</h1>
-        <h2 id="tentativiH">Tentativi per indovinare: </h2>
+        <h2 id="tentativiH">Tentativi per indovinare: <span id="tentativiSpan"></span></h2>
     </div>
 
     <div id="obiettivoDiv">
-        <h2>Obbiettivo</h2>
+        <h2>Obiettivo</h2>
         <p id="obiettivoP"></p>
         <p id="ricompensaP"></p>
     </div>
@@ -50,15 +50,15 @@
 
                     //obiettivo
                     var obiettivoP = document.getElementById("obiettivoP");
-                    obiettivoP.innerText = obiettivo;
+                    obiettivoP.innerText = "obiettivo: " + obiettivo;
 
                     //ricompensa
                     var ricompensaP = document.getElementById("ricompensaP");
-                    ricompensaP.innerText = ricompensa;
+                    ricompensaP.innerText = "ricompensa: " + ricompensa;
 
                     //tentativi per indovinare
-                    var tentativiH = document.getElementById("tentativiH");
-                    tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentativiIndovina) - int(tentativiIndovinaFatti));
+                    var tentativiSpan = document.getElementById("tentativiSpan");
+                    tentativiSpan.innerText = String(tentativiIndovina - tentativiIndovinaFatti);
 
                     //indizi
                     if(indiziOttenuti.length >= maxIndizi)
@@ -69,7 +69,7 @@
                     else if(indiziOttenuti.length > 0)
                     {
                         var mesIndizi = document.getElementById("messaggioIndizi");
-                        mesIndizi.hidden = True;
+                        mesIndizi.hidden = true;
                     
                         var listaIndizi = document.getElementById("listaIndizi");
                         indiziOttenuti.forEach(indizio => {
@@ -94,21 +94,27 @@
 
         function ReindirizzamentoPaginaGioco()
         {
-            fetch('http://localhost:8080/missione4/gioca', 
+            /*fetch('http://localhost:8080/missione4/gioca', 
             { method: 'GET' })  
-            .then(response => response.json())
-                .then(data => {})
-                .catch(error => console.error("Si è verificato un errore:", error));
+            .then(response => response.text())
+            .then( result => {
+                let parser = new DOMParser();
+                doc = parser.parseFromString( result, 'text/html' );
+                document.replaceChild( doc.documentElement, document.documentElement );
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/gioca';
         }
 
 
         function ReindirizzamentoPaginaIndovina()
         {
-            fetch('http://localhost:8080/missione4/indovina', 
+            /*fetch('http://localhost:8080/missione4/indovina', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
-                .catch(error => console.error("Si è verificato un errore:", error));
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/indovina';
         }
 
         //carica gli indizi all'avvio della pagina
