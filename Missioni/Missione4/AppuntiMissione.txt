@@ -1,0 +1,16 @@
+Prima pagina: 
+    migliorare l'impaginatura
+
+wordle:
+    creare logica di gioco simile al NYT (lettere evidenziate in base alla posizione)
+    aggiungere griglia di lettere per tenere conto di quelle usate/colorate/non presenti/...
+    aggiungere che i tentativi precedenti siano "bloccati" e visibili
+    aggiungere tab automatico a casella successiva
+
+indovina:
+    migilorare l'impaginatura
+
+GENERALE:
+    PROBLEMI: fetch non funzionante per spostarsi tra le pagine
+    si potrebbe aggiungere in automatico uno "sbiancamento" del testo
+    DA FINIRE: la lista dei TODO (mancano i cookies e complaint())
