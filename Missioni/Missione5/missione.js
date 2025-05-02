@@ -135,7 +135,7 @@ function moveToFight()
         i ++; // incrementa i per andare al prossimo blocco di dialogo
     }
 }
-
+//
 // funzione che permette di modificare l'index dei dialoghi
 function movelines(step)
 {
