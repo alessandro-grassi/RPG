@@ -13,7 +13,7 @@
 
     <div id="wordle-container">
         <h2>trova la parola</h2>
-        <p id="tentativi-rimasti">Tentativi rimasti: <span id="numero-tentativi">5</span></p>
+        <p id="tentativi-rimasti">Partite rimaste: <span id="numero-tentativi">5</span></p>
         
         <div id="messaggi">
             <p id="messaggio-stato"></p>
@@ -69,6 +69,14 @@
                             if (prevInput) {
                                 prevInput.focus();
                             }
+                        }
+                        
+                        // NUOVO CODICE: Gestione tasto Enter
+                        if (e.key === 'Enter') {
+                            // Previeni l'azione di default
+                            e.preventDefault();
+                            // Simula il click sul pulsante Indovina
+                            document.getElementById('indovina').click();
                         }
                     });
                     
@@ -205,6 +213,12 @@
                     document.getElementById('messaggio-stato').style.color = 'red';
                 });
             });
+
+            // NUOVO CODICE: Cambia il testo da "Tentativi rimasti" a "Partite rimaste"
+            const tentativiLabel = document.getElementById('tentativi-rimasti');
+            if (tentativiLabel && tentativiLabel.textContent.includes('Tentativi rimasti')) {
+                tentativiLabel.textContent = tentativiLabel.textContent.replace('Tentativi rimasti', 'Partite rimaste');
+            }
         });
         
         // Inizializza la pagina

@@ -5,8 +5,8 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 # directories ----------------------------------------------------------------------------
-BASE_DIR = Path(__file__).parent.parent.parent  # directory base, RPG
-HTML_DIR = BASE_DIR / "Missioni" / "Missione4"  # directory missione4
+BASE_DIR = Path(__file__).parent.parent.parent # directory base, RPG
+HTML_DIR = BASE_DIR / "Missioni" / "Missione4" # directory missione4
 DB_PATH = Path(__file__).parent / "database.json" # directory database.json
 # ----------------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ def check_get(path):
         if file_path and file_path.exists():
             with open(file_path, 'rb') as file:
                 content = file.read()
-                return content
+            return content
         
         return f"File non trovato: {path}".encode("utf-8")
 
@@ -67,7 +67,6 @@ def check_post(path, client_choice):
             return json.dumps(result).encode("utf-8")
     
     return json.dumps({"esito": "errore", "messaggio": "Richiesta non valida"}).encode("utf-8")
-# ---------------------------------------------------------------------------------------------
 
 # gestione DATABASE (json) --------------------------------------------------------------------
 def carica_database():
@@ -76,23 +75,24 @@ def carica_database():
             return json.load(file)
     except FileNotFoundError:
         print(f"File database non trovato in: {DB_PATH}")
-    
-    # Inizializza le parole random
-    db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
-    db["stato_gioco"]["parola_finale"] = random.choice(db["parole_finali"])
-    salva_database(db)
-    return db
+        
+        # Inizializza le parole random
+        db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
+        db["stato_gioco"]["parola_finale"] = random.choice(db["parole_finali"])
+        
+        salva_database(db)
+        return db
 
 def salva_database(db):
     # Assicurati che la directory esista
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    
     with open(DB_PATH, "w", encoding="utf-8") as file:
         json.dump(db, file, indent=2)
 
 # Carica il database all'avvio
 db = carica_database()
 print(f"Database caricato. Parola corrente: {db['stato_gioco']['parola_corrente']}, Parola finale: {db['stato_gioco']['parola_finale']}")
-# ---------------------------------------------------------------------------------------
 
 # gestione GIOCO ------------------------------------------------------------------------
 # verificare una parola nel Wordle ------------------------------------------------------
@@ -106,15 +106,28 @@ def verifica_parola(parola_tentativo):
     if len(parola_tentativo) != 5:
         return {"esito": "errore", "messaggio": "La parola deve essere di 5 lettere"}
     
-    risultato = []
+    # Inizializza il risultato con tutte le lettere marcate come non presenti
+    risultato = [{"lettera": parola_tentativo[i], "stato": "non_presente"} for i in range(5)]
+    
+    # Copia la parola corretta per tenere traccia delle lettere già utilizzate
+    lettere_disponibili = list(parola_corretta)
+    
+    # Primo passaggio: contrassegna le corrispondenze esatte (verde)
     for i in range(5):
-        if i < len(parola_tentativo):
-            if parola_tentativo[i] == parola_corretta[i]:
-                risultato.append({"lettera": parola_tentativo[i], "stato": "corretto"})
-            elif parola_tentativo[i] in parola_corretta:
-                risultato.append({"lettera": parola_tentativo[i], "stato": "posizione_errata"})
-            else:
-                risultato.append({"lettera": parola_tentativo[i], "stato": "non_presente"})
+        if parola_tentativo[i] == lettere_disponibili[i]:
+            risultato[i]["stato"] = "corretto"
+            # Segna questa posizione come utilizzata
+            lettere_disponibili[i] = None
+    
+    # Secondo passaggio: contrassegna le lettere in posizione errata (giallo)
+    for i in range(5):
+        if risultato[i]["stato"] == "non_presente":  # Salta posizioni già corrette
+            for j in range(5):
+                if lettere_disponibili[j] is not None and parola_tentativo[i] == lettere_disponibili[j]:
+                    risultato[i]["stato"] = "posizione_errata"
+                    # Segna questa lettera come utilizzata
+                    lettere_disponibili[j] = None
+                    break
     
     if parola_tentativo == parola_corretta:
         # Sblocca un indizio
@@ -129,37 +142,47 @@ def verifica_parola(parola_tentativo):
         vecchia_parola = db["stato_gioco"]["parola_corrente"]
         while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
             db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
-        
         print(f"Nuova parola corrente: {db['stato_gioco']['parola_corrente']}")
-        salva_database(db)
         
+        salva_database(db)
         return {
             "esito": "successo",
             "messaggio": "Complimenti! Hai indovinato la parola!",
             "risultato": risultato
         }
     else:
-        db["stato_gioco"]["tentativi_rimasti"] -= 1
-        tentativi_rimasti = db["stato_gioco"]["tentativi_rimasti"]
-        print(f"Tentativo errato. Tentativi rimasti: {tentativi_rimasti}")
-        salva_database(db)
+        # Inizializza o incrementa i tentativi nella partita corrente
+        if "tentativi_nella_partita_corrente" not in db["stato_gioco"]:
+            db["stato_gioco"]["tentativi_nella_partita_corrente"] = 1
+        else:
+            db["stato_gioco"]["tentativi_nella_partita_corrente"] += 1
         
-        if tentativi_rimasti <= 0:
-            # Reimposta i tentativi e cambia la parola
-            db["stato_gioco"]["tentativi_rimasti"] = 5
+        tentativi_nella_partita = db["stato_gioco"]["tentativi_nella_partita_corrente"]
+        print(f"Tentativo errato. Tentativi nella partita: {tentativi_nella_partita}")
+        
+        # Se è il quinto tentativo fallito, la partita è persa
+        if tentativi_nella_partita >= 5:
+            db["stato_gioco"]["tentativi_rimasti"] -= 1
+            db["stato_gioco"]["tentativi_nella_partita_corrente"] = 0
+            
+            tentativi_rimasti = db["stato_gioco"]["tentativi_rimasti"]
+            print(f"Partita persa. Partite rimaste: {tentativi_rimasti}")
+            
+            # Reimposta la parola
             vecchia_parola = db["stato_gioco"]["parola_corrente"]
             while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
                 db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
             
             print(f"Tentativi esauriti. Nuova parola corrente: {db['stato_gioco']['parola_corrente']}")
-            salva_database(db)
             
+            salva_database(db)
             return {
                 "esito": "fallimento",
                 "messaggio": f"Tentativi esauriti! La parola era: {parola_corretta}. Ne ho scelta una nuova.",
                 "risultato": risultato
             }
         
+        salva_database(db)
         return {
             "esito": "errore",
             "messaggio": "Parola errata, riprova!",
@@ -169,7 +192,6 @@ def verifica_parola(parola_tentativo):
 # verificare la soluzione finale -----------------------------------------------------------
 def verifica_soluzione_finale(soluzione_tentativo):
     soluzione_corretta = db["stato_gioco"]["parola_finale"]
-    
     print(f"Verifica soluzione finale: tentativo '{soluzione_tentativo}', corretta '{soluzione_corretta}'")
     
     if soluzione_tentativo.lower() == soluzione_corretta.lower():
@@ -185,4 +207,3 @@ def verifica_soluzione_finale(soluzione_tentativo):
             "esito": "errore",
             "messaggio": "Soluzione errata, raccogli più indizi!"
         }
-# -----------------------------------------------------------------------------------------
