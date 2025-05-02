@@ -58,28 +58,7 @@ def check_get(path):
 
 
 def check_post(path, client_choice):
-    if path.endswith("registrazione"):
-        try:
-            username = client_choice["user"]
-            password = client_choice["pw"]
-            email = client_choice["mail"]
-            aggiungi_utente(username, password, email)
-            return "Registrazione effettuata con successo!".encode("utf-8")
-        except Exception as errore:
-            return '"errore"'.encode("utf-8")
-
-    elif path.endswith("accesso"):
-        try:
-            username = client_choice["user"]
-            password = client_choice["pw"]
-            if(utente_registrato(username, password)):
-                return '"Successo"'.encode("utf-8")
-            else:
-                return '"errore"'.encode("utf-8")
-        except Exception as errore:
-            return '"errore"'.encode("utf-8")
-        
-    elif path.endswith("indovina"):
+    if path.endswith("indovina"):
         try:
             tentativo = client_choice["tentativo"]
             risposta = client_choice["risposta"]
