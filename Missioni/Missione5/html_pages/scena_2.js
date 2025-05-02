@@ -13,14 +13,14 @@ document.addEventListener("DOMContentLoaded",()=>{
 let client_index;
 
 // Funzione per inviare dati al server
-function sendToServer(request,data)
-{
-    fetch("http://localhost:8080/m5/" + request,{
-        method:"POST", 
-        headers:{'Content-Type':'application/json'},
+function sendToServer(request, data) {
+    return fetch("http://localhost:8080/m5/" + request, {
+        method: "POST", 
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
 }
+
 
 // Funzione per prendere dati dal server
 function fetchData(request, callback)
@@ -175,10 +175,11 @@ function setButtonNext(){
     document.getElementById('next_button').addEventListener("click", function(){        
         if (!enemyAlive)
         {
-            fetchFromServer("dialog-index").then(index=>{
-                client_index = index.current_index; // salva index su index globale
-                movelines(1);
-                window.location.replace('http://localhost:8080//m5/mission-start');
+            fetchFromServer("dialog-index").then(index => {
+                client_index = index.current_index;
+                movelines(1).then(() => {
+                    window.location.replace('http://localhost:8080/m5/mission-start');
+                });
             });
         }
         else {
@@ -277,12 +278,14 @@ function toggleActionButtons(show) {
     document.getElementById('next_button').style.visibility = show ? "hidden" : "visible";
 }
 
-function movelines(step)
-{
-    client_index += step; // incrementa index di quanto indicato dallo step
-    const data = {"current_index": client_index}; // crea oggetto da inviare al server
-    sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
+function movelines(step) {
+    client_index += step;
+    const data = { "current_index": client_index };
+
+    // Return the fetch Promise so we can wait for it
+    return sendToServer("update-index", data);
 }
+
 
 function fetchFromServer(request)
 {
