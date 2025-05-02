@@ -39,7 +39,7 @@ def check_post(path, client_choice):
             password = client_choice["pw"]
             email = client_choice["mail"]
             aggiungi_utente(username, password, email)
-            return "Registrazione effettuata con successo!".encode("utf-8")
+            return '"Registrazione effettuata con successo!"'.encode("utf-8")
         except Exception as errore:
             return '"errore"'.encode("utf-8")
 
