@@ -126,6 +126,7 @@ function setButtonNext(){
         }
         else {
             window.location.replace("http://localhost:8080/m5/mission-start"); // rimanda a mission start
+            window.location.reload();//reload della pagine per fixare problemi di fetch delle immagini
         }
     })
 }
