@@ -1,4 +1,4 @@
-var k=0;
+var k=1;
 var j=0;
 
 function changeVisibility(){

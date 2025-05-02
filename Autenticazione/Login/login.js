@@ -83,7 +83,11 @@ function accedi(){
         alert("Errore di connessione, riprova più tardi!")
       } else {
         if (data=="errore") alert("Errore nelle credenziali")
-        else alert("Accesso effettuato con successo");
+        else {
+        alert("Accesso effettuato con successo");
+          document.cookie="utente="+username;
+          window.location="http://localhost:8080/personaggio";
+        };
       }
     })
     .catch(error => {

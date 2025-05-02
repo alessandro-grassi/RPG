@@ -144,3 +144,13 @@ input[type="reset"]:hover {
 #ab1, #ab2, #ab3{
     visibility:hidden;
 }
+
+.hoverdiv{
+    transition: 1s;
+}
+
+.hoverdiv:hover{
+    color:rgb(78, 165, 200);
+    transition:0.2s;
+    cursor:pointer;
+}
