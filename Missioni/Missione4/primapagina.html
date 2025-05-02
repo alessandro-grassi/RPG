@@ -83,7 +83,7 @@
                     if((indiziOttenuti.length >= 0)&&(indiziOttenuti.length < maxIndizi))
                     {
                         //ricavo la prova da giocare e la inserisco nel localStorage per facilitare la GET successivamente
-                        numeroProva = maxIndizi - indiziOttenuti.length;
+                        var numeroProva = maxIndizi - indiziOttenuti.length;
                         localStorage.setItem("numeroProva", numeroProva);
                     }
 

@@ -35,7 +35,7 @@
         function getDettagliGioco()
         {
             //numeroProva = localStorage.getItem("numeroProva");
-            fetch('http://localhost:8080/missione4/dettagliGioco/' /* + numeroProva*/, 
+            fetch('http://localhost:8080/missione4/dettagliGioco' /* + numeroProva*/, 
             { method: 'GET' })  
                 .then(response => response.json())
                 .then(data => {
@@ -45,13 +45,18 @@
 
                     if (tentGiocoFatti >= tentGiocoMax)
                     {
+                        fetch('http://localhost:8080/missione4/tentativiSUperati', 
+                        { method: 'GET' })  
+                        .then(response => response.json())
+                            .then(data => {})
+                            .catch(error => console.error("Si è verificato un errore:", error));
                         ReindirizzamentoPrimaPagina();
                     }
                     else
                     {
                         //tentativi per indovinare
                         var tentSpan = document.getElementById("tentativiSpan");
-                        tentSpan.innerText = str(int(tentGiocoMax) - int(tentGiocoFatti));
+                        tentSpan.innerText = String(tentGiocoMax - tentGiocoFatti);
                     }
                 
                 })
@@ -61,51 +66,59 @@
         function controllaSoluzioni()
         {
             //ottengo numero prova
-            numeroProva = localStorage.getItem("numeroProva");
-            
-            //inizializzo la variabile della risposta
-            risp = "";
+            //var numeroProva = localStorage.getItem("numeroProva");
+            fetch('http://localhost:8080/missione4/tentativo' /* + numeroProva*/, 
+            { method: 'GET' })  
+                .then(response => response.json())
+                .then(data => {
+                    //estraggo i dettagli dal JSON restituito
+                    var tentativo = data["tentativo"];
 
-            //ottengo il tentativo di risposta
-            for(var i = 0; i <= 5; i++)
-            {
-                var tempTxt = document.getElementById("l" + i);
-                soluz += tempTxt.innerText;
-            }
+                    //inizializzo la variabile della risposta
+                    var soluz = "";
 
-            //ottengo il numero del tentativo
-            var tent = document.getElementById("tentativiSpan")
+                    //ottengo il tentativo di risposta
+                    for(var i = 0; i <= 4; i++)
+                    {
+                        var tempTxt = document.getElementById("l" + i);
+                        soluz += tempTxt.value;
+                    }
 
-            fetch('http://localhost:8080/missione4/controlla/' + numeroProva, 
-            {method: 'POST', body: JSON.stringify({tentativo: tent.innerText, risposta: risp})})
-            .then(response => response.json())
-            .then(data => {
-                //estraggo i dettagli dal JSON restituito
-                var risposta = data["risultato"];
-                var tentGiocoMax = data["tetativiGioco"];
-                var tentGiocoFatti = data["tentativiGiocoFatti"];
+                    //ottengo il numero del tentativo
+                    var tent = document.getElementById("tentativiSpan")
 
-                //aggiorna tentativi + metti req input
-                if (risposta == "tentativi esauriti")
-                {
-                    ReindirizzamentoPrimaPagina();
-                }   
-                else if (risposta == "hai vinto!")
-                {
-                    alert("Complimenti, Hai vinto!!!");
-                    ReindirizzamentoPrimaPagina();
-                }
-                else
-                {
-                    alert("Mi dispiace, non è la parola corretta... Riprova!");
-                }
+                    fetch('http://localhost:8080/missione4/controlla/' + tentativo /*numeroProva*/, 
+                    {method: 'POST', body: JSON.stringify({tentativo: tent.innerText, risposta: soluz})})
+                    .then(response => response.json())
+                    .then(data => {
+                        //estraggo i dettagli dal JSON restituito
+                        var risposta = data["risultato"];
+                        var tentGiocoMax = data["tentativiGioco"];
+                        var tentGiocoFatti = data["tentativiGiocoFatti"];
 
-                //tentativi per indovinare
-                var tentativiH = document.getElementById("tentativiH");
-                tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentGiocoMax) - int(tentGiocoFatti));
-            
-            })
-            .catch(error => console.error("Si è verificato un errore:", error));
+                        //aggiorna tentativi + metti req input
+                        if (risposta == "tentativi esauriti")
+                        {
+                            ReindirizzamentoPrimaPagina();
+                        }   
+                        else if (risposta == "hai vinto!")
+                        {
+                            alert("Complimenti, Hai vinto!!!");
+                            ReindirizzamentoPrimaPagina();
+                        }
+                        else
+                        {
+                            alert("Mi dispiace, non è la parola corretta... Riprova!");
+                        }
+
+                        //tentativi per indovinare
+                        var tentativiSpan = document.getElementById("tentativiSpan");
+                        tentativiSpan.innerText =String(tentGiocoMax - tentGiocoFatti);
+                    
+                    })
+                    .catch(error => console.error("Si è verificato un errore:", error));
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));            
         }
 
         function ripristinaDati()
@@ -128,7 +141,7 @@
             .then(response => response.json())
                 .then(data => {})
                 .catch(error => console.error("Si è verificato un errore:", error));*/
-                window.location.href = 'http://localhost:8080/missione4/missione4';
+                window.location.href = 'http://localhost:8080/missione4';
         }
 
         //carica gli indizi all'avvio della pagina

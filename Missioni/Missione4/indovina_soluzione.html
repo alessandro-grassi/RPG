@@ -109,7 +109,7 @@
 
                 //tentativi per indovinare
                 var tentativiH = document.getElementById("tentativiH");
-                tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentGiocoMax) - int(tentGiocoFatti));
+                tentativiH.innerText = "Tentativi per indovinare: " + String(tentGiocoMax - tentGiocoFatti);
             })
             .catch(error => console.error("Si è verificato un errore:", error));
         }

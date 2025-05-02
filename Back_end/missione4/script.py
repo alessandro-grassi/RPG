@@ -89,6 +89,15 @@ def check_get(path):
     elif path.endswith("resetMissione"):
         return resetMissione()
     
+    #get tentativo
+    elif path.endswith("tentativo"):
+        return getTentativo()
+    
+    #tentativi superati
+    elif path.endswith("tentativiSuperati"):
+        dbDict["indiziOttenuti"].append("")
+        return 0
+    
     '''
     elif path.endswith("trycookie"):
         f = open(sys.path[0] +"/SceltaPersonaggio/scelta.html", "r")
@@ -131,14 +140,14 @@ def check_post(path, client_choice):
         except Exception as errore:
                 return '"errore"'.encode("utf-8")
     
-    elif path.contains("controlla/"):
+    elif "controlla/" in path:
         try:
             num = path.rsplit('/', 1)[-1]
             tentativo = client_choice["tentativo"]
             risposta = client_choice["risposta"]
             return controlla(num, tentativo, risposta)
         except Exception as errore:
-                return '"errore"'.encode("utf-8")
+                return f'errore: {str(errore)}'.encode("utf-8")
     
     
     
@@ -211,20 +220,25 @@ def getSoluzione(num):
     return json.dumps(dati).encode("utf-8")
 
 def controlla(num, tentativo, risposta):
-    if tentativo <= dbDict["tentativiGioco"]:
-        dbDict["tentativiGiocoFatti"] += 1
+    tentativo = int(tentativo)
+    num = int(num)
+    print(tentativo,num, dbDict["tentativiGioco"])
+    if tentativo <= int(dbDict["tentativiGioco"]) and tentativo > 0:
+        dbDict["tentativiGiocoFatti"] = int(dbDict["tentativiGiocoFatti"]) + 1
         
         dbProva = dbDict["prove"][num-1]
         if risposta == dbProva["soluz"]:
             return getSoluzione(num)
         else:
             dati = {
-                "risultato": "",
+                "risultato": "f",
                 "tentativiGioco": dbDict["tentativiGioco"],
                 "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"]
             }
             return json.dumps(dati).encode("utf-8")
     else:
+        dbDict["indiziOttenuti"].append("")
+        resetGame()
         dati = {
             "risultato": "tentativi esauriti",
             "tentativiGioco": dbDict["tentativiGioco"],
@@ -263,4 +277,11 @@ def resetMissione():
     dbDict["tentativiIndovina"] = "3"
     dbDict["tentativiIndovinaFatti"] = "0"
     dbDict["indiziOttenuti"] = []
+
+def getTentativo():
+    temp = int(dbDict["tentativiIndovina"]) - len(dbDict["indiziOttenuti"])
+    dati = {
+        "tentativo": temp
+    }
+    return json.dumps(dati).encode("utf-8")
 
