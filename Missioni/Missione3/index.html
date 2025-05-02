@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combattimento</title>
     <link rel="stylesheet" href="http://localhost:8080/missione3/style.css-get_text">
+    <script src="http://localhost:8080/jslib/cookie.js"></script>
 </head>
 <body>
+    <input type="hidden" id="mid" name="mid" value="3">
+    <input type="hidden" id="uid" name="uid">
     <div id="messaggioFineGioco">
-        <h2>Test test test</h2>
-        <button id="giocaAncora">Gioca di nuovo</button>
+        <h2>Missione completata</h2>
+        <button class="exitButton">Seleziona un'altra missione</button>
     </div>
     <div id="dati">
         <h1>Turno: <span id="turno"></span></h1>
@@ -38,7 +41,7 @@
         <div>
             <button id="continueButton" class="button-green">Avanti >></button>
             <button id="retryButton" class="button-green">Riprova</button>
-            <button id="exitButton" class="button-green">Esci</button>
+            <button class="exitButton button-green">Esci</button>
         </div>
     </div>
 
