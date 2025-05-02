@@ -2,7 +2,7 @@
 <html lang="it">
     <head>
         <meta charset="UTF-8">
-        <title>mission-start</title>
+        <title>mission-scena-3</title>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="http://localhost:8080/m5/styletest">
         <script src="http://localhost:8080/m5/script-scena-3"></script>
@@ -14,21 +14,26 @@
                 <div class="life-text" id="Center-text-box">
                     <p id="name-text" style="font-size: 25px;"></p>
                     <p id="vita-text"></p>
-                    <progress id="vita"></progress>
+                    <progress class="life" id="vita"></progress>
                 </div>
-                <img id="image_king">
+                <img id="image_king" class="boss" src="">
             </div>
         </div>
         
-        <div class="combat-box">
+        <div class="combat-box" id="combat-box">
             <div class="dialog-box">
-                <p class="dialog-text" id="vita-text-pg"></p>
+                <div>
+                    <label class="dialog-text" id="vita-text-pg"></label>
+                    <audio id="hit_sound" src="http://localhost:8080/m5/get-audio/hit_sound.wav" type="audio/wav" preload="auto"></audio>
+                    <progress id="vita_pg" class="life_pg"></progress>
+                </div>
                 <button class="dialog-button" id="attack_button">Attack</button>
             </div>
             <div id="dialog-box" class="dialog-box">
                 <p class="dialog-text" id="text"></p>
                 <button class="dialog-button" id="next_button" style="visibility: hidden;">Next</button>
             </div>
+            <audio id="boss_sound" src="" preload="auto"></audio>
         </div>
     </body>
 </html>

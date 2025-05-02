@@ -78,6 +78,8 @@ function setLifePoints(json){
             document.getElementById('vita').value = vita_corrente;
             document.getElementById('vita').max = vita_corrente;
             document.getElementById('vita-text').innerHTML = "PV:"+vita_corrente;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
+            document.getElementById('vita_pg').max = vita_corrente_pg;
         }
     })
 }
@@ -92,6 +94,22 @@ function setDialogue(){
 
 function setButtonAttack(){
     document.getElementById('attack_button').addEventListener("click", function(){
+
+        //effetti visivi
+        const boss = document.getElementById('image_king');
+        const hit_sound = document.getElementById('hit_sound');
+
+        boss.classList.add('shake_boss');
+        boss.classList.add('hit');
+    
+        hit_sound.currentTime = 0;
+        hit_sound.play();
+    
+        setTimeout(() => {
+            boss.classList.remove('shake_boss');
+            boss.classList.remove('hit');
+        }, 200);
+
         vita_corrente -= danno_fisico_pg;
         if(vita_corrente <= 0){
             document.getElementById('image_king').remove();
@@ -99,7 +117,8 @@ function setButtonAttack(){
             document.getElementById('vita-text').remove();
             document.getElementById('overlay').remove();
             document.getElementById('text').textContent = "HAI VINTO!!";
-            this.removeEventListener();
+            document.getElementById('next_button').style = "visibility: visible;";
+            this.removeEventListener('click', setButtonAttack);
         }
         else{
             document.getElementById('vita').value = vita_corrente;
@@ -108,14 +127,63 @@ function setButtonAttack(){
         }
         document.getElementById('next_button').style = "visibility: visible;"; 
         this.style = "visibility: hidden";
+
+        void boss.offsetWidth; // Trigger reflow to restart animation
     })
 }
 
 function setButtonNext(){
     document.getElementById('next_button').addEventListener("click", function(){
-        fetchData("random-chance", getRand)
-        fetchData("enemies-list", enemyAttack)
+        if(vita_corrente > 0){
+            fetchData("random-chance", getRand)
+            fetchData("enemies-list", enemyAttack)
+            document.getElementById('attack_button').style = "visibility: visible;";
+            this.style = "visibility: hidden";
+        }
+        else {
+            fetchFromServer("dialog-index").then(index=>{
+                client_index = index.current_index; // salva index su index globale
+                movelines(1);
+                window.location.replace('http://localhost:8080//m5/mission-start');
+            });
+        }
     })
+}
+
+function movelines(step)
+{
+    client_index += step; // incrementa index di quanto indicato dallo step
+    const data = {"current_index": client_index}; // crea oggetto da inviare al server
+    sendToServer("update-index",data); // invia al server l'index nuovo in modo da aggiornarlo
+}
+
+function fetchFromServer(request)
+{
+    return fetch("http://localhost:8080/m5/" + request)
+    .then((response) => { // check risposta 
+        if(!response.ok)
+            throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
+        return response.json(); // ritorna la risposta codificata in json
+    })
+    .then((data) => {
+        console.log("fetched data:",data);
+        return data; // return data
+    })
+    .catch((err) => {
+        console.error('request erro: ',err); //log errore a console
+        throw err;
+    })
+}
+
+// funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
+function sendToServer(request,data)
+{
+    fetch("http://localhost:8080/m5/" + request,{
+        method:"POST", // metodo richiesta
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(data) // dati da inviare in formato json
+    })
+
 }
 
 function getRand(json){
@@ -134,10 +202,11 @@ function enemyAttack(json){
                     if(moves['move_type'] == 'attack'){
                         if(moves['damage_type'] == 'fisico'){
                             danno_enemy = danno_fisico + Math.floor((vita_corrente_pg * (moves['damage_fis_perc']/100)));
+                            console.log(danno_enemy);
                             vita_corrente_pg -= danno_enemy;
                         }
                     }
-                    if(moves['move_type'] == 'buff'){
+                    else if(moves['move_type'] == 'buff'){
                         if(moves['move_name'] == 'Aura immortale'){
                             vita_corrente_pg -= danno_fisico;
                         }
@@ -146,31 +215,44 @@ function enemyAttack(json){
                             vita_corrente_pg -= danno_fisico;
                         }
                     }
-                    if(moves['move_type'] == 'Unique'){
+                    else if(moves['move_type'] == 'Unique'){
                         document.getElementById("img-Throne").style = "filter: invert(100%)"
                         vita_corrente_pg -= danno_fisico;
                     }
+                    else{
+                        vita_corrente_pg -= danno_fisico;
+                        document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+                        document.getElementById('vita_pg').value = vita_corrente_pg;
+                    }
+                    if(vita_corrente_pg <= 0){
+                        vita_corrente_pg = 0;
+                        gameover();
+                    }
                     console.log(vita_corrente_pg);
                     tempChance -= 100
+
+                    const combat_box = document.getElementById('combat-box');
+                    const boss_sound = document.getElementById('boss_sound');
+
+                    combat_box.classList.add('shake_player');
+                    combat_box.classList.add('hit');
+                    combat_box.classList.add('flash');
+                    
+                    boss_sound.load();
+                    boss_sound.currentTime = 0;
+                    boss_sound.play().catch(err => console.error("Errore riproduzione audio:", err));
+                
+                    setTimeout(() => {
+                        combat_box.classList.remove('shake_player');
+                        combat_box.classList.remove('hit');
+                        combat_box.classList.remove('flash');
+                    }, 4000);
+
+                    void combat_box.offsetWidth; // Trigger reflow to restart animation
                 }
             })
         }
     })
-
-    if(flag_gameover)
-        gameover();
-
-    if(vita_corrente_pg > 0){
-        document.getElementById('vita-text-pg').innerText = "PV:"+vita_corrente_pg;
-        document.getElementById('attack_button').style = "visibility: visible;"; 
-        document.getElementById('next_button').style = "visibility: hidden";
-    }
-    else{
-        vita_corrente_pg = 0;
-        flag_gameover = true;
-        document.getElementById('vita-text-pg').innerText = "PV:"+vita_corrente_pg;
-    }
-    
 }
 
 function gameover(){
