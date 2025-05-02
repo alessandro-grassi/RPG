@@ -41,6 +41,20 @@ def execute(SQL:str)->list[tuple]:
         return cursor.fetchall()
     except Exception as e:
         raise ValueError(f"La Query è fallita. Motivo: \n\t{e}")
+    
+def execute_no_return(SQL:str)->None:
+    """
+    esegue la stringa SQL richiesta.
+    :param SQL: stringa SQL da eseguire
+    :return: None
+    """
+    if cursor==None:
+        raise ValueError("il modulo queryLib non è stato inizializzato. chiama queryLib.connetti().")
+    try:
+        cursor.execute(SQL)
+        connection.commit()
+    except Exception as e:
+        raise ValueError(f"La Query è fallita. Motivo: \n\t{e}")    
 
 def connetti()->None:
     """
