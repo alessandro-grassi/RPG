@@ -1,14 +1,14 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from Back_end import login
-from Back_end import personaggio
+from Back_end import login, jslib, personaggio
 import json
 from urllib.parse import urlparse
 dict = { 
     "/login": login,
+    "/jslib": jslib,
     "/personaggio" : personaggio,
-    # dizionario per prendere i prefissi dei moduli da aggiungere
-    
-}
+    }
+
+
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -59,6 +59,13 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
+    if path=="/favicon.ico":
+        f = open("Config/logo magi.ico","rb")
+        r = f.read()
+        f.close()
+        return r
+    elif path=="/":
+        return check_get("/login")
     return "Modulo non trovato".encode("utf-8")
 
 
