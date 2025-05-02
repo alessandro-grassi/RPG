@@ -6,12 +6,8 @@ import json
 def enemy_attack(userName):
 
     
-    print(get_character_abilities(2))
-
-    set_current_index(userName, 10)
     initialize_boss(userName)
 
-    player_set_healt(userName, 600)
     #get enemy name
     #enemy_set_boss_name(userName, "Guardiano di Rocciascura")
     enemyName = enemy_get_boss_name(userName)
@@ -101,6 +97,8 @@ def enemy_attack(userName):
 
 
 def player_attack(userName, attackName):
+    initialize_boss(userName)
+
     #get enemy name
     enemyName = enemy_get_boss_name(userName)
 
@@ -248,7 +246,13 @@ def set_page(userName, page):
         """)
     remove_all_bonuses(userName)
 
-def get_max_player_healt(userName):
+def get_max_player_healt(characterId):
+    vigore = queryLib.execute(f"""
+        SELECT "Vigore"
+        FROM personaggi
+        WHERE id = {characterId};
+    """)   
+    print("vigore: ", vigore)
     return 300
 
 def player_die(userName):

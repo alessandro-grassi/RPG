@@ -110,27 +110,27 @@ def check_get(path:str):
         return r
     
     # combactSystem
-    elif path == PREFIX_API + "enemy-attack":
+    elif path.startswith(PREFIX_API + "enemy-attack/"):
         username = path.split("/")[4]
         combactSystem.enemy_attack(username)
         return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
-    elif path == PREFIX_API + "get-enemy-life":
+    elif path.startswith(PREFIX_API + "get-enemy-life/"):
         username = path.split("/")[4]
         life = combactSystem.enemy_get_healt(username)
         return ('{"result":"' + str(life) + '"}').encode("utf-8")
-    elif path == PREFIX_API + "get-player-life":
+    elif path.startswith(PREFIX_API + "get-player-life/"):
         username = path.split("/")[4]
         life = combactSystem.player_get_healt(username)
         return ('{"result":"' + str(life) + '"}').encode("utf-8")
-    elif path == PREFIX_API + "get-player-max-life":
-        username = path.split("/")[4]
-        life = combactSystem.get_max_player_healt(username)
+    elif path.startswith(PREFIX_API + "get-player-max-life/"):
+        characterId = path.split("/")[4]
+        life = combactSystem.get_max_player_healt(characterId)
         return ('{"result":"' + str(life) + '"}').encode("utf-8")
-    elif path == PREFIX_API + "get-attack-list":
+    elif path.startswith(PREFIX_API + "get-attack-list/"):
         characterId = path.split("/")[4]
         attack_list = combactSystem.get_character_abilities(characterId)
         return json.dumps(attack_list).encode("utf-8")
-    elif path == PREFIX_API + "get-ability-data":
+    elif path.startswith(PREFIX_API + "get-ability-data/"):
         abilityName = path.split("/")[4]
         abilityData = combactSystem.get_ability_data(abilityName)
         return json.dumps(abilityData).encode("utf-8")
