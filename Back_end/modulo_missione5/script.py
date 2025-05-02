@@ -110,10 +110,6 @@ def check_get(path:str):
         return r
     
     # combactSystem
-    elif path.startswith(PREFIX_API + "enemy-attack/"):
-        username = path.split("/")[4]
-        combactSystem.enemy_attack(username)
-        return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
     elif path.startswith(PREFIX_API + "get-enemy-life/"):
         username = path.split("/")[4]
         life = combactSystem.enemy_get_healt(username)
@@ -126,7 +122,7 @@ def check_get(path:str):
         characterId = path.split("/")[4]
         life = combactSystem.get_max_player_healt(characterId)
         return ('{"result":"' + str(life) + '"}').encode("utf-8")
-    elif path.startswith(PREFIX_API + "get-attack-list/"):
+    elif path.startswith(PREFIX_API + "get-ability-list/"):
         characterId = path.split("/")[4]
         attack_list = combactSystem.get_character_abilities(characterId)
         return json.dumps(attack_list).encode("utf-8")
@@ -145,6 +141,12 @@ def check_post(path,clientchoice):
     try:
 
         # combactSystem
+        if path == PREFIX_API + "enemy-attack":
+            userName = clientchoice["username"]
+            characterId = clientchoice["characterId"]
+            combactSystem.enemy_attack(userName, characterId)
+            return '{"result":"Attacco eseguito con successo"}'.encode("utf-8")
+        
         if path == PREFIX_API + "player-attack":
             # recupera il nome dell'utente dalla richiesta
             userName = clientchoice["username"]

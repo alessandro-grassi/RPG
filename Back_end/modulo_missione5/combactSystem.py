@@ -3,7 +3,7 @@ from Back_end import queryLib
 import json
 
 
-def enemy_attack(userName):
+def enemy_attack(userName, characterId):
 
     
     initialize_boss(userName)
