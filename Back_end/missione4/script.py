@@ -81,10 +81,6 @@ def check_post(path, client_choice):
 
     
 
-
-
-
-
 #PARTE PER SIMULARE DB
 import json #simulo il db
 
@@ -136,4 +132,3 @@ def indovina(tentativo, risposta):
             print("mi dispiace ma non è la risposta corretta")
     else:
         print("tentativi esauriti")
-
