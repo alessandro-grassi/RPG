@@ -6,7 +6,6 @@ dict = { # dizionario per prendere i suffissi dei moduli
     "/m5": m5,
 }
 
-from Back_end import queryLib
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -23,7 +22,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         except:
             print(f"Errore durante la richiesta get a '{path}'")
             self.wfile.write(b"")
-        return
 
     def do_POST(self):
         self.send_response(200)
@@ -73,6 +71,4 @@ def check_post(path, client_choice):
 
 
 if __name__ == "__main__":
-    queryLib.connetti()
     run_server()
-    queryLib.disconnetti()

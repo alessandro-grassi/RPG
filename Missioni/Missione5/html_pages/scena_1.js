@@ -64,7 +64,7 @@ function fetchData(request, callback)
     let vita_corrente_pg = vigore * 100;
 
     let forza_pg = 10;
-    let danno_fisico_pg = attacco_pg * 10;
+    let danno_fisico_pg = forza_pg * 10;
     
     let intelligenza_pg = 8;
     let danno_magico_pg = intelligenza_pg *15;
@@ -302,7 +302,7 @@ function setButtonNext(){
             document.getElementById('attack_button').style = "visibility: visible;";
             document.getElementById('heal_button').style = "visibility: visible;";
             document.getElementById('ulti_button').style = "visibility: visible;";
-            document.getElementById('magic_button').style = "visibility: hidden;";
+            document.getElementById('magic_button').style = "visibility: visible;";
             document.getElementById('ulti').style = "visibility: visible;";
             if(carica_ulti >=3){
                 document.getElementById('ulti_button').disabled = false;
