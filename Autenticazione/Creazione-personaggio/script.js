@@ -117,47 +117,51 @@ function crea_personaggio(){
   const ab1 = document.getElementById("ab1").value;
   const ab2 = document.getElementById("ab2").value;
   const ab3 = document.getElementById("ab3").value;
-  if(classe == null){
-    alert("Non hai scelto una classe");
+  if(nome==null){
+    alert("Inserisci il nome del personaggio");
   }else{
-    if(ab1==ab2 || ab1==ab3 || ab2==ab){
-      alert("Non possono esserci abilità uguali");
+    if(classe == null){
+      alert("Non hai scelto una classe");
     }else{
-      if(ab1!=null && ab2==null && ab2==ab3){
-        const message={
-          name: nome,
-          class: classe,
-          ability1 : ab1,
-          ability2 : ab2,
-          ability2 : ab2
-      };
-      fetch('http://localhost:8080/personaggio/crea_personaggio', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(message)
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Errore nella risposta del server.');
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (data.error) {
-          alert("Errore di connessione, riprova più tardi!")
-        } else {
-          if (data=="errore") alert("Errore Client")
-            else alert("Personaggio registrato con successo");
-        }
-      })
-      .catch(error => {
-        console.error("Errore:", error);
-
-      });
+      if(ab1==ab2 || ab1==ab3 || ab2==ab){
+        alert("Non possono esserci abilità uguali");
       }else{
-        alert("Seleziona almeno una abilità");
+        if(ab1!=null && ab2==null && ab2==ab3){
+          const message={
+            name: nome,
+            class: classe,
+            ability1 : ab1,
+            ability2 : ab2,
+            ability2 : ab2
+        };
+        fetch('http://localhost:8080/personaggio/crea_personaggio', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(message)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Errore nella risposta del server.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.error) {
+            alert("Errore di connessione, riprova più tardi!")
+          } else {
+            if (data=="errore") alert("Errore Client")
+              else alert("Personaggio registrato con successo");
+          }
+        })
+        .catch(error => {
+          console.error("Errore:", error);
+
+        });
+        }else{
+          alert("Seleziona almeno una abilità");
+        }
       }
     }
   }
