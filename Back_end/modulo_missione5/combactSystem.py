@@ -125,6 +125,35 @@ def enemy_attack(userName):
     print("enemyData: ", enemyData) 
     print("enemyData moves count: ", moveCount)
 
+
+
+def set_level(userName, level):
+    if not level.startswith("pagina"):
+        bossName = enemy_get_data(level)
+        queryLib.execute_no_return(f"""
+            UPDATE m5_play_data
+            SET boss_name = '{bossName["name"]}',
+                boss_healt = {bossName["stats"]["healt"]}
+            WHERE utente = '{userName}';
+        """)
+    else:
+        queryLib.execute_no_return(f"""
+            UPDATE m5_play_data
+            SET boss_name = '{level}',
+                boss_healt = 0
+            WHERE utente = '{userName}';
+        """)
+    remove_all_bonuses(userName)
+
+def get_max_player_healt(userName):
+    return 300
+
+def player_die(userName):
+    level = enemy_get_boss_name(userName)                        
+    set_level(userName, level)
+    player_set_healt(userName, get_max_player_healt(userName))
+        
+
 def enemy_get_data(enemyName):
     #read json file with enemy data
     # read the json file
@@ -183,91 +212,6 @@ def enemy_set_healt(userName, enemyName, healt):
         WHERE boss_name = '{enemyName}' AND utente = '{userName}';
     """)
 
-def enemy_get_attack_bonus(userName, enemyName):
-    attack = queryLib.execute(f"""
-        SELECT boss_bonus_attack
-        FROM m5_play_data
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-    if len(attack) > 0:
-        return attack[0][0]
-    else:
-        return 0
-
-def enemy_set_attack_bonus(userName, enemyName, value):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET boss_bonus_attack = {value}
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-
-def enemy_get_defense_bonus(userName, enemyName):
-    defense = queryLib.execute(f"""
-        SELECT boss_bonus_defense
-        FROM m5_play_data
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-    if len(defense) > 0:
-        return defense[0][0]
-    else:
-        return 0
-
-def enemy_set_defense_bonus(userName, enemyName, value):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET boss_bonus_defense = {value}
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-
-def enemy_set_attack_bonus_duration(userName, enemyName, attack_duration):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET boss_bonus_attack_duration = {attack_duration}
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-
-def enemy_set_defense_bonus_duration(userName, enemyName, defense_duration):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET boss_bonus_defense_duration = {defense_duration}
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-
-def enemy_get_attack_bonus_duration(userName, enemyName):
-    attack_duration = queryLib.execute(f"""
-        SELECT boss_bonus_attack_duration
-        FROM m5_play_data
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-    if len(attack_duration) > 0:
-        return attack_duration[0][0]
-    else:
-        return 0
-
-def enemy_get_defense_bonus_duration(userName, enemyName):
-    defense_duration = queryLib.execute(f"""
-        SELECT boss_bonus_defense_duration
-        FROM m5_play_data
-        WHERE boss_name = '{enemyName}' AND utente = '{userName}';
-    """)
-    if len(defense_duration) > 0:
-        return defense_duration[0][0]
-    else:
-        return 0
-
-def enemy_decrement_attack_bonus_duration(userName, enemyName):
-    attack_duration = enemy_get_attack_bonus_duration(userName, enemyName)
-    if attack_duration > 0:
-        enemy_set_attack_bonus_duration(userName, enemyName, attack_duration - 1)
-    else:
-        enemy_set_attack_bonus_duration(userName, enemyName, 0)
- 
-def enemy_decrement_defense_bonus_duration(userName, enemyName):
-    defense_duration = enemy_get_defense_bonus_duration(userName, enemyName)
-    if defense_duration > 0:
-        enemy_set_defense_bonus_duration(userName, enemyName, defense_duration - 1)
-    else:
-        enemy_set_defense_bonus_duration(userName, enemyName, 0)
 
 def player_get_healt(userName):
     player_healt = queryLib.execute(f"""
@@ -296,92 +240,6 @@ def player_damage(userName, damage):
         player_set_healt(userName, newHealt)
     else:
         player_set_healt(userName, 0)
-
-def player_get_attack_bonus(userName):
-    attack_bonus = queryLib.execute(f"""
-        SELECT player_bonus_attack
-        FROM m5_play_data
-        WHERE utente = '{userName}';
-    """)
-    if len(attack_bonus) > 0:
-        return attack_bonus[0][0]
-    else:
-        return 0
-
-def player_set_attack_bonus(userName, value):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET player_bonus_attack = {value}
-        WHERE utente = '{userName}';
-    """)
-
-def player_get_defense_bonus(userName):
-    defense_bonus = queryLib.execute(f"""
-        SELECT player_bonus_defense
-        FROM m5_play_data
-        WHERE utente = '{userName}';
-    """)
-    if len(defense_bonus) > 0:
-        return defense_bonus[0][0]
-    else:
-        return 0
-
-def player_set_defense_bonus(userName, value):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET player_bonus_defense = {value}
-        WHERE utente = '{userName}';
-    """)
-
-def player_get_attack_bonus_duration(userName):
-    attack_duration = queryLib.execute(f"""
-        SELECT player_bonus_attack_duration
-        FROM m5_play_data
-        WHERE utente = '{userName}';
-    """)
-    if len(attack_duration) > 0:
-        return attack_duration[0][0]
-    else:
-        return 0
-
-def player_set_attack_bonus_duration(userName, duration):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET player_bonus_attack_duration = {duration}
-        WHERE utente = '{userName}';
-    """)
-
-def player_get_defense_bonus_duration(userName):
-    defense_duration = queryLib.execute(f"""
-        SELECT player_bonus_defense_duration
-        FROM m5_play_data
-        WHERE utente = '{userName}';
-    """)
-    if len(defense_duration) > 0:
-        return defense_duration[0][0]
-    else:
-        return 0
-
-def player_set_defense_bonus_duration(userName, duration):
-    queryLib.execute_no_return(f"""
-        UPDATE m5_play_data
-        SET player_bonus_defense_duration = {duration}
-        WHERE utente = '{userName}';
-    """)
-
-def player_decrement_attack_bonus_duration(userName):
-    attack_duration = player_get_attack_bonus_duration(userName)
-    if attack_duration > 0:
-        player_set_attack_bonus_duration(userName, attack_duration - 1)
-    else:
-        player_set_attack_bonus_duration(userName, 0)
-
-def player_decrement_defense_bonus_duration(userName):
-    defense_duration = player_get_defense_bonus_duration(userName)
-    if defense_duration > 0:
-        player_set_defense_bonus_duration(userName, defense_duration - 1)
-    else:
-        player_set_defense_bonus_duration(userName, 0)
 
 def get_status(userName):
     status = queryLib.execute(f"""
@@ -439,6 +297,12 @@ def remove_bonus(userName, bonus_id):
         DELETE FROM m5_bonuses
         WHERE utente = '{userName}' AND bonus_id = {bonus_id};
     """)
+ 
+def remove_all_bonuses(userName):
+    queryLib.execute_no_return(f"""
+        DELETE FROM m5_bonuses
+        WHERE utente = '{userName}';
+    """)
 
 def update_bonus_duration(userName, bonus_id, duration):
     queryLib.execute_no_return(f"""
@@ -464,17 +328,6 @@ def get_bonuses_sums(userName, target, name):
     else:
         return 0
 
-def mele(attackedName, attackerName):
-    do_damage(attackedName,rand(3,7))
-    
-def fire_ball(attackedName, attackerName):
-    do_damage( attackedName,rand(6,10))
-    use_mana(attackerName, 3)
-
-attacks = {
-    "mele" : mele,
-    "fire_ball": fire_ball,
-}
 
 def set_seed(seed):
     random.seed(seed)
@@ -482,46 +335,7 @@ def set_seed(seed):
 def rand(min, max):
     return random.randint(min,max)
 
-def has_attack(name, attackedName):
-    return True
 
-def attack(attackerName, attackedName, attackName):
-    if(has_attack(attackerName,attackName)):
-        attacks[attackName](attackedName, attackerName)
-
-def set_life(name, value):
-    if lifes.get(name) != None:
-        lifes[name] = value
-    else:
-        print("Entità: ",name," inesistente")
-
-def get_life(name):
-    enemy_attack("prova")
-    return lifes.get(name)
-
-def set_mana(name,value):
-    if manas.get(name) != None:
-        manas[name] = value
-    else:
-        print("Entità: ",name," inesistente")
-
-def get_mana(name):
-    return manas.get(name)
-
-
-def do_damage(name, value):
-    current_life = get_life(name)
-    if current_life != None:
-        set_life(name, current_life - value)
-    else:
-        print("Entità: ",name," inesistente")
-
-def use_mana(name, value):
-    current_mana = get_mana(name)
-    if current_mana != None:
-        set_mana(name,current_mana-value)
-    else:
-        print("Entità: ",name," inesistente")
 
 if __name__ == "__main__":
     set_seed(123)
