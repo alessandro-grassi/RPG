@@ -43,9 +43,16 @@
                     var tentGiocoMax = data[0];
                     var tentGiocoFatti = data[1];
 
-                    //tentativi per indovinare
-                    var tentSpan = document.getElementById("tentativiSpan");
-                    tentSpan.innerText = str(int(tentGiocoMax) - int(tentGiocoFatti));
+                    if (tentGiocoFatti >= tentGiocoMax)
+                    {
+                        ReindirizzamentoPrimaPagina();
+                    }
+                    else
+                    {
+                        //tentativi per indovinare
+                        var tentSpan = document.getElementById("tentativiSpan");
+                        tentSpan.innerText = str(int(tentGiocoMax) - int(tentGiocoFatti));
+                    }
                 
                 })
                 .catch(error => console.error("Si è verificato un errore:", error));
@@ -78,8 +85,17 @@
 
                 if (risposta == "tentativi esauriti")
                 {
-                    
+                    ReindirizzamentoPrimaPagina();
                 }   
+                else if (risposta == "hai vinto!")
+                {
+                    alert("Complimenti, Hai vinto!!!");
+                    ReindirizzamentoPrimaPagina();
+                }
+                else
+                {
+                    alert("Mi dispiace, non è la parola corretta... Riprova!");
+                }
 
                 //tentativi per indovinare
                 var tentativiH = document.getElementById("tentativiH");
@@ -89,6 +105,29 @@
             .catch(error => console.error("Si è verificato un errore:", error));
         }
 
+        function ripristinaDati()
+        {
+            fetch('http://localhost:8080/missione4/resetGame', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+
+        function ReindirizzamentoPrimaPagina()
+        {
+            ripristinaDati();
+
+            fetch('http://localhost:8080/missione4', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        //carica gli indizi all'avvio della pagina
+        window.onload = getDettagliGioco();
 
     </script>
 

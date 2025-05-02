@@ -58,9 +58,15 @@ def check_get(path):
     elif path.endswith("dettagliGenerali"):
         return getDettagliGenerali()
     
+    #getDettagliGioco
     elif path.endswith("dettagliGioco"):
     #elif path.contains("dettagliGioco/"):
         return getDettagliGioco()
+    
+    #reset dati gioco
+    elif path.endswith("resetGame"):
+    #elif path.contains("dettagliGioco/"):
+        return resetGame()
     
     '''
     elif path.endswith("trycookie"):
@@ -146,9 +152,9 @@ DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
 
 '       "prove":' \
 '       [' \
-'           {"soluz": "nonna", "ind": "è rosso" },' \
+'           {"soluz": "nonna", "ind": "usa spesso il termine BELANDI" },' \
 '           {"soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           {"soluz": "trave", "ind": "usa spesso il termine BELANDI" }' \
+'           {"soluz": "trave", "ind": "è rosso" }' \
 '       ] }'
 
 dbDict = json.loads(DB)
@@ -166,16 +172,25 @@ def getVincita(num):
 
 def getSoluzione(num):
     tentDict = dbDict["prove"][num - 1]
-    return tentDict["soluz"]
+    dbDict["indiziOttenuti"] += ", " + tentDict["ind"]
+    return "hai vinto!"
 
 
 def indovina(num, tentativo, risposta):
     if tentativo <= dbDict["tentativiGioco"]:
+
+        #aggiungo tentativo
+        dbProva["tentativiGiocoFatti"] = str(int(dbProva["tentativiGiocoFatti"]) + 1)
+
         dbProva = dbDict["prove"][num-1]
         if risposta == dbProva["soluz"]:
-            return getVincita(num)
+            return getSoluzione(num)
         else:
             return ""
     else:
         return "tentativi esauriti"
+    
+def resetGame():
+    dbDict["tentativiGioco"] = "5"
+    dbDict["tentativiGiocoFatti"] = "0"
 
