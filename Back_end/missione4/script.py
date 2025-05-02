@@ -1,90 +1,75 @@
 from Back_end import queryLib
+import json
 
-#la parte post e coneessione al DB la tengo buona ma non so se conviene farla qui o su modulo
 def check_get(path):
-    #apre pagina principale
-    if path == "/missione4":  
+    # Apre pagina principale
+    if path == "/missione4":
         f = open("Missioni/Missione4/primapagina.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    #apre il css
+    # Apre il css
     elif path.endswith("stile"):
         f = open("Missioni/Missione4/stile.css", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    #apre la pagina per indovinare
+    # Apre la pagina per indovinare
     elif path.endswith("indovina"):
         f = open("Missioni/Missione4/indovina_soluzione.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    #apre la pagina per giocare
+    # Apre la pagina per giocare
     elif path.endswith("gioca"):
         f = open("Missioni/Missione4/wordle.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    #torna alla home
+    # Torna alla home
     elif path.endswith("sm_home"):
         f = open("SceltaMissione/index.html", "r")
         stringa = f.read()
         f.close()
         return stringa.encode("utf-8")
     
-    #getDetteagliGenerali
+    # getDettagliGenerali
     elif path.endswith("dettagliGenerali"):
-        return getDettagliGenerali()
+        return json.dumps(getDettagliGenerali()).encode("utf-8")
     
-    #elif path.endswith("dettagliGioco"):
-    elif path.contains("dettagliGioco/"):
-        return getDettagliGioco()
+    # getDettagliGioco
+    elif "dettagliGioco" in path:
+        num = path.rsplit('/', 1)[-1] if '/' in path else 1
+        return json.dumps(getDettagliGioco(int(num))).encode("utf-8")
     
-    '''
-    elif path.endswith("trycookie"):
-        f = open(sys.path[0] +"/SceltaPersonaggio/scelta.html", "r")
-        stringa = f.read()
-        f.close()
-        return stringa.encode("utf-8")'''
-    #se non trova il path
+    # Se non trova il path
     return '"Path not found"'.encode("utf-8")
-
-
-
 
 def check_post(path, client_choice):
     if path.endswith("indovina"):
         try:
             tentativo = client_choice["tentativo"]
             risposta = client_choice["risposta"]
-            return indovina(tentativo, risposta)
+            return indovina(tentativo, risposta).encode("utf-8")
         except Exception as errore:
-                return '"errore"'.encode("utf-8")
+            return f'"errore: {str(errore)}"'.encode("utf-8")
     
-    elif path.contains("controlla/"):
+    elif "controlla" in path:
         try:
-            num = path.rsplit('/', 1)[-1]
+            num = int(path.rsplit('/', 1)[-1])
             tentativo = client_choice["tentativo"]
-            risposta = client_choice["risposta"]
-            return indovina(tentativo, risposta)
+            return controlla_wordle(num, tentativo).encode("utf-8")
         except Exception as errore:
-                return '"errore"'.encode("utf-8")
-    
-    
+            return f'"errore: {str(errore)}"'.encode("utf-8")
     
     return '"Path not found"'.encode("utf-8")
 
-    
-
-#PARTE PER SIMULARE DB
-import json #simulo il db
-
-#json per simulare il db
+# PARTE PER SIMULARE DB
+# JSON per simulare il db
 DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
      ' "ricompensa": "titolo di Kung Fury", ' \
      ' "tentativiIndovina": 3, ' \
@@ -95,40 +80,89 @@ DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
      ' "maxIndizi": 3,' \
      ' "indiziOttenuti":' \
      ' [' \
-     ' "prova1",' \
-     ' "prova1"' \
      ' ],' \
      ' "prove":' \
      ' [' \
-     ' { "num": 3, "soluz": "nonna", "ind": "è rosso" },' \
+     ' { "num": 1, "soluz": "trave", "ind": "usa spesso il termine BELANDI" },' \
      ' { "num": 2, "soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-     ' { "num": 1, "soluz": "trave", "ind": "usa spesso il termine BELANDI" }' \
+     ' { "num": 3, "soluz": "nonna", "ind": "è rosso" }' \
      ' ] }'
-
 
 dbDict = json.loads(DB)
 
-#funzioni per simulare db
+# Funzioni per simulare db
 def getDettagliGenerali():
-    return dbDict["obiettivo"],dbDict["ricompensa"],dbDict["tentativiIndovina"],dbDict["tentativiIndovinaFatti"],dbDict["indiziOttenuti"],dbDict["maxIndizi"]
+    return {
+        "obiettivo": dbDict["obiettivo"],
+        "ricompensa": dbDict["ricompensa"],
+        "tentativiIndovina": dbDict["tentativiIndovina"],
+        "tentativiIndovinaFatti": dbDict["tentativiIndovinaFatti"],
+        "indiziOttenuti": dbDict["indiziOttenuti"],
+        "maxIndizi": dbDict["maxIndizi"]
+    }
 
-def getDettagliGioco():
-    return dbDict["tentativiGioco"],dbDict["tentativiGiocoFatti"]
+def getDettagliGioco(num=1):
+    prova = next((p for p in dbDict["prove"] if p["num"] == num), None)
+    if prova:
+        return {
+            "tentativiGioco": dbDict["tentativiGioco"],
+            "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"],
+            "soluzione": prova["soluz"]
+        }
+    return {
+        "tentativiGioco": dbDict["tentativiGioco"],
+        "tentativiGiocoFatti": dbDict["tentativiGiocoFatti"]
+    }
 
 def getVincita(num):
-    tentDict = dbDict["prove"][num - 1]
-    return tentDict["ind"]
+    prova = next((p for p in dbDict["prove"] if p["num"] == num), None)
+    if prova:
+        indizio = prova["ind"]
+        if indizio not in dbDict["indiziOttenuti"]:
+            dbDict["indiziOttenuti"].append(indizio)
+        return indizio
+    return "Indizio non trovato"
 
 def getSoluzione(num):
-    tentDict = dbDict["prove"][num - 1]
-    return tentDict["soluz"]
+    prova = next((p for p in dbDict["prove"] if p["num"] == num), None)
+    return prova["soluz"] if prova else ""
 
+def controlla_wordle(num, tentativo):
+    soluzione = getSoluzione(num)
+    if not soluzione:
+        return json.dumps({"stato": "errore", "messaggio": "Prova non trovata"})
+    
+    if tentativo.lower() == soluzione.lower():
+        indizio = getVincita(num)
+        return json.dumps({"stato": "vittoria", "indizio": indizio})
+    else:
+        # Logica per verificare lettere corrette/posizione sbagliata
+        risultato = []
+        for i, lettera in enumerate(tentativo):
+            if i < len(soluzione) and lettera.lower() == soluzione[i].lower():
+                risultato.append({"lettera": lettera, "stato": "corretto"})
+            elif lettera.lower() in soluzione.lower():
+                risultato.append({"lettera": lettera, "stato": "presente"})
+            else:
+                risultato.append({"lettera": lettera, "stato": "assente"})
+        
+        dbDict["tentativiGiocoFatti"] += 1
+        return json.dumps({
+            "stato": "tentativo", 
+            "risultato": risultato,
+            "tentativiRimasti": dbDict["tentativiGioco"] - dbDict["tentativiGiocoFatti"]
+        })
 
 def indovina(tentativo, risposta):
-    if tentativo <= dbDict["tentativi"]:
-        if risposta == dbDict["soluzione"]:
-            print("complimenti! hai indovinato")
+    if dbDict["tentativiIndovinaFatti"] < dbDict["tentativiIndovina"]:
+        dbDict["tentativiIndovinaFatti"] += 1
+        if risposta.lower() == dbDict["soluzione"].lower():
+            return json.dumps({"stato": "vittoria", "messaggio": "Complimenti! Hai indovinato la soluzione finale!"})
         else:
-            print("mi dispiace ma non è la risposta corretta")
+            return json.dumps({
+                "stato": "errore", 
+                "messaggio": "Risposta errata. Tentativi rimasti: " + 
+                str(dbDict["tentativiIndovina"] - dbDict["tentativiIndovinaFatti"])
+            })
     else:
-        print("tentativi esauriti")
+        return json.dumps({"stato": "errore", "messaggio": "Tentativi esauriti"})
