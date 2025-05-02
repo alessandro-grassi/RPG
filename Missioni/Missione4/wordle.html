@@ -74,8 +74,12 @@
             .then(response => response.json())
             .then(data => {
                 //estraggo i dettagli dal JSON restituito
-                var tentGiocoMax = data[0];
-                var tentGiocoFatti = data[1];
+                var risposta = data[0];
+
+                if (risposta == "tentativi esauriti")
+                {
+                    
+                }   
 
                 //tentativi per indovinare
                 var tentativiH = document.getElementById("tentativiH");

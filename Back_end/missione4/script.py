@@ -171,11 +171,11 @@ def getSoluzione(num):
 
 def indovina(num, tentativo, risposta):
     if tentativo <= dbDict["tentativiGioco"]:
-        dbProva = dbDict["prove"][num]
+        dbProva = dbDict["prove"][num-1]
         if risposta == dbProva["soluz"]:
-            print("complimenti! hai indovinato")
+            return getVincita(num)
         else:
-            print("mi dispiace ma non è la risposta corretta")
+            return ""
     else:
-        print("tentativi esauriti")
+        return "tentativi esauriti"
 
