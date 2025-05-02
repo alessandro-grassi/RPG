@@ -102,20 +102,11 @@ def check_get(path:str):
     
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":
-<<<<<<< HEAD
-        with open("Missioni/Missione5/assets/progress.json") as f:
-            r = f.read()
-            f.close()
-            return r.encode("utf-8")
-        
-     #funzione usata per recuperare le immagini in base al nome richiesto
-=======
         out = combactSystem.get_dialog_index("provaM5")
         out = json.dumps(out, indent=4) # converte in formato json
         return out.encode("utf-8")
      
     #funzione usata per recuperare le immagini in base al nome richiesto
->>>>>>> 0ada948721d2af7ee6f76019b2142a0abf6e338a
     elif path.startswith(PREFIX+"get-image/"):
         image_name = path.split("/")[3] # fa uno split e prende la 4a cella
         with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini

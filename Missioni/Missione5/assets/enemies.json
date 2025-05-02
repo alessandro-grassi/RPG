@@ -14,7 +14,8 @@
                 "move_type": "Attack",
                 "chance": 60,
                 "damage_type": "fisico",
-                "description": "Il guardiano colpisce con i suoi pugni e infligge 100 danni!"
+                "description": "Il guardiano colpisce con i suoi pugni e infligge 100 danni!",
+                "audio": "punch.mp3"
             },
             {
                 "move_name": "Ammasso",
@@ -23,7 +24,8 @@
                 "bonus_defense": 40,
                 "damage_type": "fisico",
                 "durata": 2, 
-                "description": "Il guardiano si ricopre di strati di roccia e riduce i danni subiti"
+                "description": "Il guardiano si ricopre di strati di roccia e riduce i danni subiti",
+                "audio": "ammasso.mp3"
             },
             {
                 "move_name": "Carica",
@@ -32,13 +34,15 @@
                 "bonus_attack": 50,
                 "damage_type": "fisico",
                 "durata": 2,
-                "description": "Il guardiano si carica di energia purpurea e aumenta il suo attacco"
+                "description": "Il guardiano si carica di energia purpurea e aumenta il suo attacco",
+                "audio": "carica.mp3"
             },
             {
                 "move_name": "Folgorazione",
                 "move_type": "Unique",
                 "chance": 5,
-                "description": "Il guardiano sfodera una scarica di energia purpurea che ti paralizza"
+                "description": "Il guardiano sfodera una scarica di energia purpurea che ti paralizza",
+                "audio": "folgorazione.mp3"
             }
         ]
     },

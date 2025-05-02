@@ -313,6 +313,7 @@ function setButtonNext(){
             this.style = "visibility: hidden";
         }
         else {
+            movelines(1);
             window.location.replace("http://localhost:8080/m5/mission-start"); // rimanda a mission start
         }
     })

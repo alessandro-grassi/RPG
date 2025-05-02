@@ -66,9 +66,6 @@ def connetti()->None:
         cursor = connection.cursor()
 
     except Exception as e:
-<<<<<<< HEAD
-        raise ConnectionError(f"La connessione a Supabase è fallita. Motivo: \n\t{e}")
-=======
         raise ConnectionError(f"La connessione a Supabase è fallita. Motivo: \n\t{e}")
 
 
@@ -78,4 +75,3 @@ port = 6543
 dbname = "postgres"
 connection = None
 cursor = None
->>>>>>> 0ada948721d2af7ee6f76019b2142a0abf6e338a
