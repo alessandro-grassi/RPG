@@ -79,19 +79,6 @@ body {
     accent-color: red;
   }
 
-#vita-pg {
-    accent-color: green;
-  }
-
-.life_pg {
-    accent-color: rgb(13, 231, 13);
-}
-
-.charge {
-    accent-color: gold;
-  }
-
-
 .life_pg {
     accent-color: rgb(13, 231, 13);
 }
@@ -148,9 +135,6 @@ body {
 
 .dialog-button:hover, .prompt-button:hover {
     background: #d3869b;
-<<<<<<< HEAD
-}
-=======
 }
 
 .hit-effect {
@@ -215,7 +199,6 @@ body {
 .magic-effect {
     animation: flashRed 0.3s ease, magicShake 0.4s ease;
 }
->>>>>>> b22200f241726593f8727dc53fce9fc9e050858f
 
 
 #boss {
