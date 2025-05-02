@@ -305,7 +305,6 @@ function sendToServer(request,data)
 
 function getRand(json){
     rand = parseInt(json['result']);
-    console.log(rand);
 }
 
 function enemyAttack(json){
