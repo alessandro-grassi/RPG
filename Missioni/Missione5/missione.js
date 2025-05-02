@@ -27,8 +27,10 @@ function formatDialog(dialogLines)
     dialogLines.forEach(line =>{ // itera ogni linea della cella di dialogo
         if(line.fight != null) // controlla se ci sono reindirizzamenti a pagine di combattimento
         {
-            sendToServer("update-index", { current_index: client_index });
-            window.location.replace("http://localhost:8080/m5/" + line.fight); // redirect in modo che non si possa fare back alla pagina precedente
+            sendToServer("update-index", { current_index: client_index + 1}).then(function(){
+                window.location.replace("http://localhost:8080/m5/" + line.fight); // redirect in modo che non si possa fare back alla pagina precedente
+            });
+            return "";
         }
         else
         {
@@ -56,7 +58,7 @@ function movelines(step)
 // funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
 function sendToServer(request,data)
 {
-    fetch("http://localhost:8080/m5/" + request,{
+    return fetch("http://localhost:8080/m5/" + request,{
         method:"POST", // metodo richiesta
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(data) // dati da inviare in formato json
