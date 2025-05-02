@@ -31,7 +31,7 @@
   [
       "All'ingresso del castello si mostrava davanti un colossale cancello,",
       "nelle vicinanze numerosi detriti poggiavano sul suolo, quelli che un tempo furono le abitazioni del popolo.",
-      {"image":"Castle_gates.jpeg"}
+      {"image":"Castle_gates.jpg"}
   ],
   [
       "Dopo pochi passi davanti alle porte pezzi di roccia iniziarono a scricchiolare e ad ammassarsi,",
@@ -88,6 +88,9 @@
   [
       "\"Sanguis tuus tam pretiosus est quam mortalis aurum\" (Il tuo sangue è più prezioso dell'oro vacuo)",
       "\"Mortalis faciem tuam Fatum\" (Mortale affronta il tuo Destino)"
+  ],
+  [
+    {"fight":"mission-scena-2"}
   ],
   [
       "Le ossa caddero in una pozza di sangue che si espandeva sul pavimento.",

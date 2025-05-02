@@ -26,7 +26,10 @@ function formatDialog(dialogLines)
     let finalDialog = "" // crea una variabile in cui fare lo store delle linee
     dialogLines.forEach(line =>{ // itera ogni linea della cella di dialogo
         if(line.fight != null) // controlla se ci sono reindirizzamenti a pagine di combattimento
+        {
             window.location.replace("http://localhost:8080/m5/" + line.fight); // redirect in modo che non si possa fare back alla pagina precedente
+            movelines(0); // fa avanzare all'index dedicato alla fight scene
+        }
         else
         {
             if(line.image == null) // nel caso non ci siano immagini da cambiare

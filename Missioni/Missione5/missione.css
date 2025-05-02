@@ -94,12 +94,6 @@ body {
 progress {
     accent-color: red;
   }
-  
-
-#vita-pg {
-    accent-color: green;
-  }
-
 
 .life-text, .prompt-text {
     font-size: 18px;
@@ -124,6 +118,7 @@ progress {
 
 .dialog-button:hover, .prompt-button:hover {
     background: #d3869b;
+
 }
 
 .hit-effect {
