@@ -429,6 +429,7 @@ function gameover(){
     document.getElementById('heal_button').remove();
     document.getElementById('ulti_button').remove();
     document.getElementById('next_button').remove();
+    document.getElementById('magic_button').remove();
     document.getElementById('ulti').remove();
     retry = document.createElement('button');
     retry.textContent = "Retry";
