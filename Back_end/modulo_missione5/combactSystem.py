@@ -28,7 +28,6 @@ manas = {
 
 def enemy_attack(userName):
 
-
     player_set_healt(userName, 600)
     queue_defense_duration = None
     queue_attack_duration = None
@@ -49,43 +48,38 @@ def enemy_attack(userName):
         if rand(0, 100) > chance:
             print("miss")
             missed = True
+    criticoMissed = False
+    if enemyData.get("critico") != None:
+        critico = enemyData["critico"]
+        if rand(0, 100) > critico:
+            print("critico")
+            criticoMissed = True
 
     #execute move
     if not missed:
-
-
-
         if move.get("damage_type") != None:
 
             damage_type = move["damage_type"]
-            if damage_type == "fisico":
-                damage = enemyData["stats"]["danno_fis_base"]
-                if enemy_get_attack_bonus_duration(userName, enemyName) > 0:
-                    damage += enemy_get_attack_bonus(userName, enemyName)
-            if damage_type == "magico":
-                damage = enemyData["stats"]["danno_mag_base"]
-                if enemy_get_attack_bonus_duration(userName, enemyName) > 0:
-                    damage += enemy_get_attack_bonus(userName, enemyName)
-            if damage_type == "both":
-                damage = enemyData["stats"]["danno_fis_base"] + enemyData["danno_mag_base"]
-                if enemy_get_attack_bonus_duration(userName, enemyName) > 0:
-                    damage += enemy_get_attack_bonus(userName, enemyName)
+            if move.get("damge_fis_perc") != None:
+                damage = player_get_healt * move["damge_fis_perc"] / 100
+            if move.get("damge_mag_perc") != None:
+                damage = player_get_healt * move["damge_mag_perc"] / 100
+            else:
+                if damage_type == "fisico":
+                    damage = enemyData["stats"]["danno_fis_base"]
+                if damage_type == "magico":
+                    damage = enemyData["stats"]["danno_mag_base"]
+                if damage_type == "both":
+                    damage = enemyData["stats"]["danno_fis_base"] + enemyData["danno_mag_base"]
+            
+            damage += get_bonuses_sums(userName, "boss", "attack")
+            damage -= get_bonuses_sums(userName, "player", "defense")
+
             player_damage(userName, damage)
             print("damage: ", damage)
             print("damage type: ", damage_type)
 
-        if move.get("bonus_defense") != None:
-            bonus_defense = move["bonus_defense"]
-            enemy_set_defense_bonus(userName, enemyName, bonus_defense)
-            queue_defense_duration = move["durata"]
-            print("bonus defense: ", bonus_defense)
-            print("bonus defense duration: ", move["durata"])
-        if move.get("bonus_attack") != None:
-            bonus_attack = move["bonus_attack"]
-            enemy_set_attack_bonus(userName, enemyName, bonus_attack)
-            queue_attack_duration = move["durata"]
-            print("bonus attack: ", bonus_attack)
-            print("bonus attack duration: ", move["durata"])
+
 
         if move.get("recupero_vita") != None:
             recupero_vita = move["recupero_vita"]
@@ -103,15 +97,23 @@ def enemy_attack(userName):
     print("move: ", move)
 
     #decrement attack and defense duration
-    enemy_decrement_attack_bonus_duration(userName, enemyName)
-    enemy_decrement_defense_bonus_duration(userName, enemyName)
+    decrement_bonuses_duration(userName, "boss")
+
+
 
     #add duration to attack and defense
-    if queue_attack_duration != None:
-        enemy_set_attack_bonus_duration(userName,enemyName,queue_attack_duration)
-    
-    if queue_defense_duration != None:
-        enemy_set_defense_bonus_duration(userName,enemyName,queue_defense_duration)
+    if not missed:
+        if move.get("bonus_defense") != None:
+            bonus_defense = move["bonus_defense"]
+            add_bonuses(userName, "defense", bonus_defense, move["durata"], "boss")
+            print("bonus defense: ", bonus_defense)
+            print("bonus defense duration: ", move["durata"])
+        if move.get("bonus_attack") != None:
+            bonus_attack = move["bonus_attack"]
+            add_bonuses(userName, "attack", bonus_attack, move["durata"], "boss")
+            print("bonus attack: ", bonus_attack)
+            print("bonus attack duration: ", move["durata"])
+
 
     print("enemyName: ", enemyName)
     print("enemy healt: ", enemy_get_healt(userName,enemyName))
@@ -412,10 +414,12 @@ def get_bonuses(userName):
     
 def decrement_bonuses_duration(userName,target):
     bonuses = get_bonuses(userName)
+
     if bonuses != None:
         for bonus in bonuses:
-            if bonus[4] == target:
-                duration = bonus[3]
+            print("bonus: ", bonus)
+            if bonus[5] == target:
+                duration = bonus[4]
                 if duration > 0:
                     duration -= 1
                     if duration == 0:
@@ -449,6 +453,16 @@ def add_bonuses(userName, name, value, duration, target):
         VALUES ('{userName}', '{name}', {value}, {duration}, '{target}');
     """)
 
+def get_bonuses_sums(userName, target, name):
+    bonuses = queryLib.execute(f"""
+        SELECT SUM(value)
+        FROM m5_bonuses
+        WHERE utente = '{userName}' AND target = '{target}' AND name = '{name}';
+    """)
+    if len(bonuses) > 0:
+        return bonuses[0][0]
+    else:
+        return 0
 
 def mele(attackedName, attackerName):
     do_damage(attackedName,rand(3,7))
