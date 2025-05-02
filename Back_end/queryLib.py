@@ -3,7 +3,6 @@ Modulo scritto da Simone De Vito 22/02/25 per la connessione a Supabase.
 """
 import psycopg2
 
-
 def getHeaders(tabella:str)->list[str]:
     """
      ritorna una lista rappresentate i nomi delle colonne di una tabella
