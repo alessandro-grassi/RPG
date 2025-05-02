@@ -4,60 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indovina la soluzione</title>
-    <link rel="stylesheet" href="stile.css">
+    <link rel="stylesheet" href="http://localhost:8080/missione4/stile">
 </head>
 <body>
     <div id="header">
         <h1 id="titolo-missione">missione 4</h1>
     </div>
 
-    <div id="indizi">
+    <div id="indiziDiv">
         <h2>Indizi</h2>
-        <ul id="lista-indizi">
-            <li>Nessun indizio disponibile.</li>
-        </ul>
+        <p id="messaggioIndizi">Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</p>
+        <ol id="listaIndizi">
+
+        </ol>
     </div>
 
-    <div id="soluzione">
+    <div id="soluzioneDiv">
         <h2>Indovina la Soluzione</h2>
-        <input type="text" id="parola-finale" placeholder="Inserisci la soluzione">
+        <input type="text" id="soluzione" placeholder="Inserisci la soluzione">
         <div id="pulsanti">
-            <button id="indovina">Indovina</button>
-            <button onclick="location.href='prima_pagina.html'">Indietro</button>
+            <button id="indovinaBtn" onclick="controllaSoluzione()">Indovina</button>
+            <button id="backBtn" onclick="ReindirizzamentoPrimaPagina()">Indietro</button>
         </div>
     </div>
 
     <!--chiamate rest-->
     <script>
-        //windowonload degli indizi
-        function caricaIndizi() {
-            fetch('http://localhost:8080/api/indizi', { method: 'GET' })  //nome api di esempio
+        //onload degli indizi
+        function getDettagliGenerali() 
+        {
+            fetch('http://localhost:8080/missione4/dettagliIndovina', 
+            { method: 'GET' })  
                 .then(response => response.json())
                 .then(data => {
-                    //quindi qua bisogna fare la get della lista degli indizi da mettere dentro
-                    //<p> id="lista-indizi"></p>
+                    //estraggo i dettagli dal JSON restituito
+                    var tentativiIndovina = data[0];
+                    var tentativiIndovinaFatti = data[1];
+                    var indiziOttenuti = data[2]; //lista degli indizi
+                    var maxIndizi = data[3];
+
+                    //tentativi per indovinare
+                    var tentativiH = document.getElementById("tentativiH");
+                    tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentativiIndovina) - int(tentativiIndovinaFatti));
+
+                    //indizi
+                    if(indiziOttenuti.length > 0)
+                    {
+                        var mesIndizi = document.getElementById("messaggioIndizi");
+                        mesIndizi.hidden = True;
+                    
+                        var listaIndizi = document.getElementById("listaIndizi");
+                        indiziOttenuti.forEach(indizio => {
+                            var indizioElement = document.createElement("li");
+                            indizioElement.innerText = indizio;
+                            listaIndizi.appendChild(indizioElement);
+                        });
+
+                    }
+                    
+                    if(indiziOttenuti.length >= maxIndizi)
+                    {
+                       var backBtn = document.getElementById("backBtn");
+                       backBtn.disabled = true;
+                    }
+
                 })
                 .catch(error => console.error("Si è verificato un errore:", error));
         }
 
         //quando indovini la soluzione
-        document.getElementById('indovina').addEventListener('click', function () {
-            const soluzione = document.getElementById('parola-finale').value;
+        function controllaSoluzione()
+        {
+            var soluz = document.getElementById("souluzione").value;
 
-            fetch('http://localhost:8080/api/verifica-soluzione', { //nome api di esempio
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ soluzione: soluzione })
+            fetch('http://localhost:8080/missione4/indovina', 
+            { method: 'POST', body: JSON.stringify({ soluzione: soluz })})
+            .then(response => response.json())
+            .then(data => {
+                var risposta = data[0];
+                var tentGiocoMax = data[1];
+                var tentGiocoFatti = data[2];
+
+                //aggiorna tentativi + metti req input
+                if (risposta == "tentativi esauriti")
+                {
+                    alert("mi dispiace ma hai esaurito i tentativi...");
+                    var indovinaBtn = document.getElementById("indovinaBtn");
+                    indovinaBtn.disabled = true;
+                }   
+                else if (risposta == "hai vinto!")
+                {
+                    alert("Complimenti, Hai vinto!!!");
+                }
+                else
+                {
+                    alert("Mi dispiace, non è la risposta corretta... Riprova!");
+                }
+
+                //tentativi per indovinare
+                var tentativiH = document.getElementById("tentativiH");
+                tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentGiocoMax) - int(tentGiocoFatti));
             })
-                .then(response => response.json())
-                .then(data => {
-                    //se data è giusto, alert di ricompensa e aggiunta ricompensa nel database
-                })
-                .catch(error => console.error("Si è verificato un errore:", error));
-        });
+            .catch(error => console.error("Si è verificato un errore:", error));
+        }
 
         //carica gli indizi all'avvio della pagina
-        window.onload = caricaIndizi;
+        window.onload = getDettagliGenerali();
     </script>
 </body>
 </html>
