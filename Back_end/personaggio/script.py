@@ -80,7 +80,12 @@ def check_get(path):
         f.close()
         return stringa
     
-
+def personaggiUtente(utente):
+    queryLib.connetti()
+    listone = queryLib.execute(f'''SELECT personaggi.id, personaggi."Nome" FROM "personaggi" WHERE personaggi.creatore='{utente}' ''')
+    queryLib.disconnetti()
+    return json.dumps(listone).encode("utf-8");
+    pass
 
 def check_post(path, client_choice):
 
@@ -90,14 +95,18 @@ def check_post(path, client_choice):
         return f
 
     elif path.endswith("crea_personaggio"):
-        #try:
-        username = client_choice["username"]
-        nome = client_choice["name"]
-        classe = client_choice["class"]
-        ab1 = client_choice["ability1"]
-        ab2 = client_choice["ability2"]
-        ab3 = client_choice["ability3"]
-        aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username)
-        return '"Registrazione personaggio effettuata con successo!"'.encode("utf-8")
-        #except Exception as errore:
-            #return '"errore"'.encode("utf-8")
+        try:
+            username = client_choice["username"]
+            nome = client_choice["name"]
+            classe = client_choice["class"]
+            ab1 = client_choice["ability1"]
+            ab2 = client_choice["ability2"]
+            ab3 = client_choice["ability3"]
+            aggiungi_personaggio(nome, classe, ab1, ab2, ab3, username)
+            return '"Registrazione personaggio effettuata con successo!"'.encode("utf-8")
+        except KeyError as errore:
+            return '"errore"'.encode("utf-8")
+    elif  path.endswith("listaPersonaggi"):
+        return personaggiUtente(client_choice)
+
+    else: return '"errore"'.encode("utf-8")

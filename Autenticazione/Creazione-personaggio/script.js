@@ -57,15 +57,21 @@ function listaClassi(){
 
 }
 
-/*function cerca_personaggi(){
-  fetch('http://localhost:8080/personaggio/listaPersonaggi')
-	  .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json(); // Decodifica la risposta JSON
-    })
-}*/
+async function cerca_personaggi(){
+  let resp = await fetch('http://localhost:8080/personaggio/listaPersonaggi',{
+    "method":"POST",
+    "body": '"'+get_utente()+'"'
+  });
+  json = await resp.json();
+  str="";
+  json.forEach(
+    data=>{
+        str+="<option value='"+data[0]+"'>"+data[1]+"</option>";
+    }
+  )
+  document.getElementById("my_pers").innerHTML=str;
+	  
+}
 
 function mostraAbilita(){
   document.getElementById("ab1").style.visibility = 'visible';
@@ -107,6 +113,13 @@ async function listaAbilita(){
     
   }
 }
+
+
+function next_page(){
+  document.cookie="personaggio="+document.getElementById("my_pers").value;
+  window.location="http://localhost:8080/ms_home";
+}
+
 
 function crea_personaggio(){
   const nome = document.getElementById("name").value;

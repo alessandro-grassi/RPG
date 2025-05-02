@@ -12,8 +12,10 @@
 
     <div class="container">
         <div id="titolo">Decidi il tuo destino</div>
-        <div id="scegli" onload="cerca_personaggi()" style="visibility: visible;">
+        <div id="scegli" style="visibility: visible;">
             <div class = "hoverdiv" onclick="changeVisibility()">Crea un nuovo personaggio!</div>
+            <select id="my_pers"  onload="cerca_personaggi()">Scegli il tuo combattente</select>
+            <button onclick="next_page()">Seleziona Personaggio</button>
         </div>
         <div id="crea" style="visibility: hidden;">
             <h1 class="title">Crea il tuo personaggio!</h1>
@@ -63,5 +65,6 @@
         </div>
         
     </div>
+    <script>cerca_personaggi()</script>
 </body>
 </html>
