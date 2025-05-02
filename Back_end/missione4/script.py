@@ -3,9 +3,12 @@ import os
 import random
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-# Percorsi dei file
+# Percorsi corretti dei file
+# Otteniamo il percorso assoluto della directory base RPG
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Percorso assoluto alla directory dei file HTML
 HTML_DIR = os.path.join(BASE_DIR, "Missioni", "Missione4")
+# Percorso assoluto al file database nella stessa cartella dello script
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.json")
 
 # Funzioni per gestire il database JSON
