@@ -105,8 +105,7 @@ const CreaTimer = () => {
         timer++;
         tempo.textContent = timer;
         if(timer==45){
-            alert('tempo scaduto, hai perso! RIPROVA :)');
-            window.location.reload();
+            window.location.href="sconfitta.html";//bisogna mettere l'indirizzo corretto
         }
     }, 1000);
 };
