@@ -84,6 +84,13 @@ def enemy_attack(userName):
             queue_attack_duration = move["durata"]
             print("bonus attack: ", bonus_attack)
             print("bonus attack duration: ", move["durata"])
+
+        if move.get("recupero_vita") != None:
+            recupero_vita = move["recupero_vita"]
+            enemy_damage(userName, enemyName, -recupero_vita)
+            print("recupero vita: ", recupero_vita)
+
+        
     
         
         
@@ -282,7 +289,91 @@ def player_damage(userName, damage):
     else:
         player_set_healt(userName, 0)
 
+def player_get_attack_bonus(userName):
+    attack_bonus = queryLib.execute(f"""
+        SELECT player_bonus_attack
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(attack_bonus) > 0:
+        return attack_bonus[0][0]
+    else:
+        return 0
 
+def player_set_attack_bonus(userName, value):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET player_bonus_attack = {value}
+        WHERE utente = '{userName}';
+    """)
+
+def player_get_defense_bonus(userName):
+    defense_bonus = queryLib.execute(f"""
+        SELECT player_bonus_defense
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(defense_bonus) > 0:
+        return defense_bonus[0][0]
+    else:
+        return 0
+
+def player_set_defense_bonus(userName, value):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET player_bonus_defense = {value}
+        WHERE utente = '{userName}';
+    """)
+
+def player_get_attack_bonus_duration(userName):
+    attack_duration = queryLib.execute(f"""
+        SELECT player_bonus_attack_duration
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(attack_duration) > 0:
+        return attack_duration[0][0]
+    else:
+        return 0
+
+def player_set_attack_bonus_duration(userName, duration):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET player_bonus_attack_duration = {duration}
+        WHERE utente = '{userName}';
+    """)
+
+def player_get_defense_bonus_duration(userName):
+    defense_duration = queryLib.execute(f"""
+        SELECT player_bonus_defense_duration
+        FROM m5_play_data
+        WHERE utente = '{userName}';
+    """)
+    if len(defense_duration) > 0:
+        return defense_duration[0][0]
+    else:
+        return 0
+
+def player_set_defense_bonus_duration(userName, duration):
+    queryLib.execute_no_return(f"""
+        UPDATE m5_play_data
+        SET player_bonus_defense_duration = {duration}
+        WHERE utente = '{userName}';
+    """)
+
+def player_decrement_attack_bonus_duration(userName):
+    attack_duration = player_get_attack_bonus_duration(userName)
+    if attack_duration > 0:
+        player_set_attack_bonus_duration(userName, attack_duration - 1)
+    else:
+        player_set_attack_bonus_duration(userName, 0)
+
+def player_decrement_defense_bonus_duration(userName):
+    defense_duration = player_get_defense_bonus_duration(userName)
+    if defense_duration > 0:
+        player_set_defense_bonus_duration(userName, defense_duration - 1)
+    else:
+        player_set_defense_bonus_duration(userName, 0)
 
 def mele(attackedName, attackerName):
     do_damage(attackedName,rand(3,7))
