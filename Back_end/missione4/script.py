@@ -137,29 +137,22 @@ def check_post(path, client_choice):
 import json #simulo il db
 
 #json per simulare il db
-DB = '{ "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!", ' \
-'       "ricompensa": "titolo di Kung Fury", ' \
-
-'       "tentativiIndovina": 3, ' \
-'       "tentativiIndovinaFatti": 0, ' \
-'       "tentativiGioco": 5, ' \
-'       "tentativiGiocoFatti": 0, ' \
-
-'       "soluzione": "gabibbo",' \
-
-'       "maxIndizi": 3,' \
-'       "indiziOttenuti":' \
-'       [' \
-'           "prova1",' \
-'           "prova1"' \
-'       ],' \
-
-'       "prove":' \
-'       [' \
-'           {"soluz": "nonna", "ind": "usa spesso il termine BELANDI" },' \
-'           {"soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia" },' \
-'           {"soluz": "trave", "ind": "è rosso" }' \
-'       ] }'
+DB = '''{
+    "obiettivo": "scopri chi ha rapito Aldo Moro risolvendo i wordle!",
+    "ricompensa": "titolo di Kung Fury",
+    "tentativiIndovina": 3,
+    "tentativiIndovinaFatti": 0,
+    "tentativiGioco": 5,
+    "tentativiGiocoFatti": 0,
+    "soluzione": "gabibbo",
+    "maxIndizi": 3,
+    "indiziOttenuti": ["prova1", "prova1"],
+    "prove": [
+        {"soluz": "nonna", "ind": "usa spesso il termine BELANDI"},
+        {"soluz": "porto", "ind": "partecipa al programma televisivo Striscia la Notizia"},
+        {"soluz": "trave", "ind": "è rosso"}
+    ]
+}'''
 
 dbDict = json.loads(DB)
 
