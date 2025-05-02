@@ -62,7 +62,7 @@ def check_get(path):
         return stringa.encode("utf-8")
     
     #pagina sconfitta
-    elif path.endswith("sm_home"):
+    elif path.endswith("sconfitta"):
         f = open("Missioni/Missione4/sconfitta.html", "r")
         stringa = f.read()
         f.close()
@@ -87,7 +87,11 @@ def check_get(path):
     
     #reset dati missione
     elif path.endswith("resetMissione"):
-        return resetMissione()
+        try:
+            print("resetMissione")
+            return resetMissione()
+        except Exception as errore:
+            return json.dumps({"errore": str(errore)}).encode("utf-8")
     
     #get tentativo
     elif path.endswith("tentativo"):
@@ -132,13 +136,13 @@ def check_post(path, client_choice):
         except Exception as errore:
             return '"errore"'.encode("utf-8")
         
-    elif path.endswith("indovina"):
+    elif path.endswith("controllaRisposta"):
         try:
             tentativo = client_choice["tentativo"]
-            risposta = client_choice["risposta"]
-            return indovina(tentativo, risposta)
+            soluzione = client_choice["soluzione"]
+            return controllaRisposta(tentativo, soluzione)
         except Exception as errore:
-                return '"errore"'.encode("utf-8")
+                return f'errore: {str(errore)}'.encode("utf-8")
     
     elif "controlla/" in path:
         try:
@@ -227,7 +231,7 @@ def controlla(num, tentativo, risposta):
         dbDict["tentativiGiocoFatti"] = int(dbDict["tentativiGiocoFatti"]) + 1
         
         dbProva = dbDict["prove"][num-1]
-        if risposta == dbProva["soluz"]:
+        if risposta.lower() == dbProva["soluz"].lower():
             return getSoluzione(num)
         else:
             dati = {
@@ -246,11 +250,12 @@ def controlla(num, tentativo, risposta):
         }
         return json.dumps(dati).encode("utf-8")
 
-def indovina(tentativo, risposta):
-    if tentativo <= dbDict["tentativiIndovina"]:
-        dbDict["tentativiIndovinaFatti"] += 1
+def controllaRisposta(tentativo, soluzione):
+    tentativo = int(tentativo) 
+    if tentativo <= int(dbDict["tentativiIndovina"]) and tentativo > 0:
+        dbDict["tentativiIndovinaFatti"] = int(dbDict["tentativiIndovinaFatti"]) + 1
         
-        if risposta == dbDict["soluzione"]:
+        if soluzione.lower() == dbDict["soluzione"].lower():
             dati = {
                 "risultato": "corretto",
                 "tentativiIndovina": dbDict["tentativiIndovina"],
@@ -274,9 +279,9 @@ def resetGame():
     dbDict["tentativiGiocoFatti"] = "0"
 
 def resetMissione():
-    dbDict["tentativiIndovina"] = "3"
-    dbDict["tentativiIndovinaFatti"] = "0"
-    dbDict["indiziOttenuti"] = []
+    global dbDict
+    dbDict = json.loads(DB)
+    return json.dumps({"risultato": "Missione resettata con successo"}).encode("utf-8")
 
 def getTentativo():
     temp = int(dbDict["tentativiIndovina"]) - len(dbDict["indiziOttenuti"])

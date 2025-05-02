@@ -8,8 +8,10 @@
 </head>
 <body>
     <div id="header">
-        <h1 id="titolo-missione">missione 4</h1>
+        <h1 id="titoloMissioneH">Missione 4</h1>
+        <h2 id="tentativiH">Tentativi per indovinare: <span id="tentativiSpan"></span></h2>
     </div>
+
 
     <div id="indiziDiv">
         <h2>Indizi</h2>
@@ -40,18 +42,18 @@
                     //estraggo i dettagli dal JSON restituito
                     var tentativiIndovina = data["tentativiIndovina"];
                     var tentativiIndovinaFatti = data["tentativiIndovinaFatti"];
-                    var indiziOttenuti = data["IndiziOttenuti"]; //lista degli indizi
+                    var indiziOttenuti = data["indiziOttenuti"]; //lista degli indizi
                     var maxIndizi = data["maxIndizi"];
 
                     //tentativi per indovinare
-                    var tentativiH = document.getElementById("tentativiH");
-                    tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentativiIndovina) - int(tentativiIndovinaFatti));
+                    var tentativiSpan = document.getElementById("tentativiSpan");
+                    tentativiSpan.innerText = String(tentativiIndovina - tentativiIndovinaFatti);
 
                     //indizi
                     if(indiziOttenuti.length > 0)
                     {
                         var mesIndizi = document.getElementById("messaggioIndizi");
-                        mesIndizi.hidden = True;
+                        mesIndizi.hidden = true;
                     
                         var listaIndizi = document.getElementById("listaIndizi");
                         indiziOttenuti.forEach(indizio => {
@@ -75,15 +77,16 @@
         //quando indovini la soluzione
         function controllaSoluzione()
         {
-            var soluz = document.getElementById("souluzione").value;
+            var soluz = document.getElementById("soluzione").value;
+            var tent = document.getElementById("tentativiSpan").innerText;
 
-            fetch('http://localhost:8080/missione4/indovina', 
-            { method: 'POST', body: JSON.stringify({ soluzione: soluz })})
+            fetch('http://localhost:8080/missione4/controllaRisposta', 
+            { method: 'POST', body: JSON.stringify({ tentativo: tent, soluzione: soluz })})
             .then(response => response.json())
             .then(data => {
                 var risposta = data["risultato"];
-                var tentGiocoMax = data["tentativiGioco"];
-                var tentGiocoFatti = data["tentativiGiocoFatti"];
+                var tentativiIndovina = data["tentativiIndovina"];
+                var tentativiIndovinaFatti = data["tentativiIndovinaFatti"];
 
                 //aggiorna tentativi + metti req input
                 if (risposta == "tentativi esauriti")
@@ -94,7 +97,7 @@
                     resetMissione();
                     ReindirizzamentoSconfitta();
                 }   
-                else if (risposta == "hai vinto!")
+                else if (risposta == "corretto")
                 {
                     alert("Complimenti, Hai vinto!!!");
                     var indovinaBtn = document.getElementById("indovinaBtn");
@@ -108,32 +111,32 @@
                 }
 
                 //tentativi per indovinare
-                var tentativiH = document.getElementById("tentativiH");
-                tentativiH.innerText = "Tentativi per indovinare: " + String(tentGiocoMax - tentGiocoFatti);
+                var tentativiSpan = document.getElementById("tentativiSpan");
+                tentativiSpan.innerText =String(tentativiIndovina - tentativiIndovinaFatti);
             })
             .catch(error => console.error("Si è verificato un errore:", error));
         }
 
-        ReindirizzamentoPrimaPagina()
+        function ReindirizzamentoPrimaPagina()
         {
             /*fetch('http://localhost:8080/missione4', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
                 .catch(error => console.error("Si è verificato un errore:", error));*/
-                window.location.href = 'http://localhost:8080/missione4/missione4';
+                window.location.href = 'http://localhost:8080/missione4';
         }
 
-        resetMissione()
+        function resetMissione()
         {
-            fetch('http://localhost:8080/resetMissione', 
+            fetch('http://localhost:8080/missione4/resetMissione', 
             { method: 'GET' })  
             .then(response => response.json())
                 .then(data => {})
                 .catch(error => console.error("Si è verificato un errore:", error));
         }
 
-        ReindirizzamentoSconfitta()
+        function ReindirizzamentoSconfitta()
         {
             /*fetch('http://localhost:8080/sconfitta', 
             { method: 'GET' })  
@@ -143,7 +146,7 @@
                 window.location.href = 'http://localhost:8080/missione4/sconfitta';
         }
         
-        ReindirizzamentoVittoria()
+        function ReindirizzamentoVittoria()
         {
             /*fetch('http://localhost:8080/vittoria', 
             { method: 'GET' })  
