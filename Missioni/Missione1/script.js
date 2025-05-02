@@ -71,7 +71,7 @@ function startTimer() {
       clearInterval(timerInterval);
       endGame();
     }
-  }, 1000);
+  }, 10);
 }
 
 // Conteggio click
