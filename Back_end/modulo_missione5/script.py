@@ -5,6 +5,7 @@ import json
 import Back_end.modulo_missione5.combactSystem as combactSystem
 
 #queryLib.connetti()
+#queryLib.connetti()
 
 PREFIX = "/m5/" 
 PREFIX_API = PREFIX+"api/"
@@ -18,6 +19,18 @@ def check_get(path:str):
         
     elif path == PREFIX+"mission-start": # get pagina di start missione
         with open("Missioni/Missione5/missione.html", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+        
+    elif path == PREFIX+"enemies-images-path":
+        with open("Missioni/Missione5/assets/enemies_images.json", "r") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8") # encode 
+        
+    elif path == PREFIX+"mission-scene-2":
+        with open("Missioni/Missione5/html_pages/scena_2.html", "r") as f:
             r = f.read()
             f.close()
             return r.encode("utf-8")
@@ -68,11 +81,10 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8") # encode
-        
     elif path == PREFIX+"random-chance":
         rand = combactSystem.rand(1, 100)
-        return ('{"result":"'+str(rand)+'"}').encode("utf-8")
-        
+        return ('{"result":"'+str(rand)+'"}').encode("utf-8")  
+    
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
@@ -99,16 +111,23 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-     
-    #funzione usata per recuperare le immagini in base al nome richiesto
+        
+     #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):
         image_name = path.split("/")[3] # fa uno split e prende la 4a cella
         with open("Missioni/Missione5/assets/"+image_name, "rb") as f: # utilizzare rb(read byte) per richieste sulle immagini
             r = f.read()
             f.close()
             return r # restituisce immagine in formato binario
-     #funzione usata per recuperare le immagini in base al nome richiesto
-            return r # restituisce immagine in formato binario
+    elif path=="/m5/script-scena-2":
+        f = open("Missioni/Missione5/html_pages/scena_2.js")
+        r = f.read()
+        f.close()
+        return r.encode("utf-8")
+    else:
+        return "Percorso non valido!".encode("utf-8")
+
+
     elif path== PREFIX + "script-scena-1":
         f = open("Missioni/Missione5/html_pages/scena_1.js", "rb")
         r = f.read()

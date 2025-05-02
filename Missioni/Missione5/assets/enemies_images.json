@@ -4,7 +4,11 @@
         "image": "Immortal_guardian.png"
     },
     {
+<<<<<<< HEAD
         "enemy_name": "Adepto immortale cremesi",
+=======
+        "enemy_name": "Adepto immortale Cremisi",
+>>>>>>> b22200f241726593f8727dc53fce9fc9e050858f
         "image": "Skeleton_blood_mage.png"
     },
     {

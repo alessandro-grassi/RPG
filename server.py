@@ -18,9 +18,15 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         resp = check_get(path)
         try:
             self.wfile.write(resp)
+<<<<<<< HEAD
         except:
             print(f"Errore durante la richiesta get a '{path}'")
             self.wfile.write(b"");
+=======
+        except: 
+            print(f"Errore durante la richiesta get a '{path}'")
+            self.wfile.write(b"")
+>>>>>>> b22200f241726593f8727dc53fce9fc9e050858f
         return
 
     def do_POST(self):
