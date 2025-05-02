@@ -40,14 +40,16 @@
   ],
   [
       "I suoi occhi fiammeggiavano di una fiamma viola e il suo cristallo in cima al capo iniziò a sprigionare scariche elettriche.",
-      "Il Guardiano era pronto a difendere il castello con tutto sè stesso."
+      "Il Guardiano era pronto a difendere il castello con tutto sè stesso.",
+      {"image":"Castle_gates.jpg"}
   ],
   [
     {"fight":"mission-scena-1"}
   ],
   [
       "Riuscendo nell'impresa impossibile l'ammasso di roccia cadde inanime",
-      "ponendo fine al lavoro di quell'ammasso di detriti."
+      "ponendo fine al lavoro di quell'ammasso di detriti.",
+      {"image":"Castle_gates.jpg"}
   ],
   [
       "Rivolgendoti verso il castello i cancelli si aprirono, il buio inondava l'interno del castello,",
@@ -94,7 +96,8 @@
   ],
   [
       "Le ossa caddero in una pozza di sangue che si espandeva sul pavimento.",
-      "Eri esausto ma la tua missione non era ancora finita."
+      "Eri esausto ma la tua missione non era ancora finita.",
+      {"image":"second_lib.jpg"}
   ],
   [
       "Il Re sta aspettando il tuo arrivo.",
@@ -139,7 +142,8 @@
   [
       "Il vecchio re crollando tentò di afferrare la sua spada",
       "Gridò \"Sono immortale!!\"",
-      "\"Non puoi uccidere chi non può morire!!\""
+      "\"Non puoi uccidere chi non può morire!!\"",
+      {"image":"Throne_room.jpg"}
   ],
   [
       "Afferrò saldamente la sua spada finché non cominciò a brillare di una luce intensa da delle crepe che iniziavano a formarsi su di essa.",

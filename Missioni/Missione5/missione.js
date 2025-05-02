@@ -23,6 +23,7 @@ function setButton(){
             movelines(1); // imposta incremento linee
     });
     container.appendChild(nextButton); // appende bottone a container
+    skipButton(); // aggiunge skip button assieme a next-button
 }
 
 //funzione che formatta il blocco di dialogo e controlla se ci sono immagini
@@ -39,7 +40,7 @@ function formatDialog(dialogLines)
         }
         if(line.choice == "end") // caso in cui si arriva alla fine della missione
         {
-            if(line.image == null && line.choice == null) // nel caso non ci siano immagini da cambiare
+            if(line.image == null) // nel caso non ci siano immagini da cambiare
                 finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
             updateImage(line.image); // fa un update delle immagini
             endChoice(); // aggiunge bottone di restart missione
@@ -91,12 +92,47 @@ function endMission()
 function removeNext(flag)
 {
     if(flag) // se flag true rimuove next-button
+    {
         document.getElementById("next-button").remove();
+        document.getElementById("skip-button").remove();
+    }
     else // rimuove tasti di fine missione
     {
         document.getElementById("new-run-button").remove(); // rimuove bottone 
         document.getElementById("exit-run").remove(); // rimuove bottone
         setButton(); // imposta bottone next
+    }
+}
+
+// funzione che crea il tasto skip
+function skipButton()
+{
+    const container = document.getElementById("dialog-container"); // prende container
+    const skipButton = document.createElement("button"); // crea bottone di skip
+    skipButton.textContent = "salta dialoghi"; // textcontent bottone
+    skipButton.id = "skip-button"; // setta id
+    skipButton.className = "dialog-button"; // classe per styling
+    skipButton.onclick = function() {
+        moveToFight(); // sposta al primo fight trovato
+    }
+    container.appendChild(skipButton); // aggiunge bottone skip a container
+}
+
+// sotto funzione che recuperar gli index che fanno partire i fight
+function moveToFight()
+{
+    let flag = false; // indica se è stata trovata una fight
+    let i = client_index;
+    while( i+1 < dialogLines.length && flag == false) // while itera i blocchi di dialogo a partire da quello corrente
+    {
+        dialogLines[i].forEach(line => { // itera ogni linea del blocco
+            if(line.fight != null || line.choice != null) // caso in cui trova una linea che avvia un fight
+            {
+                flag = true; // fa terminare loop
+                movelines(i-client_index); // sposta la pagina allo start della boss fight
+            }
+        });
+        i ++; // incrementa i per andare al prossimo blocco di dialogo
     }
 }
 
