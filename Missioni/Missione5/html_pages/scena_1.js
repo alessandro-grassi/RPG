@@ -333,9 +333,15 @@ function enemyAttack(json){
                     }
                     tempChance -= 100;*/
 
-                    fetch(PREFIX_API+"enemy-attack/"){
-                        
-                    }
+                    fetch(PREFIX_API+"enemy-attack/provaM5")                 
+                    .then(response => response.json())
+                    .then(data => console.log(data));
+
+                    fetch(PREFIX_API+"get_enemy_life/provaM5")
+                    .then(response=>response.json())
+                    .then(data=>{
+                            vita_corrente = data
+                        })
 
                     document.getElementById('boss_sound').setAttribute('src', "http://localhost:8080/m5/get-audio/"+ moves['audio']);
 
