@@ -1,8 +1,9 @@
+//Al caricamento della pagina, fa questo:
 document.addEventListener("DOMContentLoaded",()=>{ 
     fetchData("enemies-images-path", setImageEnemy)
     fetchData("enemies-list", setLifePoints)
-    setNameBoss();
-    setFirstDialogue();
+    document.getElementById('name-text').innerHTML = NAME;
+    document.getElementById('text').innerHTML = "Il Re sta aspettando...";
     setButtonAttack();
     setButtonNext();
 });
@@ -16,6 +17,7 @@ function sendToServer(request, data) {
     });
 }
 
+//Prende dal server, con callback
 function fetchData(request, callback)
 {
     fetch("http://localhost:8080/m5/" + request)
@@ -33,11 +35,37 @@ function fetchData(request, callback)
     });
 }
 
+//prende dal server, NO callback
+function fetchFromServer(request)
+{
+    return fetch("http://localhost:8080/m5/" + request)
+    .then((response) => { // check risposta 
+        if(!response.ok)
+            throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
+        return response.json(); // ritorna la risposta codificata in json
+    })
+    .then((data) => {
+        console.log("fetched data:",data);
+        return data; // return data
+    })
+    .catch((err) => {
+        console.error('request erro: ',err); //log errore a console
+        throw err;
+    })
+}
+
+//Sposta 'index', l'indice di mission-start, al prossimo step dopo aver sconfitto il boss
+function movelines(step) {
+    client_index += step;
+    const data = { "current_index": client_index };
+    return sendToServer("update-index", data);
+}
+
 //GLOBAL
     const NAME = "Il Re Eterno";
     let vita_corrente = 0;
     let vita_corrente_pg = 500;
-    let attacco_pg = 10;
+    let attacco_pg = 100;
     let danno_fisico_pg = attacco_pg * 10;
     let forza = 10;
     let danno_fisico = forza * 10;
@@ -69,18 +97,11 @@ function setLifePoints(json){
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
 }
 
-function setNameBoss(){
-    document.getElementById('name-text').innerHTML = NAME;
-}
-
-function setFirstDialogue(){
-    document.getElementById('text').innerHTML = "Il Re sta aspettando...";
-}
-
+//Carica le funzioni del bottone di attacco
 function setButtonAttack(){
     document.getElementById('attack_button').addEventListener("click", function(){
 
-        //effetti visivi
+        //Audio ed Effetti
         const boss = document.getElementById('image_king');
         const hit_sound = document.getElementById('hit_sound');
 
@@ -97,6 +118,7 @@ function setButtonAttack(){
 
         vita_corrente -= danno_fisico_pg;
         if(vita_corrente <= 0){
+            //Sconfitta del boss rimuove tutto
             document.getElementById('image_king').remove();
             document.getElementById('vita').remove();
             document.getElementById('vita-text').remove();
@@ -106,6 +128,7 @@ function setButtonAttack(){
             this.removeEventListener('click', setButtonAttack);
         }
         else{
+            //Attacco del player
             document.getElementById('vita').value = vita_corrente;
             document.getElementById('vita-text').textContent = "PV:"+ vita_corrente;
             document.getElementById('text').textContent = "'Hai inflitto "+danno_fisico_pg+" danni fisici!'";
@@ -113,19 +136,22 @@ function setButtonAttack(){
         document.getElementById('next_button').style = "visibility: visible;"; 
         this.style = "visibility: hidden";
 
-        void boss.offsetWidth; // Trigger reflow to restart animation
+        void boss.offsetWidth;
     })
 }
 
+//Carica le funzioni del bottone 'Next'
 function setButtonNext(){
     document.getElementById('next_button').addEventListener("click", function(){
         if(vita_corrente > 0){
+            //Attacco del boss
             fetchData("random-chance", getRand)
             fetchData("enemies-list", enemyAttack)
             document.getElementById('attack_button').style = "visibility: visible;";
             this.style = "visibility: hidden";
         }
         else {
+            //Boss sconfitto, ritorna a mission-start
             fetchFromServer("dialog-index").then(index => {
                 client_index = index.current_index;
                 movelines(1).then(() => {
@@ -136,58 +162,25 @@ function setButtonNext(){
     })
 }
 
-function movelines(step) {
-    client_index += step;
-    const data = { "current_index": client_index };
-    return sendToServer("update-index", data);
-}
-
-function fetchFromServer(request)
-{
-    return fetch("http://localhost:8080/m5/" + request)
-    .then((response) => { // check risposta 
-        if(!response.ok)
-            throw new Error(`response fetch error ${response.status}`); // in caso di errore stampa lo stato a console
-        return response.json(); // ritorna la risposta codificata in json
-    })
-    .then((data) => {
-        console.log("fetched data:",data);
-        return data; // return data
-    })
-    .catch((err) => {
-        console.error('request erro: ',err); //log errore a console
-        throw err;
-    })
-}
-
-// funzione che manda i dati al server prende in input la richiesta da fare e i dati da mandare come oggetto
-function sendToServer(request,data)
-{
-    fetch("http://localhost:8080/m5/" + request,{
-        method:"POST", // metodo richiesta
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(data) // dati da inviare in formato json
-    })
-
-}
-
 // funzione che genera un numero da 1-100 per far decidere al boss quale mossa usare
 function getRand(json){
     rand = parseInt(json['result']);
-    console.log(rand);
 }
 
 // funzione principale: scelta casuale del boss di una sua mossa
 function enemyAttack(json){
     json.forEach(enemy =>{
+        //Cerca il nemico
         if(enemy['name'] == NAME){
             tempChance = 0;
             console.log(tempChance);
             enemy['moves'].forEach(moves =>{
+                //Cerca la mossa in base alla chance
                 tempChance += moves['chance'];
                 console.log(tempChance);
                 console.log(moves['chance']);
                 if(tempChance >= rand){
+                    //Controlla che tipo di mossa è e cosa fa
                     document.getElementById('text').innerHTML = moves['description'];
                     if(moves['move_type'] == 'attack'){
                         if(moves['damage_type'] == 'fisico'){
@@ -221,12 +214,15 @@ function enemyAttack(json){
                         document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
                         document.getElementById('vita_pg').value = vita_corrente_pg;
                     }
+                    //Controllo vita del giocatore dopo attacco
                     if(vita_corrente_pg <= 0){
                         vita_corrente_pg = 0;
                         gameover();
                     }
+                    //Fa smette di controllare le mosse
                     tempChance -= 100
 
+                    //Audio ed Effetti
                     document.getElementById('boss_sound').setAttribute('src', "http://localhost:8080/m5/get-audio/"+ moves['audio']);
 
                     const combat_box = document.getElementById('combat-box');
@@ -246,7 +242,7 @@ function enemyAttack(json){
                         combat_box.classList.remove('flash');
                     }, 4000);
 
-                    void combat_box.offsetWidth; // Trigger reflow to restart animation
+                    void combat_box.offsetWidth;
                 }
             })
         }
@@ -255,10 +251,12 @@ function enemyAttack(json){
 
 // funzione fine gioco
 function gameover(){
+    //Rimuove ogni tipo di bottone e funzione
     document.getElementById('vita-text-pg').innerHTML = "PV:"+vita_corrente_pg;
     document.getElementById('text').innerHTML = "GAME OVER";
     document.getElementById('attack_button').remove();
     document.getElementById('next_button').remove();
+    //Crea bottone di riprova
     retry = document.createElement('button');
     retry.textContent = "Retry";
     retry.className = "dialog-button";
