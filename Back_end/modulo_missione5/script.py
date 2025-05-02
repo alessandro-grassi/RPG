@@ -108,6 +108,8 @@ def check_get(path:str):
         r = f.read()
         f.close()
         return r
+    
+    # combactSystem
     elif path == PREFIX_API + "enemy-attack":
         username = path.split("/")[4]
         combactSystem.enemy_attack(username)
@@ -131,6 +133,8 @@ def check_get(path:str):
     elif path == PREFIX_API + "get-ability-data":
         abilityName = path.split("/")[4]
         abilityData = combactSystem.get_ability_data(abilityName)
+
+
     else:
         return "Percorso non valido!".encode("utf-8")
     
@@ -138,6 +142,8 @@ def check_get(path:str):
         
 def check_post(path,clientchoice):
     try:
+
+        # combactSystem
         if path == PREFIX_API + "player-attack":
             # recupera il nome dell'utente dalla richiesta
             userName = clientchoice["username"]
