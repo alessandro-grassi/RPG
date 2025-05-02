@@ -42,6 +42,7 @@ retryButton.addEventListener("click", () => {
     window.location.reload();
 });
 
+// Pulsante per uscire dalla missione in caso di sconfitta
 exitButton.addEventListener("click", () => {
     if (winner?.constructor.name !== "Enemy") return;
     window.location.href = "../SceltaMissione/sm_home.html";
