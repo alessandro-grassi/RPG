@@ -105,7 +105,7 @@ const CreaTimer = () => {
         timer++;
         tempo.textContent = timer;
         if(timer==60){
-            window.location.href="";//bisogna mettere l'indirizzo corretto
+            window.location.href="../../Missione_Finale/pagina_boss_finale/sconfitta.html";//bisogna mettere l'indirizzo corretto
         }
     }, 1000);
 };
