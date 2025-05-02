@@ -75,18 +75,18 @@ body {
     color: #ebdbb2;
 }
 
-progress {
+.life {
     accent-color: red;
   }
-<<<<<<< HEAD
-=======
-  
 
-#vita-pg {
-    accent-color: green;
+.life_pg {
+    accent-color: rgb(13, 231, 13);
+}
+
+.charge {
+    accent-color: gold;
   }
 
->>>>>>> b22200f241726593f8727dc53fce9fc9e050858f
 
 .life-text, .prompt-text {
     font-size: 18px;
@@ -109,11 +109,32 @@ progress {
     font-family: 'Press Start 2P', cursive;
 }
 
+.ulti_button {
+    background: gold;
+    border: 2px solid goldenrod;
+    color: black;
+    padding: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px #000;
+    margin: 5px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.ulti_button:disabled {
+    background-color: #cccccc; /* grigio chiaro */
+    color: #666666;           /* testo grigio scuro */
+    cursor: not-allowed;      /* cursore di "bloccato" */
+    opacity: 0.7;
+}
+
+.ulti_button:hover {
+    background: rgb(185, 158, 2);
+}
+
+
 .dialog-button:hover, .prompt-button:hover {
     background: #d3869b;
-<<<<<<< HEAD
-}
-=======
 }
 
 .hit-effect {
@@ -178,4 +199,61 @@ progress {
 .magic-effect {
     animation: flashRed 0.3s ease, magicShake 0.4s ease;
 }
->>>>>>> b22200f241726593f8727dc53fce9fc9e050858f
+
+
+#boss {
+    font-size: 50px;
+    margin-bottom: 30px;
+    transition: transform 0.1s;
+    padding: 20px;
+    display: inline-block;
+}
+
+.hit {
+    transform:scale(1.1);
+}
+
+.shake_boss {
+    animation: shake 4.0s ease;
+}
+
+.shake_player {
+    animation: shake_p 0.5s ease;
+}
+
+.flash {
+    animation: flash 3.5s ease;
+}
+
+@keyframes shake_p {
+    0%   { transform: translate(0, 0); }
+    10%  { transform: translate(-4px, 2px); }
+    20%  { transform: translate(4px, -2px); }
+    30%  { transform: translate(-6px, 1px); }
+    40%  { transform: translate(6px, -1px); }
+    50%  { transform: translate(-4px, 2px); }
+    60%  { transform: translate(4px, -2px); }
+    70%  { transform: translate(-2px, 1px); }
+    80%  { transform: translate(-2px, -1px); }
+    90%  { transform: translate(-2px, 1px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    10%  { transform: translateX(-15px); }
+    20%  { transform: translateX(15px); }
+    30%  { transform: translateX(15px); }
+    40%  { transform: translateX(-15px); }
+    50%  { transform: translateX(-15px); }
+    60%  { transform: translateX(15px); }
+    70%  { transform: translateX(15px); }
+    80%  { transform: translateX(-15px); }
+    90%  { transform: translateX(-15px); }
+    100% { transform: translateX(0); }
+  }
+
+@keyframes flash {
+    0%,20%,40%,60%,80%,100%   { opacity: 1;}
+    10%,30%,50%,70%,90%   { opacity: 0.1; }
+}
