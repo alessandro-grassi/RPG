@@ -259,7 +259,7 @@ function setButtonNext(){
             this.style = "visibility: hidden";
         }
         else {
-            console.log("redirect alla pagina principale");
+            window.location.replace('/m5/mission-start');
         }
     })
 }
