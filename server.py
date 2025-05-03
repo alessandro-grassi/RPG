@@ -1,12 +1,15 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from Back_end import jslib
+from Back_end import login, jslib, personaggio, complete_mission as cm
 import json
 from urllib.parse import urlparse
-from Back_end import complete_mission as cm
-dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
+dict = { 
     "/cm" : cm,
-    "/jslib": jslib
-}
+    "/login": login,
+    "/jslib": jslib,
+    "/personaggio" : personaggio,
+    }
+
+
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -63,7 +66,7 @@ def check_get(path):
         f.close()
         return r
     elif path=="/":
-        return check_get("/login")
+        return "<script>window.location='http://localhost:8080/login'</script>".encode("UTF-8")
     return "Modulo non trovato".encode("utf-8")
 
 

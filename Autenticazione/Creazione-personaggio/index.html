@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <link rel="stylesheet" href="http://localhost:8080/personaggio/stile">
+    <script src="http://localhost:8080/personaggio/backend"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <script src="http://localhost:8080/jslib/cookie.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onload="listaClassi()">
+
+    <div class="container">
+        <div id="titolo">Decidi il tuo destino</div>
+        <div id="scegli" style="visibility: visible;">
+            <div class = "hoverdiv" onclick="changeVisibility()">Crea un nuovo personaggio!</div>
+            <select id="my_pers"  onload="cerca_personaggi()">Scegli il tuo combattente</select>
+            <button onclick="next_page()">Seleziona Personaggio</button>
+        </div>
+        <div id="crea" style="visibility: hidden;">
+            <h1 class="title">Crea il tuo personaggio!</h1>
+            <form class="register-form" id="form">
+                <div class="form-group">
+                    <label for="name">Nome:</label>
+                    <input class="input" type="text" id="name" placeholder="Inserisci un nome" required oninvalid="this.setCustomValidity('Non hai inserito un nome')" oninput="setCustomValidity('')">
+                </div><br><br>
+                
+                <!-- Lista a discesa con opzioni e immagine a destra -->
+                <div class="form-group flex-row">
+                    <label id="classe" for="choice">Classe:</label>
+
+                    <select id="choice"  onchange=" mostraAbilita();listaAbilita();statistics()">
+
+
+                        <option value="default">Seleziona classe</option>
+                    </select>
+                    <div class="statistics">
+                        <div id="A" onload="statistics()"></div>
+                        <div id="B" onload="statistics()"></div>
+                        <div id="C" onload="statistics()"></div>
+                        <div id="D" onload="statistics()"></div>
+                        <div id="E" onload="statistics()"></div>
+                    </div>
+                </div><br><br>
+    
+                <!-- Lista della sofferenza  
+                <label id ="abilita" for="checkbox">Abilità:</label><br><br>
+                <div>
+                    <label><input type="checkbox" class="checkbox" value="opzione1"> Palla di fuoco</label><br>
+                    <label><input type="checkbox" class="checkbox" value="opzione2"> Sberle a raffica</label><br>
+                    <label><input type="checkbox" class="checkbox" value="opzione3"> Pensione</label><br>
+                    <label><input type="checkbox" class="checkbox" value="opzione4"> Reddito</label><br>
+                </div>
+                 -->
+    
+                <select id="ab1" class="input" >
+                    <option value="default">Seleziona abilita'</option>
+                </select>
+                <br>
+                <select id="ab2" class="input">
+                    <option value="default">Seleziona abilita'</option>
+                </select>
+                <br>
+                <select id="ab3" class="input" >
+                    <option value="default">Seleziona abilita'</option>
+                </select>
+                
+                <br>
+                <button class="input" onclick="crea_personaggio()">Submit</button>
+                
+                <div class = "hoverdiv" onclick="changeVisibility()">Seleziona il personaggio</div>
+            </form>
+
+        </div>
+        
+    </div>
+    <script>cerca_personaggi()</script>
+</body>
+</html>
