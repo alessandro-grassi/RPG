@@ -66,7 +66,7 @@ class Game {
         let victoriousEntity = null;
         if (!this.hero.isAlive()) {
             victoriousEntity = this.selectedEnemy;
-        } else if (!this.selectedEnemy.isAlive()) {
+        } else if (!this.selectedEnemy?.isAlive()) {
             victoriousEntity = this.hero;
         }
 
@@ -82,11 +82,12 @@ class Game {
     aggiornaUI() {
         /* Mostro */
         document.getElementById("immagineMostro").src = this.selectedEnemy.imageUrl;
-        document.getElementById("nomeMostro").textContent = game.selectedEnemy.name;
+        document.getElementById("nomeMostro").textContent = this.selectedEnemy.name;
         document.getElementById("vitaMostro").textContent = this.selectedEnemy.hp;
         /* Mostro */
         
         /* Eroe */
+        document.getElementById("nomeGiocatore").textContent = this.hero.name;
         document.getElementById("vitaGiocatore").textContent = this.hero.hp;
         /* Eroe */
 
@@ -94,18 +95,13 @@ class Game {
 
         magicButton.disabled = !this.hero.canUseMagic;
     }
-
-    //Metodo che genera un numero da 0 a max-1
-    RNG(max) {
-        return Math.floor(Math.random() * max);
-    }
     
     //Metodo che controlla la rimozione degli effetti di stato
     removeStatusEffects() {
-        if (this.selectedEnemy.status === "burned" && !this.RNG(5)){
+        if (this.selectedEnemy.status === "burned" && !RNG(5)){
             this.removeStatus();
         }
-        if (this.selectedEnemy.status === "paralyzed" && this.RNG(5) === 0) {
+        if (this.selectedEnemy.status === "paralyzed" && RNG(5) === 0) {
             this.removeStatus();
         }
     }
@@ -125,7 +121,7 @@ class Game {
         if ((!this.hero.isAlive()) || (!this.selectedEnemy.isAlive())) 
             return;
         if (this.selectedEnemy.status === "burned") {
-            let burnDamage = Math.floor((this.hero.atk / 3) + this.RNG(10));
+            let burnDamage = Math.floor((this.hero.atk / 3) + RNG(10));
             this.selectedEnemy.hp -= burnDamage;
             console.log(`Il nemico subisce ${burnDamage} danni da bruciatura!`);
             setTimeout(() => {

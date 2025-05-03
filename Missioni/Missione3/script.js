@@ -1,9 +1,14 @@
+let game = null;
+
+(async () => {
+
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
 
 const continueButton = document.getElementById("continueButton");
 const retryButton = document.getElementById("retryButton");
 const exitButtons = document.getElementsByClassName("exitButton");
+const exitButton = document.getElementById("exitButton");
 
 
 const output = document.getElementById("output")
@@ -20,17 +25,6 @@ const magieDescriptions = {
     3: "Fulmine Devastante "
 };
 
-document.addEventListener("DOMContentLoaded", (e) => {
-    game.aggiornaUI();
-    // Aggiorno l'input con l'utente preso dai cookie
-    /*
-    const idPersonaggio = get_personaggio();
-    console.log(idPersonaggio);
-    const inputHiddenUserId = document.getElementById("uid");
-    inputHiddenUserId?.value = idPersonaggio;
-    */
-});
-
 continueButton.addEventListener("click", (e) => {
     const winner = game.getWinner();
     if (winner?.constructor.name !== "Hero") return;
@@ -38,7 +32,6 @@ continueButton.addEventListener("click", (e) => {
     if (!game.remaingEnemies()) {
         endGameScreen.style.display = "flex";
         game.endGame = true;
-        // Chiamare funzione completion
         //completion();
         return;
     }
@@ -60,8 +53,8 @@ retryButton.addEventListener("click", () => {
 Array.from(exitButtons).forEach(exitButton => {
     exitButton.addEventListener("click", () => {
         const winner = game.getWinner();
-        if (winner?.constructor.name !== "Enemy") return;
-        window.location.href = "../SceltaMissione/sm_home.html";
+        if (winner?.constructor.name !== "Hero") return;
+        window.location.href = "/sm_home";
     }); 
 });
 
@@ -177,9 +170,20 @@ function checkGameStatus() {
     }
 }
 
+async function getCharacter(id) {
+    const characterResponse = await fetch(`http:localhost:8008/missione3/${id}/personaggio`);
+    if (!characterResponse?.ok) return null;
+    const character = await characterResponse.json();
+    return character;
+}
+
+const character = await getCharacter(get_personaggio());
+
+console.log(character);
+
 const heroesInfos = [
     {
-        name: "Super Tibet",
+        name: character.name,
         lvl: 80,
         exp: 7900,
         atk: 29,
@@ -187,7 +191,7 @@ const heroesInfos = [
         magic: 1,
     },
     {
-        name: "Mario il Grande",
+        name: character.name,
         lvl: 100,
         exp: 10000,
         atk: 50,
@@ -200,8 +204,19 @@ const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.leng
 
 console.log(selectedHeroInfo);
 
-let game = new Game(selectedHeroInfo, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
+game = new Game(selectedHeroInfo, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
 game.selectedEnemy = game.selectEnemy();
+
+/* Inizializzo il la pagina */
+game.aggiornaUI();
+// Aggiorno l'input con l'utente preso dai cookie
+const idUtente = get_utente();
+if (idUtente) {
+    const inputHiddenUserId = document.getElementById("uid");
+    inputHiddenUserId.value = idUtente;
+}
+/* Inizializzo il la pagina */
+
 /* Inizio sezione chiamate REST */
 
 /* Inzio Sezione Gestione Audio */
@@ -263,3 +278,5 @@ function GestisciAudio() {
     }
 }
 /* Fine Sezione Gestione audio*/
+
+})();
