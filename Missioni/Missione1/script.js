@@ -3,6 +3,7 @@ const gameContainer = document.getElementById("game-container");
 const restartButton = document.getElementById("restart-button");
 const backButton = document.getElementById("back-button");
 const audio = new Audio('http://localhost:8080/missione1/grassSound.mp3'); // URL dell'audio
+
 //const character = get_personaggio();
 
 let clicks = 0;
