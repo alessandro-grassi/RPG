@@ -12,14 +12,14 @@ let match = 0;
 let inizioGioco = true;
 
 const images = [
-    './img/drago1.jpg',
-    './img/drago2.webp',
-    './img/drago3.jpg',
-    './img/drago4.jpg',
-    './img/drago5.jpg',
-    './img/drago6.jpg',
-    './img/drago7.jpg',
-    './img/drago8.jpg'
+    '/drago1',
+    '/drago2',
+    '/drago3',
+    '/drago4',
+    '/drago5',
+    '/drago6',
+    '/drago7',
+    '/drago8'
 ];
 
 const generaCarte = () => {

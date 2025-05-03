@@ -2,7 +2,7 @@
 <head>
     <style>
         body {
-            background-image: url('sconfitta.jpg');
+            background-image: url('/sconfitta');
             background-repeat: no-repeat;
             background-size: cover;
             display: flex;
@@ -33,14 +33,14 @@
             window.location.href = ""; // inserire locazione dopo aver preso modifiche dal branch principale
         }
         function ReloadMissione(){
-            window.location.href = "../../../missione1/index.html"; // attenzione: "Missione1" deve essere scritto come da nome reale della cartella (maiuscole contano!)
+            window.location.href = "/"; // attenzione: "Missione1" deve essere scritto come da nome reale della cartella (maiuscole contano!)
         }
     </script>
 </head>
 <body>
     <div class="riga_bottoni">
-        <button onclick="PaginaMissioni()"><img width="200px" src="casa.png"></button>
-        <button onclick="ReloadMissione()"><img width="200px" src="reload.png"></button>
+        <button onclick="PaginaMissioni()"><img width="200px" src="/casa"></button>
+        <button onclick="ReloadMissione()"><img width="200px" src="/reload"></button>
     </div>
 </body>
 </html>

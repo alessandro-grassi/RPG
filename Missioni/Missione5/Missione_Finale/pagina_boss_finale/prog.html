@@ -13,7 +13,7 @@
             height: 100vh;
             font-family: Arial, sans-serif;
             flex-direction: column;
-			background-image:url('inferno.jpg');
+			background-image:url('/inferno');
 			background-repeat: no-repeat;
 			background-size: cover;
         }
@@ -55,8 +55,8 @@
     </div>
 	<br>
 	<h1 style="color: white; background-color:black">IL MALVAGIO SMAUG</h1>
-	<img src="drago.gif">
-    <button id="bottone"><img id="sfera" src="sfera.png"><br>ALITO FETIDO!</button>
+	<img src="/drago">
+    <button id="bottone"><img id="sfera" src="/sfera"><br>ALITO FETIDO!</button>
     <script>
         const button = document.getElementById("bottone");
         const healthBar = document.getElementById("health");
@@ -77,7 +77,7 @@
                 healthBar.style.backgroundColor = "red";
             }
             if (healthValue <= 0) {
-				window.location.href="vittoria.html";
+				window.location.href="/vittoria";
             }
         }
 
@@ -110,7 +110,7 @@
             
             colorTimeout1 = setTimeout(changeColor, changeColTime); 
             timeout = setTimeout(() => {
-                window.location.href="sconfitta.html";
+                window.location.href="/sconfitta";
             }, timeLose);
             
             healthValue -= 100 / 9;

@@ -44,8 +44,24 @@ const esempio = {
 updateMission(esempio);
 v
 function Sconfitta(){
-    window.location.href="../Missione5/Missione_Finale/pagina_boss_finale/sconfitta.html";
+    window.location.href="/pagina_sconfitta";
 }
 function MissioneSuccessiva(){
-    window.location.href="../Missione5/Missione2/memory/index.html";
+    window.location.href="/missione_memory";
+}
+function invia() {
+    const risposta = document.querySelector('input[name="answer"]:checked');
+    if (!risposta) {
+        alert("Seleziona una risposta!");
+        return;
+    }
+
+    const rispostaCorretta = 2; // Indice corretto (1 = "Una mappa")
+    if (parseInt(risposta.value) === rispostaCorretta) {
+        alert("Risposta corretta!");
+        MissioneSuccessiva();
+    } else {
+        alert("Risposta sbagliata!");
+        Sconfitta();
+    }
 }

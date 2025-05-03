@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(){ //esegue il codice sol
     caricaMissione();
 });
 function Sconfitta(){
-    window.location.href="";
+    window.location.href="/pagina_sconfitta"; 
 }
 function MissioneSuccessiva(){
     window.location.href="/missione2";
