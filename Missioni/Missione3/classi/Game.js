@@ -66,7 +66,7 @@ class Game {
         let victoriousEntity = null;
         if (!this.hero.isAlive()) {
             victoriousEntity = this.selectedEnemy;
-        } else if (!this.selectedEnemy.isAlive()) {
+        } else if (!this.selectedEnemy?.isAlive()) {
             victoriousEntity = this.hero;
         }
 
