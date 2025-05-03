@@ -105,7 +105,7 @@ const CreaTimer = () => {
         timer++;
         tempo.textContent = timer;
         if(timer==60){
-            window.location.href="../../Missione_Finale/pagina_boss_finale/sconfitta.html";//bisogna mettere l'indirizzo corretto
+            window.location.href="/pagina_sconfitta";//bisogna mettere l'indirizzo corretto
         }
     }, 1000);
 };
@@ -114,7 +114,7 @@ const checkVittoria = () => {
     if (match === carte.length) {
         clearInterval(interval);
         alert('Missione superata');
-        window.location.href="../../Missione_Finale/pagina_boss_finale/prog.html";// dovrebbe essere il collegamento con il boss finale però bisognerà vedere 
+        window.location.href="/pagina_boss_finale";// dovrebbe essere il collegamento con il boss finale però bisognerà vedere 
     }
 };
 
