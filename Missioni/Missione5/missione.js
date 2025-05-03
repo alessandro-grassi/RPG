@@ -83,7 +83,7 @@ function endMission()
     endRun.id = "exit-run";
     endRun.className = "dialog-button";
     endRun.onclick = function() {
-        console.log("aggiungere parte che rimanda a selezione missioni");
+        window.location.replace("http://localhost:8080/sm_home");
     }
     container.appendChild(endRun);
 }
@@ -126,12 +126,7 @@ function moveToFight()
     while( i+1 < dialogLines.length && flag == false) // while itera i blocchi di dialogo a partire da quello corrente
     {
         dialogLines[i].forEach(line => { // itera ogni linea del blocco
-            if(line.image != null)
-            {
-                const data = {"last_image": current_image}; // crea oggetto da inviare al server
-                sendToServer("update-last_image", data);
-            }
-            else if(line.fight != null || line.choice != null) // caso in cui trova una linea che avvia un fight
+            if(line.fight != null) // caso in cui trova una linea che avvia un fight
             {
                 flag = true; // fa terminare loop
                 movelines(i-client_index); // sposta la pagina allo start della boss fight
@@ -140,7 +135,7 @@ function moveToFight()
         i ++; // incrementa i per andare al prossimo blocco di dialogo
     }
 }
-
+//
 // funzione che permette di modificare l'index dei dialoghi
 function movelines(step)
 {
