@@ -1,0 +1,17 @@
+FATTO - Gioco a oggetti
+FATTO - Entità Gioco che gestisce elementi di gioco, turno (attributo), Giocatore, Nemico (chiama oggetto di nemico che chiama per esempio)
+FATTO - Classe astratta Entità con vita, livello, attacco, attacco(), schiva(), nome ecc.
+FATTO - Classe eroe eredità Entità e aggiunge classe, mana, exp, magia con metodo usaMagia() ecc.
+FATTO - Classe Mostro eredità Entità e forse basta boh vedremo
+FATTO - Gestione audio
+FATTO - Gestione turni con try catch oppure impedire di cliccare bottoni (o entrambi)
+Gestione magia
+
+
+
+
+
+TODO FUTURO
+Creare funzione con attacco del mostro per rendere il tutto più scalabile (occhiali veloci)
+Sessioni di gioco (se esci si salva dove sei rimasto)
+Selezione personaggio
