@@ -1,5 +1,9 @@
 import json
 
+##     lista=["33","trentini"]
+## return json.dumps(lista).encode("utf-8")
+## fetch("localh..../missione1/dammiquellalistacazzo")
+
 def check_get(path):
     if path.endswith("get_generica"):
         return 'ciao'.encode("utf-8")
