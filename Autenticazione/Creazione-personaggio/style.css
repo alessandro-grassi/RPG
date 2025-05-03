@@ -45,7 +45,25 @@ body {
     color:rgb(0, 255, 242)
 }
 
+#my_pers{
+    font-size: 2.5rem;
+    font-family: 'Iceland';
+    border-radius: 0.4em;
+}
+
+#my_pers_stats{
+
+}
+
+#bottone_1{
+    font-size: 1.6rem;
+    font-family: 'Iceland';
+    background-color: #e53935;
+    border-radius: 2em;
+}
+
 #crea{
+    background-color: #666666b2;
     visibility: hidden;
     justify-content: center;
     border-radius: 2em;
@@ -56,6 +74,7 @@ body {
 }
 
 #scegli{
+    background-color: #887f7fb2;
     justify-content: center;
     border-radius: 2em;
     padding-left: 3%;

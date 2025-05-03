@@ -13,9 +13,14 @@
     <div class="container">
         <div id="titolo">Decidi il tuo destino</div>
         <div id="scegli" style="visibility: visible;">
+            <h1 class="title">Scegli il tuo combattente</h1>
+            <br>
+            <select id="my_pers"  onload="cerca_personaggi()"></select>
+            <br><br>
+            <div id="my_pers_stats"></div>
+            <button id="bottone_1" onclick="next_page()">Seleziona Personaggio</button>
+            <br><br>
             <div class = "hoverdiv" onclick="changeVisibility()">Crea un nuovo personaggio!</div>
-            <select id="my_pers"  onload="cerca_personaggi()">Scegli il tuo combattente</select>
-            <button onclick="next_page()">Seleziona Personaggio</button>
         </div>
         <div id="crea" style="visibility: hidden;">
             <h1 class="title">Crea il tuo personaggio!</h1>
@@ -42,17 +47,7 @@
                         <div id="E" onload="statistics()"></div>
                     </div>
                 </div><br><br>
-    
-                <!-- Lista della sofferenza  
-                <label id ="abilita" for="checkbox">Abilità:</label><br><br>
-                <div>
-                    <label><input type="checkbox" class="checkbox" value="opzione1"> Palla di fuoco</label><br>
-                    <label><input type="checkbox" class="checkbox" value="opzione2"> Sberle a raffica</label><br>
-                    <label><input type="checkbox" class="checkbox" value="opzione3"> Pensione</label><br>
-                    <label><input type="checkbox" class="checkbox" value="opzione4"> Reddito</label><br>
-                </div>
-                 -->
-    
+
                 <select id="ab1" class="input" >
                     <option value="default">Seleziona abilita'</option>
                 </select>
