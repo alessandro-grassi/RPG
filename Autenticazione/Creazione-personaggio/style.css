@@ -96,15 +96,32 @@ body {
    
 }
 
-.form-group {
-    margin-bottom: 15px;
+#gestisci_classe_stats{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    position: absolute;
+    width:90%;
+    height:20%;
+    gap:3rem;
+}
+
+#statistics{
+    width: 50%;
+}
+
+#abilita{
+    position: static;
+}
+
+#colonna{
+    display: flex;
+    flex-direction:column;
+    gap:8rem;
 }
 
 input.input, select.input {
     width: 50%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-left: 5px;
     font-size: 1rem;
     border-radius: 5px;
     border: 1px solid #000000;
@@ -120,23 +137,9 @@ input.input:focus, select.input:focus {
     border-color: #007BFF;
     outline: none;
     font-family: 'Iceland';
+    font-size: 1.2rem;
 }
 
-.flex-row {
-    display: flex;
-    align-items: center;
-}
-
-.classe-immagine {
-    max-width: 150px;
-    max-height: 150px;
-    margin-left: 20px;
-    transition: transform 0.3s ease;
-}
-
-.classe-immagine:hover {
-    transform: scale(1.1); /* Effetto hover per l'immagine */
-}
 
 input[type="submit"], input[type="reset"] {
     background-color: #007BFF;
@@ -172,7 +175,13 @@ input[type="reset"]:hover {
 }
 
 .hoverdiv:hover{
-    color:rgb(78, 165, 200);
+    color:rgb(37, 120, 153);
     transition:0.2s;
     cursor:pointer;
+}
+
+#choice{
+    font-size: 1.2rem;
+    font-family: 'Iceland';
+    border-radius: 2em;
 }

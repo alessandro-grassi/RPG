@@ -149,8 +149,13 @@ async function listaAbilita(){
 
 
 function next_page(){
-  document.cookie="personaggio="+document.getElementById("my_pers").value;
-  window.location="http://localhost:8080/ms_home";
+  const select = document.getElementById("my_pers");
+  if(select.options.length===0){
+    alert("Crea un personaggio");
+  }else{
+    document.cookie="personaggio="+document.getElementById("my_pers").value;
+    window.location="http://localhost:8080/ms_home";
+  }
 }
 
 
