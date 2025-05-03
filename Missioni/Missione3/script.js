@@ -210,10 +210,10 @@ game.selectedEnemy = game.selectEnemy();
 /* Inizializzo il la pagina */
 game.aggiornaUI();
 // Aggiorno l'input con l'utente preso dai cookie
-const idPersonaggio = get_personaggio();
-if (idPersonaggio) {
+const idUtente = get_utente();
+if (idUtente) {
     const inputHiddenUserId = document.getElementById("uid");
-    inputHiddenUserId.value = idPersonaggio;
+    inputHiddenUserId.value = idUtente;
 }
 /* Inizializzo il la pagina */
 
