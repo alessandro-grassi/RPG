@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(){ //esegue il codice sol
     function caricaMissione(){
         
         let missione = {
-            testo: "Qual è il colore del cielo di giorno?", // Testo della domanda
+            testo: "Qual &egrave; il colore del cielo di giorno?", // Testo della domanda
             opzioni: ["Rosso", "Blu", "Azzurro", "Giallo"], // Opzioni di risposta
             immagine: "/image" // Percorso dell'immagine da mostrare
         };

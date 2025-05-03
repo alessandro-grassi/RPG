@@ -36,7 +36,7 @@ function updateMission(data) {
 
 // Esempio di dati ricevuti dal server
 const esempio = {
-    description: "Sono il perfido Dr. Malvagio! Se non rispondi correttamente a questa domanda, ti trasformerò in un gatto! Quant'è 2 + 2?",
+    description: "Sono il perfido Dr. Malvagio! Se non rispondi correttamente a questa domanda, ti trasformerò in un gatto! Quant'&egrave; 2 + 2?",
     answers: ["5", "4", "Cane", "134523"],
     image: "https://spacejockeyreviews.com/wp-content/uploads/2013/08/Dr.-Malvegio-011.jpg"
 };

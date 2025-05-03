@@ -156,7 +156,7 @@ def check_get(path):
         image_data = f.read()
         f.close()
         return image_data  # Restituisci direttamente i dati binari
-    elif path.endswith("/vittoria"):
+    elif path.endswith("/vittoria_gif"):
         f = open(sys.path[0] +"/Missioni/Missione5/Missione_Finale/pagina_boss_finale/vittoria.gif", "rb")  # 'rb' per leggere in binario
         image_data = f.read()
         f.close()

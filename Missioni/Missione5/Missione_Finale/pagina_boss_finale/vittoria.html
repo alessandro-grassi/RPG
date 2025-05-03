@@ -2,7 +2,7 @@
 <head>
     <style>
         body {
-            background-image: url('/vittoria');
+            background-image: url('/vittoria_gif');
             background-repeat: no-repeat;
             background-size: cover;
             display: flex;
@@ -23,7 +23,7 @@
             cursor: pointer;
         }
     </style>
-    <script>
+    <script>/*
          async function PaginaMissioni()
         {
             const valoreVittoria=100;
@@ -31,7 +31,7 @@
                 'vittoria': valoreVittoria
             }
             try{
-                    const responde=await fetch (/*nome server*/,{
+                    const responde=await fetch (/*nome server*//*,{
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -51,6 +51,10 @@
                 catch(error){
                     console.error("Errore:", error);
                 }
+        }*/
+
+        function PaginaMissioni(){
+            window.location.href = "/sm_home"; // inserire locazione dopo aver preso modifiche dal branch principale
         }
 
     </script>
