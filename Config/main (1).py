@@ -1,26 +1,22 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from Back_end import login, jslib, personaggio, complete_mission as cm, select_mis as sm
 import json
 from urllib.parse import urlparse
-dict = { 
-    "/cm" : cm,
-    "/login": login,
-    "/jslib": jslib,
-    "/sm_" : sm,
-    "/personaggio" : personaggio,
-    }
+import mis1
+import mis2
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
+        self.send_header("Content-type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         path = self.path
         path = urlparse(path).path
+
         resp = check_get(path)
 
-        self.wfile.write(resp)
+        self.wfile.write(json.dumps(resp).encode("utf-8"))
         return
 
     def do_POST(self):
@@ -37,7 +33,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
         resp = check_post(path, client_choice)
 
-        self.wfile.write(resp)
+        self.wfile.write(json.dumps(resp).encode("utf-8"))
         return
 
     def do_OPTIONS(self):
@@ -56,24 +52,21 @@ def run_server():
 
 
 def check_get(path):
-    for suffisso, modulo in dict.items():
-        if path.startswith(suffisso):
-            return modulo.check_get(path)
-    if path=="/favicon.ico":
-        f = open("Config/logo magi.ico","rb")
-        r = f.read()
-        f.close()
-        return r
-    elif path=="/":
-        return "<script>window.location='http://localhost:8080/login'</script>".encode("UTF-8")
-    return "Modulo non trovato".encode("utf-8")
+    if path.startswith("/m1_"):
+        mis1.check_get(path)
+        return 0
+    if path.startswith("/m2_"):
+        mis2.check_get(path)
+        return 1
 
 
 def check_post(path, client_choice):
-    for suffisso, modulo in dict.items():
-        if path.startswith(suffisso):
-            return modulo.check_post(path, client_choice)
-    return "Modulo non trovato".encode("utf-8")
+    if path.startswith("/m1_"):
+        mis1.check_post(path, client_choice)
+        return 0
+    if path.startswith("/m2_"):
+        mis2.check_post(path, client_choice)
+        return 1
 
 
 if __name__ == "__main__":
