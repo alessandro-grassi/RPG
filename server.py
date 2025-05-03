@@ -4,12 +4,15 @@ from Back_end import login
 import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
+from Back_end import jslib
+from Back_end import complete_mission as cm
 
 dict = {
     "/sm_" : sm,
     "/login": login,
+    "/cm" : cm,
+    "/jslib": jslib
     # dizionario per prendere i prefissi dei moduli da aggiungere
-    
 }
 
 
@@ -61,6 +64,13 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
+    if path=="/favicon.ico":
+        f = open("Config/logo magi.ico","rb")
+        r = f.read()
+        f.close()
+        return r
+    elif path=="/":
+        return check_get("/login")
     return "Modulo non trovato".encode("utf-8")
 
 
