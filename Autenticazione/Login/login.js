@@ -16,10 +16,11 @@ function registrazione(){
   const username= document.getElementById('n_username').value;
   const password= document.getElementById('n_password').value;
   const email= document.getElementById('n_email').value;
- 
-  
+  const  myRegEx = /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$/;
   if(username=="" || password == "" || email == ""){
-    alert("Non hai compilato tutti i campi")
+    alert("Non hai compilato tutti i campi");
+  }else if(!myRegEx.test(email)){
+    alert("Email non valida");
   }else{
     const message={
       user : username, 
@@ -41,10 +42,14 @@ function registrazione(){
     })
     .then(data => {
       if (data.error) {
-        alert("Errore di connessione, riprova più tardi!")
+        alert("Errore di connessione, riprova più tardi!");
       } else {
-        if (data=="errore") alert("Errore Client")
-          else alert("Registrazione effettuata con successo");
+        if (data=="errore"){
+          alert("Errore Client");
+        }else{
+          alert("Registrazione effettuata con successo");
+          window.location="http://localhost:8080/login";
+        } 
       }
     })
     .catch(error => {
