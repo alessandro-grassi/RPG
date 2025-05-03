@@ -25,7 +25,7 @@
         
         <div id="pulsanti">
             <button id="indovina">Indovina</button>
-            <button onclick="location.href='prima_pagina.html'">Indietro</button>
+            <button onclick="location.href='Prima_pagina.html'">Indietro</button>
         </div>
     </div>
 
@@ -110,7 +110,7 @@
         
         // Carica i tentativi rimasti all'avvio della pagina
         function caricaTentativiRimasti() {
-            fetch('http://localhost:8080/missione4/api/tentativi-rimasti', { method: 'GET' })
+            fetch('http://localhost:8080/missione4a/api/tentativi-rimasti', { method: 'GET' })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('numero-tentativi').textContent = data.tentativiRimasti;
@@ -151,7 +151,7 @@
                     return;
                 }
                 
-                fetch('http://localhost:8080/missione4/api/verifica-parola', {
+                fetch('http://localhost:8080/missione4a/api/verifica-parola', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ parola: parola })
@@ -176,7 +176,7 @@
                             creaGriglia();
                             document.getElementById('messaggio-stato').textContent = 'Hai sbloccato un nuovo indizio! Prova con una nuova parola.';
                             caricaTentativiRimasti();
-                            //window.location.href = "/missione4/prima_pagina.html" METTI A POSTO ------------------------------------------------------------
+                            //window.location.href = "/missione4a/prima_pagina.html" METTI A POSTO ------------------------------------------------------------
                         }, 2000);
                     } else if (data.esito === 'fallimento') {
                         // Tentativi esauriti - mostra messaggio di fallimento
@@ -188,7 +188,7 @@
                             creaGriglia();
                             document.getElementById('messaggio-stato').textContent = '';
                             caricaTentativiRimasti();
-                            //window.location.href = "/missione4/prima_pagina.html" METTI A POSTO ------------------------------------------------------------
+                            //window.location.href = "/missione4a/prima_pagina.html" METTI A POSTO ------------------------------------------------------------
                         }, 3000);
                     } else {
                         // Tentativo errato - passa alla riga successiva

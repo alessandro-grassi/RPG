@@ -5,8 +5,8 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 # directories ----------------------------------------------------------------------------
-BASE_DIR = Path(__file__).parent.parent # directory base, RPG
-HTML_DIR = BASE_DIR / "Missioni" / "Missione4" # directory missione4
+BASE_DIR = Path(__file__).parent.parent.parent.parent # directory base, RPG
+HTML_DIR = BASE_DIR / "Missioni" / "Missione4a" # directory missione4a
 DB_PATH = Path(__file__).parent / "database.json" # directory database.json
 # ----------------------------------------------------------------------------------------
 
@@ -16,13 +16,13 @@ def check_get(path):
     path = urlparse(path).path
     
     # API per ottenere i tentativi rimasti
-    if path == "/missione4/api/tentativi-rimasti":
+    if path == "/missione4a/api/tentativi-rimasti":
         db = carica_database()
         tentativi_rimasti = db["stato_gioco"]["tentativi_rimasti"]
         return json.dumps({"tentativiRimasti": tentativi_rimasti}).encode("utf-8")
     
     # API per ottenere gli indizi sbloccati
-    elif path == "/missione4/api/indizi":
+    elif path == "/missione4a/api/indizi":
         db = carica_database()
         indizi = db["stato_gioco"]["indizi_sbloccati"]
         return json.dumps({"indizi": indizi}).encode("utf-8")
@@ -32,15 +32,15 @@ def check_get(path):
         file_path = None
         
         # Mappatura tra URL e file
-        if path == "/missione4" or path == "/missione4/":
+        if path == "/missione4a" or path == "/missione4a/":
             file_path = HTML_DIR / "Prima_pagina.html"
-        elif path == "/missione4/wordle.html":
+        elif path == "/missione4a/wordle":
             file_path = HTML_DIR / "Wordle.html"
-        elif path == "/missione4/prima_pagina.html":
+        elif path == "/missione4a/primapagina":
             file_path = HTML_DIR / "Prima_pagina.html"
-        elif path == "/missione4/indovina_soluzione.html":
-            file_path = HTML_DIR / "Indovina_soluzione.html"
-        elif path == "/missione4/stile.css":
+        elif path == "/missione4a/indovina_soluzione":
+            file_path = HTML_DIR / "Indovinasoluzione.html"
+        elif path == "/missione4a/stile":
             file_path = HTML_DIR / "Stile.css"
         
         if file_path and file_path.exists():
@@ -55,13 +55,13 @@ def check_post(path, client_choice):
     path = urlparse(path).path
     
     # API per verificare una parola del Wordle
-    if path == "/missione4/api/verifica-parola":
+    if path == "/missione4a/api/verifica-parola":
         if "parola" in client_choice:
             result = verifica_parola(client_choice["parola"])
             return json.dumps(result).encode("utf-8")
     
     # API per verificare la soluzione finale
-    elif path == "/missione4/api/verifica-soluzione":
+    elif path == "/missione4a/api/verifica-soluzione":
         if "soluzione" in client_choice:
             result = verifica_soluzione_finale(client_choice["soluzione"])
             return json.dumps(result).encode("utf-8")

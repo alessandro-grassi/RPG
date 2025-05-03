@@ -6,7 +6,7 @@ from Back_end import missione4a, complete_mission as cm
 dict = {  # dizionario per prendere i prefissi dei moduli da aggiungere
     "/login": login,
     "/jslib": jslib,
-    "/missione4": missione4a
+    "/missione4a": missione4a
 }
 
 

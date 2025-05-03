@@ -24,14 +24,14 @@
         <input type="text" id="parola-finale" placeholder="Inserisci la soluzione">
         <div id="pulsanti">
             <button id="indovina">Indovina</button>
-            <button onclick="location.href='prima_pagina.html'">Indietro</button>
+            <button onclick="location.href='Prima_pagina.html'">Indietro</button>
         </div>
     </div>
 
     <script>
         // Carica gli indizi all'avvio della pagina
         function caricaIndizi() {
-            fetch('http://localhost:8080/missione4/api/indizi', { method: 'GET' })
+            fetch('http://localhost:8080/missione4a/api/indizi', { method: 'GET' })
                 .then(response => response.json())
                 .then(data => {
                     const listaIndizi = document.getElementById('lista-indizi');
@@ -69,7 +69,7 @@
                     return;
                 }
 
-                fetch('http://localhost:8080/missione4/api/verifica-soluzione', {
+                fetch('http://localhost:8080/missione4a/api/verifica-soluzione', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ soluzione: soluzione })

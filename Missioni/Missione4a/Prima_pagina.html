@@ -26,14 +26,14 @@
     </div>
 
     <div id="pulsanti">
-        <button onclick="location.href='indovina_soluzione.html'">Indovina Soluzione</button>
-        <button onclick="location.href='wordle.html'">Gioca</button>
+        <button onclick="location.href='Indovina_soluzione.html'">Indovina Soluzione</button>
+        <button onclick="location.href='Wordle.html'">Gioca</button>
     </div>
 
     <script>
         // Carica gli indizi all'avvio della pagina
         function caricaIndizi() {
-            fetch('http://localhost:8080/missione4/api/indizi', { method: 'GET' })
+            fetch('http://localhost:8080/missione4a/api/indizi', { method: 'GET' })
                 .then(response => response.json())
                 .then(data => {
                     const listaIndizi = document.getElementById('lista-indizi');
