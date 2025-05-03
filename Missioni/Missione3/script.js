@@ -1,3 +1,5 @@
+let game = null;
+
 (async () => {
 
 const atkButton = document.getElementById("atkButton");
@@ -30,7 +32,7 @@ continueButton.addEventListener("click", (e) => {
     if (!game.remaingEnemies()) {
         endGameScreen.style.display = "flex";
         game.endGame = true;
-        completion();
+        //completion();
         return;
     }
     game.aggiornaUI();
@@ -51,8 +53,8 @@ retryButton.addEventListener("click", () => {
 Array.from(exitButtons).forEach(exitButton => {
     exitButton.addEventListener("click", () => {
         const winner = game.getWinner();
-        if (winner?.constructor.name !== "Enemy") return;
-        window.location.href = "../SceltaMissione/sm_home.html";
+        if (winner?.constructor.name !== "Hero") return;
+        window.location.href = "/sm_home";
     }); 
 });
 
@@ -169,7 +171,7 @@ function checkGameStatus() {
 }
 
 async function getCharacter(id) {
-    const characterResponse = await fetch(`http:localhost:8008/missione3/1/personaggio`);
+    const characterResponse = await fetch(`http:localhost:8008/missione3/${id}/personaggio`);
     if (!characterResponse?.ok) return null;
     const character = await characterResponse.json();
     return character;
@@ -200,11 +202,9 @@ const heroesInfos = [
 
 const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.length)];
 
-//console.log(await getCharacter(1));
-
 console.log(selectedHeroInfo);
 
-let game = new Game(selectedHeroInfo, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
+game = new Game(selectedHeroInfo, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
 game.selectedEnemy = game.selectEnemy();
 
 /* Inizializzo il la pagina */
