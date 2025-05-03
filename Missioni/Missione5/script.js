@@ -1,94 +1,38 @@
-function updateMission(data) {
-    if (!data || !data.description || !data.answers || !data.image) {
-        console.error("Dati non validi:", data);
-        return;
-    }
 
-    document.getElementById('description').textContent = data.description;
+document.addEventListener("DOMContentLoaded", function(){ //esegue il codice solo dopo che la pagina è stata completamente caricata
 
-    const answersContainer = document.getElementById('answers');
-    answersContainer.innerHTML = ''; // Puliamo le risposte precedenti
+    function caricaMissione(){
+        
+        let missione = {
+            testo: "Qual è il colore del cielo di giorno?", // Testo della domanda
+            opzioni: ["Rosso", "Blu", "Azzurro", "Giallo"], // Opzioni di risposta
+            immagine: "cielo.jpg" // Percorso dell'immagine da mostrare
+        };
 
-    data.answers.forEach((answer, index) => {
-        const label = document.createElement('label');
-        label.style.display = "block"; // Separiamo le risposte senza bisogno di `<br>`
-        label.innerHTML = `<input type="radio" name="answer" value="${index + 1}"> ${answer}`;
-        answersContainer.appendChild(label);
-    });
+        
+        document.getElementById("description").textContent = missione.testo; //imposta il testo della domanda
 
-    // Verifica se il bottone già esiste
-    let submitButton = document.getElementById('submit');
-    if (!submitButton) {
-        submitButton = document.createElement('button');
-        submitButton.id = 'submit';
-        submitButton.textContent = 'Invia';
-        answersContainer.appendChild(submitButton);
-    }
+        
+        let risposte = document.getElementById("answers");
+        risposte.innerHTML = ""; //pulisco eventuali risposte precedenti
 
-    // Aggiorna l'immagine nello scenario
-    const scenario = document.getElementById('scenario');
-    scenario.innerHTML = ''; // svuota il contenuto del dom
-    const img = document.createElement('img');
-    img.src = data.image;
-    img.alt = 'Scenario';
-    scenario.appendChild(img);
-}
-
-// Esempio di dati ricevuti dal server, ancora da ridefinire le chiamate al server
-const esempio = {
-    description: "Sono il perfido Dr. Malvagio! Se non rispondi correttamente a questa domanda, ti trasformerò in un gatto! Quant'è 2 + 2?",
-    answers: ["5", "4", "Cane", "134523"],
-    image: "https://spacejockeyreviews.com/wp-content/uploads/2013/08/Dr.-Malvegio-011.jpg"
-};
-
-async function getData(){ 
-    try{
-        const response = await fetch("nome server");
-        if (!response.ok){
-            throw new Error(`Errore HTTP: ${responde.status}`);
-        }
-        const data = await response.json();
-        console.log(data);
-        updateMission(data); //dati ricevuti nel seguente moto:
-        /*
-        description: "descrizione",
-        answers: ["risposta1", "risposta2"...],
-        image: "url immagine"
-        */
-    } catch(error) {
-        console.error("Errore durante la richiesta GET: ", error);
-        logResult({error: error.message});
-    }
-}
-
-async function inviaData(data){ //funzione per la POST della risposta selezionata dall'utente
-    try{
-        const response = await fetch("server name", {
-            method : "POST",
-            headers : { "Content-Type" : "application/json"},
-            body : JSON.stringify(data)
+        
+        missione.opzioni.forEach((opzione) => {
+            let label = document.createElement("label");
+            //radio button
+            label.innerHTML = `<input type='radio' name='risposta' value='${opzione}'> ${opzione}`;
+            risposte.appendChild(label); 
+            risposte.appendChild(document.createElement("br")); 
         });
-        if(!response.ok){
-            throw new Error(`Errore HTTP: ${response.status}`);
-        }
-        const risposta = await response.json();
-        console.log(risposta);
 
-        if(risposta.result === 1){ //ricevo una risposta dal server con un JSON contenente il risultato, se è 1 allora è tutto corretto
-            alert("Risposta corretta!");
-            window.location.reload();
-            //DA IMPLEMENTARE IL PASSAGGIO ALLA MISSIONE SUCCESSIVA
-        }else if(risposta.result === 0){
-            alert("No hai sbagliato!");
-            window.location.reload();
-        }else{
-            alert("C'è stato un errore di comunicazione con il server!");
-            window.location.reload();
-        }
-    } catch(error){
-        console.error("Errore durante la richiesta POST: ", error);
+        document.getElementById("scenario").innerHTML = `<img src="${missione.immagine}" alt="Scenario">`;
     }
+//quando la pagina è pronta carico la massione
+    caricaMissione();
+});
+function Sconfitta(){
+    window.location.href="../Missione5/Missione_Finale/pagina_boss_finale/sconfitta.html";
 }
-
-
-updateMission(esempio);
+function MissioneSuccessiva(){
+    window.location.href="parte grafica.html";
+}

@@ -1,8 +1,9 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
+import mis1
+import mis2
 
-import moduli.modulo_test as mt 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -52,16 +53,21 @@ def run_server():
 
 def check_get(path):
     if path.startswith("/m1_"):
-        mt.check_get(path)
+        mis1.check_get(path)
         return 0
+    if path.startswith("/m2_"):
+        mis2.check_get(path)
+        return 1
+
 
 def check_post(path, client_choice):
     if path.startswith("/m1_"):
-        mt.check_post(path, client_choice)
+        mis1.check_post(path, client_choice)
         return 0
+    if path.startswith("/m2_"):
+        mis2.check_post(path, client_choice)
+        return 1
 
 
 if __name__ == "__main__":
     run_server()
-   
-    mt.funz()

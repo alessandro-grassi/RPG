@@ -1,0 +1,62 @@
+<html>
+<head>
+    <style>
+        body {
+            background-image: url('vittoria.gif');
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            max-width: 50%;
+            height: auto;
+        }
+        button {
+            margin-top: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+         async function PaginaMissioni()
+        {
+            const valoreVittoria=100;
+            const data={
+                'vittoria': valoreVittoria
+            }
+            try{
+                    const responde=await fetch (/*nome server*/,{
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (responde.ok)
+                    {
+                        window.location.href='/sm_home';// rimanda alla pagina delle missioni dopo aver aggiornato il campo p_comp
+                    }
+                    else 
+                    {
+                        console.error("Errore durante l'operazione:", await responde.text());
+                    }
+
+                }
+                catch(error){
+                    console.error("Errore:", error);
+                }
+        }
+
+    </script>
+</head>
+<body>
+    <img src="vit.gif">
+	<button onclick="PaginaMissioni()"><img width="200px" src="casa.png"></button>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco del Pulsante</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+			background-image:url('inferno.jpg');
+			background-repeat: no-repeat;
+			background-size: cover;
+        }
+        #bottone {
+            position: absolute;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: green;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+        #health-container {
+            position: fixed;
+            top: 10px;
+            width: 80%;
+            max-width: 400px;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #health {
+            width: 100%;
+            height: 100%;
+            background-color: green;
+            transition: width 0.3s;
+        }
+		#sfera{
+			width:100px;
+			height: 100px;
+		}
+    </style>
+</head>
+<body>
+    <div id="health-container">
+        <div id="health"></div>
+		<br>
+    </div>
+	<br>
+	<h1 style="color: white; background-color:black">IL MALVAGIO SMAUG</h1>
+	<img src="drago.gif">
+    <button id="bottone"><img id="sfera" src="sfera.png"><br>ALITO FETIDO!</button>
+    <script>
+        const button = document.getElementById("bottone");
+        const healthBar = document.getElementById("health");
+        let timeout;
+        let colorTimeout1, colorTimeout2;
+        let healthValue = 100;
+        let click = 0;
+		let timeLose=3000;
+        let changeColTime = 1000;
+
+        function updateHealth() {
+            healthBar.style.width = healthValue + "%";
+            if (healthValue > 50) {
+                healthBar.style.backgroundColor = "green";
+            } else if (healthValue > 25) {
+                healthBar.style.backgroundColor = "yellow";
+            } else {
+                healthBar.style.backgroundColor = "red";
+            }
+            if (healthValue <= 0) {
+				window.location.href="vittoria.html";
+            }
+        }
+
+        function changeColor() {
+            button.style.backgroundColor = "yellow"; 
+            colorTimeout2 = setTimeout(() => {
+                button.style.backgroundColor = "red"; 
+            }, changeColTime);
+        }
+
+        function moveButton() {
+            const maxX = window.innerWidth - button.offsetWidth;
+            const maxY = window.innerHeight - button.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY+25;
+            
+            if (click % 3 === 0 && changeColTime > 250) {
+                changeColTime /= 2;
+				timeLose=timeLose-500;
+            }
+            
+            button.style.left = `${randomX}px`;
+            button.style.top = `${randomY}px`;
+            button.style.backgroundColor = "green";
+
+            clearTimeout(timeout);
+            clearTimeout(colorTimeout1);
+            clearTimeout(colorTimeout2); 
+            
+            colorTimeout1 = setTimeout(changeColor, changeColTime); 
+            timeout = setTimeout(() => {
+                window.location.href="sconfitta.html";
+            }, timeLose);
+            
+            healthValue -= 100 / 9;
+            updateHealth();
+            click++;
+        }
+        
+        updateHealth();
+        button.addEventListener("click", moveButton);
+        moveButton();
+    </script>
+</body>
+</html>
