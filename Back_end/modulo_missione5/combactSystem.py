@@ -486,7 +486,7 @@ def set_current_index(userName, current_index):
 def set_last_image(userName, last_image):
     queryLib.execute_no_return(f"""
         UPDATE m5_play_data
-        SET last_image = {last_image}
+        SET last_image = '{last_image}'
         WHERE utente = '{userName}';
     """)
 

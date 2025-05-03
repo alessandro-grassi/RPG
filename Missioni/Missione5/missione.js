@@ -33,7 +33,7 @@ function formatDialog(dialogLines)
     dialogLines.forEach(line =>{ // itera ogni linea della cella di dialogo
         if(line.fight != null) // controlla se ci sono reindirizzamenti a pagine di combattimento
         {
-            sendToServer("update-index", { current_index: client_index + 1}).then(function(){
+            sendToServer("update-index", { "current_index": client_index + 1}).then(function(){
                 window.location.replace("http://localhost:8080/m5/" + line.fight); // redirect in modo che non si possa fare back alla pagina precedente
             });
             return "";
