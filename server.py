@@ -1,11 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib, personaggio
+from Back_end import complete_mission as cm
 import json
 from urllib.parse import urlparse
 dict = { 
     "/login": login,
     "/jslib": jslib,
     "/personaggio" : personaggio,
+    "/cm" : cm,
     }
 
 
