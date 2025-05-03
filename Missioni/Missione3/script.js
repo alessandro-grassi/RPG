@@ -1,3 +1,5 @@
+(async () => {
+
 const atkButton = document.getElementById("atkButton");
 const magicButton = document.getElementById("magicButton");
 
@@ -21,17 +23,6 @@ const magieDescriptions = {
     3: "Fulmine Devastante "
 };
 
-document.addEventListener("DOMContentLoaded", (e) => {
-    game.aggiornaUI();
-    // Aggiorno l'input con l'utente preso dai cookie
-    /*
-    const idPersonaggio = get_personaggio();
-    console.log(idPersonaggio);
-    const inputHiddenUserId = document.getElementById("uid");
-    inputHiddenUserId?.value = idPersonaggio;
-    */
-});
-
 continueButton.addEventListener("click", (e) => {
     const winner = game.getWinner();
     if (winner?.constructor.name !== "Hero") return;
@@ -39,8 +30,7 @@ continueButton.addEventListener("click", (e) => {
     if (!game.remaingEnemies()) {
         endGameScreen.style.display = "flex";
         game.endGame = true;
-        // Chiamare funzione completion
-        //completion();
+        completion();
         return;
     }
     game.aggiornaUI();
@@ -178,9 +168,20 @@ function checkGameStatus() {
     }
 }
 
+async function getCharacter(id) {
+    const characterResponse = await fetch(`http:localhost:8008/missione3/1/personaggio`);
+    if (!characterResponse?.ok) return null;
+    const character = await characterResponse.json();
+    return character;
+}
+
+const character = await getCharacter(get_personaggio());
+
+console.log(character);
+
 const heroesInfos = [
     {
-        name: "Super Tibet",
+        name: character.name,
         lvl: 80,
         exp: 7900,
         atk: 29,
@@ -188,7 +189,7 @@ const heroesInfos = [
         magic: 1,
     },
     {
-        name: "Mario il Grande",
+        name: character.name,
         lvl: 100,
         exp: 10000,
         atk: 50,
@@ -199,10 +200,23 @@ const heroesInfos = [
 
 const selectedHeroInfo = heroesInfos[Math.round(Math.random() * heroesInfos.length)];
 
+//console.log(await getCharacter(1));
+
 console.log(selectedHeroInfo);
 
 let game = new Game(selectedHeroInfo, [new Enemy("Noce I", 85, 8400, 30, 255, "http://localhost:8080/missione3/media/mostro.png-get_binary"), new Enemy("Noce II", 90, 30, 60, 150, "http://localhost:8080/missione3/media/mostro2.png-get_binary"), new Enemy("Noce Wittelsbach", 80, 30, 20, 400, "http://localhost:8080/missione3/media/mostro3.png-get_binary")]);
 game.selectedEnemy = game.selectEnemy();
+
+/* Inizializzo il la pagina */
+game.aggiornaUI();
+// Aggiorno l'input con l'utente preso dai cookie
+const idPersonaggio = get_personaggio();
+if (idPersonaggio) {
+    const inputHiddenUserId = document.getElementById("uid");
+    inputHiddenUserId.value = idPersonaggio;
+}
+/* Inizializzo il la pagina */
+
 /* Inizio sezione chiamate REST */
 
 /* Inzio Sezione Gestione Audio */
@@ -264,3 +278,5 @@ function GestisciAudio() {
     }
 }
 /* Fine Sezione Gestione audio*/
+
+})();
