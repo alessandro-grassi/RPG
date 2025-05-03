@@ -1,6 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib, personaggio, complete_mission as cm, select_mis as sm
 from Back_end import missione3, missione4
+from urllib.parse import urlparse
+import Back_end.modulo_missione5 as m5
 import json
 from urllib.parse import urlparse
 dict = { 
@@ -10,7 +12,8 @@ dict = {
     "/sm_" : sm,
     "/personaggio" : personaggio,
     "/missione3": missione3,
-    "/missione4": missione4
+    "/missione4": missione4,
+    "/m5": m5,
     }
 
 
@@ -22,6 +25,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         path = self.path
         path = urlparse(path).path
+
         resp = check_get(path)
 
         self.wfile.write(resp)
@@ -77,7 +81,7 @@ def check_post(path, client_choice):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_post(path, client_choice)
-    return "Modulo non trovato".encode("utf-8")
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":

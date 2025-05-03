@@ -1,0 +1,67 @@
+DOCUMENTAZIONE COMBATTIMENTI - Missione 5
+
+STATISTICHE
+- Valgono come dei moltiplicatori (0 ~ 10)
+
+Vigore 	-> Vita del personaggio 		- Vigore * 100
+Forza 	-> Danno fisico del personaggio 	- Danno base + Forza * 10
+Destrezza -> Possibilità di schivare un danno	- Destrezza * 5%
+Intelligenza -> Danno magico del personaggio	- Danno base + Intelligenza * 10
+Fede -> Possibilità di danno CRITICO [Danno * 2]- Fede * 10%
+
+
+NEMICI
+
+- [Guardiano di Rocciascura]
+
+ 700 Punti Vita
+
+Statistiche:
+  Vigore 	7
+  Forza 	10
+  Destrezza	0
+  Intelligenza	1
+  Fede		3
+
+Mosse [Possibilità della mossa - Nome: Descrizione -> Funzionamento]:
+60% - Pugno: Colpo fisico -> 100 danni Fisici
+20% - Ammasso: Riduzione danni fisici quando colpiti -> -40% da danni Fisici [2 turni]
+15% - Carica: Aumento del'attacco Fisico -> +50% danni Fisici [2 turni]
+5%  - Folgorazione: Vieni folgorato e paralizzato -> 50 danni Fisici + Perdi l'azione al prossimo turno
+
+
+- [Adepto immortale Cremesi]
+
+ 500 Punti Vita
+
+Statistiche:
+  Vigore 	5
+  Forza 	0
+  Destrezza	3
+  Intelligenza	8
+  Fede		6
+
+Mosse [Possibilità della mossa - Nome: Descrizione -> Funzionamento]:
+60% - Risucchio: Risucchia il sangue attraverso la magia cremesi -> 80 danni Magici
+20% - Salsa Sanguigna: Usa la magia cremesi per recuperare vita -> Recupera Punti Vita pari al 75% del danno del suo ultimo attacco
+15% - Memento Mori: Usa la magia cremesi per rimembrare la mortalità dell'uomo -> Rende Vulnerabile il bersagio da danni magici [2 turni](*2 da danni magici)
+5%  - Frenesia: La magia cremesi fa ribollire il sangue! -> Sferri un attacco casuale contro te stesso
+
+
+- [Il Re Eterno]
+
+ 1000 Punti Vita
+
+Statistiche:
+  Vigore 	10
+  Forza 	5
+  Destrezza	3
+  Intelligenza	5
+  Fede		4
+
+Mosse [Possibilità della mossa - Nome: Descrizione -> Funzionamento]:
+PASSIVA [Sempre attiva]- Spada delle Mille Anime: 25% di possibilità di negare un danno Fisico o Magico  
+60% - Fendente Spirituale: Colpisce con la spada delle Mille Anime -> 5% vita corrente in danni Fisici [arrotondato per difetto] + Rende Vulnerabile a danni Magici(*2 da danni Magici)[1 turno]
+20% - Aura Immortale: Crea un aura intorno al Re -> Inizio/Fine turno tuo o del Re: Infligge 1% vita massima in danni Magici + Rende Vulnerabile a danni Fisici(*2 da danni Fisici)[2 turni]
+19% - Corona Indistruttibile: La corona si illumina d'immenso e infervora il Re -> Aumento dei danni Fisici e Magici +50% + Riduzione dei danni Fisici e Magici -50% [3 turni]
+1%  - Dominio Spirituale: Il Re punta un bersaglio e lo trasporta insieme a lui nel suo Regno Spirituale -> Ruba 1 punto da ogni statistica [5 turni] 
