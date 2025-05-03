@@ -83,7 +83,7 @@ function endMission()
     endRun.id = "exit-run";
     endRun.className = "dialog-button";
     endRun.onclick = function() {
-        console.log("aggiungere parte che rimanda a selezione missioni");
+        window.location.replace("http://localhost:8080/sm_home");
     }
     container.appendChild(endRun);
 }
