@@ -25,7 +25,7 @@
         </div>
         <div id="crea" style="visibility: hidden;">
             <h1 class="title">Crea il tuo personaggio!</h1>
-            <form class="register-form" id="form">
+            <div class="register-form" id="form">
                 <div class="form-group">
                     <label for="name">Nome:</label>
                     <input class="input" type="text" id="name" placeholder="Inserisci un nome" required oninvalid="this.setCustomValidity('Non hai inserito un nome')" oninput="setCustomValidity('')">
@@ -65,7 +65,7 @@
                 <button class="input" id="bottone_1" onclick="crea_personaggio()">Salva il tuo personaggio</button>
                 <br><br>
                 <div class = "hoverdiv" onclick="changeVisibility()">Seleziona il personaggio</div>
-            </form>
+            </div>
 
         </div>
         

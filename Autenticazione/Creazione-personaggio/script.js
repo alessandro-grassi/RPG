@@ -166,37 +166,49 @@ function crea_personaggio(){
   const ab2 = document.getElementById("ab2").value;
   const ab3 = document.getElementById("ab3").value;
   const usname = get_utente();
-  const message={
-    username: usname,
-    name: nome,
-    class: classe,
-    ability1 : ab1,
-    ability2 : ab2,
-    ability3 : ab3
-  };
-  fetch('http://localhost:8080/personaggio/crea_personaggio', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Errore nella risposta del server.');
-    }
-    return response.json();
-  })
-  .then(data => {
-    if (data.error) {
-      alert("Errore di connessione, riprova più tardi!")
-    } else {
-      if (data=="errore") alert("Errore Client")
-        else alert("Personaggio registrato con successo");
-    }
-  })
-  .catch(error => {
-    console.error("Errore:", error);
+  if(nome==""){
+    alert("Inserisci un nome");
+  }else if(classe=="default"){
+    alert("Inserisci una classe");
+  }else if(ab1==ab2 || ab1==ab3){
+    alert("Non puoi inserire abilità uguali")
+  }else{
+    const message={
+      username: usname,
+      name: nome,
+      class: classe,
+      ability1 : ab1,
+      ability2 : ab2,
+      ability3 : ab3
+    };
+    fetch('http://localhost:8080/personaggio/crea_personaggio', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Errore nella risposta del server.');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.error) {
+        alert("Errore di connessione, riprova più tardi!")
+      } else {
+        if (data=="errore"){
+          alert("Errore Client");
+        }else{
+          alert("Personaggio registrato con successo");
+          window.location="http://localhost:8080/personaggio"
+        } 
+      }
+    })
+    .catch(error => {
+      console.error("Errore:", error);
 
-  });
+    });
+  }
 }
