@@ -3,14 +3,13 @@ from Back_end import jslib
 import json
 from urllib.parse import urlparse
 from Back_end import complete_mission as cm
+import Back_end.missione1.script as missione1
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/cm" : cm,
-    "/jslib": jslib
+    "/jslib": jslib,
+     "/missione1": missione1
 }
-import Back_end.missione1.script as missione1
-dict = { 
-    "/missione1": missione1
-}
+
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
