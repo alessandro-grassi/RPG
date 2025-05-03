@@ -25,7 +25,16 @@ def check_get(path):
     elif path == "/missione4a/api/indizi":
         db = carica_database()
         indizi = db["stato_gioco"]["indizi_sbloccati"]
-        return json.dumps({"indizi": indizi}).encode("utf-8")
+        
+        # Controlla se tutti gli indizi sono stati sbloccati
+        parola_finale = db["stato_gioco"]["parola_finale"]
+        tutti_indizi_disponibili = db["tutti_indizi"][parola_finale]
+        indizi_tutti_sbloccati = len(indizi) >= len(tutti_indizi_disponibili)
+        
+        return json.dumps({
+            "indizi": indizi,
+            "tuttiIndiziSbloccati": indizi_tutti_sbloccati
+        }).encode("utf-8")
     
     # Servi i file HTML, CSS e JS
     else:
@@ -35,6 +44,21 @@ def check_get(path):
         if path == "/missione4a" or path == "/missione4a/":
             file_path = HTML_DIR / "Prima_pagina.html"
         elif path == "/missione4a/wordle":
+            # Prima di servire la pagina Wordle, controlla se tutti gli indizi sono già stati sbloccati
+            db = carica_database()
+            indizi = db["stato_gioco"]["indizi_sbloccati"]
+            parola_finale = db["stato_gioco"]["parola_finale"]
+            tutti_indizi_disponibili = db["tutti_indizi"][parola_finale]
+            
+            if len(indizi) >= len(tutti_indizi_disponibili):
+                # Reindirizza alla pagina principale con un messaggio
+                return """
+                <script>
+                alert('Hai già sbloccato tutti gli indizi! Vai alla pagina per indovinare la soluzione.');
+                window.location.href = '/missione4a/';
+                </script>
+                """.encode("utf-8")
+            
             file_path = HTML_DIR / "Wordle.html"
         elif path == "/missione4a/primapagina":
             file_path = HTML_DIR / "Prima_pagina.html"
@@ -57,6 +81,18 @@ def check_post(path, client_choice):
     # API per verificare una parola del Wordle
     if path == "/missione4a/api/verifica-parola":
         if "parola" in client_choice:
+            # Prima di verificare, controlla se tutti gli indizi sono già stati sbloccati
+            db = carica_database()
+            indizi = db["stato_gioco"]["indizi_sbloccati"]
+            parola_finale = db["stato_gioco"]["parola_finale"]
+            tutti_indizi_disponibili = db["tutti_indizi"][parola_finale]
+            
+            if len(indizi) >= len(tutti_indizi_disponibili):
+                return json.dumps({
+                    "esito": "errore", 
+                    "messaggio": "Hai già sbloccato tutti gli indizi! Non puoi giocare ulteriormente."
+                }).encode("utf-8")
+                
             result = verifica_parola(client_choice["parola"])
             return json.dumps(result).encode("utf-8")
     
@@ -113,6 +149,16 @@ def verifica_parola(parola_tentativo):
     
     print(f"Verifica parola: tentativo '{parola_tentativo}', corretta '{parola_corretta}'")
     
+    # Controlla se tutti gli indizi sono già stati sbloccati
+    parola_finale = db["stato_gioco"]["parola_finale"]
+    indizi_disponibili = db["tutti_indizi"][parola_finale]
+    
+    if len(db["stato_gioco"]["indizi_sbloccati"]) >= len(indizi_disponibili):
+        return {
+            "esito": "errore", 
+            "messaggio": "Hai già sbloccato tutti gli indizi! Non puoi giocare ulteriormente."
+        }
+    
     if len(parola_tentativo) != 5:  #se la lettera non è da 5 lettere
         return {"esito": "errore", "messaggio": "La parola deve essere di 5 lettere"}
     
@@ -158,12 +204,20 @@ def verifica_parola(parola_tentativo):
         while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
             db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
         
+        # Controlla se dopo aver aggiunto l'indizio abbiamo sbloccato tutti gli indizi
+        tutti_indizi_sbloccati = len(db["stato_gioco"]["indizi_sbloccati"]) >= len(indizi_disponibili)
+        messaggio_aggiuntivo = ""
+        
+        if tutti_indizi_sbloccati:
+            messaggio_aggiuntivo = " Hai sbloccato tutti gli indizi disponibili! Ora puoi provare a indovinare la soluzione finale."
+        
         salva_database(db)
         
         return {
             "esito": "successo",
-            "messaggio": "Complimenti! Hai indovinato la parola!",
+            "messaggio": f"Complimenti! Hai indovinato la parola!{messaggio_aggiuntivo}",
             "risultato": risultato,
+            "tuttiIndiziSbloccati": tutti_indizi_sbloccati
         }
     #se non becca la parola
     else:

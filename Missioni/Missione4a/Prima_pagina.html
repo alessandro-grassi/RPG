@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benvenuto!</title>
     <link rel="stylesheet" href="/missione4a/stile">
+    <style>
+        .difficolta-difficile {
+            color: purple;
+            font-weight: bold;
+        }
+        .difficolta-medio {
+            color: #cc9900; /* Un giallo più scuro per leggibilità */
+            font-weight: bold;
+        }
+        .difficolta-facile {
+            color: green;
+            font-weight: bold;
+        }
+        #livello-difficolta {
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+    </style>
 </head>
 <body>
     <div id="header">
@@ -20,6 +38,7 @@
 
     <div id="indizi">
         <h2>Indizi</h2>
+        <div id="livello-difficolta"></div>
         <ul id="lista-indizi">
             <li>Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</li>
         </ul>
@@ -27,7 +46,7 @@
 
     <div id="pulsanti">
         <button onclick="location.href='/missione4a/indovinasoluzione'">Indovina Soluzione</button>
-        <button onclick="location.href='/missione4a/wordle'">Gioca</button>
+        <button id="btn-gioca" onclick="location.href='/missione4a/wordle'">Gioca</button>
     </div>
 
     <script>
@@ -37,6 +56,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const listaIndizi = document.getElementById('lista-indizi');
+                    const livelloDifficolta = document.getElementById('livello-difficolta');
                     
                     if (data.indizi && data.indizi.length > 0) {
                         listaIndizi.innerHTML = ''; //svuota la lista
@@ -46,8 +66,26 @@
                             elemento.textContent = indizio;
                             listaIndizi.appendChild(elemento);
                         });
+                        
+                        // Aggiungi l'indicatore del livello di difficoltà
+                        if (data.indizi.length <= 2) {
+                            livelloDifficolta.innerHTML = '<span class="difficolta-difficile">livello difficile</span>';
+                        } else if (data.indizi.length <= 4) {
+                            livelloDifficolta.innerHTML = '<span class="difficolta-medio">livello medio</span>';
+                        } else {
+                            livelloDifficolta.innerHTML = '<span class="difficolta-facile">livello facile</span>';
+                        }
+                        
+                        // Verifica se tutti gli indizi sono stati raccolti
+                        if (data.tuttiIndiziSbloccati) {
+                            const btnGioca = document.getElementById('btn-gioca');
+                            btnGioca.disabled = true;
+                            btnGioca.title = "Hai già raccolto tutti gli indizi!";
+                            btnGioca.style.opacity = "0.5";
+                        }
                     } else {
                         listaIndizi.innerHTML = '<li>Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</li>';
+                        livelloDifficolta.innerHTML = '';
                     }
                 })
                 .catch(error => {

@@ -25,7 +25,6 @@
     "lente",
     "drago"
   ],
-
   "parole_finali": [
     "enigma",
     "tesoro",
@@ -33,17 +32,16 @@
     "mistero",
     "successo"
   ],
-
   "stato_gioco": {
-    "tentativi_rimasti": 4,
+    "tentativi_rimasti": 3,
     "tentativi_nella_partita_corrente": 0,
     "indizi_sbloccati": [
-      "Un rompicapo che sfida la mente"
+      "Rappresenta il trionfo dopo la lotta",
+      "\u00c8 simboleggiata da una corona d'alloro"
     ],
-    "parola_corrente": "canto",
-    "parola_finale": "enigma"
+    "parola_corrente": "tigre",
+    "parola_finale": "vittoria"
   },
-
   "tutti_indizi": {
     "enigma": [
       "Un rompicapo che sfida la mente",
@@ -57,11 +55,11 @@
     ],
     "vittoria": [
       "Rappresenta il trionfo dopo la lotta",
-      "È simboleggiata da una corona d'alloro",
+      "\u00c8 simboleggiata da una corona d'alloro",
       "Deriva dal latino 'victoria'"
     ],
     "mistero": [
-      "Ciò che rimane incomprensibile",
+      "Ci\u00f2 che rimane incomprensibile",
       "Deriva dal greco 'mysterion'",
       "Richiede indagine e scoperta"
     ],
@@ -71,30 +69,30 @@
       "Ricompensa per l'impegno e la perseveranza"
     ],
     "gioco": [
-      "Attività ricreativa praticata per divertimento",
-      "Può essere da tavolo, di carte o digitale",
+      "Attivit\u00e0 ricreativa praticata per divertimento",
+      "Pu\u00f2 essere da tavolo, di carte o digitale",
       "Spesso ha regole precise",
       "Favorisce la socializzazione",
       "La parola deriva dal latino 'jocus'",
       "Esistono anche giochi olimpici"
     ],
     "piano": [
-      "Può essere uno strumento musicale",
+      "Pu\u00f2 essere uno strumento musicale",
       "Indica anche un progetto o strategia",
       "In architettura, rappresenta un livello di un edificio",
-      "Può significare 'superficie liscia'",
+      "Pu\u00f2 significare 'superficie liscia'",
       "In musica, indica una dinamica 'suonare dolcemente'"
     ],
     "opera": [
       "Capolavoro artistico, spesso teatrale o musicale",
-      "Può indicare anche un lavoro manuale",
+      "Pu\u00f2 indicare anche un lavoro manuale",
       "Famosa quella di Verdi e Puccini",
       "In latino significa 'lavoro'",
       "Esiste la 'prima' di una rappresentazione"
     ],
     "stella": [
       "Corpo celeste che brilla nel cielo notturno",
-      "Il Sole è una di queste",
+      "Il Sole \u00e8 una di queste",
       "Simbolo di successo o fama",
       "Usata nelle bandiere di molti paesi"
     ],
@@ -120,7 +118,7 @@
       "Rappresentazione sferica della Terra"
     ],
     "agile": [
-      "Chi si muove con rapidità e leggerezza"
+      "Chi si muove con rapidit\u00e0 e leggerezza"
     ],
     "lente": [
       "Oggetto che ingrandisce o mette a fuoco"
