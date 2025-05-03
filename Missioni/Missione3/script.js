@@ -4,6 +4,7 @@ const magicButton = document.getElementById("magicButton");
 const continueButton = document.getElementById("continueButton");
 const retryButton = document.getElementById("retryButton");
 const exitButtons = document.getElementsByClassName("exitButton");
+const exitButton = document.getElementById("exitButton");
 
 
 const output = document.getElementById("output")
