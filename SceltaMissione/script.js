@@ -31,7 +31,7 @@ function loadMis(missioni) {
 
         mis.innerHTML = `<h3>${missione.nome}</h3>${missione.descrizione}<br>`;             //aggiorna contenuto HTML di un elemento div creato dinamicamente
         btn.onclick = () => {
-            goToUrl(mis.url);
+            goToUrl(missione.url);
         }
         btn.innerHTML = "Partecipa";
         //img.src = missione.img;
