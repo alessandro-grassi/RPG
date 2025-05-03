@@ -3,12 +3,12 @@ const magicButton = document.getElementById("magicButton");
 
 const continueButton = document.getElementById("continueButton");
 const retryButton = document.getElementById("retryButton");
-const exitButton = document.getElementById("exitButton");
+const exitButtons = document.getElementsByClassName("exitButton");
 
 
 const output = document.getElementById("output")
 const endGameScreen = document.getElementById("messaggioFineGioco");
-const playAgainButton = document.getElementById("giocaAncora");
+
 var genericAudio = new Audio("http://localhost:8080/missione3/audio/Background.mp3-get_binary");
 var attackAudio = new Audio("http://localhost:8080/missione3/audio/Attacco.mp3-get_binary");
 var magicAudio = new Audio("http://localhost:8080/missione3/audio/Magia.mp3-get_binary");
@@ -22,12 +22,26 @@ const magieDescriptions = {
 
 document.addEventListener("DOMContentLoaded", (e) => {
     game.aggiornaUI();
+    // Aggiorno l'input con l'utente preso dai cookie
+    /*
+    const idPersonaggio = get_personaggio();
+    console.log(idPersonaggio);
+    const inputHiddenUserId = document.getElementById("uid");
+    inputHiddenUserId?.value = idPersonaggio;
+    */
 });
 
 continueButton.addEventListener("click", (e) => {
     const winner = game.getWinner();
     if (winner?.constructor.name !== "Hero") return;
     game.reset();
+    if (!game.remaingEnemies()) {
+        endGameScreen.style.display = "flex";
+        game.endGame = true;
+        // Chiamare funzione completion
+        //completion();
+        return;
+    }
     game.aggiornaUI();
     atkButton.disabled = false;
     magicButton.disabled = false;
@@ -43,9 +57,12 @@ retryButton.addEventListener("click", () => {
 });
 
 // Pulsante per uscire dalla missione in caso di sconfitta
-exitButton.addEventListener("click", () => {
-    if (winner?.constructor.name !== "Enemy") return;
-    window.location.href = "../SceltaMissione/sm_home.html";
+Array.from(exitButtons).forEach(exitButton => {
+    exitButton.addEventListener("click", () => {
+        const winner = game.getWinner();
+        if (winner?.constructor.name !== "Enemy") return;
+        window.location.href = "../SceltaMissione/sm_home.html";
+    }); 
 });
 
 function useActionButton(button, action) {
@@ -151,36 +168,14 @@ function checkGameStatus() {
     const winner = game.getWinner();
     if (!winner) return;
     if (winner.constructor.name === "Hero") {
-        if (!game.remaingEnemies()) {
-            // Mostra la schermata finale
-            // Salva la partita del db
-        } else {
-            continueButton.style.display = "block";
-            output.innerHTML = 'Hai vinto!!';
-        }
+        continueButton.style.display = "block";
+        output.innerHTML = 'Hai vinto!!';
     } else {
         retryButton.style.display = "block";
         exitButton.style.display = "block";
         output.innerHTML = 'Hai perso...';
     }
 }
-
-// Evento gioca di nuovo
-playAgainButton.addEventListener("click", () => {
-    endGameScreen.style.display = "none";
-
-    // Resetto il gioco per poter iniziare con una nuova partita
-    game.reset();
-    // Aggiorno l'interfaccia
-    // Abilito i pulsanti
-    atkButton.disabled = false
-    magicButton.disabled = false
-    // Cancello il messaggio nel div output
-    output.innerHTML = "";
-
-    game.aggiornaUI();
-});
-
 
 const heroesInfos = [
     {
