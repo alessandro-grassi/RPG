@@ -87,6 +87,7 @@ class Game {
         /* Mostro */
         
         /* Eroe */
+        document.getElementById("nomeGiocatore").textContent = this.hero.name;
         document.getElementById("vitaGiocatore").textContent = this.hero.hp;
         /* Eroe */
 
