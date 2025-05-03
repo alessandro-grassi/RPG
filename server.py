@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib, personaggio, complete_mission as cm, select_mis as sm
-from Back_end import missione3
+from Back_end import missione3, missione4
 import json
 from urllib.parse import urlparse
 dict = { 
@@ -9,7 +9,8 @@ dict = {
     "/jslib": jslib,
     "/sm_" : sm,
     "/personaggio" : personaggio,
-    "/missione3": missione3
+    "/missione3": missione3,
+    "/missione4": missione4
     }
 
 
@@ -17,6 +18,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Connection", "close")
         self.end_headers()
         path = self.path
         path = urlparse(path).path

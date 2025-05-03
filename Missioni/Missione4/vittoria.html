@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai Vinto!</title>
+    <link rel="stylesheet" href="http://localhost:8080/missione4/stile">
+</head>
+<body>
+    <div id="vittoria-container">
+        <h1>Complimenti, hai vinto!</h1>
+        <button class="back-button" onclick="ReindirizzamentoSceltaMissioni()">Indietro</button>
+    </div>
+
+    <script>
+        function createConfetti() {
+            const colors = ['#b58339', '#a06f2e', '#8a5c24', '#6e4a1d', '#f8f4e3', '#ece0c8'];
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                
+                const duration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${duration}s linear infinite`;
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                
+                document.body.appendChild(confetti);
+            }
+        }
+
+        function ReindirizzamentoSceltaMissioni()
+        {
+            /*fetch('http://localhost:8080/missione4/sm_home', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+            window.location.href = "http://localhost:8080/missione4/sm_home";
+        }
+        
+        window.onload = createConfetti;
+    </script>
+</body>
+</html>

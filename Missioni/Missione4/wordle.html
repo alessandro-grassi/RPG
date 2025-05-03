@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <link rel="stylesheet" href="http://localhost:8080/missione4/stile">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titolo-missione">trova la parola</h1>
+    </div>
+
+    <div id="wordle-container">
+        <h2 id="tentativiH">Tentativi per indovinare: <span id="tentativiSpan"></span></h2>
+        <div id="griglia-wordle">
+            <!--prima riga come esempio-->
+            <div class="riga">
+                <input id="l0" type="text" maxlength="1" class="lettera" required>
+                <input id="l1" type="text" maxlength="1" class="lettera" required>
+                <input id="l2" type="text" maxlength="1" class="lettera" required>
+                <input id="l3" type="text" maxlength="1" class="lettera" required>
+                <input id="l4" type="text" maxlength="1" class="lettera" required>
+            </div>
+            <!--altre righe da fare dinamicamente-->
+        </div>
+        <div id="pulsanti">
+            <button id="indovina" onclick="controllaSoluzioni()">Indovina</button>
+        </div>
+    </div>
+
+
+    <script>
+        //onload dei dettagli di gioco
+        function getDettagliGioco()
+        {
+            //numeroProva = localStorage.getItem("numeroProva");
+            fetch('http://localhost:8080/missione4/dettagliGioco' /* + numeroProva*/, 
+            { method: 'GET' })  
+                .then(response => response.json())
+                .then(data => {
+                    //estraggo i dettagli dal JSON restituito
+                    var tentGiocoMax = data["tentativiGioco"];
+                    var tentGiocoFatti = data["tentativiGiocoFatti"];
+
+                    if (tentGiocoFatti >= tentGiocoMax)
+                    {
+                        fetch('http://localhost:8080/missione4/tentativiSUperati', 
+                        { method: 'GET' })  
+                        .then(response => response.json())
+                            .then(data => {})
+                            .catch(error => console.error("Si è verificato un errore:", error));
+                        ReindirizzamentoPrimaPagina();
+                    }
+                    else
+                    {
+                        //tentativi per indovinare
+                        var tentSpan = document.getElementById("tentativiSpan");
+                        tentSpan.innerText = String(tentGiocoMax - tentGiocoFatti);
+                    }
+                
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        function controllaSoluzioni()
+        {
+            //ottengo numero prova
+            //var numeroProva = localStorage.getItem("numeroProva");
+            fetch('http://localhost:8080/missione4/tentativo' /* + numeroProva*/, 
+            { method: 'GET' })  
+                .then(response => response.json())
+                .then(data => {
+                    //estraggo i dettagli dal JSON restituito
+                    var tentativo = data["tentativo"];
+
+                    //inizializzo la variabile della risposta
+                    var soluz = "";
+
+                    //ottengo il tentativo di risposta
+                    for(var i = 0; i <= 4; i++)
+                    {
+                        var tempTxt = document.getElementById("l" + i);
+                        soluz += tempTxt.value;
+                    }
+
+                    //ottengo il numero del tentativo
+                    var tent = document.getElementById("tentativiSpan")
+
+                    fetch('http://localhost:8080/missione4/controlla/' + tentativo /*numeroProva*/, 
+                    {method: 'POST', body: JSON.stringify({tentativo: tent.innerText, risposta: soluz})})
+                    .then(response => response.json())
+                    .then(data => {
+                        //estraggo i dettagli dal JSON restituito
+                        var risposta = data["risultato"];
+                        var tentGiocoMax = data["tentativiGioco"];
+                        var tentGiocoFatti = data["tentativiGiocoFatti"];
+
+                        //aggiorna tentativi + metti req input
+                        if (risposta == "tentativi esauriti")
+                        {
+                            ReindirizzamentoPrimaPagina();
+                        }   
+                        else if (risposta == "hai vinto!")
+                        {
+                            alert("Complimenti, Hai vinto!!!");
+                            ReindirizzamentoPrimaPagina();
+                        }
+                        else
+                        {
+                            alert("Mi dispiace, non è la parola corretta... Riprova!");
+                        }
+
+                        //tentativi per indovinare
+                        var tentativiSpan = document.getElementById("tentativiSpan");
+                        tentativiSpan.innerText =String(tentGiocoMax - tentGiocoFatti);
+                    
+                    })
+                    .catch(error => console.error("Si è verificato un errore:", error));
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));            
+        }
+
+        function ripristinaDati()
+        {
+            /*fetch('http://localhost:8080/missione4/resetGame', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/resetGame';
+        }
+
+
+        function ReindirizzamentoPrimaPagina()
+        {
+            ripristinaDati();
+
+            /*fetch('http://localhost:8080/missione4', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4';
+        }
+
+        //carica gli indizi all'avvio della pagina
+        window.onload = getDettagliGioco();
+
+    </script>
+
+    <!--chiamate rest
+    <script>
+        //onload dei tentativi rimasti
+        function caricaTentativiRimasti() {
+            fetch('http://localhost:8080/api/tentativi-rimasti', { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('numero-tentativi').textContent = data.tentativiRimasti;
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        //prendere la parola dalla griglia unendo in un array le lettere e poi unirle in una stringa
+        function getParolaDallaGriglia() {
+            const lettere = document.querySelectorAll('.lettera');  //però qua prende tutta la griglia, va fatta solo la riga, vedi con monto
+            return Array.from(lettere).map(input => input.value).join('');
+        }
+
+        //post della parola inserita per vedere se giusta
+        document.getElementById('indovina').addEventListener('click', function () {
+            const parola = getParolaDallaGriglia();
+
+            fetch('http://localhost:8080/api/verifica-parola', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ parola: parola })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    //se giusta allert ok
+                    //bisogna fare che se non si riesce a trovare entro le 5 righe si diminuiscono i tentativi
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        });
+
+        // Carica i tentativi rimasti all'avvio della pagina
+        window.onload = caricaTentativiRimasti;
+    </script>
+-->
+</body>
+</html>

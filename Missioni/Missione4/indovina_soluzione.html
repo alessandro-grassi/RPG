@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indovina la soluzione</title>
+    <link rel="stylesheet" href="http://localhost:8080/missione4/stile">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titoloMissioneH">Missione 4</h1>
+        <h2 id="tentativiH">Tentativi per indovinare: <span id="tentativiSpan"></span></h2>
+    </div>
+
+
+    <div id="indiziDiv">
+        <h2>Indizi</h2>
+        <p id="messaggioIndizi">Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</p>
+        <ol id="listaIndizi">
+
+        </ol>
+    </div>
+
+    <div id="soluzioneDiv">
+        <h2>Indovina la Soluzione</h2>
+        <input type="text" id="soluzione" placeholder="Inserisci la soluzione">
+        <div id="pulsanti">
+            <button id="indovinaBtn" onclick="controllaSoluzione()">Indovina</button>
+            <button id="backBtn" onclick="ReindirizzamentoPrimaPagina()">Indietro</button>
+        </div>
+    </div>
+
+    <!--chiamate rest-->
+    <script>
+        //onload degli indizi
+        function getDettagliGenerali() 
+        {
+            fetch('http://localhost:8080/missione4/dettagliIndovina', 
+            { method: 'GET' })  
+                .then(response => response.json())
+                .then(data => {
+                    //estraggo i dettagli dal JSON restituito
+                    var tentativiIndovina = data["tentativiIndovina"];
+                    var tentativiIndovinaFatti = data["tentativiIndovinaFatti"];
+                    var indiziOttenuti = data["indiziOttenuti"]; //lista degli indizi
+                    var maxIndizi = data["maxIndizi"];
+
+                    //tentativi per indovinare
+                    var tentativiSpan = document.getElementById("tentativiSpan");
+                    tentativiSpan.innerText = String(tentativiIndovina - tentativiIndovinaFatti);
+
+                    //indizi
+                    if(indiziOttenuti.length > 0)
+                    {
+                        var mesIndizi = document.getElementById("messaggioIndizi");
+                        mesIndizi.hidden = true;
+                    
+                        var listaIndizi = document.getElementById("listaIndizi");
+                        indiziOttenuti.forEach(indizio => {
+                            var indizioElement = document.createElement("li");
+                            indizioElement.innerText = indizio;
+                            listaIndizi.appendChild(indizioElement);
+                        });
+
+                    }
+                    
+                    if(indiziOttenuti.length >= maxIndizi)
+                    {
+                       var backBtn = document.getElementById("backBtn");
+                       backBtn.disabled = true;
+                    }
+
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        //quando indovini la soluzione
+        function controllaSoluzione()
+        {
+            var soluz = document.getElementById("soluzione").value;
+            var tent = document.getElementById("tentativiSpan").innerText;
+
+            fetch('http://localhost:8080/missione4/controllaRisposta', 
+            { method: 'POST', body: JSON.stringify({ tentativo: tent, soluzione: soluz })})
+            .then(response => response.json())
+            .then(data => {
+                var risposta = data["risultato"];
+                var tentativiIndovina = data["tentativiIndovina"];
+                var tentativiIndovinaFatti = data["tentativiIndovinaFatti"];
+
+                //aggiorna tentativi + metti req input
+                if (risposta == "tentativi esauriti")
+                {
+                    alert("mi dispiace ma hai esaurito i tentativi...");
+                    var indovinaBtn = document.getElementById("indovinaBtn");
+                    indovinaBtn.disabled = true;
+                    resetMissione();
+                    ReindirizzamentoSconfitta();
+                }   
+                else if (risposta == "corretto")
+                {
+                    alert("Complimenti, Hai vinto!!!");
+                    var indovinaBtn = document.getElementById("indovinaBtn");
+                    indovinaBtn.disabled = true;
+                    resetMissione();
+                    ReindirizzamentoVittoria();
+                }
+                else
+                {
+                    alert("Mi dispiace, non è la risposta corretta... Riprova!");
+                }
+
+                //tentativi per indovinare
+                var tentativiSpan = document.getElementById("tentativiSpan");
+                tentativiSpan.innerText =String(tentativiIndovina - tentativiIndovinaFatti);
+            })
+            .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        function ReindirizzamentoPrimaPagina()
+        {
+            /*fetch('http://localhost:8080/missione4', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4';
+        }
+
+        function resetMissione()
+        {
+            fetch('http://localhost:8080/missione4/resetMissione', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        function ReindirizzamentoSconfitta()
+        {
+            /*fetch('http://localhost:8080/sconfitta', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/sconfitta';
+        }
+        
+        function ReindirizzamentoVittoria()
+        {
+            /*fetch('http://localhost:8080/vittoria', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));*/
+                window.location.href = 'http://localhost:8080/missione4/vittoria';
+        }
+
+        //carica gli indizi all'avvio della pagina
+        window.onload = getDettagliGenerali();
+    </script>
+</body>
+</html>
