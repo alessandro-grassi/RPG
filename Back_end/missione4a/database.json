@@ -20,10 +20,10 @@
   ],
   "stato_gioco": {
     "tentativi_rimasti": 5,
-    "tentativi_nella_partita_corrente": 0,
+    "tentativi_nella_partita_corrente": 1,
     "indizi_sbloccati": [],
-    "parola_corrente": "pesca",
-    "parola_finale": "successo"
+    "parola_corrente": "fiume",
+    "parola_finale": "enigma"
   },
   "tutti_indizi": {
     "enigma": [

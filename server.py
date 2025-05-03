@@ -2,11 +2,11 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib
 import json
 from urllib.parse import urlparse
-from Back_end import missione4, complete_mission as cm
+from Back_end import missione4a, complete_mission as cm
 dict = {  # dizionario per prendere i prefissi dei moduli da aggiungere
     "/login": login,
     "/jslib": jslib,
-    "/missione4": missione4
+    "/missione4": missione4a
 }
 
 
