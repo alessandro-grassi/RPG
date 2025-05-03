@@ -87,7 +87,7 @@ const VerificaMatch = () => {
                 primaCarta.classList.remove('rotazione');
                 secondaCarta.classList.remove('rotazione');
                 resetCarte();
-            }, 1000);
+            }, 300);
         }
     }
 };
@@ -104,6 +104,9 @@ const CreaTimer = () => {
     interval = setInterval(() => {
         timer++;
         tempo.textContent = timer;
+        if(timer==60){
+            window.location.href="../../Missione_Finale/pagina_boss_finale/sconfitta.html";//bisogna mettere l'indirizzo corretto
+        }
     }, 1000);
 };
 
@@ -111,6 +114,7 @@ const checkVittoria = () => {
     if (match === carte.length) {
         clearInterval(interval);
         alert('Missione superata');
+        window.location.href="../../Missione_Finale/pagina_boss_finale/prog.html";// dovrebbe essere il collegamento con il boss finale però bisognerà vedere 
     }
 };
 
