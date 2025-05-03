@@ -64,7 +64,7 @@ def check_get(path):
         f.close()
         return r
     elif path=="/":
-        return check_get("/login")
+        return check_get("/")
     return "Modulo non trovato".encode("utf-8")
 
 
