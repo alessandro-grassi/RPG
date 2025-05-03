@@ -6,6 +6,8 @@ dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/m5": m5,
 }
 
+from Back_end import queryLib
+
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -67,4 +69,6 @@ def check_post(path, client_choice):
 
 
 if __name__ == "__main__":
+    queryLib.connetti()
     run_server()
+    queryLib.disconnetti()
