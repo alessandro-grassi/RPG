@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib, personaggio
 from Back_end import complete_mission as cm
+from Back_end import modulo_missione5
 import json
 from urllib.parse import urlparse
 dict = { 
@@ -8,6 +9,7 @@ dict = {
     "/jslib": jslib,
     "/personaggio" : personaggio,
     "/cm" : cm,
+    "/m5":modulo_missione5
     }
 
 
