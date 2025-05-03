@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse
 import Back_end.modulo_missione5 as m5
-dict = { # dizionario per prendere i suffissi dei moduli
+dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/m5": m5,
 }
 

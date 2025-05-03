@@ -1,99 +1,164 @@
 [
-    {
-      "text": [
-        "C'era un tempo in cui il nostro regno era assolutamente perfetto.",
-        "Dove il cibo era abbondante, la povertà una mera barzelletta, e tutti potevano essere chiamati fratelli e sorelle",
-        "Ma per qualcuno così egoista come il re, un regno come questo non era abbastanza",
-        "Voleva qualcosa che nessuno potesse realizzare",
-        "E così... il re sfidò la morte",
-        "Il regno cadde in rovina e la gente divenne solo i fantasmi di ciò che erano una volta",
-        "Per l'alto prezzo del suo regno.",
-        "Salvaci Eroe, noi povere anime vogliamo la nostra pace eterna e la vendetta di quel re malvagio"
-      ]
-    },
-    {
-      "text": [
-        "Dopo aver superato le insidie sei riuscito a raggiungere i cancelli principali del castello",
-        "Il regno era in rovina, non c'era nemmeno una singola anima tranne il popolo perduto del regno",
-        "All'ingresso si mostrava davanti un colossale cancello",
-        "Davanti al cancello furono lasciati numerosi detriti, quelli che un tempo furono le abitazioni dei popolani.",
-        "Dopo pochi passi davanti alle porte pezzi di roccia iniziarono a scricchiolare e ad ammassarsi",
-        "Un costrutto immenso torreggiava in modo terrificante",
-        "Sollevò lentamente un arto schiantandolo violentemente per terra cercando di colpirti fallendo nel tentativo",
-        "I loro occhi fiammeggiavano di una fiamma viola e il suo cristallo in cima al capo iniziò a caricarsi di scariche elettriche",
-        "Il Guardiano era pronto a difendere il castello con tutto sè stesso"
-      ]
-    },
-    {
-      "text": [
-        "Riuscendo nell'impresa impossibile l'ammasso di roccia cadde inanime",
-        "Ponendo fine al lavoro del povero guardiano",
-        "Rivolgendoti verso il castello i cancelli si aprirono e così continuò il tuo cammino"
-      ]
-    },
-    {
-      "text": [
-        "Entrando nel castello si presentò all'ingresso una vecchia e polverosa biblioteca",
-        "All'interno della stanza era umido, disordinato e freddo",
-        "Vecchi libri sparsi sul pavimento che rallentavano il tuo cammino, librearie rotte che bloccavano il tuo cammino",
-        "E sangue... vecchie macchie di sangue arrugginite ovunque",
-        "Continuando a camminare, cercando di ignorare gli orrori nella stanza, riuscì a notare per un momento il pavimento",
-        "Segni e simboli di lingue antiche realizzati con quelle macchie di sangue ovunque, probabilmente per un antico culto oscuro",
-        "Il sangue reagiva alla tua presenza e ai tuoi movimenti",
-        "Ti sentivi come se qualcuno ti stesse osservando..."
-      ]
-    },
-    {
-      "text": [
-        "Parole profonde e distanti si udivano da un angolo buio come la pece",
-        "\"Pape Satàn, pape Satàn aleppe\" (Alè Satan, Alè Satan risorgi)",
-        "Uno scheletro con una lunga tunica regale rosso cremisi con simboli antichi su tutto il cranio apparve di fronte a te",
-        "Fece un gesto rapido con la mano e la stanza cominciò a girare",
-        "Fogli e libri iniziarono a volare dappertutto mentre lo scheletro ti guardava dritto negli occhi",
-        "\"Denique, novum sacrificium...\" (Finalmente, un nuovo sacrificio...)",
-        "\"Sanguis tuus tam pretiosus est quam mortalis aurum\" (Il tuo sangue è più prezioso dell'oro vacuo)",
-        "\"Mortalis faciem tuam Fatum\" (Mortale affronta il tuo Destino)"
-      ]
-    },
-    {
-      "text": [
-        "Le ossa caderono di fronte a te diventando di nuovo cenere",
-        "Eri esausto ma il tuo lavoro non era ancora finito",
-        "Il Re ti stava aspettando"
-      ]
-    },
-    {
-      "text": [
-        "Quando si aprono le porte della sala del trono, si vide una sala reale vuota.",
-        "Era vuoto ma si poteva sentire nei tuoi pensieri le urla dei poveri che imploravano per la loro vita ai piedi del re",
-        "Si potevano sentire le piccole risate e le risate dei nobili nel vedere i poveri supplicare",
-        "E il Re con il suo sguardo cupo e giudicante si rifiuta duramente di aiutare quei poveretti",
-        "Ma quando hai aperto gli occhi, era... vuoto proprio come lo era ora l'intero regno",
-        "Ma una forma apparve di fronte a te, il fantasma del Re con il suo manto regale, la sua corona d'argento spezzata e il vecchio volto scavato, di ciò che dovrebbe essere già morto",
-        "Le porte dietro si chiusero rapidamente con grande sorpresa mentre il fantasma cominciò a camminare dal suo trono",
-        "\"Ti stavo aspettando, eroe...\"",
-        "\"La mia gente sta reclamando il mio trono ma è troppo debole per essere ancora utile\"",
-        "\"Ora hanno un nuovo scopo\""
-      ]
-    },
-    {
-      "text": [
-        "Il vecchio re cominciò a cadere cercando di afferrare la sua spada",
-        "Gridò \"Sono immortale!!\"",
-        "\"Il mio regno è eterno!!\"",
-        "Afferrò saldamente la sua spada finché non cominciò a brillare di una luce intensa",
-        "La luce e le urla della spada inondarono la stanza rendendoti sordo e cieco per un momento",
-        "Finché la spada non cadde a terra",
-        "La spada aveva reclamato un'altra anima, l'anima di quel re",
-        "Hai allungato la mano per afferrare la spada ma le urla risuonavano ancora dentro di essa",
-        "Le anime delle persone dentro la spada erano grate ma ora dovevi fare una scelta"
-      ]
-    },
-    {
-      "text": [
-        "PURIFICA LA SPADA E RIPORTA LA PACE ALLE ANIME DEL REGNO",
-        "MANTIENI LA SPADA IN QUELLE CONDIZIONI PER LE TUE PROSSIME AVVENTURE"
-      ]
-    }
+  [
+      "C'era un tempo in cui il nostro regno era assolutamente perfetto.",
+      "Dove il cibo era abbondante, la povertà una mera barzelletta, e tutti potevano essere chiamati fratelli e sorelle",
+      {"image":"perfect_reign.jpg"}
+  ],
+  [
+      "Ma per qualcuno così egoista come il re, un regno come questo non era abbastanza",
+      "Voleva qualcosa che nessuno potesse realizzare."
+  ],
+  [
+      "E così... il re sfidò la morte."
+  ],
+  [
+      "Il regno cadde in rovina e il popolo divenne l'ombra di ciò che erano una volta.",
+      "L'immortalità per l'alto prezzo di un intero regno.",
+      {"image":"destroyed_reign.jpg"}
+  ],
+  [
+      "Salvaci Eroe, noi povere anime rivogliamo la nostra pace e vendetta da quel tiranno.",
+      {"image":"hero_image.png"}
+  ],
+  [
+      "Superati gli ostacoli e le insidie del regno, i cancelli principali del castello parvero davanti",
+      {"image":"Castle_front.jpg"}
+  ],
+  [
+      "Il regno era in rovina, non c'era nemmeno una singola anima tranne le ombre vaganti dei popolani",
+      {"image":"ruined_reign.jpg"}
+  ],
+  [
+      "All'ingresso del castello si mostrava davanti un colossale cancello,",
+      "nelle vicinanze numerosi detriti poggiavano sul suolo, quelli che un tempo furono le abitazioni del popolo.",
+      {"image":"Castle_gates.jpg"}
+  ],
+  [
+      "Dopo pochi passi davanti alle porte pezzi di roccia iniziarono a scricchiolare e ad ammassarsi,",
+      "un costrutto immenso torreggiava terrificatamente.",
+      "Sollevò lentamente un arto schiantandolo violentemente per terra lasciando un cratere nel suolo."
+  ],
+  [
+      "I suoi occhi fiammeggiavano di una fiamma viola e il suo cristallo in cima al capo iniziò a sprigionare scariche elettriche.",
+      "Il Guardiano era pronto a difendere il castello con tutto sè stesso.",
+      {"image":"Castle_gates.jpg"}
+  ],
+  [
+    {"fight":"mission-scena-1"}
+  ],
+  [
+      "Riuscendo nell'impresa impossibile l'ammasso di roccia cadde inanime",
+      "ponendo fine al lavoro di quell'ammasso di detriti.",
+      {"image":"Castle_gates.jpg"}
+  ],
+  [
+      "Rivolgendoti verso il castello i cancelli si aprirono, il buio inondava l'interno del castello,",
+      "questo era solo l'inizio."
+  ],
+  [
+      "Entrando nel castello si presentò all'ingresso una vecchia e polverosa biblioteca.",
+      {"image":"Library.png"}
+  ],
+  [
+      "All'interno della stanza era umido, disordinato e freddo.",
+      "Vecchi libri sparsi sul pavimento rallentavano il passo, e le librerie marce e decadenti bloccavano il passaggio",
+      {"image":"second_lib.jpg"}
+  ],
+  [
+      "E sangue... vecchie macchie di sangue sopraffavano il tuo olfatto."
+  ],
+  [
+      "Continuando a camminare a passo lento, cercando di ignorare gli orrori nella stanza",
+      "si riuscivano a notare segni e simboli di lingue antiche realizzati con il sangue,",
+      "reagivano alla tua presenza, ai tuoi movimenti e alla tua paura."
+  ],
+  [
+      "Un'altra presenza si trovava in quella stanza..."
+  ],
+  [
+      "Parole dal tono profondo e distanti si udivano da un angolo oscuro della stanza.",
+      "\"Pape Satàn, pape Satàn aleppe\" (Alè Satan, Alè Satan risorgi)."
+  ],
+  [
+      "Uno scheletro con una lunga tunica rosso cremisi con simboli antichi su tutto il cranio apparve di fronte a te,",
+      "con un gesto rapido la stanza cominciò a girare."
+  ],
+  [
+      "Fogli e libri iniziarono a volare mentre lo scheletro scrutava i tuoi occhi",
+      "\"Denique, novum sacrificium...\" (Finalmente, un nuovo sacrificio...)"
+  ],
+  [
+      "\"Sanguis tuus tam pretiosus est quam mortalis aurum\" (Il tuo sangue è più prezioso dell'oro vacuo)",
+      "\"Mortalis faciem tuam Fatum\" (Mortale affronta il tuo Destino)"
+  ],
+  [
+    {"fight":"mission-scena-2"}
+  ],
+  [
+      "Le ossa caddero in una pozza di sangue che si espandeva sul pavimento.",
+      "Eri esausto ma la tua missione non era ancora finita.",
+      {"image":"second_lib.jpg"}
+  ],
+  [
+      "Il Re sta aspettando il tuo arrivo.",
+      {"image":"Throne_room_door.jpg"}
+  ],
+  [
+      "Quando si aprirono le porte della sala del trono, parve una sala regale buia e cupa.",
+      "Era vuoto e silenzioso ma si poteva sentire nei tuoi pensieri le urla di quei poveri che imploravano per la loro vita ai piedi del Re.",
+      {"image":"Throne_room.jpg"}
+  ],
+  [
+      "Si potevano sentire le piccole risate dei nobili nel vedere i poveri supplicare,",
+      "ed il Re con il suo sguardo cupo e giudicante che si rifiutava ad aiutare quella gente.",
+      "Aprendo gli occhi però la sala era... vuota e silenziosa proprio come è ora l'intero regno."
+  ],
+  [
+      "D'un tratto una forma apparve di fronte al trono.",
+      "Il fantasma del Re con il suo manto regale, la sua corona d'argento spezzata e il vecchio volto scavato, di ciò che dovrebbe essere già morto,",
+      "le porte retrostanti si chiusero rapidamente con grande sorpresa mentre il Re si alzò e cominciò a fluttuare dal suo trono."
+  ],
+  [
+      "\"Ti stavo aspettando, eroe...\"",
+      "\"La mia gente sta cercando invanamente di reclamare il mio trono\""
+  ],
+  [
+      "\"Sono così disperati da chiedere aiuto perfino ad un mortale\"",
+      "\"sono deboli, inutili ma ora hanno un nuovo scopo.\""
+  ],
+  [
+      "Il Re sfoderò la sua spada spettrale puntandola con fervore.",
+      "\"Ti trafiggerò con la stessa spada che mi ha reso immortale\""
+  ],
+  [
+      "Urla disumane uscivano dalla spada, le stesse che venivano dai tuoi pensieri."
+  ],
+  [
+      "Era arrivato il momento, salva il popolo e sconfiggi il Re!"
+  ],
+  [
+    {"fight":"mission-scena-3"}
+  ],
+  [
+      "Il vecchio re crollando tentò di afferrare la sua spada",
+      "Gridò \"Sono immortale!!\"",
+      "\"Non puoi uccidere chi non può morire!!\"",
+      {"image":"Throne_room.jpg"}
+  ],
+  [
+      "Afferrò saldamente la sua spada finché non cominciò a brillare di una luce intensa da delle crepe che iniziavano a formarsi su di essa.",
+      "La luce e le urla della spada inondarono la stanza rendendoti sordo e cieco per un momento."
+  ],
+  [
+      "La spada cadde a terra",
+      "e reclamò una nuova anima, l'anima dello stesso re."
+  ],
+  [
+      "Afferando la spada risuonavano ancora in essa urla affievolite del popolo,",
+      "le anime delle persone dentro la spada erano grate ma ancora spaventate."
+  ],
+  [
+    "Sei giunto alla fine della tua avventura, cosa vuoi fare?",
+    {"choice":"end"}
   ]
-  
+]
