@@ -1,0 +1,178 @@
+/*Light mode attiva del dispositivo*/
+:root {
+    --body-bg: #FFFFFF;
+    --body-color: #000000;
+ }
+ 
+ /* Dark mode attiva del dispositivo*/
+ @media (prefers-color-scheme: dark) {
+    :root {
+        --body-bg: #000000;
+        --body-color: #FFFFFF;
+    }
+ }
+
+body {
+    position: relative;
+    background: var(--body-bg);
+    color: var(--body-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: 'Iceland';
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    position:fixed;
+    top:9em;
+    gap:3em;
+    width: 65%;
+    height:80%;
+    border-radius: 3em;
+    background-color: #f0f0f0bb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#titolo{
+    position:fixed;
+    bottom:85%;
+    font-size: 5rem;
+    color:rgb(0, 255, 242)
+}
+
+#my_pers{
+    font-size: 2.5rem;
+    font-family: 'Iceland';
+    border-radius: 0.4em;
+}
+
+#my_pers_stats{
+
+}
+
+#bottone_1{
+    font-size: 1.6rem;
+    font-family: 'Iceland';
+    background-color: #e53935;
+    border-radius: 2em;
+}
+
+#crea{
+    background-color: #666666b2;
+    visibility: hidden;
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 3%;
+    padding-top: 1em;
+    height:90%;
+    width:40%;
+}
+
+#scegli{
+    background-color: #887f7fb2;
+    justify-content: center;
+    border-radius: 2em;
+    padding-left: 3%;
+    padding-top: 1em;
+    height:90%;
+    width:40%;
+}
+
+
+.title {
+    padding: 5px;
+    font-size: 2rem;
+}
+
+.register-form {
+    width: 100%;
+    max-width: 70%;
+    text-align: left;
+   
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input.input, select.input {
+    width: 50%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    font-family: 'Iceland';
+}
+select.input{
+    width:75%;
+}
+
+input.input:focus, select.input:focus {
+    border-color: #007BFF;
+    outline: none;
+    font-family: 'Iceland';
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+}
+
+.classe-immagine {
+    max-width: 150px;
+    max-height: 150px;
+    margin-left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.classe-immagine:hover {
+    transform: scale(1.1); /* Effetto hover per l'immagine */
+}
+
+input[type="submit"], input[type="reset"] {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 40%;
+    margin: 10px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover {
+    background-color: #0056b3;
+}
+
+input[type="reset"] {
+    background-color: #f44336;
+}
+
+input[type="reset"]:hover {
+    background-color: #e53935;
+}
+
+#ab1, #ab2, #ab3{
+    visibility:hidden;
+}
+
+.hoverdiv{
+    transition: 1s;
+}
+
+.hoverdiv:hover{
+    color:rgb(78, 165, 200);
+    transition:0.2s;
+    cursor:pointer;
+}

@@ -3,11 +3,14 @@ from Back_end import jslib
 import json
 from urllib.parse import urlparse
 import Back_end.modulo_missione5 as m5
+from Back_end import login, jslib, personaggio
 from Back_end import complete_mission as cm
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/cm" : cm,
     "/jslib": jslib,
     "/m5": m5,
+    "/login": login,
+    "/jslib": jslib,
 }
 
 
@@ -65,7 +68,7 @@ def check_get(path):
         f.close()
         return r
     elif path=="/":
-        return check_get("/login")
+        return "<script>window.location='http://localhost:8080/login'</script>".encode("utf-8")
     return "Modulo non trovato".encode("utf-8")
 
 
