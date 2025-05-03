@@ -65,7 +65,7 @@ def check_get(path):
         f.close()
         return r
     elif path=="/":
-        return check_get("/login")
+        return "<script>window.location='http://localhost:8080/login'</script>"
     return "Modulo non trovato".encode("utf-8")
 
 
