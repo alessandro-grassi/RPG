@@ -1,14 +1,15 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib
+from Back_end.missione5 import check_get
 import json
 from urllib.parse import urlparse
-dict = { 
-    "/login": login,
-    "/jslib": jslib
-    # dizionario per prendere i prefissi dei moduli da aggiungere
-    
-}
+import sys
+print(sys.path)
 
+# Dizionario che mappa i prefissi delle richieste HTTP ai moduli
+dict = { 
+    "/": check_get
+}
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -46,34 +47,23 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
-
 def run_server():
     server_address = ('localhost', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     print("Server in esecuzione su http://localhost:8080...")
     httpd.serve_forever()
 
-
 def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
-            return modulo.check_get(path)
-    if path=="/favicon.ico":
-        f = open("Config/logo magi.ico","rb")
-        r = f.read()
-        f.close()
-        return r
-    elif path=="/":
-        return check_get("/")
+            return modulo(path)  # Esegui check_get per il modulo associato al percorso
     return "Modulo non trovato".encode("utf-8")
-
 
 def check_post(path, client_choice):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
-            return modulo.check_post(path, client_choice)
+            return modulo(path, client_choice)  # Esegui check_post per il modulo
     return "Modulo non trovato".encode("utf-8")
-
 
 if __name__ == "__main__":
     run_server()
