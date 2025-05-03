@@ -150,7 +150,7 @@ async function listaAbilita(){
 
 function next_page(){
   document.cookie="personaggio="+document.getElementById("my_pers").value;
-  window.location="http://localhost:8080/ms_home";
+  window.location="http://localhost:8080/sm_home";
 }
 
 
