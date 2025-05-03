@@ -102,9 +102,10 @@ def check_get(path:str):
     
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":
-        out = combactSystem.get_dialog_index("provaM5")
-        out = json.dumps(out, indent=4) # converte in formato json
-        return out.encode("utf-8")
+        with open("Missioni/Missione5/assets/progress.json") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
      
     #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):
@@ -181,12 +182,12 @@ def check_post(path,clientchoice):
         #aggiorna index dialoghi e immagini lore
         elif path == PREFIX + "update-index":
             print(clientchoice) # print per debug
-            combactSystem.set_current_index("provaM5", clientchoice["current_index"]) # aggiorna l'index del dialogo
+            update_progress(clientchoice["current_index"],"current_index")
             return json.dumps({"status": "success"}).encode() 
         
         #aggiorna l'ultima immagine vista nel file json
         elif path == PREFIX + "update-last_image":
-            combactSystem.set_last_image("provaM5",clientchoice["last_image"]) # aggiorna l'index del dialogo
+            update_progress(clientchoice["last_image"],"last_image")
             return json.dumps({"status": "success"}).encode() 
         
         return json.dumps({"status": "error"}).encode()
