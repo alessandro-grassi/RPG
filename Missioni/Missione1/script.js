@@ -2,6 +2,7 @@ const timerDisplay = document.getElementById("timer");
 const gameContainer = document.getElementById("game-container");
 const restartButton = document.getElementById("restart-button");
 const backButton = document.getElementById("back-button");
+const audio = new Audio('http://localhost:8080/missione1/grassSound.mp3'); // URL dell'audio
 //const character = get_personaggio();
 
 let clicks = 0;
@@ -81,6 +82,12 @@ function startTimer() {
 grass.addEventListener("click", () => {
   clicks++; // Incrementa il numero di click
   clickCounter.textContent = `Click effettuati: ${clicks}`; // Aggiorna il testo dell'elemento
+  
+  audio.play().catch(error => {
+                console.error("Errore durante la riproduzione dell'audio:", error);
+            });
+
+
   moveGrass(); // Sposta l'erba
 
   // Controlla se il giocatore ha raggiunto il numero di click richiesti

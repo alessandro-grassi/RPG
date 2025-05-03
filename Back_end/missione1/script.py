@@ -36,6 +36,11 @@ def check_get(path):
         r= f.read()
         f.close()
         return r
+    elif path.endswith("grassSound.mp3"):
+        f= open("Missioni/Missione1/grassSound.mp3","rb")
+        r= f.read()
+        f.close()
+        return r
 
 def check_post(path, client_choice):
     if path.endswith("post_generica"):
