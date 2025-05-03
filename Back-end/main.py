@@ -63,5 +63,5 @@ def check_post(path, client_choice):
 
 if __name__ == "__main__":
     run_server()
+   
     mt.funz()
-    
