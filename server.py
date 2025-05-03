@@ -6,6 +6,7 @@ from Back_end import missione3
 import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
+import Back_end.missione1.script as missione1
 #gita a monaco: 7/10
 dict = { 
     "/login": login,
@@ -14,9 +15,11 @@ dict = {
     "/cm" : cm,
     "/m5":modulo_missione5,
     "/missione3":missione3,
-    "/sm_" : sm
+    "/sm_" : sm,
+     "/missione1": missione1
 }
     
+
 
 
 
@@ -33,6 +36,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(resp)
         return
 
+
     def do_POST(self):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
@@ -41,14 +45,17 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         path = self.path
         path = urlparse(path).path
 
+
         content_length = int(self.headers.get('Content-Length', 0))
         post_data = self.rfile.read(content_length) if content_length > 0 else b""
         client_choice = json.loads(post_data)
+
 
         resp = check_post(path, client_choice)
 
         self.wfile.write(resp)
         return
+
 
     def do_OPTIONS(self):
         self.send_response(200)
@@ -58,11 +65,15 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 
+
+
 def run_server():
     server_address = ('localhost', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     print("Server in esecuzione su http://localhost:8080...")
     httpd.serve_forever()
+
+
 
 
 def check_get(path):
