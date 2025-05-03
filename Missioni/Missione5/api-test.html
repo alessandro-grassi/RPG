@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <title>mission-start</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="http://localhost:8080/m5/styletest">
+    </head>
+    <body>
+        api test
+        <button id="fetchLifeButton">Get Life</button>
+        <button id="fetchManaButton">Get Mana</button>
+        <button id="setLifeButton">Set Life</button>
+        <button id="setManaButton">Set Mana</button>
+        <button id="doDamageButton">Do Damage</button>
+        <button id="useManaButton">Use Mana</button>
+        <button id="attackButton">Attack</button>
+        Result
+        <div id="result"></div>
+        <script>
+            document.getElementById('attackButton').addEventListener('click', function() {
+                const attackerName = prompt("Enter attacker name:");
+                const attackedName = prompt("Enter attacked name:");
+                const attackName = prompt("Enter attack name:");
+                postData('http://localhost:8080/m5/api/attack', { attacker_name: attackerName, attacked_name: attackedName, attack_name: attackName })
+                    .then(data => {
+                        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerText = 'Error: ' + error;
+                    });
+            });
+ 
+            function postData(url = '', data = {}) {
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json());
+            }
+
+            document.getElementById('setLifeButton').addEventListener('click', function() {
+                const name = prompt("Enter player name:");
+                const value = prompt("Enter life value:");
+                postData('http://localhost:8080/m5/api/set-life', { name, value })
+                    .then(data => {
+                        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerText = 'Error: ' + error;
+                    });
+            });
+
+            document.getElementById('setManaButton').addEventListener('click', function() {
+                const name = prompt("Enter player name:");
+                const value = prompt("Enter mana value:");
+                postData('http://localhost:8080/m5/api/set-mana', { name, value })
+                    .then(data => {
+                        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerText = 'Error: ' + error;
+                    });
+            });
+
+            document.getElementById('doDamageButton').addEventListener('click', function() {
+                const name = prompt("Enter player name:");
+                const value = prompt("Enter damage value:");
+                postData('http://localhost:8080/m5/api/do-damage', { name, value })
+                    .then(data => {
+                        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerText = 'Error: ' + error;
+                    });
+            });
+
+            document.getElementById('useManaButton').addEventListener('click', function() {
+                const name = prompt("Enter player name:");
+                const value = prompt("Enter mana value:");
+                postData('http://localhost:8080/m5/api/use-mana', { name, value })
+                    .then(data => {
+                        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerText = 'Error: ' + error;
+                    });
+            });
+            document.getElementById('fetchLifeButton').addEventListener('click', function() {
+                const playerName = prompt("Enter player name:");
+                fetch(`http://localhost:8080/m5/api/get-life/${playerName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerText = 'Error: ' + error;
+                    });
+            });
+
+            document.getElementById('fetchManaButton').addEventListener('click', function() {
+                const playerName = prompt("Enter player name:");
+                fetch(`http://localhost:8080/m5/api/get-mana/${playerName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerText = 'Error: ' + error;
+                    });
+            });
+        </script>
+        <style>
+            button {
+                font-family: 'Press Start 2P', cursive;
+                font-size: 14px;
+                padding: 10px 20px;
+                margin: 5px;
+                border: none;
+                background-color: yellow;
+                color: black;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #FFD700;
+            }
+
+            #result {
+                margin-top: 20px;
+                font-family: 'Press Start 2P', cursive;
+                white-space: pre-wrap;
+            }
+        </style>
+    </body>
+</html>

@@ -2,10 +2,12 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import jslib
 import json
 from urllib.parse import urlparse
+import Back_end.modulo_missione5 as m5
 from Back_end import complete_mission as cm
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/cm" : cm,
-    "/jslib": jslib
+    "/jslib": jslib,
+    "/m5": m5,
 }
 
 
@@ -71,7 +73,7 @@ def check_post(path, client_choice):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_post(path, client_choice)
-    return "Modulo non trovato".encode("utf-8")
+    return "Modulo non trovato"
 
 
 if __name__ == "__main__":
