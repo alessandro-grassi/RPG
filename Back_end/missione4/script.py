@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 # directories ----------------------------------------------------------------------------
-BASE_DIR = Path(__file__).parent.parent.parent # directory base, RPG
+BASE_DIR = Path(__file__).parent.parent # directory base, RPG
 HTML_DIR = BASE_DIR / "Missioni" / "Missione4" # directory missione4
 DB_PATH = Path(__file__).parent / "database.json" # directory database.json
 # ----------------------------------------------------------------------------------------
@@ -113,47 +113,47 @@ def verifica_parola(parola_tentativo):
     
     print(f"Verifica parola: tentativo '{parola_tentativo}', corretta '{parola_corretta}'")
     
-    if len(parola_tentativo) != 5:
+    if len(parola_tentativo) != 5:  #se la lettera non è da 5 lettere
         return {"esito": "errore", "messaggio": "La parola deve essere di 5 lettere"}
     
-    # Inizializza il risultato con tutte le lettere marcate come non presenti
+    #inizializza il risultato con tutte le lettere segnate come non presenti
     risultato = [{"lettera": parola_tentativo[i], "stato": "non_presente"} for i in range(5)]
     
-    # Copia la parola corretta per tenere traccia delle lettere già utilizzate
-    lettere_disponibili = list(parola_corretta)
     
-    # Primo passaggio: contrassegna le corrispondenze esatte (verde)
+    lettere_disponibili = list(parola_corretta) #array con le lettere giuste
+    
+    #colora le lettere corrette in verde
     for i in range(5):
         if parola_tentativo[i] == lettere_disponibili[i]:
             risultato[i]["stato"] = "corretto"
             # Segna questa posizione come utilizzata
             lettere_disponibili[i] = None
     
-    # Secondo passaggio: contrassegna le lettere in posizione errata (giallo)
+    #colora le lettere semi-errate in giallo
     for i in range(5):
         if risultato[i]["stato"] == "non_presente":  # Salta posizioni già corrette
             for j in range(5):
                 if lettere_disponibili[j] is not None and parola_tentativo[i] == lettere_disponibili[j]:
                     risultato[i]["stato"] = "posizione_errata"
-                    # Segna questa lettera come utilizzata
                     lettere_disponibili[j] = None
                     break
     
+    #se becca la parola
     if parola_tentativo == parola_corretta:
-        # Sblocca un indizio
+        #scrive l'indizio
         indizi_disponibili = db["tutti_indizi"][db["stato_gioco"]["parola_finale"]]
         if len(db["stato_gioco"]["indizi_sbloccati"]) < len(indizi_disponibili):
             indizio_index = len(db["stato_gioco"]["indizi_sbloccati"])
             nuovo_indizio = indizi_disponibili[indizio_index]
             db["stato_gioco"]["indizi_sbloccati"].append(nuovo_indizio)
             
-        # -1 contatore delle partite rimaste
+        #-1 contatore delle partite rimaste
         db["stato_gioco"]["tentativi_rimasti"] -= 1
         
-        # reset contatore dei tentativi
+        #reset contatore dei tentativi
         db["stato_gioco"]["tentativi_nella_partita_corrente"] = 0
         
-        # Cambia la parola corrente per il prossimo round
+        #cambia la parola per il prossimo round
         vecchia_parola = db["stato_gioco"]["parola_corrente"]
         while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
             db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
@@ -165,6 +165,7 @@ def verifica_parola(parola_tentativo):
             "messaggio": "Complimenti! Hai indovinato la parola!",
             "risultato": risultato,
         }
+    #se non becca la parola
     else:
         # Inizializza o incrementa i tentativi nella partita corrente
         if "tentativi_nella_partita_corrente" not in db["stato_gioco"]:
@@ -175,7 +176,7 @@ def verifica_parola(parola_tentativo):
         tentativi_nella_partita = db["stato_gioco"]["tentativi_nella_partita_corrente"]
         print(f"Tentativo errato. Tentativi nella partita: {tentativi_nella_partita}")
         
-        # Se è il quinto tentativo fallito, la partita è persa
+        #al quinto tentativo, partita persa
         if tentativi_nella_partita >= 5:
             db["stato_gioco"]["tentativi_rimasti"] -= 1
             db["stato_gioco"]["tentativi_nella_partita_corrente"] = 0
@@ -183,7 +184,7 @@ def verifica_parola(parola_tentativo):
             tentativi_rimasti = db["stato_gioco"]["tentativi_rimasti"]
             print(f"Partita persa. Partite rimaste: {tentativi_rimasti}")
             
-            # Reimposta la parola
+            #reimposta la parola
             vecchia_parola = db["stato_gioco"]["parola_corrente"]
             while db["stato_gioco"]["parola_corrente"] == vecchia_parola:
                 db["stato_gioco"]["parola_corrente"] = random.choice(db["parole_wordle"])
@@ -210,7 +211,6 @@ def verifica_soluzione_finale(soluzione_tentativo):
     print(f"Verifica soluzione finale: tentativo '{soluzione_tentativo}', corretta '{soluzione_corretta}'")
     
     if soluzione_tentativo.lower() == soluzione_corretta.lower():
-        # L'utente ha vinto il gioco!
         print("Soluzione corretta! Vittoria!")
         return {
             "esito": "successo",

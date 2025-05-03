@@ -19,13 +19,11 @@
     "successo"
   ],
   "stato_gioco": {
-    "tentativi_rimasti": 4,
+    "tentativi_rimasti": 5,
     "tentativi_nella_partita_corrente": 0,
-    "indizi_sbloccati": [
-      "Rappresenta il trionfo dopo la lotta"
-    ],
-    "parola_corrente": "fiore",
-    "parola_finale": "vittoria"
+    "indizi_sbloccati": [],
+    "parola_corrente": "pesca",
+    "parola_finale": "successo"
   },
   "tutti_indizi": {
     "enigma": [
