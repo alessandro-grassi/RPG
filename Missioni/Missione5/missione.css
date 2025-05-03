@@ -109,6 +109,13 @@ body {
     font-family: 'Press Start 2P', cursive;
 }
 
+.dialog-button:disabled {
+    background-color: #cccccc; /* grigio chiaro */
+    color: #666666;           /* testo grigio scuro */
+    cursor: not-allowed;      /* cursore di "bloccato" */
+    opacity: 0.7;
+}
+
 .ulti_button {
     background: gold;
     border: 2px solid goldenrod;
