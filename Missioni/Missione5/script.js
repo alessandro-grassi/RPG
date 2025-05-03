@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(){ //esegue il codice sol
         let missione = {
             testo: "Qual è il colore del cielo di giorno?", // Testo della domanda
             opzioni: ["Rosso", "Blu", "Azzurro", "Giallo"], // Opzioni di risposta
-            immagine: "cielo.jpg" // Percorso dell'immagine da mostrare
+            immagine: "/image" // Percorso dell'immagine da mostrare
         };
 
         
@@ -31,8 +31,25 @@ document.addEventListener("DOMContentLoaded", function(){ //esegue il codice sol
     caricaMissione();
 });
 function Sconfitta(){
-    window.location.href="../Missione5/Missione_Finale/pagina_boss_finale/sconfitta.html";
+    window.location.href="";
 }
 function MissioneSuccessiva(){
-    window.location.href="parte grafica.html";
+    window.location.href="/missione2";
+}
+
+function invia(){
+    let risposta = document.querySelector('input[name="risposta"]:checked');
+    console.log(risposta.value); 
+    if (!risposta) {
+        alert("Seleziona una risposta!");
+        return;
+    }
+    let rispostaCorretta = "Blu"; //risposta corretta
+    if (risposta.value === rispostaCorretta) { //se la risposta è corretta
+        alert("Risposta corretta!"); //messaggio di successo
+        MissioneSuccessiva(); //passa alla missione successiva
+    } else {
+        alert("Risposta sbagliata!"); //messaggio di errore
+        Sconfitta(); //passa alla schermata di sconfitta
+    }
 }
