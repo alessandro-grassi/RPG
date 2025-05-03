@@ -5,7 +5,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 # directories ----------------------------------------------------------------------------
-BASE_DIR = Path(__file__).parent.parent.parent.parent # directory base, RPG
+BASE_DIR = Path(__file__).parent.parent.parent # directory base, RPG
 HTML_DIR = BASE_DIR / "Missioni" / "Missione4a" # directory missione4a
 DB_PATH = Path(__file__).parent / "database.json" # directory database.json
 # ----------------------------------------------------------------------------------------
@@ -38,8 +38,8 @@ def check_get(path):
             file_path = HTML_DIR / "Wordle.html"
         elif path == "/missione4a/primapagina":
             file_path = HTML_DIR / "Prima_pagina.html"
-        elif path == "/missione4a/indovina_soluzione":
-            file_path = HTML_DIR / "Indovinasoluzione.html"
+        elif path == "/missione4a/indovinasoluzione":
+            file_path = HTML_DIR / "Indovina_soluzione.html"
         elif path == "/missione4a/stile":
             file_path = HTML_DIR / "Stile.css"
         
