@@ -23,10 +23,12 @@ const magieDescriptions = {
 document.addEventListener("DOMContentLoaded", (e) => {
     game.aggiornaUI();
     // Aggiorno l'input con l'utente preso dai cookie
+    /*
     const idPersonaggio = get_personaggio();
     console.log(idPersonaggio);
     const inputHiddenUserId = document.getElementById("uid");
     inputHiddenUserId?.value = idPersonaggio;
+    */
 });
 
 continueButton.addEventListener("click", (e) => {
