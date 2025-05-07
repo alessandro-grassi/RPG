@@ -24,7 +24,7 @@
         <input type="text" id="parola-finale" placeholder="Inserisci la soluzione">
         <div id="pulsanti">
             <button id="indovina">Indovina</button>
-            <button onclick="location.href='/missione4a'">Indietro</button>
+            <button id="backButton" onclick="location.href='/missione4a'">Indietro</button>
         </div>
     </div>
 
@@ -80,6 +80,14 @@
                     
                     if (data.esito === 'successo') {
                         messaggioSoluzione.style.color = 'green';
+                        
+                        // Modifica il pulsante indietro in "Torna alle missioni"
+                        const backButton = document.getElementById('backButton');
+                        backButton.textContent = 'Torna alle missioni';
+                        backButton.onclick = function() {
+                            location.href = '/sm_home';
+                        };
+                        
                         // Mostra un'animazione o un messaggio di vittoria
                         celebraVittoria();
                     } else {
