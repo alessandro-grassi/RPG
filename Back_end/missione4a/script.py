@@ -21,6 +21,16 @@ def check_get(path):
         tentativi_rimasti = db["stato_gioco"]["tentativi_rimasti"]
         return json.dumps({"tentativiRimasti": tentativi_rimasti}).encode("utf-8")
     
+    # API per ottenere informazioni sulla difficoltà
+    elif path == "/missione4a/api/info-difficolta":
+        db = carica_database()
+        parola_finale = db["stato_gioco"]["parola_finale"]
+        totale_indizi = len(db["tutti_indizi"][parola_finale])
+        
+        return json.dumps({
+            "totaleIndizi": totale_indizi
+        }).encode("utf-8")
+    
     # API per ottenere gli indizi sbloccati
     elif path == "/missione4a/api/indizi":
         db = carica_database()
