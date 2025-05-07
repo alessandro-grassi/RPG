@@ -33,21 +33,15 @@
     "successo"
   ],
   "stato_gioco": {
-    "tentativi_rimasti": 2,
+    "tentativi_rimasti": 5,
     "tentativi_nella_partita_corrente": 0,
-    "indizi_sbloccati": [
-      "Raggiungimento di un obiettivo",
-      "Deriva dal latino 'successus', che significa 'avanzare'",
-      "Ricompensa per l'impegno e la perseveranza"
-    ],
-    "parola_corrente": "fiore",
-    "parola_finale": "successo"
+    "indizi_sbloccati": [],
+    "parola_corrente": "sogno",
+    "parola_finale": "vittoria"
   },
   "tutti_indizi": {
     "enigma": [
-      "Un rompicapo che sfida la mente",
-      "Deriva dal greco 'ainigma', che significa 'parlare in modo oscuro'",
-      "Spesso richiede un salto logico per essere risolto"
+      "Un rompicapo che sfida la mente"
     ],
     "tesoro": [
       "Oggetto di grande valore",
