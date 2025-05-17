@@ -1,0 +1,32 @@
+<!DOCTYPE html>               
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missione 1 - Versione Alternativa</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mission-container">
+        <header>
+            <h1>Missione Speciale: Sfida il Nemico!</h1>
+        </header>
+        <main>
+            <section class="enemy-info">
+                <p id="description">Descrizione del nemico e domande</p>
+                <div id="answers" class="answer-options"></div>
+                <button id="submit">Rispondi alla Sfida</button>
+            </section>
+            <section class="scenario-display">
+                <div id="scenario" class="image-container">
+                    <p>Immagine dello scenario generata con l'AI</p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="javascript.js"></script>
+    <button onclick="Sconfitta()">pagina sconfitta</button>
+    <button onclick="MissioneSuccessiva()">Missioone</button>
+</body>
+</html>
