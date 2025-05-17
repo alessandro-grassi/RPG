@@ -1,5 +1,5 @@
-todo:
 
+<<<<<<< HEAD
 far interagire crea personaggio con il server (e sistemare select abilità)
 login se fatta con successo setta cookie utente
 sign up da errore se utente esiste già
@@ -7,3 +7,5 @@ feedback del sign up
 pagina scelta personaggio con relativi cookies
 test libreria cookies.js
 fixare saraFa in login (probabilmente dovuto a decoding del file)
+=======
+>>>>>>> 8ef8f0cdda1bfcdb913696b48003d9d8567a75a8

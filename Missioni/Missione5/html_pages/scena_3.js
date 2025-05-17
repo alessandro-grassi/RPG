@@ -16,8 +16,14 @@ let danno_magico_pg = intelligenza_pg * 15;
 let forza = 10;
 let danno_fisico = forza * 10;
 
+let fede = 5;
+let critico = fede * 10;
+
 let rand = 0;
 let tempChance = 0;
+let max_cure = 5;
+
+let flag_audio = true;
 
 //Al caricamento della pagina, fa questo:
 document.addEventListener("DOMContentLoaded",()=>{ 
@@ -30,6 +36,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     setButtonNext();
     setButtonMagic();
     setButtonHeal();
+    setButtonAudio();
 });
 
 //Manda al server
@@ -137,14 +144,16 @@ function setButtonAttack(){
     document.getElementById('attack_button').addEventListener("click", function(){
 
         //Audio ed Effetti
+        if(flag_audio){
+            const hit_sound = document.getElementById('hit_sound');
+            hit_sound.currentTime = 0;
+            hit_sound.play();
+        }
         const boss = document.getElementById('image_king');
-        const hit_sound = document.getElementById('hit_sound');
+        
 
         boss.classList.add('shake_boss');
         boss.classList.add('hit');
-    
-        hit_sound.currentTime = 0;
-        hit_sound.play();
     
         setTimeout(() => {
             boss.classList.remove('shake_boss');
@@ -176,14 +185,16 @@ function setButtonMagic() {
     document.getElementById('magic_button').addEventListener("click", function() {
 
         //Audio ed Effetti
+        if(flag_audio){
+            const magic_sound = document.getElementById('magical_sound');
+            magic_sound.currentTime = 0;
+            magic_sound.play();
+        }
         const boss = document.getElementById('image_king');
-        const magic_sound = document.getElementById('magical_sound');
+        
 
         boss.classList.add('shake_boss');
-        boss.classList.add('hit');
-    
-        magic_sound.currentTime = 0;
-        magic_sound.play();
+        boss.classList.add('hit'); 
 
         setTimeout(() => {
             boss.classList.remove('shake_boss');
@@ -219,16 +230,18 @@ function setButtonHeal(){
     document.getElementById('heal_button').addEventListener("click", function(){
 
         //Audio ed Effetti
-        const heal_sound = document.getElementById('heal_sound');
-
-        heal_sound.currentTime = 0;
-        heal_sound.play();
-
+        if(flag_audio){
+            const heal_sound = document.getElementById('heal_sound');
+            heal_sound.currentTime = 0;
+            heal_sound.play();
+        }
         if(vita_corrente <= 0){
             this.removeEventListener();
         }
+
+        //Calcola la cura casuale (150-300)
         let temp_vita = vita_corrente_pg;
-        let cura = vigore*30;
+        let cura = Math.floor((vigore*45)*(Math.random() * 0.4 + 0.8));
         if(vigore*100-vita_corrente_pg < cura){
             cura = vigore*100-vita_corrente_pg;
             vita_corrente_pg += cura;
@@ -236,16 +249,22 @@ function setButtonHeal(){
         else
             vita_corrente_pg += cura;
 
+        //Riduce le cure massime
+        max_cure -= 1;
+        if(max_cure <= 0){
+            this.setAttribute("disabled", true);
+        }
+
         if(temp_vita ==  vigore * 100){
             vita_corrente_pg = vigore*100;
             document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
             document.getElementById('vita_pg').value = vita_corrente_pg;
-            document.getElementById('text').innerHTML = "'Non puoi curarti oltre i "+ vigore * 100 +" PV!'";
+            document.getElementById('text').innerHTML = "'Non puoi curarti oltre i "+ vigore * 100 +" PV!' Cure rimaste: "+ max_cure;
         }
         else{
             document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
             document.getElementById('vita_pg').value = vita_corrente_pg;
-            document.getElementById('text').innerHTML = "'Ti sei curato di " + cura + " PV!'";
+            document.getElementById('text').innerHTML = "'Ti sei curato di " + cura + " PV!' <br> Cure rimaste: "+ max_cure;
         }
 
         document.getElementById('next_button').style = "visibility: visible;"; 
@@ -253,6 +272,16 @@ function setButtonHeal(){
         document.getElementById('magic_button').style = "visibility: hidden;";
         this.style = "visibility: hidden";
 
+        
+    })
+}
+
+function setButtonAudio(){
+    document.getElementById('audio_button').addEventListener('click', function(){
+        if(flag_audio)
+            flag_audio = false;
+        else
+            flag_audio = true;
     })
 }
 
@@ -317,62 +346,26 @@ function enemyAttack(json){
                 console.log(tempChance);
                 console.log(moves['chance']);
                 if(tempChance >= rand){
-                    //Controlla che tipo di mossa è e cosa fa
-                    document.getElementById('text').innerHTML = moves['description'];
-                    if(moves['move_type'] == 'attack'){
-                        if(moves['damage_type'] == 'fisico'){
-                            danno_enemy = danno_fisico + Math.floor((vita_corrente_pg * (moves['damage_fis_perc']/100)));
-                            vita_corrente_pg -= danno_enemy;
-                            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
-                            document.getElementById('vita_pg').value = vita_corrente_pg;
-                        }
-                    }
-                    else if(moves['move_type'] == 'buff'){
-                        if(moves['move_name'] == 'Aura immortale'){
-                            vita_corrente_pg -= danno_fisico;
-                            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
-                            document.getElementById('vita_pg').value = vita_corrente_pg;
-                        }
-                        if(moves['move_name'] == 'Corona Indistruttibile'){
-                            document.getElementById('image_king').style = "filter: brightness(150%);";
-                            vita_corrente_pg -= danno_fisico;
-                            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
-                            document.getElementById('vita_pg').value = vita_corrente_pg;
-                        }
-                    }
-                    else if(moves['move_type'] == 'Unique'){
-                        document.getElementById("img-Throne").style = "filter: invert(100%)"
-                        vita_corrente_pg -= danno_fisico;
-                        document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
-                        document.getElementById('vita_pg').value = vita_corrente_pg;
-                    }
-                    else{
-                        vita_corrente_pg -= danno_fisico;
-                        document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
-                        document.getElementById('vita_pg').value = vita_corrente_pg;
-                    }
-                    //Controllo vita del giocatore dopo attacco
-                    if(vita_corrente_pg <= 0){
-                        vita_corrente_pg = 0;
-                        gameover();
-                    }
+                    enemyMove(moves);
                     //Fa smette di controllare le mosse
                     tempChance -= 100
 
                     //Audio ed Effetti
-                    document.getElementById('boss_sound').setAttribute('src', "http://localhost:8080/m5/get-audio/"+ moves['audio']);
-
+                    if(flag_audio){
+                        const boss_sound = document.getElementById('boss_sound');
+                        boss_sound.setAttribute('src', "http://localhost:8080/m5/get-audio/"+ moves['audio']);
+                        boss_sound.volume = moves['volume'];
+                        boss_sound.load();
+                        boss_sound.currentTime = 0;
+                        boss_sound.play().catch(err => console.error("Errore riproduzione audio:", err));
+                    }
+                    
                     const combat_box = document.getElementById('combat-box');
-                    const boss_sound = document.getElementById('boss_sound');
-
+                    
                     combat_box.classList.add('shake_player');
                     combat_box.classList.add('hit');
                     combat_box.classList.add('flash');
                     
-                    boss_sound.load();
-                    boss_sound.currentTime = 0;
-                    boss_sound.play().catch(err => console.error("Errore riproduzione audio:", err));
-                
                     setTimeout(() => {
                         combat_box.classList.remove('shake_player');
                         combat_box.classList.remove('hit');
@@ -384,6 +377,57 @@ function enemyAttack(json){
             })
         }
     })
+}
+
+//Controlla che tipo di mossa è e cosa fa
+function enemyMove(moves){
+    document.getElementById('text').innerHTML = moves['description'];
+    if(moves['move_type'] == 'attack'){
+        if(moves['damage_type'] == 'fisico'){
+            danno_enemy = danno_fisico + Math.floor((vita_corrente_pg * (moves['damage_fis_perc']/100)));
+            vita_corrente_pg -= danno_enemy;
+            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
+        }
+    }
+    else if(moves['move_type'] == 'buff'){
+        if(moves['move_name'] == 'Aura immortale'){
+            vita_corrente_pg -= danno_fisico;
+            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
+        }
+        if(moves['move_name'] == 'Corona Indistruttibile'){
+            document.getElementById('image_king').style = "filter: brightness(150%);";
+            vita_corrente_pg -= danno_fisico;
+            document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+            document.getElementById('vita_pg').value = vita_corrente_pg;
+        }
+    }
+    else if(moves['move_type'] == 'Unique'){
+        document.getElementById("img-Throne").style = "filter: invert(100%)"
+        vita_corrente_pg -= danno_fisico;
+        document.getElementById('vita-text-pg').innerHTML = "PV:" + vita_corrente_pg;
+        document.getElementById('vita_pg').value = vita_corrente_pg;
+    }
+    else{
+        vita_corrente_pg -= danno_fisico;
+        document.getElementById('vita-text-pg').innerHTML = "PV:"+ vita_corrente_pg;
+        document.getElementById('vita_pg').value = vita_corrente_pg;
+    }
+    flashScreen();
+    //Controllo vita del giocatore dopo attacco
+    if(vita_corrente_pg <= 0){
+        vita_corrente_pg = 0;
+        gameover();
+    }
+}
+
+function flashScreen() {
+    const flash = document.getElementById('screen-flash');
+    flash.classList.add('active');
+    setTimeout(() => {
+        flash.classList.remove('active');
+    }, 200);
 }
 
 // funzione fine gioco
