@@ -1,5 +1,6 @@
 import sys
 from http.server import BaseHTTPRequestHandler
+from Back_end import queryLib
 
 def check_get(path):
     if path == "/":  # per aprire la prima missione 
@@ -162,5 +163,21 @@ def check_get(path):
         f.close()
         return image_data  # Restituisci direttamente i dati binari
     return '"Path not found"'.encode("utf-8")
+
+def check_post(path, data):
+    if path == "/missione6/inviaData":
+        try:
+            variabile = data
+            aggiungiValore(variabile)
+            val = 1
+            return val.encode("utf-8")
+        except Exception:
+            val = 0
+            return val.encode("utf-8")
+        
+def aggiungiValore(valore):
+    queryLib.connetti()
+    a = queryLib.execute(f'''INSERT INTO "utenti"() VALUES ('{valore}')''')
+    queryLib.disconnetti()
 
 

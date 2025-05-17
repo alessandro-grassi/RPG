@@ -57,6 +57,28 @@
             window.location.href = "/sm_home"; // inserire locazione dopo aver preso modifiche dal branch principale
         }
 
+        function inviaVittoria(){
+            let valore = 100;
+            fetch("http://localhost:8080/missione6/inviaData", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({valore})
+            })
+            .then((response) => {
+                if(!response.ok) {
+                    throw new Error("Errore connessione"); 
+                }
+                return response.json();
+            })
+            .then((data) => {
+                alert(data);
+            })
+            .catch((e) => {
+                console.error(e);
+                alert("Errore");
+            })
+        }
+
     </script>
 </head>
 <body>
