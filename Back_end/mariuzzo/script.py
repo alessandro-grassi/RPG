@@ -13,11 +13,16 @@ def check_get(path):
         return contenuto.encode("utf-8")
     elif path.endswith("classi"):
         ql.connetti()
+        # Lista che poi verrà convertita in json
         classi = []
+        # Effettuo una query al database
         classiDB = ql.execute("SELECT * FROM classi")
+        # Inserisco nella lista solo il nome della classe
         for classe in classiDB:
-            classi.append(classe[0])
+            nomeClasse = classe[0]
+            classi.append(nomeClasse)
         ql.disconnetti()
+        # Invio al client una stringa json contenente un attributo classi con l'array dei nomi delle classi
         return json.dumps({"classi": classi}).encode("utf-8")
 
 def check_post(path, client_choice):
