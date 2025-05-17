@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib
-from Back_end.missione5 import check_get
+from Back_end import missione5
 import json
 from urllib.parse import urlparse
 import sys
@@ -8,7 +8,7 @@ print(sys.path)
 
 # Dizionario che mappa i prefissi delle richieste HTTP ai moduli
 dict = { 
-    "/missione6": check_get
+    "/missione6": missione5
 }
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -56,7 +56,7 @@ def run_server():
 def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
-            return modulo(path)  # Esegui check_get per il modulo associato al percorso
+            return modulo.check_get(path)  # Esegui check_get per il modulo associato al percorso
     return "Modulo non trovato".encode("utf-8")
 
 def check_post(path, client_choice):
