@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+body {
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f4e3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#header {
+    width: 80%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: 20px; 
+}
+
+#header h1 {
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+}
+
+#obbiettivo, #indizi, #azioni, #wordle-container, #soluzione {
+    background-color: #ece0c8; 
+    padding: 20px;
+    border-radius: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    margin: 20px 0; 
+    text-align: left; 
+}
+
+#obbiettivo h2, #indizi h2, #soluzione h2, #wordle-container h2 {
+    font-weight: 600;
+    text-align: left; 
+    margin-top: 0; 
+}
+
+#azioni button, #pulsanti button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #b58339; 
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Outfit', sans-serif; 
+}
+
+#azioni button:hover, #pulsanti button:hover {
+    background-color: #a06f2e;
+}
+
+
+#wordle-container button#indovina {
+    display: block;
+    margin: 20px auto; 
+}
+
+
+#parola-finale {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif; 
+    border: 1px solid #ccc;
+    border-radius: 10px; 
+    margin-bottom: 20px;
+}
+
+#griglia-wordle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.riga {
+    display: flex;
+    gap: 5px;
+}
+
+.lettera {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 10px; 
+}
+
+#indizi ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#indizi li {
+    margin: 5px 0;
+}

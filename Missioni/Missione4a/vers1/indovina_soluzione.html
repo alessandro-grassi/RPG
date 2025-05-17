@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indovina la soluzione</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titolo-missione">missione 4</h1>
+    </div>
+
+    <div id="indizi">
+        <h2>Indizi</h2>
+        <ul id="lista-indizi">
+            <li>Nessun indizio disponibile.</li>
+        </ul>
+    </div>
+
+    <div id="soluzione">
+        <h2>Indovina la Soluzione</h2>
+        <input type="text" id="parola-finale" placeholder="Inserisci la soluzione">
+        <div id="pulsanti">
+            <button id="indovina">Indovina</button>
+            <button onclick="location.href='prima_pagina.html'">Indietro</button>
+        </div>
+    </div>
+
+    <!--chiamate rest-->
+    <script>
+        //windowonload degli indizi
+        function caricaIndizi() {
+            fetch('http://localhost:8080/api/indizi', { method: 'GET' })  //nome api di esempio
+                .then(response => response.json())
+                .then(data => {
+                    //quindi qua bisogna fare la get della lista degli indizi da mettere dentro
+                    //<p> id="lista-indizi"></p>
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        //quando indovini la soluzione
+        document.getElementById('indovina').addEventListener('click', function () {
+            const soluzione = document.getElementById('parola-finale').value;
+
+            fetch('http://localhost:8080/api/verifica-soluzione', { //nome api di esempio
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ soluzione: soluzione })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    //se data è giusto, alert di ricompensa e aggiunta ricompensa nel database
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        });
+
+        //carica gli indizi all'avvio della pagina
+        window.onload = caricaIndizi;
+    </script>
+</body>
+</html>

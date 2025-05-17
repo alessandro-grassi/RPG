@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Accedi!</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://localhost:8080/login/stile" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+        <script type="text/javascript" src="http://localhost:8080/login/backend"></script>   
+    </head>
+    <body>
+        <div id="titolo">RPG</div>
+        <div id="contenitore">
+            <div id="accesso">
+                <br><br>
+                <p>Inserisci le tue credenziali</p>
+                <label>Username: </label>
+                <input type="text" id="username" required>
+                <br><br>
+                <label>Password: </label>
+                <input type="password" id="password" required>
+                <br><br>
+                <input type="button" value="Accedi" onclick="accedi()">
+                <br><br>
+                <div class = "hoverdiv" onclick="changeVisibility()">Non hai un account? Registrati!</div>
+            </div>
+            <div id="registrazione">
+                <p>Siamo costretti a chiederti di compilare il seguente form</p>
+                <br>
+                <label>Inserisci il tuo Username: </label>
+                <input type="text" id="n_username" required>
+                <br>
+                <p>Nota bene! Sara' il nome con cui tutti<br>gli altri giocatori ti vedranno</p>
+                <br>
+                <label>Inserisci la tua password:</label>
+                <input type="password" id="n_password" required>
+                <br><br>
+                <label>Inserisci la tua email: </label>
+                <input type="email" id="n_email">
+                <br><br>
+                <input type="button" value="Registrati" onclick="registrazione()">
+                <br><br>
+                <div class = "hoverdiv" onclick="changeVisibility()">Torna indietro</div>
+            </div>
+        </div>
+    </body>
+</html>

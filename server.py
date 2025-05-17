@@ -1,12 +1,29 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from Back_end import jslib
+from Back_end import login, jslib, personaggio
+from Back_end import complete_mission as cm
+from Back_end import modulo_missione5
+from Back_end import missione3, missione4a, missione6
 import json
 from urllib.parse import urlparse
-from Back_end import complete_mission as cm
-dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
+from Back_end import select_mis as sm
+import Back_end.missione1.script as missione1
+#gita a monaco: 7/10
+dict = { 
+    "/login": login,
+    "/jslib": jslib,
+    "/personaggio" : personaggio,
     "/cm" : cm,
-    "/jslib": jslib
+    "/m5":modulo_missione5,
+    "/missione3":missione3,
+    "/sm_" : sm,
+    "/missione1": missione1,
+    "/missione4a": missione4a,
+    "/missione6":missione6
 }
+    
+
+
+
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -21,6 +38,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(resp)
         return
 
+
     def do_POST(self):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
@@ -29,14 +47,17 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         path = self.path
         path = urlparse(path).path
 
+
         content_length = int(self.headers.get('Content-Length', 0))
         post_data = self.rfile.read(content_length) if content_length > 0 else b""
         client_choice = json.loads(post_data)
+
 
         resp = check_post(path, client_choice)
 
         self.wfile.write(resp)
         return
+
 
     def do_OPTIONS(self):
         self.send_response(200)
@@ -46,11 +67,15 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 
+
+
 def run_server():
     server_address = ('localhost', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     print("Server in esecuzione su http://localhost:8080...")
     httpd.serve_forever()
+
+
 
 
 def check_get(path):
@@ -63,7 +88,7 @@ def check_get(path):
         f.close()
         return r
     elif path=="/":
-        return check_get("/login")
+        return "<script>window.location='http://localhost:8080/login'</script>".encode("utf-8")
     return "Modulo non trovato".encode("utf-8")
 
 
