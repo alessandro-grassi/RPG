@@ -1,0 +1,88 @@
+<html>
+<head>
+    <style>
+        body {
+            background-image: url('/missione6/vittoria_gif');
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            max-width: 50%;
+            height: auto;
+        }
+        button {
+            margin-top: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script>/*
+         async function PaginaMissioni()
+        {
+            const valoreVittoria=100;
+            const data={
+                'vittoria': valoreVittoria
+            }
+            try{
+                    const responde=await fetch (/*nome server*//*,{
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    if (responde.ok)
+                    {
+                        window.location.href='/sm_home';// rimanda alla pagina delle missioni dopo aver aggiornato il campo p_comp
+                    }
+                    else 
+                    {
+                        console.error("Errore durante l'operazione:", await responde.text());
+                    }
+
+                }
+                catch(error){
+                    console.error("Errore:", error);
+                }
+        }*/
+
+        function PaginaMissioni(){
+            window.location.href = "/sm_home"; // inserire locazione dopo aver preso modifiche dal branch principale
+        }
+
+        function inviaVittoria(){
+            let valore = 100;
+            fetch("http://localhost:8080/cm/complete", {
+                method: "POST",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({uid: get_personaggio(), mid:6})
+            })
+            .then((response) => {
+                if(!response.ok) {
+                    throw new Error("Errore connessione"); 
+                }
+                return response.json();
+            })
+            .then((data) => {
+                alert(data);
+            })
+            .catch((e) => {
+                console.error(e);
+                alert("Errore");
+            })
+        }
+
+    </script>
+</head>
+<body>
+    <img src="/missione6/vit">
+	<button onclick="PaginaMissioni()"><img width="200px" src="/missione6/casa"></button>
+</body>
+</html>

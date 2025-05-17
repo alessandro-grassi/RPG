@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(120deg, #070707 0%, #fff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 350px;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.dettagli {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.carteC {
+    display: grid;
+    grid-template-columns: repeat(4, 75px);
+    gap: 10px;
+    justify-content: center;
+}
+
+.carte {
+    width: 75px;
+    height: 75px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    cursor: pointer;
+}
+
+.carte.rotazione {
+    transform: rotateY(180deg);
+}
+
+.fronte, .retro {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fronte {
+    background-color: #f54440;
+    transform: rotateY(180deg);
+}
+
+.retro {
+    background-color: #f54440;
+    transform: rotateY(0deg);
+}
+
+.carte img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}

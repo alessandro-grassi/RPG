@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Missione</title>
+    <link rel="stylesheet" href="/missione6/stile"> <!-- percorso corretto per il CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Missione</h1>
+    <div class="container">
+        <div class="text-area">
+            <p id="description">Caricamento...</p>
+            <div id="answers"></div>
+            <button id="submit" onclick="invia()">Invia</button>
+        </div>
+        <div class="image-area" id="scenario">
+            <p>Caricamento immagine...</p>
+        </div>
+    </div>
+    <script src="/missione6/backend"></script> <!-- percorso corretto per lo script JS -->
+    <button onclick="Sconfitta()">Pagina Sconfitta</button>
+    <button onclick="MissioneSuccessiva()">Missione Successiva</button>
+
+</body>
+</html>
