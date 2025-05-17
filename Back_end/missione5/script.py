@@ -1,6 +1,7 @@
 import sys
 from http.server import BaseHTTPRequestHandler
 from Back_end import queryLib
+import json
 
 def check_get(path):
     if path == "/":  # per aprire la prima missione 
@@ -165,10 +166,11 @@ def check_get(path):
     return '"Path not found"'.encode("utf-8")
 
 def check_post(path, data):
-    if path == "/missione6/inviaData":
+    if path == "/missione6/cm/complete":
         try:
             variabile = data
-            aggiungiValore(variabile)
+            msg = aggiungiValore(variabile)
+            print(msg)
             val = 1
             return val.encode("utf-8")
         except Exception:
@@ -177,7 +179,23 @@ def check_post(path, data):
         
 def aggiungiValore(valore):
     queryLib.connetti()
-    a = queryLib.execute(f'''INSERT INTO "utenti"() VALUES ('{valore}')''')
+    msg = {}
+    mid = 6
+
+    query = f"""
+            UPDATE progressi
+            SET 
+                p_comp = 100
+            WHERE   
+                progressi.id_missione = {mid}
+            """
+    try:
+        queryLib.execute(query)
+        msg["success"] = "Salvataggio avvenuto correttamente"
+    except ValueError as e:
+        msg["error"] = "Errore nel salvataggio dei dati"
+    
     queryLib.disconnetti()
+    return json.dumps(msg).encode("utf-8")
 
 
