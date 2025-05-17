@@ -111,7 +111,9 @@
                 "damage_fis_perc": 5,
                 "vulnerabile_mag": true,
                 "durata": 1,
-                "description": "Il Re fende la sua spada e ti colpisce la tua anima attraverso il tuo corpo"
+                "description": "Il Re fende la sua spada e ti colpisce la tua anima attraverso il tuo corpo",
+                "audio": "ulti_sound.mp3",
+                "volume": 1
             },
             {
                 "move_name":"Aura immortale",
@@ -121,24 +123,30 @@
                 "damage_type": "magico",
                 "vulnerabile_fis": true,
                 "durata": 2,
-                "description": "Il Re evoca un aura intorno a sè con migliaia di spiriti che vagano incessatamente intorno"
+                "description": "Il Re evoca un aura intorno a sè con migliaia di spiriti che vagano incessatamente intorno",
+                "audio": "magical_sound.mp3",
+                "volume": 1
             },
             {
                 "move_name":"Corona Indistruttibile",
                 "move_type": "buff",
-                "chance": 19,
+                "chance": 15,
                 "bonus_attack": 50,
                 "bonus_defense": 50,
                 "damage_type": "both",
                 "durata": 3,
-                "description": "Il Re si infervora e la sua corona brilla alla sua furia aumentando attacco e difesa"
+                "description": "Il Re si infervora e la sua corona brilla alla sua furia aumentando attacco e difesa",
+                "audio":"folgorazione.mp3",
+                "volume": 0.2
             },
             {
                 "move_name":"Dominio",
                 "move_type": "Unique",
-                "chance": 1,
+                "chance": 5,
                 "durata": 5,
-                "description": "Il Re inizia a cambiare la trama dello spazio-tempo portandoti nel suo Dominio Spirituale"
+                "description": "Il Re inizia a cambiare la trama dello spazio-tempo portandoti nel suo Dominio Spirituale",
+                "audio": "dominio.ogg",
+                "volume": 0.3
             }
         ]
     }
