@@ -42,7 +42,6 @@ const esempio = {
 };
 
 updateMission(esempio);
-v
 function Sconfitta(){
     window.location.href="/missione6/pagina_sconfitta";
 }
