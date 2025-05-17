@@ -3,5 +3,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch("http://localhost:8080/mariuzzo/classi");
     const data = await response.json();
     const classi = data["classi"];
-    document.getElementById("classi").innerHTML = classi.map((classe, index) => `<h1>${index + 1}) ${classe}</h1>`).join("");
+    document.getElementById("classi").innerHTML = classi.map((classe, index) => `<h1>${index + 1}) ${classe.nome}</h1><p>Vigore: ${classe.vigore}</p><p>Forza: ${classe.forza}</p>`).join("");
 });

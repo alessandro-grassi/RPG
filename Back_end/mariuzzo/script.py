@@ -19,8 +19,12 @@ def check_get(path):
         classiDB = ql.execute("SELECT * FROM classi")
         # Inserisco nella lista solo il nome della classe
         for classe in classiDB:
-            nomeClasse = classe[0]
-            classi.append(nomeClasse)
+            classeObj = {
+                "nome": classe[0],
+                "vigore": classe[1],
+                "forza": classe[2]
+            }
+            classi.append(classeObj)
         ql.disconnetti()
         # Invio al client una stringa json contenente un attributo classi con l'array dei nomi delle classi
         return json.dumps({"classi": classi}).encode("utf-8")
