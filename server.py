@@ -7,6 +7,7 @@ import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
 import Back_end.missione1.script as missione1
+import Back_end.demo_db as demo
 #gita a monaco: 7/10
 dict = { 
     "/login": login,
@@ -17,7 +18,8 @@ dict = {
     "/missione3":missione3,
     "/sm_" : sm,
     "/missione1": missione1,
-    "/missione4a": missione4a
+    "/missione4a": missione4a,
+    "/demo": demo
 }
     
 
