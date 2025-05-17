@@ -29,21 +29,15 @@ dict = {
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        path = urlparse(self.path).path
-        resp = check_get(path)
-
         self.send_response(200)
-
-        # Cerca di capire se è JSON o no
-        try:
-            json.loads(resp.decode("utf-8"))
-            self.send_header("Content-type", "application/json")
-        except:
-            self.send_header("Content-type", "text/html")
-
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
+        path = self.path
+        path = urlparse(path).path
+        resp = check_get(path)
+
         self.wfile.write(resp)
+        return
 
 
     def do_POST(self):
