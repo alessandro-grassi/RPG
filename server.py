@@ -1,11 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from Back_end import jslib
+from Back_end import jslib, esercitazione
 import json
 from urllib.parse import urlparse
 from Back_end import complete_mission as cm
+from Back_end import queryLib
 dict = { # dizionario per prendere i suffissi dei moduli da aggiungere
     "/cm" : cm,
-    "/jslib": jslib
+    "/jslib": jslib, 
+    "/es": esercitazione
 }
 
 
@@ -75,4 +77,6 @@ def check_post(path, client_choice):
 
 
 if __name__ == "__main__":
+    queryLib.connetti()
     run_server()
+    queryLib.disconnetti()
