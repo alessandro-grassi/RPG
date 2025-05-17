@@ -198,4 +198,3 @@ def aggiungiValore(valore):
     queryLib.disconnetti()
     return json.dumps(msg).encode("utf-8")
 
-
