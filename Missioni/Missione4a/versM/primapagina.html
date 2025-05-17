@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto!</title>
+    <link rel="stylesheet" href="http://localhost:8080/missione4/stile">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titoloMissioneH">Missione 4</h1>
+        <h2 id="tentativiH">Tentativi per indovinare: </h2>
+    </div>
+
+    <div id="obiettivoDiv">
+        <h2>Obbiettivo</h2>
+        <p id="obiettivoP"></p>
+        <p id="ricompensaP"></p>
+    </div>
+
+    <div id="indiziDiv">
+        <h2>Indizi</h2>
+        <p id="messaggioIndizi">Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</p>
+        <ol id="ListaIndizi">
+
+        </ol>
+    </div>
+
+    <div id="pulsanti">
+        <button onclick="ReindirizzamentoPaginaIndovina()">Indovina Soluzione</button>
+        <button onclick="ReindirizzamentoPaginaGioco()">Gioca</button>
+    </div>
+
+
+    <script>
+        //onload degli indizi
+        function getDettagliGenerali() 
+        {
+            fetch('http://localhost:8080/missione4/dettagliGenerali', 
+            { method: 'GET' })  
+                .then(response => response.json())
+                .then(data => {
+                    //estraggo i dettagli dal JSON restituito
+                    var obiettivo = data[0];
+                    var ricompensa = data[1];
+                    var tentativiIndovina = data[2];
+                    var tentativiIndovinaFatti = data[3];
+                    var indiziOttenuti = data[4]; //lista degli indizi
+                    var maxIndizi = data[5];
+
+                    //obiettivo
+                    var obiettivoP = document.getElementById("obiettivoP");
+                    obiettivoP.innerText = obiettivo;
+
+                    //ricompensa
+                    var ricompensaP = document.getElementById("ricompensaP");
+                    ricompensaP.innerText = ricompensa;
+
+                    //tentativi per indovinare
+                    var tentativiH = document.getElementById("tentativiH");
+                    tentativiH.innerText = "Tentativi per indovinare: " + str(int(tentativiIndovina) - int(tentativiIndovinaFatti));
+
+                    //indizi
+                    if(indiziOttenuti.length >= maxIndizi)
+                    {
+                        //reindirizzamento a pagina indovina
+                        ReindirizzamentoPaginaIndovina();
+                    }
+                    else if(indiziOttenuti.length > 0)
+                    {
+                        var mesIndizi = document.getElementById("messaggioIndizi");
+                        mesIndizi.hidden = True;
+                    
+                        var listaIndizi = document.getElementById("listaIndizi");
+                        indiziOttenuti.forEach(indizio => {
+                            var indizioElement = document.createElement("li");
+                            indizioElement.innerText = indizio;
+                            listaIndizi.appendChild(indizioElement);
+                        });
+
+                    }
+                    
+                    if((indiziOttenuti.length >= 0)&&(indiziOttenuti.length < maxIndizi))
+                    {
+                        //ricavo la prova da giocare e la inserisco nel localStorage per facilitare la GET successivamente
+                        numeroProva = maxIndizi - indiziOttenuti.length;
+                        localStorage.setItem("numeroProva", numeroProva);
+                    }
+
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+
+        function ReindirizzamentoPaginaGioco()
+        {
+            fetch('http://localhost:8080/missione4/gioca', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+
+        function ReindirizzamentoPaginaIndovina()
+        {
+            fetch('http://localhost:8080/missione4/indovina', 
+            { method: 'GET' })  
+            .then(response => response.json())
+                .then(data => {})
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        //carica gli indizi all'avvio della pagina
+        window.onload = getDettagliGenerali();
+    </script>
+</body>
+</html>
