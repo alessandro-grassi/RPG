@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classi RPG</title>
+</head>
+<body>
+    <h1>Classi RPG</h1>
+    
+    <!-- Tabella per visualizzare le classi -->
+    <h2>Lista delle Classi</h2>
+    <table id="classi-table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Vigore</th>
+                <th>Forza</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- I dati verranno inseriti dinamicamente tramite JS -->
+        </tbody>
+    </table>
+
+    <!-- Sezione per selezionare una classe e visualizzare le statistiche -->
+    <h2>Seleziona una Classe</h2>
+    <select id="classe-select">
+        <option value="default">Seleziona una classe</option>
+    </select>
+    <button id="load-statistics">Carica Statistiche</button>
+
+    <h3>Statistiche della Classe Selezionata</h3>
+    <div id="statistics">
+        <p>Vigore: <span id="vigore"></span></p>
+        <p>Forza: <span id="forza"></span></p>
+        <p>Destrezza: <span id="destrezza"></span></p>
+        <p>Intelligenza: <span id="intelligenza"></span></p>
+        <p>Fede: <span id="fede"></span></p>
+    </div>
+
+    <script>
+        // Funzione per recuperare le classi dal backend
+        async function recuperaClassi() {
+            try {
+                const response = await fetch('http://localhost:8080/personaggio/classi'); 
+                const classi = await response.json();
+                
+                // Aggiorna la tabella delle classi
+                const tableBody = document.getElementById('classi-table').getElementsByTagName('tbody')[0];
+                const selectElement = document.getElementById('classe-select');
+
+                classi.forEach(classe => {
+                    // Aggiungi riga alla tabella
+                    const row = tableBody.insertRow();
+                    row.insertCell(0).textContent = classe.ID;
+                    row.insertCell(1).textContent = classe.Vigore;
+                    row.insertCell(2).textContent = classe.Forza;
+                    
+                    // Aggiungi opzione alla lista a discesa
+                    const option = document.createElement("option");
+                    option.value = classe.ID;
+                    option.textContent = `Classe ${classe.ID} (Vigore: ${classe.Vigore}, Forza: ${classe.Forza})`;
+                    selectElement.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Errore durante il recupero delle classi:', error);
+            }
+        }
+
+        // Funzione per caricare le statistiche della classe selezionata
+        async function caricaStatistiche() {
+            const classeSelezionata = document.getElementById("classe-select").value;
+            
+            if (classeSelezionata === "default") {
+                alert("Seleziona una classe!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8080/personaggio/statistiche?classe=${classeSelezionata}`); 
+                const stats = await response.json();
+                
+                // Mostra le statistiche nella pagina
+                document.getElementById("vigore").textContent = stats[0];
+                document.getElementById("forza").textContent = stats[1];
+                document.getElementById("destrezza").textContent = stats[2];
+                document.getElementById("intelligenza").textContent = stats[3];
+                document.getElementById("fede").textContent = stats[4];
+            } catch (error) {
+                console.error('Errore durante il recupero delle statistiche:', error);
+            }
+        }
+
+        // Inizializza la pagina
+        window.onload = () => {
+            recuperaClassi(); // Carica le classi quando la pagina viene caricata
+            document.getElementById("load-statistics").addEventListener("click", caricaStatistiche); 
+        };
+    </script>
+</body>
+</html>
