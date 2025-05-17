@@ -40,16 +40,18 @@ function formatDialog(dialogLines)
         }
         if(line.choice == "end") // caso in cui si arriva alla fine della missione
         {
-            if(line.image == null) // nel caso non ci siano immagini da cambiare
+            if(line.image == null && line.choice == null) // nel caso non ci siano immagini da cambiare
                 finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
             updateImage(line.image); // fa un update delle immagini
             endChoice(); // aggiunge bottone di restart missione
             endMission(); // tasto per uscire dalla missione
             removeNext(true); // rimuove tasto next
+            endMissionDb();
+            console.log(get_utente());
         }
         else
         {
-            if(line.image == null) // nel caso non ci siano immagini da cambiare
+            if(line.image == null && line.choice == null) // nel caso non ci siano immagini da cambiare
                 finalDialog += line + "\n"; // aggiunge le linee di testo al dialogo finale
             updateImage(line.image); // fa un update delle immagini
         }
@@ -135,7 +137,7 @@ function moveToFight()
         i ++; // incrementa i per andare al prossimo blocco di dialogo
     }
 }
-//
+
 // funzione che permette di modificare l'index dei dialoghi
 function movelines(step)
 {
@@ -206,4 +208,14 @@ function updateImage(current_image)
         fetchFromServer("dialog-index").then((image)=>{ // in caso non ci siano immagini da impostare prende l'ultima salvata
             document.getElementById("background-image").setAttribute("src","http://localhost:8080/m5/get-image/" + image.last_image); // carica ultima immagine salvata su progress.json
         });
+}
+
+// funzione che invia al server il messaggio di completamento missione
+function endMissionDb()
+{
+    fetch("http://localhost:8080/cm/complete",{
+        method: "POST",
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({"uid":get_personaggio(),"mid":5})
+    });
 }
