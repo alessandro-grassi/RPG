@@ -165,36 +165,4 @@ def check_get(path):
         return image_data  # Restituisci direttamente i dati binari
     return '"Path not found"'.encode("utf-8")
 
-def check_post(path, data):
-    if path == "/missione6/cm/complete":
-        try:
-            variabile = data
-            msg = aggiungiValore(variabile)
-            print(msg)
-            val = 1
-            return val.encode("utf-8")
-        except Exception:
-            val = 0
-            return val.encode("utf-8")
-        
-def aggiungiValore(valore):
-    queryLib.connetti()
-    msg = {}
-    mid = 6
-
-    query = f"""
-            UPDATE progressi
-            SET 
-                p_comp = 100
-            WHERE   
-                progressi.id_missione = {mid}
-            """
-    try:
-        queryLib.execute(query)
-        msg["success"] = "Salvataggio avvenuto correttamente"
-    except ValueError as e:
-        msg["error"] = "Errore nel salvataggio dei dati"
-    
-    queryLib.disconnetti()
-    return json.dumps(msg).encode("utf-8")
 
