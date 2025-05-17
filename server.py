@@ -3,6 +3,7 @@ from Back_end import login, jslib, personaggio
 from Back_end import complete_mission as cm
 from Back_end import modulo_missione5
 from Back_end import missione3, missione4a
+from Back_end import greco
 import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
@@ -17,7 +18,8 @@ dict = {
     "/missione3":missione3,
     "/sm_" : sm,
     "/missione1": missione1,
-    "/missione4a": missione4a
+    "/missione4a": missione4a,
+    "/greco": greco
 }
     
 
@@ -87,7 +89,7 @@ def check_get(path):
         f.close()
         return r
     elif path=="/":
-        return "<script>window.location='http://localhost:8080/login'</script>".encode("utf-8")
+        return "<script>window.location='http://localhost:8080/index'</script>".encode("utf-8")
     return "Modulo non trovato".encode("utf-8")
 
 
