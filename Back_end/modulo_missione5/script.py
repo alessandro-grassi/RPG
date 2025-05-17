@@ -29,6 +29,13 @@ def check_get(path:str):
             f.close()
             return r.encode("utf-8") # encode 
         
+    elif path == PREFIX+"data":
+        queryLib.connetti()
+        data = queryLib.execute('SELECT * FROM abilita')
+        queryLib.disconnetti()
+        json_data = json.dumps(data, indent=4)
+        return json_data.encode("utf-8")
+        
     elif path == PREFIX+"mission-scena-2":
         with open("Missioni/Missione5/html_pages/scena_2.html", "r") as f:
             r = f.read()
@@ -83,6 +90,12 @@ def check_get(path:str):
     # prende javascript missione
     elif path == PREFIX + "script":
         with open("Missioni/Missione5/missione.js") as f:
+            r = f.read()
+            f.close()
+            return r.encode("utf-8")
+        
+    elif path == PREFIX + "script-grassi":
+        with open("Missioni/grassi/script.js") as f:
             r = f.read()
             f.close()
             return r.encode("utf-8")
