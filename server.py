@@ -3,6 +3,7 @@ from Back_end import login, jslib, personaggio
 from Back_end import complete_mission as cm
 from Back_end import modulo_missione5
 from Back_end import missione3, missione4a
+from Back_end import quaranta
 import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
@@ -17,7 +18,8 @@ dict = {
     "/missione3":missione3,
     "/sm_" : sm,
     "/missione1": missione1,
-    "/missione4a": missione4a
+    "/missione4a": missione4a,
+    "/quaranta": quaranta
 }
     
 
@@ -27,15 +29,21 @@ dict = {
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.send_response(200)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.end_headers()
-        path = self.path
-        path = urlparse(path).path
+        path = urlparse(self.path).path
         resp = check_get(path)
 
+        self.send_response(200)
+
+        # Cerca di capire se è JSON o no
+        try:
+            json.loads(resp.decode("utf-8"))
+            self.send_header("Content-type", "application/json")
+        except:
+            self.send_header("Content-type", "text/html")
+
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
         self.wfile.write(resp)
-        return
 
 
     def do_POST(self):
