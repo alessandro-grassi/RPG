@@ -8,7 +8,7 @@ print(sys.path)
 
 # Dizionario che mappa i prefissi delle richieste HTTP ai moduli
 dict = { 
-    "/": check_get
+    "/missione6": check_get
 }
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):

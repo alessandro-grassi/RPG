@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", function(){ //esegue il codice sol
     caricaMissione();
 });
 function Sconfitta(){
-    window.location.href="/pagina_sconfitta"; 
+    window.location.href="/missione6/pagina_sconfitta"; 
 }
 function MissioneSuccessiva(){
-    window.location.href="/missione2";
+    window.location.href="/missione6/quiz2";
 }
 
 function invia(){

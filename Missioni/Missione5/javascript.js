@@ -44,10 +44,10 @@ const esempio = {
 updateMission(esempio);
 v
 function Sconfitta(){
-    window.location.href="/pagina_sconfitta";
+    window.location.href="/missione6/pagina_sconfitta";
 }
 function MissioneSuccessiva(){
-    window.location.href="/missione_memory";
+    window.location.href="/missione6/memory";
 }
 function invia() {
     const risposta = document.querySelector('input[name="answer"]:checked');

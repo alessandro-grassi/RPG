@@ -12,14 +12,14 @@ let match = 0;
 let inizioGioco = true;
 
 const images = [
-    '/drago1',
-    '/drago2',
-    '/drago3',
-    '/drago4',
-    '/drago5',
-    '/drago6',
-    '/drago7',
-    '/drago8'
+    '/missione6/drago1',
+    '/missione6/drago2',
+    '/missione6/drago3',
+    '/missione6/drago4',
+    '/missione6/drago5',
+    '/missione6/drago6',
+    '/missione6/drago7',
+    '/missione6/drago8'
 ];
 
 const generaCarte = () => {
@@ -105,7 +105,7 @@ const CreaTimer = () => {
         timer++;
         tempo.textContent = timer;
         if(timer==60){
-            window.location.href="/pagina_sconfitta";//bisogna mettere l'indirizzo corretto
+            window.location.href="/missione6/pagina_sconfitta";//bisogna mettere l'indirizzo corretto
         }
     }, 1000);
 };
@@ -114,7 +114,7 @@ const checkVittoria = () => {
     if (match === carte.length) {
         clearInterval(interval);
         alert('Missione superata');
-        window.location.href="/pagina_boss_finale";// dovrebbe essere il collegamento con il boss finale però bisognerà vedere 
+        window.location.href="/missione6/pagina_boss_finale";// dovrebbe essere il collegamento con il boss finale però bisognerà vedere 
     }
 };
 
