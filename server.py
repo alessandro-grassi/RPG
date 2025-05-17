@@ -61,7 +61,7 @@ def check_get(path):
     for suffisso, modulo in dict.items():
         if path.startswith(suffisso):
             return modulo.check_get(path)
-    return "Modulo non trovato"
+    return "Modulo non trovato".encode("utf-8")
 
 
 def check_post(path, client_choice):
