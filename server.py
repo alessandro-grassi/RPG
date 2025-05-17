@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from Back_end import login, jslib, personaggio
 from Back_end import complete_mission as cm
 from Back_end import modulo_missione5
-from Back_end import missione3, missione4a
+from Back_end import missione3, missione4a, konomi
 import json
 from urllib.parse import urlparse
 from Back_end import select_mis as sm
@@ -17,7 +17,8 @@ dict = {
     "/missione3":missione3,
     "/sm_" : sm,
     "/missione1": missione1,
-    "/missione4a": missione4a
+    "/missione4a": missione4a,
+    "/konomi": konomi
 }
     
 
