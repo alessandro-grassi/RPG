@@ -59,10 +59,10 @@
 
         function inviaVittoria(){
             let valore = 100;
-            fetch("http://localhost:8080/missione6/inviaData", {
+            fetch("http://localhost:8080/cm/complete", {
                 method: "POST",
                 headers: {"Content-Type" : "application/json"},
-                body: JSON.stringify({valore})
+                body: JSON.stringify({uid: get_personaggio(), mid:6})
             })
             .then((response) => {
                 if(!response.ok) {
