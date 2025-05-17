@@ -31,9 +31,12 @@ def check_get(path):
         characterFromDB = ql.execute(f"SELECT * FROM personaggi p WHERE p.id = {characterId}")[0]
         print(characterFromDB)
         character = {
-            "name": characterFromDB[1],
+            "name": "characterFromDB[1]",
         }
         return json.dumps(character).encode("utf-8")
+    elif path.endswith("utente"):
+        print("Ciao")
+
 
 def check_post(path, client_choice):
     if path.endswith("post"):
