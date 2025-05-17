@@ -17,6 +17,7 @@ def check_get(path):
         classi = []
         # Effettuo una query al database
         classiDB = ql.execute("SELECT * FROM classi")
+        print(classiDB)
         # Inserisco nella lista solo il nome della classe
         for classe in classiDB:
             classeObj = {
