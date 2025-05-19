@@ -2,12 +2,26 @@ const timerDisplay = document.getElementById("timer");
 const gameContainer = document.getElementById("game-container");
 const restartButton = document.getElementById("restart-button");
 const backButton = document.getElementById("back-button");
-const audio = new Audio('http://localhost:8080/missione1/grassSound.mp3'); // URL dell'audio
 
-//const character = get_personaggio();
+// Creiamo un oggetto Audio per la musica di sottofondo
+const backgroundMusic = new Audio("http://localhost:8080/missione1/music.mp3");
+backgroundMusic.currentTime = 3;
+backgroundMusic.loop = true; // Ripetizione automatica
 
+let musicStarted = false; // Variabile di controllo
+
+// Avvia la musica dopo un'interazione dell'utente (per politiche di autoplay)
+function startBackgroundMusic() {
+  if (!musicStarted) {
+    backgroundMusic.play().catch((error) => {
+      console.error("Errore durante la riproduzione della musica:", error);
+    });
+    musicStarted = true;
+  }
+}
+
+const audio = new Audio("http://localhost:8080/missione1/grassSound.mp3"); // URL dell'audio
 let clicks = 0;
-
 const clickCounter = document.getElementById("click-counter");
 
 // Avvia il gioco
@@ -16,6 +30,7 @@ function startGame() {
   moveGrass(); // Sposta l'erba inizialmente
   setInterval(moveGrass, 2000);
   startTimer(); // Avvia il timer
+  startBackgroundMusic();
 }
 
 // Inizia la missione
@@ -27,7 +42,6 @@ function startMission() {
   ).map((checkbox) => checkbox.value);
 
   // Simulazione dei dati ricevuti dal server
-
   const data = {
     tempo:
       playerClass === "assassino" ? 50 : playerClass === "clerico" ? 70 : 60,
@@ -47,7 +61,7 @@ function startMission() {
 }
 
 let timeLeft = 60; // Tempo iniziale
-let clicksRequired = 10; // Click richiesti
+let clicksRequired = 10;
 let timerInterval = null;
 
 const grass = document.getElementById("grass");
@@ -72,6 +86,9 @@ function startTimer() {
     timeLeft--;
     timerDisplay.textContent = `Tempo rimasto: ${timeLeft}s`;
 
+    if (timeLeft < 20) {
+      switchMusic();
+    }
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       endGame();
@@ -79,15 +96,29 @@ function startTimer() {
   }, 1000);
 }
 
+//da finire e mettere apposto
+function switchMusic() {
+  let finalMusic = new Audio("http://localhost:8080/missione1/final.mp3");
+  // Ferma la musica corrente
+  backgroundMusic.pause();
+  backgroundMusic.currentTime = 2; // Resetta al secondo 2
+
+  // Avvia la nuova musica
+  finalMusic.loop = true;
+  finalMusic.play().catch((error) => {
+    console.error("Errore durante la riproduzione della nuova musica:", error);
+  });
+}
+
 // Conteggio click
 grass.addEventListener("click", () => {
   clicks++; // Incrementa il numero di click
   clickCounter.textContent = `Click effettuati: ${clicks}`; // Aggiorna il testo dell'elemento
-  
-  audio.play().catch(error => {
-                console.error("Errore durante la riproduzione dell'audio:", error);
-            });
 
+  audio.currentTime = 0; // Riavvia l'audio se già in riproduzione
+  audio.play().catch((error) => {
+    console.error("Errore durante la riproduzione dell'audio:", error);
+  });
 
   moveGrass(); // Sposta l'erba
 
