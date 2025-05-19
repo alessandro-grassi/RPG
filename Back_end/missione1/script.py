@@ -46,6 +46,7 @@ def check_get(path):
         r= f.read()
         f.close()
         return r
+    
 
 def check_post(path, client_choice):
     if path.endswith("post_generica"):
