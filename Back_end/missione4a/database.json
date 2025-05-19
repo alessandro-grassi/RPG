@@ -33,11 +33,11 @@
     "successo"
   ],
   "stato_gioco": {
-    "tentativi_rimasti": 5,
+    "tentativi_rimasti": 4,
     "tentativi_nella_partita_corrente": 0,
     "indizi_sbloccati": [],
-    "parola_corrente": "robot",
-    "parola_finale": "tesoro"
+    "parola_corrente": "fiore",
+    "parola_finale": "mistero"
   },
   "tutti_indizi": {
     "enigma": [
