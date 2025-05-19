@@ -1,4 +1,6 @@
 const timerDisplay = document.getElementById("timer");
+defaultColor = timerDisplay.style.color;
+defaultSize = timerDisplay.style.fontSize;
 const gameContainer = document.getElementById("game-container");
 const restartButton = document.getElementById("restart-button");
 const backButton = document.getElementById("back-button");
@@ -9,10 +11,12 @@ const resultDisplay = document.getElementById("result");
 const clickCounter = document.getElementById("click-counter");
 
 const finalMusic = new Audio("http://localhost:8080/missione1/final.mp3");
+const victory = new Audio("http://localhost:8080/missione1/victory.mp3");
+const gameOver = new Audio("http://localhost:8080/missione1/gameOver.mp3");
 
 // Audio
 const backgroundMusic = new Audio("http://localhost:8080/missione1/music.mp3");
-backgroundMusic.currentTime = 3;
+backgroundMusic.currentTime = 2;
 backgroundMusic.loop = true;
 
 let musicStarted = false;
@@ -101,6 +105,8 @@ function startTimer() {
       clearInterval(timerInterval);
       endGame();
     } else if (timeLeft < 20) {
+      timerDisplay.style.color = "red";
+      timerDisplay.style.fontSize = "20px";
       switchMusic();
     }
   }, 1000);
@@ -141,15 +147,43 @@ grass.addEventListener("click", () => {
 // Fine partita
 function endGame() {
   clearInterval(timerInterval);
+
   grass.style.display = "none"; // Nasconde l'erba
   resultDisplay.textContent =
     clicks >= clicksRequired ? "Missione Completata!" : "Missione Fallita!";
   resultDisplay.style.display = "block";
 
   if (clicks < clicksRequired) {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 2; // Resetta al secondo 2
+    finalMusic.pause();
+    finalMusic.currentTime = 0; // Resetta al secondo 2
+
+    // Avvia la nuova musica
+    gameOver.play().catch((error) => {
+      console.error(
+        "Errore durante la riproduzione della nuova musica:",
+        error
+      );
+    });
+
     restartButton.style.display = "block";
     backButton.style.display = "block";
   } else {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 2; // Resetta al secondo 2
+    finalMusic.pause();
+    finalMusic.currentTime = 0; // Resetta al secondo 2
+
+    // Avvia la nuova musica
+    victory.loop = true;
+    victory.play().catch((error) => {
+      console.error(
+        "Errore durante la riproduzione della nuova musica:",
+        error
+      );
+    });
+
     backButton.style.display = "block";
   }
 }
@@ -162,6 +196,9 @@ function restartGame() {
   clicksRequired = 10;
 
   // Reset UI
+  musicStarted = false;
+  timerDisplay.style.color = defaultColor;
+  timerDisplay.style.fontSize = defaultSize;
   resultDisplay.style.display = "none";
   restartButton.style.display = "none";
   backButton.style.display = "none";
