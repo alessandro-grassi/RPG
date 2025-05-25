@@ -1,13 +1,19 @@
-document.addEventListener("DOMContentLoaded",()=>{ // caricare il testo
-    fetchFromServer("get-dialog").then(data=>{ // fetch dei dialoghi dal server
-        dialogLines = data;// assegna le linee di dialogo alla variabile globale});
-     });
-    fetchFromServer("dialog-index").then(index=>{
-        document.getElementById("dialog-box").textContent = formatDialog(dialogLines[index.current_index]); // imposta index corrente
-        client_index = index.current_index; // salva index su index globale
-    });
-    setButton();
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        dialogLines = await fetchFromServer("get-dialog"); // wait for dialogLines first
+        const index = await fetchFromServer("dialog-index"); // then get index
+        if (!dialogLines[index.current_index]) {
+            throw new Error("dialogLines at current_index is undefined");
+        }
+        document.getElementById("dialog-box").textContent = formatDialog(dialogLines[index.current_index]);
+        client_index = index.current_index;
+        setButton();
+    } catch (err) {
+        console.error("Failed to load dialog:", err);
+        alert("Errore nel caricamento del dialogo. Ricarica la pagina.");
+    }
 });
+
 let dialogLines; // variabile globale per lo store delle linee di dialogo da scorrere
 let imageMapping; // variabile usata per salvare la mappatura delle immagini
 let client_index; // variabile globale per lo store lato client dell'index a cui si trova il dialogo e le immagini
@@ -190,7 +196,7 @@ function fetchFromServer(request)
         return data; // return data
     })
     .catch((err) => {
-        console.error('request erro: ',err); //log errore a console
+        console.error('request error: ',err); //log errore a console
         throw err;
     })
 }

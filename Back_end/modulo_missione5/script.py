@@ -4,7 +4,7 @@ import json
 #non funziona
 import Back_end.modulo_missione5.combactSystem as combactSystem
 
-#queryLib.connetti()
+queryLib.connetti()
 #queryLib.connetti()
 
 PREFIX = "/m5/" 
@@ -92,20 +92,21 @@ def check_get(path:str):
             r = f.read()
             f.close()
             return r.encode("utf-8")
-    
-    # prende le linee di testo da far scorrere per i dialoghi
+        # prende le linee di testo da far scorrere per i dialoghi
     elif path == PREFIX + "get-dialog":
         with open("Missioni/Missione5/assets/dialogs.json", "rb") as f:
             r = f.read()
             f.close()
             return r # encode per restituire i contenuti del file json come stringa da convertire in json dopo
-    
+
     # prende index dialoghi per dialogo corrente
     elif path == PREFIX + "dialog-index":
-        with open("Missioni/Missione5/assets/progress.json") as f:
-            r = f.read()
-            f.close()
-            return r.encode("utf-8")
+        out = combactSystem.get_dialog_index("provaM5")
+        print("index data:"+str(out["current_index"])) # print per debug
+        out = json.dumps(out, indent=4) # converte in formato json
+        return out.encode("utf-8")
+    
+
      
     #funzione usata per recuperare le immagini in base al nome richiesto
     elif path.startswith(PREFIX+"get-image/"):

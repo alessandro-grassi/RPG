@@ -503,4 +503,3 @@ if __name__ == "__main__":
     set_seed(123)
     print(random.random())
     print(rand(0,3))
-
