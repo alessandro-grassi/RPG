@@ -1,0 +1,5 @@
+# Attributi personaggio
+
+- vita 
+- mana
+

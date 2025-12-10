@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto!</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titolo-missione">missione 4</h1>
+    </div>
+
+    <div id="obbiettivo">
+        <h2>Obbiettivo</h2>
+        <p>Risolvi i Wordle per ottenere indizi e scoprire la parola finale!</p>
+        <p>Ricompensa: Una sorpresa speciale!</p>
+    </div>
+
+    <div id="indizi">
+        <h2>Indizi</h2>
+        <p id="lista-indizi">Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</p>
+    </div>
+
+    <div id="pulsanti">
+        <button onclick="location.href='indovina_soluzione.html'">Indovina Soluzione</button>
+        <button onclick="location.href='wordle.html'">Gioca</button>
+    </div>
+
+    <!--parte di script per gli indizi-->
+    <script>
+        //windowonload degli indizi
+        function caricaIndizi() {
+            fetch('http://localhost:8080/api/indizi', { method: 'GET' })  //nome api di esempio
+                .then(response => response.json())
+                .then(data => {
+                    //quindi qua bisogna fare la get della lista degli indizi da mettere dentro
+                    //<p> id="lista-indizi"></p>
+                })
+                .catch(error => console.error("Si è verificato un errore:", error));
+        }
+
+        //carica gli indizi all'avvio della pagina
+        window.onload = caricaIndizi;
+    </script>
+</body>
+</html>

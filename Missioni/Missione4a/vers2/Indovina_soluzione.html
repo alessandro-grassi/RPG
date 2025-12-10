@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indovina la soluzione</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titolo-missione">missione 4</h1>
+    </div>
+
+    <div id="indizi">
+        <h2>Indizi Raccolti</h2>
+        <ul id="lista-indizi">
+            <li>Nessun indizio disponibile.</li>
+        </ul>
+    </div>
+
+    <div id="soluzione">
+        <h2>Indovina la Soluzione</h2>
+        <p id="messaggio-soluzione"></p>
+        <input type="text" id="parola-finale" placeholder="Inserisci la soluzione">
+        <div id="pulsanti">
+            <button id="indovina">Indovina</button>
+            <button onclick="location.href='prima_pagina.html'">Indietro</button>
+        </div>
+    </div>
+
+    <script>
+        // Carica gli indizi all'avvio della pagina
+        function caricaIndizi() {
+            fetch('http://localhost:8080/api/indizi', { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    const listaIndizi = document.getElementById('lista-indizi');
+                    
+                    if (data.indizi && data.indizi.length > 0) {
+                        // Svuota la lista
+                        listaIndizi.innerHTML = '';
+                        
+                        // Aggiungi ogni indizio
+                        data.indizi.forEach(indizio => {
+                            const elemento = document.createElement('li');
+                            elemento.textContent = indizio;
+                            listaIndizi.appendChild(elemento);
+                        });
+                    } else {
+                        // Nessun indizio disponibile
+                        listaIndizi.innerHTML = '<li>Nessun indizio disponibile. Gioca al Wordle per ottenerne!</li>';
+                    }
+                })
+                .catch(error => {
+                    console.error("Si è verificato un errore:", error);
+                    document.getElementById('lista-indizi').innerHTML = '<li>Errore nel caricamento degli indizi. Riprova più tardi.</li>';
+                });
+        }
+
+        // Quando indovini la soluzione
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('indovina').addEventListener('click', function() {
+                const soluzione = document.getElementById('parola-finale').value;
+                const messaggioSoluzione = document.getElementById('messaggio-soluzione');
+                
+                if (soluzione.trim() === '') {
+                    messaggioSoluzione.textContent = 'Inserisci una parola!';
+                    messaggioSoluzione.style.color = 'red';
+                    return;
+                }
+
+                fetch('http://localhost:8080/api/verifica-soluzione', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ soluzione: soluzione })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    messaggioSoluzione.textContent = data.messaggio;
+                    
+                    if (data.esito === 'successo') {
+                        messaggioSoluzione.style.color = 'green';
+                        // Mostra un'animazione o un messaggio di vittoria
+                        celebraVittoria();
+                    } else {
+                        messaggioSoluzione.style.color = 'red';
+                    }
+                })
+                .catch(error => {
+                    console.error("Si è verificato un errore:", error);
+                    messaggioSoluzione.textContent = 'Errore di comunicazione con il server';
+                    messaggioSoluzione.style.color = 'red';
+                });
+            });
+        });
+        
+        // Animazione di vittoria
+        function celebraVittoria() {
+            // Crea elementi per l'animazione
+            const confetti = document.createElement('div');
+            confetti.id = 'confetti-container';
+            document.body.appendChild(confetti);
+            
+            // Aggiungi stile CSS per i confetti
+            const style = document.createElement('style');
+            style.textContent = `
+                #confetti-container {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 9999;
+                }
+                .confetti {
+                    position: absolute;
+                    width: 10px;
+                    height: 10px;
+                    background-color: #f00;
+                    animation: fall 5s ease-in-out forwards;
+                }
+                @keyframes fall {
+                    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Crea i confetti
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti';
+                    piece.style.left = Math.random() * 100 + 'vw';
+                    piece.style.backgroundColor = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'][Math.floor(Math.random() * 6)];
+                    piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.appendChild(piece);
+                    
+                    // Rimuovi il confetto dopo l'animazione
+                    setTimeout(() => {
+                        piece.remove();
+                    }, 5000);
+                }, Math.random() * 1000);
+            }
+            
+            // Rimuovi il container dopo un po'
+            setTimeout(() => {
+                confetti.remove();
+                style.remove();
+            }, 6000);
+        }
+
+        // Carica gli indizi all'avvio della pagina
+        window.onload = caricaIndizi;
+    </script>
+</body>
+</html>

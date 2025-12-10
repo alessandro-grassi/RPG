@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto!</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+    <div id="header">
+        <h1 id="titolo-missione">missione 4</h1>
+    </div>
+
+    <div id="obbiettivo">
+        <h2>Obbiettivo</h2>
+        <p>Risolvi i Wordle per ottenere indizi e scoprire la parola finale!</p>
+        <p>Una volta raccolti abbastanza indizi, potrai indovinare la parola finale e completare la missione.</p>
+        <p>Ricompensa: Una sorpresa speciale!</p>
+    </div>
+
+    <div id="indizi">
+        <h2>Indizi</h2>
+        <ul id="lista-indizi">
+            <li>Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</li>
+        </ul>
+    </div>
+
+    <div id="pulsanti">
+        <button onclick="location.href='indovina_soluzione.html'">Indovina Soluzione</button>
+        <button onclick="location.href='wordle.html'">Gioca</button>
+    </div>
+
+    <script>
+        // Carica gli indizi all'avvio della pagina
+        function caricaIndizi() {
+            fetch('http://localhost:8080/api/indizi', { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    const listaIndizi = document.getElementById('lista-indizi');
+                    
+                    if (data.indizi && data.indizi.length > 0) {
+                        // Svuota la lista
+                        listaIndizi.innerHTML = '';
+                        
+                        // Aggiungi ogni indizio
+                        data.indizi.forEach(indizio => {
+                            const elemento = document.createElement('li');
+                            elemento.textContent = indizio;
+                            listaIndizi.appendChild(elemento);
+                        });
+                    } else {
+                        // Nessun indizio disponibile
+                        listaIndizi.innerHTML = '<li>Nessun indizio disponibile. Gioca al Wordle per ottenerne uno!</li>';
+                    }
+                })
+                .catch(error => {
+                    console.error("Si è verificato un errore:", error);
+                    document.getElementById('lista-indizi').innerHTML = '<li>Errore nel caricamento degli indizi. Riprova più tardi.</li>';
+                });
+        }
+
+        // Carica gli indizi all'avvio della pagina
+        window.onload = caricaIndizi;
+    </script>
+</body>
+</html>

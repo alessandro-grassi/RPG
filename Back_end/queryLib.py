@@ -73,9 +73,10 @@ def connetti()->None:
         raise ConnectionError(f"La connessione a Supabase è fallita. Motivo: \n\t{e}")
 
 
-user = "postgres.wzpwffetdfjgngwcpyuq"
-host = "aws-0-eu-central-1.pooler.supabase.com"
-port = 6543
+user = "postgres"
+password = "admin"  # molto importante!
+host = "localhost"
+port = 5433
 dbname = "postgres"
 connection = None
 cursor = None

@@ -1,0 +1,133 @@
+/* Reset base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0e0f11;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px;
+}
+
+.mission-container {
+    width: 100%;
+    max-width: 1200px;
+    background: #1a1c1f;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 2px solid #00bcd4;
+}
+
+header {
+    background: #00bcd4;
+    color: #000;
+    text-align: center;
+    padding: 30px;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    border-bottom: 3px solid #0097a7;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 30px;
+}
+
+.enemy-info {
+    flex: 1 1 45%;
+    background: #25282c;
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    border: 1px solid #00bcd4;
+    box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.1);
+}
+
+#description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #cfd8dc;
+}
+
+.answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.answer-options label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #e0f7fa;
+    cursor: pointer;
+}
+
+.answer-options input[type="radio"] {
+    margin-right: 12px;
+    width: 18px;
+    height: 18px;
+    accent-color: #00e5ff;
+}
+
+.scenario-display {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container {
+    width: 100%;
+    height: 400px;
+    background: #1e2a36;
+    border-radius: 12px;
+    border: 1px dashed #00bcd4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #90caf9;
+    font-style: italic;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+button {
+    background: linear-gradient(45deg, #00bcd4, #0097a7);
+    color: #fff;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    align-self: center;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.3);
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+button:active {
+    transform: scale(0.95);
+}

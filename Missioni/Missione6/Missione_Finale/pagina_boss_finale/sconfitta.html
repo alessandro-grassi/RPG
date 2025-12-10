@@ -1,0 +1,47 @@
+<html>
+<head>
+    <style>
+        body {
+            background-image: url('/missione6/sconfitta');
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            max-width: 50%;
+            height: auto;
+        }
+        .riga_bottoni {
+            display: flex;
+            gap: 20px; 
+            position: relative;
+            top: -20px;
+        }
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function PaginaMissioni(){
+            window.location.href = "/sm_home"; // inserire locazione dopo aver preso modifiche dal branch principale
+        }
+        function ReloadMissione(){
+            window.location.href = "/missione6"; // attenzione: "Missione1" deve essere scritto come da nome reale della cartella (maiuscole contano!)
+        }
+    </script>
+</head>
+<body>
+    <div class="riga_bottoni">
+        <button onclick="PaginaMissioni()"><img width="200px" src="/missione6/casa"></button>
+        <button onclick="ReloadMissione()"><img width="200px" src="/missione6/reload"></button>
+    </div>
+</body>
+</html>
+

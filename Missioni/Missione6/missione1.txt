@@ -1,0 +1,9 @@
+todo:
+
+far interagire crea personaggio con il server (e sistemare select abilità)
+login se fatta con successo setta cookie utente
+sign up da errore se utente esiste già
+feedback del sign up
+pagina scelta personaggio con relativi cookies
+test libreria cookies.js
+fixare saraFa in login (probabilmente dovuto a decoding del file)

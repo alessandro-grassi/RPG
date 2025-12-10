@@ -1,0 +1,125 @@
+{
+  "parole_wordle": [
+    "pesca",
+    "monte",
+    "luogo",
+    "tempo",
+    "libro",
+    "fiume",
+    "canto",
+    "passo",
+    "vista",
+    "fiore",
+    "gioco",
+    "piano",
+    "opera",
+    "stella",
+    "guida",
+    "robot",
+    "sogno",
+    "radio",
+    "tigre",
+    "nobel",
+    "globo",
+    "agile",
+    "lente",
+    "drago"
+  ],
+  "parole_finali": [
+    "enigma",
+    "tesoro",
+    "vittoria",
+    "mistero",
+    "successo"
+  ],
+  "stato_gioco": {
+    "tentativi_rimasti": 5,
+    "tentativi_nella_partita_corrente": 0,
+    "indizi_sbloccati": [],
+    "parola_corrente": "robot",
+    "parola_finale": "tesoro"
+  },
+  "tutti_indizi": {
+    "enigma": [
+      "Un rompicapo che sfida la mente"
+    ],
+    "tesoro": [
+      "Oggetto di grande valore",
+      "Spesso nascosto e protetto",
+      "Cercato dai cacciatori di fortuna"
+    ],
+    "vittoria": [
+      "Rappresenta il trionfo dopo la lotta",
+      "\u00c8 simboleggiata da una corona d'alloro",
+      "Deriva dal latino 'victoria'"
+    ],
+    "mistero": [
+      "Ci\u00f2 che rimane incomprensibile",
+      "Deriva dal greco 'mysterion'",
+      "Richiede indagine e scoperta"
+    ],
+    "successo": [
+      "Raggiungimento di un obiettivo",
+      "Deriva dal latino 'successus', che significa 'avanzare'",
+      "Ricompensa per l'impegno e la perseveranza"
+    ],
+    "gioco": [
+      "Attivit\u00e0 ricreativa praticata per divertimento",
+      "Pu\u00f2 essere da tavolo, di carte o digitale",
+      "Spesso ha regole precise",
+      "Favorisce la socializzazione",
+      "La parola deriva dal latino 'jocus'",
+      "Esistono anche giochi olimpici"
+    ],
+    "piano": [
+      "Pu\u00f2 essere uno strumento musicale",
+      "Indica anche un progetto o strategia",
+      "In architettura, rappresenta un livello di un edificio",
+      "Pu\u00f2 significare 'superficie liscia'",
+      "In musica, indica una dinamica 'suonare dolcemente'"
+    ],
+    "opera": [
+      "Capolavoro artistico, spesso teatrale o musicale",
+      "Pu\u00f2 indicare anche un lavoro manuale",
+      "Famosa quella di Verdi e Puccini",
+      "In latino significa 'lavoro'",
+      "Esiste la 'prima' di una rappresentazione"
+    ],
+    "stella": [
+      "Corpo celeste che brilla nel cielo notturno",
+      "Il Sole \u00e8 una di queste",
+      "Simbolo di successo o fama",
+      "Usata nelle bandiere di molti paesi"
+    ],
+    "guida": [
+      "Chi conduce un gruppo o un veicolo"
+    ],
+    "robot": [
+      "Macchina programmata per svolgere compiti"
+    ],
+    "sogno": [
+      "Esperienza mentale durante il sonno"
+    ],
+    "radio": [
+      "Dispositivo per ascoltare musica e notizie"
+    ],
+    "tigre": [
+      "Grande felino, simbolo di forza"
+    ],
+    "nobel": [
+      "Premio internazionale per la pace, scienza e letteratura"
+    ],
+    "globo": [
+      "Rappresentazione sferica della Terra"
+    ],
+    "agile": [
+      "Chi si muove con rapidit\u00e0 e leggerezza"
+    ],
+    "lente": [
+      "Oggetto che ingrandisce o mette a fuoco"
+    ],
+    "drago": [
+      "Creatura mitologica spesso associata al fuoco"
+    ]
+  }
+}
