@@ -154,7 +154,7 @@ function next_page(){
     alert("Crea un personaggio");
   }else{
     document.cookie="personaggio="+document.getElementById("my_pers").value;
-    window.location="http://localhost:8080/ms_home";
+    window.location="http://localhost:8080/sm_home";
   }
 }
 
